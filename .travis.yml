@@ -1,6 +1,6 @@
 language: csharp
 mono: none
-solution: Heroes.Models.sln
+solution: Heroes.Icons.sln
 dotnet: 2.1.300
 os:
   - linux
