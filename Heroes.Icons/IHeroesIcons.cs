@@ -6,6 +6,12 @@ namespace Heroes.Icons
     public interface IHeroesIcons
     {
         /// <summary>
+        /// Returns the interface to access image streams.
+        /// </summary>
+        /// <returns></returns>
+        IHeroImagesStream HeroImages();
+
+        /// <summary>
         /// Returns the interface to access hero data based on the specified build.
         /// </summary>
         /// <param name="build">The build number.</param>
@@ -19,9 +25,10 @@ namespace Heroes.Icons
         IHeroBuildsXml HeroBuilds();
 
         /// <summary>
-        /// Returns the interface to access image streams.
+        /// Returns the interface to access the match awards data.
         /// </summary>
+        /// <param name="build">The build number.</param>
         /// <returns></returns>
-        IHeroImagesStream HeroImages();
+        IMatchAwardsXml MatchAwards(int build);
     }
 }

@@ -17,11 +17,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Xml\MatchAwards - Copy\**" />
+    <EmbeddedResource Remove="Xml\MatchAwards - Copy\**" />
+    <None Remove="Xml\MatchAwards - Copy\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Heroes.Models\Heroes.Models\Heroes.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Xml\HeroBuilds\**">
+    <None Update="Xml\*\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

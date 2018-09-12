@@ -3,13 +3,12 @@ using Heroes.Models.AbilityTalents;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Xml.Linq;
 
 namespace Heroes.Icons.Xml
 {
-    internal class HeroDataXml : XmlBase, IHeroDataXml
+    internal class HeroDataXml : XmlBase, IXmlMultipleBuild, IHeroDataXml
     {
         private readonly string HeroesDataZipFileFormat = "heroesdata_{0}_{1}.min.zip";
         private readonly string HeroesDataXmlFileFormat = "heroesdata_{0}_{1}.min.xml";
@@ -40,7 +39,7 @@ namespace Heroes.Icons.Xml
             string zipFile = string.Format(HeroesDataZipFileFormat, SelectedBuild, "enus");
             string xmlFile = string.Format(HeroesDataXmlFileFormat, SelectedBuild, "enus");
 
-            LoadFile(zipFile, xmlFile);
+            HeroesDataXml = LoadZipFile(Path.Combine(HeroBuildsXmlDirectory, zipFile), xmlFile);
         }
 
         public Hero GetHeroData(string name)
@@ -94,24 +93,14 @@ namespace Heroes.Icons.Xml
 
         public int GetTotalAmountOfHeroes()
         {
-            return GetListOfHeroNames().Count;
-        }
-
-        private void LoadFile(string zipFile, string xmlFile)
-        {
-            using (FileStream fileStream = new FileStream(Path.Combine(HeroBuildsXmlDirectory, zipFile), FileMode.Open))
-            {
-                using (ZipArchive zipArchive = new ZipArchive(fileStream, ZipArchiveMode.Read))
-                {
-                    ZipArchiveEntry fileEntry = zipArchive.GetEntry(xmlFile);
-
-                    HeroesDataXml = XDocument.Load(fileEntry.Open());
-                }
-            }
+            return HeroesDataXml.Root.Elements().Count();
         }
 
         private Hero GetHeroDataFromDataXml(XElement heroElement)
         {
+            if (heroElement == null)
+                return null;
+
             Hero hero = new Hero
             {
                 ShortName = heroElement.Name.LocalName,

@@ -159,8 +159,8 @@ namespace Heroes.Icons.Tests
             Assert.Equal("AbathurSymbiote", heroUnit.CUnitId);
             Assert.Equal(0, heroUnit.InnerRadius);
             Assert.Equal(0, heroUnit.Radius);
-            Assert.Equal(12.0, heroUnit.Sight);
-            Assert.Equal(4.3984, heroUnit.Speed);
+            Assert.Equal(4.0, heroUnit.Sight);
+            Assert.Equal(0.0117, heroUnit.Speed);
             Assert.Equal("Ranged", heroUnit.Type);
             Assert.Empty(heroUnit.Description.RawDescription);
 

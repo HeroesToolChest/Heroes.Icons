@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using Heroes.Icons.Models;
+using System.IO;
 using System.Reflection;
 
 namespace Heroes.Icons.Images
@@ -15,6 +16,11 @@ namespace Heroes.Icons.Images
         public Stream TalentImage(string fileName)
         {
             return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Talents.{fileName}");
+        }
+
+        public Stream MatchAwardImage(string fileName, MVPAwardColor awardColor)
+        {
+            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Awards.{fileName.Replace("{mvpColor}", awardColor.ToString().ToLower())}");
         }
     }
 }
