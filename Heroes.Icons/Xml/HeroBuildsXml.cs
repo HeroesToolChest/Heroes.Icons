@@ -6,7 +6,7 @@ using System.Xml.Linq;
 
 namespace Heroes.Icons.Xml
 {
-    internal class HeroBuildsXml : XmlBase, IHeroBuildsXml
+    internal class HeroBuildsXml : XmlBase, IXml, IHeroBuildsXml
     {
         private readonly string BuildsXmlFile = "builds.xml";
 

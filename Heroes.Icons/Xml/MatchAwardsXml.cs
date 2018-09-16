@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Heroes.Icons.Xml
 {
-    internal class MatchAwardsXml : XmlBase, IXmlMultipleBuild, IMatchAwardsXml
+    internal class MatchAwardsXml : XmlBase, IXml, IXmlMultipleBuild, IMatchAwardsXml
     {
         private readonly string MatchAwardsLatestZipFileName = "matchawards.zip";
         private readonly string MatchAwardsZipFileFormat = "matchawards_{0}.zip";
@@ -36,7 +36,7 @@ namespace Heroes.Icons.Xml
             if (MatchAwardsFilePathsByBuild.Count > 0)
             {
                 if (MatchAwardsFilePathsByBuild.TryGetValue(build, out string filePath))
-                    zipFileToLoad = filePath;
+                    zipFileToLoad = Path.GetFileName(filePath);
                 else if (build < LowestBuild)
                     zipFileToLoad = MatchAwardsFilePathsByBuild[LowestBuild];
                 else if (build > HighestBuild)

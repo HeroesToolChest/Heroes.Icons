@@ -25,10 +25,17 @@ namespace Heroes.Icons
         IHeroBuildsXml HeroBuilds();
 
         /// <summary>
-        /// Returns the interface to access the match awards data.
+        /// Returns the interface to access the match award data.
         /// </summary>
         /// <param name="build">The build number.</param>
         /// <returns></returns>
         IMatchAwardsXml MatchAwards(int build);
+
+        /// <summary>
+        /// Returns the interface to access the battleground data.
+        /// </summary>
+        /// <param name="build">The build number.</param>
+        /// <returns></returns>
+        IBattlegroundsXml Battlegrounds(int build);
     }
 }
