@@ -69,5 +69,19 @@ namespace Heroes.Icons.Images
         /// <param name="heroRole">The name of the hero role.</param>
         /// <returns></returns>
         Stream HeroRoleImage(string heroRole);
+
+        /// <summary>
+        /// Returns the image stream for the party icon.
+        /// </summary>
+        /// <param name="partyIconColor">Party icon type.</param>
+        /// <returns></returns>
+        Stream PartyIconImage(PartyIconColor partyIconColor);
+
+        /// <summary>
+        /// Returns the image stream for an icon.
+        /// </summary>
+        /// <param name="icon">Other icon type.</param>
+        /// <returns></returns>
+        Stream OtherIconImage(OtherIcon icon);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Heroes.Icons.Images;
+using Heroes.Icons.Models;
 using Xunit;
 
 namespace Heroes.Icons.Tests
@@ -23,13 +24,13 @@ namespace Heroes.Icons.Tests
         [Fact]
         public void GetMatchAwardImageStreamTest()
         {
-            Assert.NotNull(HeroImages.MatchAwardImage("storm_ui_mvp_teamplayer_{mvpColor}.png", Models.MVPAwardColor.Blue));
-            Assert.NotNull(HeroImages.MatchAwardImage("storm_ui_mvp_teamplayer_{mvpColor}.png", Models.MVPAwardColor.Red));
-            Assert.NotNull(HeroImages.MatchAwardImage("storm_ui_mvp_teamplayer_{mvpColor}.png", Models.MVPAwardColor.Gold));
+            Assert.NotNull(HeroImages.MatchAwardImage("storm_ui_mvp_teamplayer_{mvpColor}.png", MVPAwardColor.Blue));
+            Assert.NotNull(HeroImages.MatchAwardImage("storm_ui_mvp_teamplayer_{mvpColor}.png", MVPAwardColor.Red));
+            Assert.NotNull(HeroImages.MatchAwardImage("storm_ui_mvp_teamplayer_{mvpColor}.png", MVPAwardColor.Gold));
 
-            Assert.NotNull(HeroImages.MatchAwardImage("storm_ui_scorescreen_mvp_teamplayer_{mvpColor}.png", Models.MVPAwardColor.Blue));
-            Assert.NotNull(HeroImages.MatchAwardImage("storm_ui_scorescreen_mvp_teamplayer_{mvpColor}.png", Models.MVPAwardColor.Red));
-            Assert.Null(HeroImages.MatchAwardImage("storm_ui_scorescreen_mvp_teamplayer_{mvpColor}.png", Models.MVPAwardColor.Gold));
+            Assert.NotNull(HeroImages.MatchAwardImage("storm_ui_scorescreen_mvp_teamplayer_{mvpColor}.png", MVPAwardColor.Blue));
+            Assert.NotNull(HeroImages.MatchAwardImage("storm_ui_scorescreen_mvp_teamplayer_{mvpColor}.png", MVPAwardColor.Red));
+            Assert.Null(HeroImages.MatchAwardImage("storm_ui_scorescreen_mvp_teamplayer_{mvpColor}.png", MVPAwardColor.Gold));
         }
 
         [Fact]
@@ -85,6 +86,23 @@ namespace Heroes.Icons.Tests
             Assert.NotNull(HeroImages.HeroRoleImage("support"));
             Assert.NotNull(HeroImages.HeroRoleImage("specialist"));
             Assert.Null(HeroImages.HeroRoleImage("threeforone."));
+        }
+
+        [Fact]
+        public void GetPartyIconImageStreamTest()
+        {
+            Assert.NotNull(HeroImages.PartyIconImage(PartyIconColor.Blue));
+            Assert.NotNull(HeroImages.PartyIconImage(PartyIconColor.Red));
+            Assert.NotNull(HeroImages.PartyIconImage(PartyIconColor.Yellow));
+            Assert.NotNull(HeroImages.PartyIconImage(PartyIconColor.Teal));
+        }
+
+        [Fact]
+        public void GetOtherIconImageStreamTest()
+        {
+            Assert.NotNull(HeroImages.OtherIconImage(OtherIcon.Assist));
+            Assert.NotNull(HeroImages.OtherIconImage(OtherIcon.HeroDamage));
+            Assert.NotNull(HeroImages.OtherIconImage(OtherIcon.TalentUnavailable));
         }
     }
 }
