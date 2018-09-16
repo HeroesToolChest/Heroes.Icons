@@ -31,5 +31,13 @@ namespace Heroes.Icons.Tests
             Assert.NotNull(HeroImages.MatchAwardImage("storm_ui_scorescreen_mvp_teamplayer_{mvpColor}.png", Models.MVPAwardColor.Red));
             Assert.Null(HeroImages.MatchAwardImage("storm_ui_scorescreen_mvp_teamplayer_{mvpColor}.png", Models.MVPAwardColor.Gold));
         }
+
+        [Fact]
+        public void GetBattlegroundImageStreamTest()
+        {
+            Assert.NotNull(HeroImages.BattlegroundImage("ui_ingame_mapmechanic_loadscreen_gardenofterror.jpg"));
+            Assert.NotNull(HeroImages.BattlegroundImage("ui_ingame_mapmechanic_loadscreen_hanamura_rework.jpg"));
+            Assert.NotNull(HeroImages.BattlegroundImage("storm_ui_homescreenbackground_wcav.jpg"));
+        }
     }
 }

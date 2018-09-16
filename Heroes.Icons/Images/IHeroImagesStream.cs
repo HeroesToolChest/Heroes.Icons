@@ -19,5 +19,12 @@ namespace Heroes.Icons.Images
         /// <param name="awardColor">The color type of the award.</param>
         /// <returns></returns>
         Stream MatchAwardImage(string fileName, MVPAwardColor awardColor);
+
+        /// <summary>
+        /// Returns the image stream for the battleground.
+        /// </summary>
+        /// <param name="fileName">The file name of the image.</param>
+        /// <returns></returns>
+        Stream BattlegroundImage(string fileName);
     }
 }

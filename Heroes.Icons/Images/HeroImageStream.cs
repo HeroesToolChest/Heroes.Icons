@@ -22,5 +22,10 @@ namespace Heroes.Icons.Images
         {
             return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Awards.{fileName.Replace("{mvpColor}", awardColor.ToString().ToLower())}");
         }
+
+        public Stream BattlegroundImage(string fileName)
+        {
+            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Battlegrounds.{fileName}");
+        }
     }
 }
