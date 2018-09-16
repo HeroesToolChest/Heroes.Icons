@@ -48,7 +48,7 @@ namespace Heroes.Icons.Xml
             BattlegroundsDataXml = LoadZipFile(Path.Combine(BattlegroundsDirectory, zipFileToLoad), Path.ChangeExtension(zipFileToLoad, "xml"));
         }
 
-        public List<Battleground> ListOfBattlegrounds(bool includeBrawl = false)
+        public IEnumerable<Battleground> Battlegrounds(bool includeBrawl = false)
         {
             List<Battleground> battleground = new List<Battleground>();
             if (includeBrawl)
@@ -69,7 +69,7 @@ namespace Heroes.Icons.Xml
             return battleground;
         }
 
-        public List<Battleground> ListOfBrawlBattlegrounds()
+        public IEnumerable<Battleground> BrawlBattlegrounds()
         {
             List<Battleground> battleground = new List<Battleground>();
             foreach (XElement battlegroundElement in BattlegroundsDataXml.Root.Elements().Where(x => x.Attribute("brawl")?.Value == "true"))
@@ -80,12 +80,30 @@ namespace Heroes.Icons.Xml
             return battleground;
         }
 
-        public Battleground GetBattleground(string mapId)
+        public Battleground Battleground(string name)
         {
-            return GetBattlegroundDataFromDataXml(BattlegroundsDataXml.Root.Elements().Where(x => x.Attribute("id")?.Value == mapId).FirstOrDefault());
+            Battleground battleground = GetBattlegroundDataFromDataXml(BattlegroundsDataXml.Root.Elements().FirstOrDefault(x => x.Attribute("id")?.Value == name));
+            if (battleground == null)
+            {
+                battleground = GetBattlegroundDataFromDataXml(BattlegroundsDataXml.Root.Elements().FirstOrDefault(x => x.Attribute("name")?.Value == name));
+
+                if (battleground == null)
+                {
+                    foreach (XElement battlegroundElement in BattlegroundsDataXml.Root.Elements().Where(x => x.Element("Aliases")?.Value != string.Empty))
+                    {
+                        string aliases = battlegroundElement.Element("Aliases")?.Value;
+                        if (!string.IsNullOrEmpty(aliases) && aliases.Contains(name))
+                        {
+                            battleground = GetBattlegroundDataFromDataXml(battlegroundElement);
+                        }
+                    }
+                }
+            }
+
+            return battleground;
         }
 
-        public int TotalCountOfBattlegrounds(bool includeBrawl = false)
+        public int Count(bool includeBrawl = false)
         {
             if (includeBrawl)
                 return BattlegroundsDataXml.Root.Elements().Count();
@@ -133,7 +151,16 @@ namespace Heroes.Icons.Xml
             battleground.TextColor = textElement.Element("TextColor")?.Value;
             battleground.TextGlowColor = textElement.Element("GlowColor")?.Value;
 
-            battleground.Image = battlegroundElement.Element("Image")?.Value;
+            battleground.ImageFileName = battlegroundElement.Element("Image")?.Value;
+
+            string aliasesString = battlegroundElement.Element("Aliases")?.Value;
+            if (!string.IsNullOrEmpty(aliasesString))
+            {
+                foreach (string alias in aliasesString.Split('~'))
+                {
+                    battleground.AddAlias(alias);
+                }
+            }
 
             return battleground;
         }

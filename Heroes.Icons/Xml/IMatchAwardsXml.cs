@@ -10,18 +10,18 @@ namespace Heroes.Icons.Xml
         /// </summary>
         /// <param name="awardId">The reference id.</param>
         /// <returns></returns>
-        MatchAward GetMatchAward(string awardId);
+        MatchAward MatchAward(string awardId);
 
         /// <summary>
-        /// Returns a list of all awards.
+        /// Returns a collection of all awards.
         /// </summary>
         /// <returns></returns>
-        List<MatchAward> ListOfAwards();
+        IEnumerable<MatchAward> Awards();
 
         /// <summary>
-        /// Returns the total count of awards.
+        /// Returns the number of awards.
         /// </summary>
         /// <returns></returns>
-        int TotalCountOfAwards();
+        int Count();
     }
 }

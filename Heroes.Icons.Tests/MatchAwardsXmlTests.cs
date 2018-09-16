@@ -1,5 +1,6 @@
 ﻿using Heroes.Icons.Models;
 using Heroes.Icons.Xml;
+using System.Linq;
 using Xunit;
 
 namespace Heroes.Icons.Tests
@@ -16,19 +17,19 @@ namespace Heroes.Icons.Tests
         [Fact]
         public void GetTotalCountOfAwardsTest()
         {
-            Assert.True(MatchAwards.TotalCountOfAwards() >= 37);
+            Assert.True(MatchAwards.Count() >= 37);
         }
 
         [Fact]
         public void GetListOfAwardsTest()
         {
-            Assert.True(MatchAwards.ListOfAwards().Count == MatchAwards.TotalCountOfAwards());
+            Assert.True(MatchAwards.Awards().Count() == MatchAwards.Count());
         }
 
         [Fact]
         public void MatchAwardsFromIdTest()
         {
-            MatchAward matchAward = MatchAwards.GetMatchAward("ZeroOutnumberedDeaths");
+            MatchAward matchAward = MatchAwards.MatchAward("ZeroOutnumberedDeaths");
             Assert.Equal("Team Player", matchAward.Name);
             Assert.Equal("ZeroOutnumberedDeaths", matchAward.Id);
             Assert.Equal("TeamPlayer", matchAward.ShortName);

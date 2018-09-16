@@ -1,5 +1,6 @@
 ﻿using Heroes.Icons.Models;
 using Heroes.Icons.Xml;
+using System.Linq;
 using Xunit;
 
 namespace Heroes.Icons.Tests
@@ -18,19 +19,19 @@ namespace Heroes.Icons.Tests
         [Fact]
         public void GetTotalCountOfBattlegroundsTest()
         {
-            Assert.Equal(15, Battlegrounds67621.TotalCountOfBattlegrounds());
-            Assert.Equal(26, Battlegrounds67621.TotalCountOfBattlegrounds(true));
+            Assert.Equal(15, Battlegrounds67621.Count());
+            Assert.Equal(26, Battlegrounds67621.Count(true));
 
-            Assert.True(Battlegrounds.TotalCountOfBattlegrounds() >= 15);
-            Assert.True(Battlegrounds.TotalCountOfBattlegrounds(true) >= 26);
+            Assert.True(Battlegrounds.Count() >= 15);
+            Assert.True(Battlegrounds.Count(true) >= 26);
         }
 
         [Fact]
         public void BattlegroundsFromMapIdTest()
         {
-            Battleground battleground = Battlegrounds67621.GetBattleground("HauntedWoods");
+            Battleground battleground = Battlegrounds67621.Battleground("HauntedWoods");
             Assert.Equal("HauntedWoods", battleground.Id);
-            Assert.Equal("ui_ingame_mapmechanic_loadscreen_gardenofterror.jpg", battleground.Image);
+            Assert.Equal("ui_ingame_mapmechanic_loadscreen_gardenofterror.jpg", battleground.ImageFileName);
             Assert.False(battleground.IsBrawl);
             Assert.Equal("Garden of Terror", battleground.Name);
             Assert.Equal("GardenofTerror", battleground.ShortName);
@@ -41,14 +42,22 @@ namespace Heroes.Icons.Tests
         [Fact]
         public void ListOfBrawlBattlegroundsTest()
         {
-            Assert.Equal(11, Battlegrounds67621.ListOfBrawlBattlegrounds().Count);
+            Assert.Equal(11, Battlegrounds67621.BrawlBattlegrounds().Count());
         }
 
         [Fact]
         public void ListOfBattlegroundsTests()
         {
-            Assert.Equal(15, Battlegrounds67621.ListOfBattlegrounds().Count);
-            Assert.Equal(26, Battlegrounds67621.ListOfBattlegrounds(true).Count);
+            Assert.Equal(15, Battlegrounds67621.Battlegrounds().Count());
+            Assert.Equal(26, Battlegrounds67621.Battlegrounds(true).Count());
+        }
+
+        [Fact]
+        public void ListOfBattlegroundAliasesTest()
+        {
+            Assert.Equal(11, Battlegrounds67621.Battleground("逃离布莱克西斯（英雄难度）").GetsListOfAliases().Count());
+            Assert.Equal(11, Battlegrounds67621.Battleground("a fuite de Braxis (héroïque)").GetsListOfAliases().Count());
+            Assert.Equal(11, Battlegrounds67621.Battleground("Escape From Braxis (Heroic)").GetsListOfAliases().Count());
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Heroes.Icons.Tests
         [Fact]
         public void ListOfHeroNamesTest()
         {
-            List<string> heroesList = HeroData.GetListOfHeroNames();
+            List<string> heroesList = HeroData.HeroNames().ToList();
 
             Assert.Equal(82, heroesList.Count);
             Assert.Contains("Anub'arak", heroesList);
@@ -45,28 +45,28 @@ namespace Heroes.Icons.Tests
         [Fact]
         public void HeroNameFromUnitIdTest()
         {
-            Assert.Equal("Valeera", HeroData.GetHeroNameFromUnitId("HeroValeera"));
-            Assert.Equal("Anub'arak", HeroData.GetHeroNameFromUnitId("HeroAnubarak"));
+            Assert.Equal("Valeera", HeroData.HeroNameFromUnitId("HeroValeera"));
+            Assert.Equal("Anub'arak", HeroData.HeroNameFromUnitId("HeroAnubarak"));
         }
 
         [Fact]
         public void HeroNameFromShortNameTest()
         {
-            Assert.Equal("Valeera", HeroData.GetHeroNameFromShortName("Valeera"));
-            Assert.Equal("Anub'arak", HeroData.GetHeroNameFromShortName("Anubarak"));
+            Assert.Equal("Valeera", HeroData.HeroNameFromShortName("Valeera"));
+            Assert.Equal("Anub'arak", HeroData.HeroNameFromShortName("Anubarak"));
         }
 
         [Fact]
         public void HeroNameFromAttributeIdTest()
         {
-            Assert.Equal("Valeera", HeroData.GetHeroNameFromAttributeId("VALE"));
-            Assert.Equal("Anub'arak", HeroData.GetHeroNameFromAttributeId("Anub"));
+            Assert.Equal("Valeera", HeroData.HeroNameFromAttributeId("VALE"));
+            Assert.Equal("Anub'arak", HeroData.HeroNameFromAttributeId("Anub"));
         }
 
         [Fact]
         public void GetHeroDataAbathurTest()
         {
-            Hero hero = HeroData.GetHeroData("Abathur");
+            Hero hero = HeroData.HeroData("Abathur");
 
             Assert.Equal("Abathur", hero.ShortName);
             Assert.Equal("Abathur", hero.Name);
@@ -179,7 +179,7 @@ namespace Heroes.Icons.Tests
         [Fact]
         public void GetHeroDataTychusTest()
         {
-            Hero hero = HeroData.GetHeroData("Tychus");
+            Hero hero = HeroData.HeroData("Tychus");
 
             // energy
             Assert.Equal(500, hero.Energy.EnergyMax);

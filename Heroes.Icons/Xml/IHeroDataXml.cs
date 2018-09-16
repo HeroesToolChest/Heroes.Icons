@@ -6,41 +6,41 @@ namespace Heroes.Icons.Xml
     public interface IHeroDataXml
     {
         /// <summary>
-        /// Gets a Hero object.
+        /// Returns a Hero object.
         /// </summary>
         /// <param name="name">The hero real name or short name.</param>
         /// <returns></returns>
-        Hero GetHeroData(string name);
+        Hero HeroData(string name);
 
         /// <summary>
-        /// Gets the hero's name from the attribute id.
+        /// Returns the hero's name from the attribute id.
         /// </summary>
         /// <param name="attributeId">Four character hero id.</param>
         /// <returns></returns>
-        string GetHeroNameFromAttributeId(string attributeId);
+        string HeroNameFromAttributeId(string attributeId);
 
         /// <summary>
-        /// Gets the hero's name from the short name.
+        /// Returns the hero's name from the short name.
         /// </summary>
         /// <param name="shortName">Short name of hero.</param>
         /// <returns></returns>
-        string GetHeroNameFromShortName(string shortName);
+        string HeroNameFromShortName(string shortName);
 
         /// <summary>
-        /// Gets the hero's name from the unit id.
+        /// Returns the hero's name from the unit id.
         /// </summary>
         /// <param name="unitId">Unit id of hero. Starts with 'Hero'.</param>
         /// <returns></returns>
-        string GetHeroNameFromUnitId(string unitId);
+        string HeroNameFromUnitId(string unitId);
 
         /// <summary>
-        /// Gets a list of real hero names.
+        /// Returns a collection of real hero names.
         /// </summary>
         /// <returns></returns>
-        List<string> GetListOfHeroNames();
+        IEnumerable<string> HeroNames();
 
         /// <summary>
-        /// Gets the total count of heroes.
+        /// Returns the number of heroes.
         /// </summary>
         /// <returns></returns>
         int GetTotalAmountOfHeroes();

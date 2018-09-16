@@ -40,7 +40,7 @@ namespace Heroes.Icons.Models
         /// <summary>
         /// Gets or sets the map image file name.
         /// </summary>
-        public string Image { get; set; }
+        public string ImageFileName { get; set; }
 
         /// <summary>
         /// Add a map name alias.
@@ -52,12 +52,12 @@ namespace Heroes.Icons.Models
         }
 
         /// <summary>
-        /// Returns a list of map name aliases.
+        /// Returns a collection of map name aliases.
         /// </summary>
         /// <returns></returns>
-        public List<string> GetsListOfAliases()
+        public IEnumerable<string> GetsListOfAliases()
         {
-            return Aliases.ToList();
+            return Aliases;
         }
     }
 }

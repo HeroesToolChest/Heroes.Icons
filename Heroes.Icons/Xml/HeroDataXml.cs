@@ -42,30 +42,30 @@ namespace Heroes.Icons.Xml
             HeroesDataXml = LoadZipFile(Path.Combine(HeroBuildsXmlDirectory, zipFile), xmlFile);
         }
 
-        public Hero GetHeroData(string name)
+        public Hero HeroData(string name)
         {
-            string realName = GetHeroNameFromShortName(name);
+            string realName = HeroNameFromShortName(name);
             if (!string.IsNullOrEmpty(realName))
                 return GetHeroDataFromDataXml(HeroesDataXml.Root.Element(realName));
             else
                 return GetHeroDataFromDataXml(HeroesDataXml.Root.Element(name));
         }
 
-        public string GetHeroNameFromShortName(string shortName)
+        public string HeroNameFromShortName(string shortName)
         {
             XElement heroElement = HeroesDataXml.Root.Elements().FirstOrDefault(x => x.Name.LocalName == shortName);
 
             return heroElement?.Attribute("name")?.Value;
         }
 
-        public string GetHeroNameFromAttributeId(string attributeId)
+        public string HeroNameFromAttributeId(string attributeId)
         {
             XElement heroElement = HeroesDataXml.Root.Elements().FirstOrDefault(x => x.Attribute("attributeId")?.Value == attributeId);
 
             return heroElement?.Attribute("name")?.Value;
         }
 
-        public string GetHeroNameFromUnitId(string unitId)
+        public string HeroNameFromUnitId(string unitId)
         {
             XElement heroElement = HeroesDataXml.Root.Elements().FirstOrDefault(x => x.Attribute("cUnitId")?.Value == unitId);
 
@@ -74,13 +74,13 @@ namespace Heroes.Icons.Xml
 
         public bool HeroExists(string name)
         {
-            if (!string.IsNullOrEmpty(GetHeroNameFromShortName(name)))
+            if (!string.IsNullOrEmpty(HeroNameFromShortName(name)))
                 return true;
             else
                 return HeroesDataXml.Root.Elements().Any(x => x.Attribute("name")?.Value == name);
         }
 
-        public List<string> GetListOfHeroNames()
+        public IEnumerable<string> HeroNames()
         {
             List<string> heroNames = new List<string>();
             foreach (XElement heroElement in HeroesDataXml.Root.Elements())

@@ -48,7 +48,7 @@ namespace Heroes.Icons.Xml
             MatchAwardsDataXml = LoadZipFile(Path.Combine(MatchAwardsDirectory, zipFileToLoad), Path.ChangeExtension(zipFileToLoad, "xml"));
         }
 
-        public List<MatchAward> ListOfAwards()
+        public IEnumerable<MatchAward> Awards()
         {
             List<MatchAward> matchAwards = new List<MatchAward>();
             foreach (XElement awardElement in MatchAwardsDataXml.Root.Elements())
@@ -59,12 +59,12 @@ namespace Heroes.Icons.Xml
             return matchAwards;
         }
 
-        public MatchAward GetMatchAward(string awardId)
+        public MatchAward MatchAward(string awardId)
         {
             return GetMatchAwardDataFromDataXml(MatchAwardsDataXml.Root.Elements().Where(x => x.Attribute("id")?.Value == awardId).FirstOrDefault());
         }
 
-        public int TotalCountOfAwards()
+        public int Count()
         {
             return MatchAwardsDataXml.Root.Elements().Count();
         }
