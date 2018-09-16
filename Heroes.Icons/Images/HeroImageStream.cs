@@ -32,5 +32,20 @@ namespace Heroes.Icons.Images
         {
             return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Homescreens.{fileName}");
         }
+
+        public Stream HeroSelectImage(string fileName)
+        {
+            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.HeroSelectPortraits.{fileName}");
+        }
+
+        public Stream LeaderboardImage(string fileName)
+        {
+            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.LeaderboardPortraits.{fileName}");
+        }
+
+        public Stream TargetPortraitImage(string fileName)
+        {
+            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.TargetPortraits.{fileName}");
+        }
     }
 }

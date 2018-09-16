@@ -33,5 +33,26 @@ namespace Heroes.Icons.Images
         /// <param name="fileName">The file name of the image.</param>
         /// <returns></returns>
         Stream HomescreenImage(string fileName);
+
+        /// <summary>
+        /// Returns the image stream for the hero select image.
+        /// </summary>
+        /// <param name="fileName">The file name of the image.</param>
+        /// <returns></returns>
+        Stream HeroSelectImage(string fileName);
+
+        /// <summary>
+        /// Returns the image stream for the leaderboard image.
+        /// </summary>
+        /// <param name="fileName">The file name of the image.</param>
+        /// <returns></returns>
+        Stream LeaderboardImage(string fileName);
+
+        /// <summary>
+        /// Returns the image stream for the target portrait image.
+        /// </summary>
+        /// <param name="fileName">The file name of the image.</param>
+        /// <returns></returns>
+        Stream TargetPortraitImage(string fileName);
     }
 }

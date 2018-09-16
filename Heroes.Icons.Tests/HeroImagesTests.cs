@@ -46,5 +46,26 @@ namespace Heroes.Icons.Tests
             Assert.NotNull(HeroImages.HomescreenImage("storm_ui_homescreenbackground_diablotristram.jpg"));
             Assert.NotNull(HeroImages.HomescreenImage("storm_ui_homescreenbackground_greymane.jpg"));
         }
+
+        [Fact]
+        public void GetHeroSelectPortraitImageStreamTest()
+        {
+            Assert.NotNull(HeroImages.HeroSelectImage("storm_ui_ingame_heroselect_btn_azmodan.png"));
+            Assert.NotNull(HeroImages.HeroSelectImage("storm_ui_ingame_heroselect_btn_firebat.png"));
+        }
+
+        [Fact]
+        public void GetLeaderboardPortraitsImageStreamTest()
+        {
+            Assert.NotNull(HeroImages.LeaderboardImage("storm_ui_ingame_hero_leaderboard_chen.png"));
+            Assert.NotNull(HeroImages.LeaderboardImage("storm_ui_ingame_hero_leaderboard_femalebarbarian.png"));
+        }
+
+        [Fact]
+        public void GetTargetPortraitsImageStreamTest()
+        {
+            Assert.NotNull(HeroImages.TargetPortraitImage("ui_targetportrait_hero_demonhunter.png"));
+            Assert.NotNull(HeroImages.TargetPortraitImage("ui_targetportrait_hero_junkrat.png"));
+        }
     }
 }
