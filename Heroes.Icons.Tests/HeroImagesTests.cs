@@ -76,5 +76,15 @@ namespace Heroes.Icons.Tests
             Assert.NotNull(HeroImages.HeroFranchiseImage(Heroes.Models.HeroFranchise.Warcraft));
             Assert.Null(HeroImages.HeroFranchiseImage(Heroes.Models.HeroFranchise.Unknown));
         }
+
+        [Fact]
+        public void GetHeroRoleImageStreamTest()
+        {
+            Assert.NotNull(HeroImages.HeroRoleImage("Assassin"));
+            Assert.NotNull(HeroImages.HeroRoleImage("warrior"));
+            Assert.NotNull(HeroImages.HeroRoleImage("support"));
+            Assert.NotNull(HeroImages.HeroRoleImage("specialist"));
+            Assert.Null(HeroImages.HeroRoleImage("threeforone."));
+        }
     }
 }

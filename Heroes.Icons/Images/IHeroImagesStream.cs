@@ -62,5 +62,12 @@ namespace Heroes.Icons.Images
         /// <param name="heroFranchise">Franchise type.</param>
         /// <returns></returns>
         Stream HeroFranchiseImage(HeroFranchise heroFranchise);
+
+        /// <summary>
+        /// Returns the image stream for the hero role.
+        /// </summary>
+        /// <param name="heroRole">The name of the hero role.</param>
+        /// <returns></returns>
+        Stream HeroRoleImage(string heroRole);
     }
 }

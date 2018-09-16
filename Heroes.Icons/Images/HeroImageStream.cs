@@ -53,5 +53,10 @@ namespace Heroes.Icons.Images
         {
             return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Franchises.hero_franchise_{heroFranchise.ToString().ToLower()}.png");
         }
+
+        public Stream HeroRoleImage(string heroRole)
+        {
+            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Roles.hero_role_{heroRole.ToLower()}.png");
+        }
     }
 }
