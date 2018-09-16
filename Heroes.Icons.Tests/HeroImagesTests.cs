@@ -67,5 +67,14 @@ namespace Heroes.Icons.Tests
             Assert.NotNull(HeroImages.TargetPortraitImage("ui_targetportrait_hero_demonhunter.png"));
             Assert.NotNull(HeroImages.TargetPortraitImage("ui_targetportrait_hero_junkrat.png"));
         }
+
+        [Fact]
+        public void GetHeroFranchiseImageStreamTest()
+        {
+            Assert.NotNull(HeroImages.HeroFranchiseImage(Heroes.Models.HeroFranchise.Classic));
+            Assert.NotNull(HeroImages.HeroFranchiseImage(Heroes.Models.HeroFranchise.Overwatch));
+            Assert.NotNull(HeroImages.HeroFranchiseImage(Heroes.Models.HeroFranchise.Warcraft));
+            Assert.Null(HeroImages.HeroFranchiseImage(Heroes.Models.HeroFranchise.Unknown));
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Heroes.Icons.Models;
+using Heroes.Models;
 using System.IO;
 using System.Reflection;
 
@@ -46,6 +47,11 @@ namespace Heroes.Icons.Images
         public Stream TargetPortraitImage(string fileName)
         {
             return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.TargetPortraits.{fileName}");
+        }
+
+        public Stream HeroFranchiseImage(HeroFranchise heroFranchise)
+        {
+            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Franchises.hero_franchise_{heroFranchise.ToString().ToLower()}.png");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Heroes.Icons.Models;
+using Heroes.Models;
 using System.IO;
 
 namespace Heroes.Icons.Images
@@ -54,5 +55,12 @@ namespace Heroes.Icons.Images
         /// <param name="fileName">The file name of the image.</param>
         /// <returns></returns>
         Stream TargetPortraitImage(string fileName);
+
+        /// <summary>
+        /// Returns the image stream for the hero franchise.
+        /// </summary>
+        /// <param name="heroFranchise">Franchise type.</param>
+        /// <returns></returns>
+        Stream HeroFranchiseImage(HeroFranchise heroFranchise);
     }
 }
