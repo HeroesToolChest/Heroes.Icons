@@ -26,5 +26,12 @@ namespace Heroes.Icons.Images
         /// <param name="fileName">The file name of the image.</param>
         /// <returns></returns>
         Stream BattlegroundImage(string fileName);
+
+        /// <summary>
+        /// Returns the image stream for the homescreen.
+        /// </summary>
+        /// <param name="fileName">The file name of the image.</param>
+        /// <returns></returns>
+        Stream HomescreenImage(string fileName);
     }
 }

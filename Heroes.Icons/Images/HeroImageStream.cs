@@ -27,5 +27,10 @@ namespace Heroes.Icons.Images
         {
             return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Battlegrounds.{fileName}");
         }
+
+        public Stream HomescreenImage(string fileName)
+        {
+            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Homescreens.{fileName}");
+        }
     }
 }

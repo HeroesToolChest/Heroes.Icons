@@ -39,5 +39,12 @@ namespace Heroes.Icons.Tests
             Assert.NotNull(HeroImages.BattlegroundImage("ui_ingame_mapmechanic_loadscreen_hanamura_rework.jpg"));
             Assert.NotNull(HeroImages.BattlegroundImage("storm_ui_homescreenbackground_wcav.jpg"));
         }
+
+        [Fact]
+        public void GetHomescreensImageStreamTest()
+        {
+            Assert.NotNull(HeroImages.HomescreenImage("storm_ui_homescreenbackground_diablotristram.jpg"));
+            Assert.NotNull(HeroImages.HomescreenImage("storm_ui_homescreenbackground_greymane.jpg"));
+        }
     }
 }
