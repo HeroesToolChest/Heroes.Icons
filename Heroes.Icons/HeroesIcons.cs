@@ -10,6 +10,7 @@ namespace Heroes.Icons
         private readonly HeroDataXml HeroDataXml;
         private readonly MatchAwardsXml MatchAwardsXml;
         private readonly BattlegroundsXml BattlegroundsXml;
+        private readonly HomescreensXml HomescreensXml;
 
         public HeroesIcons()
         {
@@ -17,10 +18,12 @@ namespace Heroes.Icons
             HeroBuildsXml = new HeroBuildsXml();
             MatchAwardsXml = new MatchAwardsXml();
             BattlegroundsXml = new BattlegroundsXml();
+            HomescreensXml = new HomescreensXml();
 
             HeroBuildsXml.Initialize();
             MatchAwardsXml.Initialize();
             BattlegroundsXml.Initialize();
+            HomescreensXml.Initialize();
 
             HeroDataXml = new HeroDataXml(HeroBuildsXml);
         }
@@ -51,6 +54,12 @@ namespace Heroes.Icons
         {
             BattlegroundsXml.SetSelectedBuild(build);
             return BattlegroundsXml;
+        }
+
+        public IHomescreensXml Homescreens()
+        {
+            HomescreensXml.SetSelectedBuild(0);
+            return HomescreensXml;
         }
     }
 }

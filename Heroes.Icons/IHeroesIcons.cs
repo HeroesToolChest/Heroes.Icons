@@ -37,5 +37,11 @@ namespace Heroes.Icons
         /// <param name="build">The build number.</param>
         /// <returns></returns>
         IBattlegroundsXml Battlegrounds(int build);
+
+        /// <summary>
+        /// Returns the interface to access the homescreens data.
+        /// </summary>
+        /// <returns></returns>
+        IHomescreensXml Homescreens();
     }
 }
