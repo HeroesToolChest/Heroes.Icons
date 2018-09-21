@@ -35,8 +35,8 @@ namespace Heroes.Icons.Tests
             Assert.False(battleground.IsBrawl);
             Assert.Equal("Garden of Terror", battleground.Name);
             Assert.Equal("GardenofTerror", battleground.ShortName);
-            Assert.Equal("b2d6fe", battleground.TextColor);
-            Assert.Equal("0078ff", battleground.TextGlowColor);
+            Assert.Equal("#b2d6fe", battleground.TextHexColor);
+            Assert.Equal("#0078ff", battleground.TextHexGlowColor);
         }
 
         [Fact]

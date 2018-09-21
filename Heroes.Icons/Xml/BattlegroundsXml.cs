@@ -148,8 +148,14 @@ namespace Heroes.Icons.Xml
                 battleground.Name = name;
 
             XElement textElement = battlegroundElement.Element("Text");
-            battleground.TextColor = textElement.Element("TextColor")?.Value;
-            battleground.TextGlowColor = textElement.Element("GlowColor")?.Value;
+
+            string colorString = textElement.Element("TextColor")?.Value;
+            if (!string.IsNullOrEmpty(colorString))
+                battleground.TextHexColor = $"#{colorString}";
+
+            colorString = textElement.Element("GlowColor")?.Value;
+            if (!string.IsNullOrEmpty(colorString))
+                battleground.TextHexGlowColor = $"#{colorString}";
 
             battleground.ImageFileName = battlegroundElement.Element("Image")?.Value;
 

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace Heroes.Icons.Models
 {
@@ -30,12 +29,12 @@ namespace Heroes.Icons.Models
         /// <summary>
         /// Gets or sets the text color.
         /// </summary>
-        public string TextColor { get; set; }
+        public string TextHexColor { get; set; }
 
         /// <summary>
         /// Gets or sets the text glow color.
         /// </summary>
-        public string TextGlowColor { get; set; }
+        public string TextHexGlowColor { get; set; }
 
         /// <summary>
         /// Gets or sets the map image file name.
