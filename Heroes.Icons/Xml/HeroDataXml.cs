@@ -255,7 +255,6 @@ namespace Heroes.Icons.Xml
             XElement abilitiesElement = heroElement.Element("Abilities");
             if (abilitiesElement != null)
             {
-                hero.Abilities = new Dictionary<string, Ability>();
                 SetAbilities(abilitiesElement, hero);
             }
 
@@ -273,7 +272,6 @@ namespace Heroes.Icons.Xml
             XElement talentsElement = heroElement.Element("Talents");
             if (talentsElement != null)
             {
-                hero.Talents = new Dictionary<string, Talent>();
                 SetTalents(talentsElement, hero);
             }
 

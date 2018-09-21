@@ -205,6 +205,10 @@ namespace Heroes.Icons.Tests
             Assert.True(ability.Tooltip.Charges.IsHideCount);
             Assert.Equal(AbilityType.E, ability.AbilityType);
 
+            ability = hero.GetAbility("TychusRunAndGun");
+            Assert.True(ability.Tooltip.Charges.IsHideCount);
+            Assert.Equal(AbilityType.E, ability.AbilityType);
+
             // talents
             Talent talent = hero.Talents["TychusMasteryRunandGunDash"];
             Assert.Equal("TychusMasteryRunandGunDash", talent.ReferenceNameId);
@@ -216,6 +220,16 @@ namespace Heroes.Icons.Tests
             Assert.Equal(AbilityType.E, talent.AbilityType);
             Assert.False(talent.IsActive);
             Assert.True(talent.IsQuest);
+
+            talent = hero.GetTalent("TychusMasteryRunandGunDash");
+            Assert.Empty(talent.Tooltip.Cooldown.CooldownTooltip.RawDescription);
+            Assert.Equal(AbilityType.E, talent.AbilityType);
+
+            talent = hero.GetTalent(TalentType.NoPick.ToString());
+            Assert.Equal("No Pick", talent.Name);
+
+            talent = hero.GetTalent(TalentType.NotFound.ToString());
+            Assert.Equal("Unknown", talent.Name);
 
             // subAbilities
             ability = hero.SubAbilities(AbilityTier.Basic).ToList().First();
