@@ -5,7 +5,6 @@ namespace Heroes.Icons
 {
     public class HeroesIcons : IHeroesIcons
     {
-        private readonly HeroImageStream HeroImageStream;
         private readonly HeroBuildsXml HeroBuildsXml;
         private readonly HeroDataXml HeroDataXml;
         private readonly MatchAwardsXml MatchAwardsXml;
@@ -14,7 +13,6 @@ namespace Heroes.Icons
 
         public HeroesIcons()
         {
-            HeroImageStream = new HeroImageStream();
             HeroBuildsXml = new HeroBuildsXml();
             MatchAwardsXml = new MatchAwardsXml();
             BattlegroundsXml = new BattlegroundsXml();
@@ -30,9 +28,9 @@ namespace Heroes.Icons
             HeroDataXml.Initialize();
         }
 
-        public IHeroImagesStream HeroImages()
+        public static IHeroImagesStream HeroImages()
         {
-            return HeroImageStream;
+            return new HeroImageStream();
         }
 
         public IHeroBuildsXml HeroBuilds()

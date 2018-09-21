@@ -27,6 +27,9 @@ namespace Heroes.Icons.Tests
 
             IHeroDataXml heroDataOldSplit = HeroesIcons.HeroData(56705);
             Assert.True(heroDataOldSplit.HeroExists("Abathur"));
+
+            IHeroDataXml heroDataLastest = HeroesIcons.HeroData();
+            Assert.True(HeroData.HeroExists("Mephisto"));
         }
 
         [Fact]

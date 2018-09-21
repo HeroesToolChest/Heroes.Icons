@@ -1,16 +1,9 @@
-﻿using Heroes.Icons.Images;
-using Heroes.Icons.Xml;
+﻿using Heroes.Icons.Xml;
 
 namespace Heroes.Icons
 {
     public interface IHeroesIcons
     {
-        /// <summary>
-        /// Returns the interface to access image streams.
-        /// </summary>
-        /// <returns></returns>
-        IHeroImagesStream HeroImages();
-
         /// <summary>
         /// Returns the interface to access hero data based on the latest build.
         /// </summary>

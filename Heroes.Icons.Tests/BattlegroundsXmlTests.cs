@@ -43,6 +43,9 @@ namespace Heroes.Icons.Tests
         public void ListOfBrawlBattlegroundsTest()
         {
             Assert.Equal(11, Battlegrounds67621.BrawlBattlegrounds().Count());
+
+            IBattlegroundsXml battlegrounds = HeroesIcons.Battlegrounds();
+            Assert.Equal(11, battlegrounds.BrawlBattlegrounds().Count());
         }
 
         [Fact]

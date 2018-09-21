@@ -24,6 +24,9 @@ namespace Heroes.Icons.Tests
         public void GetListOfAwardsTest()
         {
             Assert.True(MatchAwards.Awards().Count() == MatchAwards.Count());
+
+            IMatchAwardsXml matchAwards = HeroesIcons.MatchAwards();
+            Assert.True(matchAwards.Awards().Count() == MatchAwards.Count());
         }
 
         [Fact]
