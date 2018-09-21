@@ -40,16 +40,34 @@ namespace Heroes.Icons
             return HeroBuildsXml;
         }
 
+        public IHeroDataXml HeroData()
+        {
+            HeroDataXml.SetSelectedBuild(int.MaxValue);
+            return HeroDataXml;
+        }
+
         public IHeroDataXml HeroData(int build)
         {
             HeroDataXml.SetSelectedBuild(build);
             return HeroDataXml;
         }
 
+        public IMatchAwardsXml MatchAwards()
+        {
+            MatchAwardsXml.SetSelectedBuild(int.MaxValue);
+            return MatchAwardsXml;
+        }
+
         public IMatchAwardsXml MatchAwards(int build)
         {
             MatchAwardsXml.SetSelectedBuild(build);
             return MatchAwardsXml;
+        }
+
+        public IBattlegroundsXml Battlegrounds()
+        {
+            BattlegroundsXml.SetSelectedBuild(int.MaxValue);
+            return BattlegroundsXml;
         }
 
         public IBattlegroundsXml Battlegrounds(int build)
@@ -60,7 +78,7 @@ namespace Heroes.Icons
 
         public IHomescreensXml Homescreens()
         {
-            HomescreensXml.SetSelectedBuild(0);
+            HomescreensXml.SetSelectedBuild(int.MaxValue);
             return HomescreensXml;
         }
     }

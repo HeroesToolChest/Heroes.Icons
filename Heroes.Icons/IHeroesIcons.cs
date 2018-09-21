@@ -12,6 +12,12 @@ namespace Heroes.Icons
         IHeroImagesStream HeroImages();
 
         /// <summary>
+        /// Returns the interface to access hero data based on the latest build.
+        /// </summary>
+        /// <returns></returns>
+        IHeroDataXml HeroData();
+
+        /// <summary>
         /// Returns the interface to access hero data based on the specified build.
         /// </summary>
         /// <param name="build">The build number.</param>
@@ -25,14 +31,26 @@ namespace Heroes.Icons
         IHeroBuildsXml HeroBuilds();
 
         /// <summary>
-        /// Returns the interface to access the match award data.
+        /// Returns the interface to access the match award data on the latest build.
+        /// </summary>
+        /// <returns></returns>
+        IMatchAwardsXml MatchAwards();
+
+        /// <summary>
+        /// Returns the interface to access the match award data on the specified build.
         /// </summary>
         /// <param name="build">The build number.</param>
         /// <returns></returns>
         IMatchAwardsXml MatchAwards(int build);
 
         /// <summary>
-        /// Returns the interface to access the battleground data.
+        /// Returns the interface to access the battleground data on the latest build.
+        /// </summary>
+        /// <returns></returns>
+        IBattlegroundsXml Battlegrounds();
+
+        /// <summary>
+        /// Returns the interface to access the battleground data on the specified build.
         /// </summary>
         /// <param name="build">The build number.</param>
         /// <returns></returns>
