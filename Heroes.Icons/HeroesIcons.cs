@@ -25,7 +25,9 @@ namespace Heroes.Icons
             BattlegroundsXml.Initialize();
             HomescreensXml.Initialize();
 
+            // last
             HeroDataXml = new HeroDataXml(HeroBuildsXml);
+            HeroDataXml.Initialize();
         }
 
         public IHeroImagesStream HeroImages()

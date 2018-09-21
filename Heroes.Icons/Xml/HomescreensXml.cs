@@ -20,7 +20,6 @@ namespace Heroes.Icons.Xml
 
         public void Initialize()
         {
-            LoadHomescreenFiles();
         }
 
         public void SetSelectedBuild(int build)
@@ -42,10 +41,6 @@ namespace Heroes.Icons.Xml
         public int Count()
         {
             return HomescreenDataXml.Root.Elements().Count();
-        }
-
-        private void LoadHomescreenFiles()
-        {
         }
 
         private Homescreen GetHomescreenDataFromDataXml(XElement homescreenElement)

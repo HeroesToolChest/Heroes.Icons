@@ -8,11 +8,12 @@ using System.Xml.Linq;
 
 namespace Heroes.Icons.Xml
 {
-    internal class HeroDataXml : XmlBase, IXmlMultipleBuild, IHeroDataXml
+    internal class HeroDataXml : XmlBase, IXml, IXmlMultipleBuild, IHeroDataXml
     {
         private readonly string HeroesDataZipFileFormat = "heroesdata_{0}_{1}.min.zip";
         private readonly string HeroesDataXmlFileFormat = "heroesdata_{0}_{1}.min.xml";
         private readonly Dictionary<string, Hero> HeroDataByHeroShortName = new Dictionary<string, Hero>();
+        private readonly int OldestHeroesDataBuild = 47479;
 
         private readonly string HeroBuildsXmlDirectory;
         private readonly HeroBuildsXml HeroBuildsXml;
@@ -27,16 +28,39 @@ namespace Heroes.Icons.Xml
             HeroBuildsXml = heroBuildsXml;
         }
 
+        public void Initialize()
+        {
+        }
+
         public void SetSelectedBuild(int build)
         {
-            if (build < HeroBuildsXml.OldestBuild)
-                SelectedBuild = HeroBuildsXml.OldestBuild;
+            if (build < OldestHeroesDataBuild)
+                SelectedBuild = OldestHeroesDataBuild;
             else if (build > HeroBuildsXml.NewestBuild)
                 SelectedBuild = HeroBuildsXml.NewestBuild;
             else
                 SelectedBuild = build;
 
-            string zipFile = string.Format(HeroesDataZipFileFormat, SelectedBuild, "enus");
+            // zip file we want to load
+            string zipFile = string.Format(HeroesDataZipFileFormat, SelectedBuild, Localization);
+
+            if (!File.Exists(Path.Combine(HeroBuildsXmlDirectory, zipFile)))
+            {
+                foreach (string filePath in Directory.EnumerateFiles(HeroBuildsXmlDirectory, string.Format(HeroesDataZipFileFormat, "*", Localization)))
+                {
+                    string[] buildNumbers = Path.GetFileName(filePath).Split('_')[1].Split('-');
+                    int beginning = int.Parse(buildNumbers[0]);
+                    int end = int.Parse(buildNumbers[1]);
+
+                    if (build >= beginning && build <= end)
+                    {
+                        zipFile = Path.GetFileName(filePath);
+                        break;
+                    }
+                }
+            }
+
+            // file in the zip we want to load
             string xmlFile = string.Format(HeroesDataXmlFileFormat, SelectedBuild, "enus");
 
             HeroesDataXml = LoadZipFile(Path.Combine(HeroBuildsXmlDirectory, zipFile), xmlFile);

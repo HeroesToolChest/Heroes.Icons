@@ -26,7 +26,7 @@ namespace Heroes.Icons.Xml
 
         public void Initialize()
         {
-            LoadBattlegroundFiles();
+            LoadBattlegroundZipFiles();
         }
 
         public void SetSelectedBuild(int build)
@@ -111,7 +111,7 @@ namespace Heroes.Icons.Xml
                 return BattlegroundsDataXml.Root.Elements().Where(x => x.Attribute("brawl")?.Value != "true").Count();
         }
 
-        private void LoadBattlegroundFiles()
+        private void LoadBattlegroundZipFiles()
         {
             foreach (string filePath in Directory.EnumerateFiles(BattlegroundsDirectory, string.Format(BattlegroundsZipFileFormat, "*")))
             {

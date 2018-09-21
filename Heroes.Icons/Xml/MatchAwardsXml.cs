@@ -26,7 +26,7 @@ namespace Heroes.Icons.Xml
 
         public void Initialize()
         {
-            LoadMatchAwardFiles();
+            LoadMatchAwardZipFiles();
         }
 
         public void SetSelectedBuild(int build)
@@ -69,7 +69,7 @@ namespace Heroes.Icons.Xml
             return MatchAwardsDataXml.Root.Elements().Count();
         }
 
-        private void LoadMatchAwardFiles()
+        private void LoadMatchAwardZipFiles()
         {
             foreach (string filePath in Directory.EnumerateFiles(MatchAwardsDirectory, string.Format(MatchAwardsZipFileFormat, "*")))
             {
