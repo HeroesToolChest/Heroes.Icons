@@ -19,36 +19,57 @@ namespace Heroes.Icons.Images
 
         public Stream TalentImage(string fileName)
         {
+            if (string.IsNullOrEmpty(fileName))
+                return null;
+
             return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Talents.{fileName.ToLower()}");
         }
 
         public Stream MatchAwardImage(string fileName, MVPAwardColor awardColor)
         {
+            if (string.IsNullOrEmpty(fileName))
+                return null;
+
             return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Awards.{fileName.Replace("{mvpColor}", awardColor.ToString().ToLower())}");
         }
 
         public Stream BattlegroundImage(string fileName)
         {
+            if (string.IsNullOrEmpty(fileName))
+                return null;
+
             return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Battlegrounds.{fileName.ToLower()}");
         }
 
         public Stream HomescreenImage(string fileName)
         {
+            if (string.IsNullOrEmpty(fileName))
+                return null;
+
             return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Homescreens.{fileName.ToLower()}");
         }
 
         public Stream HeroSelectImage(string fileName)
         {
+            if (string.IsNullOrEmpty(fileName))
+                return null;
+
             return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.HeroSelectPortraits.{fileName.ToLower()}");
         }
 
         public Stream LeaderboardImage(string fileName)
         {
+            if (string.IsNullOrEmpty(fileName))
+                return null;
+
             return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.LeaderboardPortraits.{fileName.ToLower()}");
         }
 
         public Stream TargetPortraitImage(string fileName)
         {
+            if (string.IsNullOrEmpty(fileName))
+                return null;
+
             return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.TargetPortraits.{fileName.ToLower()}");
         }
 
@@ -59,6 +80,9 @@ namespace Heroes.Icons.Images
 
         public Stream HeroRoleImage(string heroRole)
         {
+            if (string.IsNullOrEmpty(heroRole))
+                return null;
+
             return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Roles.hero_role_{heroRole.ToLower()}.png");
         }
 
