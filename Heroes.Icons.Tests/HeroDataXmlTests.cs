@@ -225,11 +225,11 @@ namespace Heroes.Icons.Tests
             Assert.Empty(talent.Tooltip.Cooldown.CooldownTooltip.RawDescription);
             Assert.Equal(AbilityType.E, talent.AbilityType);
 
-            talent = hero.GetTalent(TalentType.NoPick.ToString());
+            talent = hero.GetTalent(string.Empty);
             Assert.Equal("No Pick", talent.Name);
 
-            talent = hero.GetTalent(TalentType.NotFound.ToString());
-            Assert.Equal("Unknown", talent.Name);
+            talent = hero.GetTalent("SomeTalent");
+            Assert.Equal("SomeTalent", talent.Name);
 
             // subAbilities
             ability = hero.SubAbilities(AbilityTier.Basic).ToList().First();
