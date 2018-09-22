@@ -19,7 +19,7 @@ namespace Heroes.Icons.Images
 
         public Stream TalentImage(string fileName)
         {
-            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Talents.{fileName}");
+            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Talents.{fileName.ToLower()}");
         }
 
         public Stream MatchAwardImage(string fileName, MVPAwardColor awardColor)
@@ -29,27 +29,27 @@ namespace Heroes.Icons.Images
 
         public Stream BattlegroundImage(string fileName)
         {
-            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Battlegrounds.{fileName}");
+            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Battlegrounds.{fileName.ToLower()}");
         }
 
         public Stream HomescreenImage(string fileName)
         {
-            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Homescreens.{fileName}");
+            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Homescreens.{fileName.ToLower()}");
         }
 
         public Stream HeroSelectImage(string fileName)
         {
-            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.HeroSelectPortraits.{fileName}");
+            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.HeroSelectPortraits.{fileName.ToLower()}");
         }
 
         public Stream LeaderboardImage(string fileName)
         {
-            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.LeaderboardPortraits.{fileName}");
+            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.LeaderboardPortraits.{fileName.ToLower()}");
         }
 
         public Stream TargetPortraitImage(string fileName)
         {
-            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.TargetPortraits.{fileName}");
+            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.TargetPortraits.{fileName.ToLower()}");
         }
 
         public Stream HeroFranchiseImage(HeroFranchise heroFranchise)
