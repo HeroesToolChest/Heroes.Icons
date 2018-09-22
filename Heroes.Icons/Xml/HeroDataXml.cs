@@ -49,13 +49,16 @@ namespace Heroes.Icons.Xml
                 foreach (string filePath in Directory.EnumerateFiles(HeroBuildsXmlDirectory, string.Format(HeroesDataZipFileFormat, "*", Localization)))
                 {
                     string[] buildNumbers = Path.GetFileName(filePath).Split('_')[1].Split('-');
-                    int beginning = int.Parse(buildNumbers[0]);
-                    int end = int.Parse(buildNumbers[1]);
-
-                    if (build >= beginning && build <= end)
+                    if (buildNumbers.Length == 2)
                     {
-                        zipFile = Path.GetFileName(filePath);
-                        break;
+                        int beginning = int.Parse(buildNumbers[0]);
+                        int end = int.Parse(buildNumbers[1]);
+
+                        if (build >= beginning && build <= end)
+                        {
+                            zipFile = Path.GetFileName(filePath);
+                            break;
+                        }
                     }
                 }
             }
