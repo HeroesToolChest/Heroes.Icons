@@ -140,7 +140,7 @@ namespace Heroes.Icons.Tests
             Assert.Equal(3, secondAbility.Tooltip.Charges.CountMax);
             Assert.Equal(1, secondAbility.Tooltip.Charges.CountUse);
             Assert.Equal(3, secondAbility.Tooltip.Charges.CountStart);
-            Assert.Equal(0.0625, secondAbility.Tooltip.Charges.RecastCoodown);
+            Assert.Equal(0.0625, secondAbility.Tooltip.Charges.RecastCooldown);
             Assert.Null(secondAbility.Tooltip.Charges.IsHideCount);
             Assert.Equal(AbilityType.W, secondAbility.AbilityType);
 
@@ -201,7 +201,7 @@ namespace Heroes.Icons.Tests
             Assert.Equal(1, ability.Tooltip.Charges.CountMax);
             Assert.Equal(1, ability.Tooltip.Charges.CountUse);
             Assert.Equal(1, ability.Tooltip.Charges.CountStart);
-            Assert.Equal(0.5, ability.Tooltip.Charges.RecastCoodown);
+            Assert.Equal(0.5, ability.Tooltip.Charges.RecastCooldown);
             Assert.True(ability.Tooltip.Charges.IsHideCount);
             Assert.Equal(AbilityType.E, ability.AbilityType);
 
@@ -240,6 +240,13 @@ namespace Heroes.Icons.Tests
             Assert.Equal("storm_ui_icon_tychus_annihilate.png", ability.IconFileName);
             Assert.Equal("Cooldown: 7 seconds", ability.Tooltip.Cooldown.CooldownTooltip.RawDescription);
             Assert.Equal(AbilityType.Q, ability.AbilityType);
+        }
+
+        [Fact]
+        public void HeroDataExistsTests()
+        {
+            Assert.NotNull(HeroData.HeroData("Kerrigan"));
+            Assert.NotNull(HeroData.HeroData("The Lost Vikings"));
         }
     }
 }
