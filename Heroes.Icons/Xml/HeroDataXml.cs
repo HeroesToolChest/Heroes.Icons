@@ -340,7 +340,7 @@ namespace Heroes.Icons.Xml
                     Talent talent = new Talent
                     {
                         Tier = talentTier,
-                        Column = int.Parse(talentElement.Attribute("sort")?.Value),
+                        Column = int.TryParse(talentElement.Attribute("sort")?.Value, out int column) ? column : 0,
                     };
 
                     SetAbilityTalentData(talentElement, hero, talent);
