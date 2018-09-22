@@ -11,6 +11,8 @@ namespace Heroes.Icons.Xml
 
         protected XDocument LoadZipFile(string zipFilePath, string xmlFile)
         {
+            xmlFile = Path.GetFileName(xmlFile);
+
             using (FileStream fileStream = new FileStream(zipFilePath, FileMode.Open))
             {
                 using (ZipArchive zipArchive = new ZipArchive(fileStream, ZipArchiveMode.Read))
