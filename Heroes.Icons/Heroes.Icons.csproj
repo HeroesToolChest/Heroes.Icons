@@ -23,6 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Images\TargetPortraits\ui_targetportrait_hero_gazlowe.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Heroes.Models\Heroes.Models\Heroes.Models.csproj" />
   </ItemGroup>
 
