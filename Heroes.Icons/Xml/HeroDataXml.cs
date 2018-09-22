@@ -68,11 +68,12 @@ namespace Heroes.Icons.Xml
 
         public Hero HeroData(string name)
         {
-            string realName = HeroNameFromShortName(name);
-            if (!string.IsNullOrEmpty(realName))
-                return GetHeroDataFromDataXml(HeroesDataXml.Root.Element(realName));
-            else
+            string realName = HeroNameFromShortName(name); // check if it's a short name
+
+            if (!string.IsNullOrEmpty(realName)) // is a short name
                 return GetHeroDataFromDataXml(HeroesDataXml.Root.Element(name));
+            else // full real name
+                return GetHeroDataFromDataXml(HeroesDataXml.Root.Elements().FirstOrDefault(x => x.Attribute("name")?.Value == name));
         }
 
         public string HeroNameFromShortName(string shortName)
@@ -376,9 +377,15 @@ namespace Heroes.Icons.Xml
             XElement chargesElement = abilityTalentElement.Element("Charges");
             if (chargesElement != null)
             {
-                abilityTalent.Tooltip.Charges.CountUse = int.Parse(chargesElement.Attribute("consume")?.Value);
-                abilityTalent.Tooltip.Charges.CountStart = int.Parse(chargesElement.Attribute("initial")?.Value);
-                abilityTalent.Tooltip.Charges.RecastCoodown = double.Parse(chargesElement.Attribute("recastCooldown")?.Value);
+                if (int.TryParse(chargesElement.Attribute("consume")?.Value, out int chargesCountUse))
+                    abilityTalent.Tooltip.Charges.CountUse = chargesCountUse;
+
+                if (int.TryParse(chargesElement.Attribute("initial")?.Value, out int chargesCountStart))
+                    abilityTalent.Tooltip.Charges.CountStart = chargesCountStart;
+
+                if (double.TryParse(chargesElement.Attribute("recastCooldown")?.Value, out double chargesRecastCooldown))
+                    abilityTalent.Tooltip.Charges.RecastCooldown = chargesRecastCooldown;
+
                 abilityTalent.Tooltip.Charges.CountMax = int.Parse(chargesElement.Value);
 
                 if (bool.TryParse(chargesElement.Attribute("isHidden")?.Value, out bool isHidden))
