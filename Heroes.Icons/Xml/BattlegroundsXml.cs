@@ -31,7 +31,7 @@ namespace Heroes.Icons.Xml
 
         public void SetSelectedBuild(int build)
         {
-            string zipFileToLoad = Path.Combine(BattlegroundsDirectory, BattlegroundsLatestZipFileName);
+            string zipFileToLoad = BattlegroundsLatestZipFileName;
 
             if (BattlegroundsFilePathsByBuild.Count > 0)
             {
@@ -45,7 +45,7 @@ namespace Heroes.Icons.Xml
                     zipFileToLoad = BattlegroundsFilePathsByBuild.Aggregate((x, y) => Math.Abs(x.Key - build) < Math.Abs(y.Key - build) ? x : y).Value;
             }
 
-            BattlegroundsDataXml = LoadZipFile(zipFileToLoad, Path.ChangeExtension(zipFileToLoad, "xml"));
+            BattlegroundsDataXml = LoadZipFile(Path.Combine(BattlegroundsDirectory, Path.GetFileName(zipFileToLoad)), Path.ChangeExtension(zipFileToLoad, "xml"));
         }
 
         public IEnumerable<Battleground> Battlegrounds(bool includeBrawl = false)

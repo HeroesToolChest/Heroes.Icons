@@ -31,7 +31,7 @@ namespace Heroes.Icons.Xml
 
         public void SetSelectedBuild(int build)
         {
-            string zipFileToLoad = Path.Combine(MatchAwardsDirectory, MatchAwardsLatestZipFileName);
+            string zipFileToLoad = MatchAwardsLatestZipFileName;
 
             if (MatchAwardsFilePathsByBuild.Count > 0)
             {
@@ -45,7 +45,7 @@ namespace Heroes.Icons.Xml
                     zipFileToLoad = MatchAwardsFilePathsByBuild.Aggregate((x, y) => Math.Abs(x.Key - build) < Math.Abs(y.Key - build) ? x : y).Value;
             }
 
-            MatchAwardsDataXml = LoadZipFile(zipFileToLoad, Path.ChangeExtension(zipFileToLoad, "xml"));
+            MatchAwardsDataXml = LoadZipFile(Path.Combine(MatchAwardsDirectory, Path.GetFileName(zipFileToLoad)), Path.ChangeExtension(zipFileToLoad, "xml"));
         }
 
         public IEnumerable<MatchAward> Awards()
