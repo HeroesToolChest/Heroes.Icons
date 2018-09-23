@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace Heroes.Icons.Xml
 {
-    internal class HeroDataXml : XmlBase, IXml, IXmlMultipleBuild, IHeroDataXml
+    internal class HeroesDataXml : XmlBase, IXml, IXmlMultipleBuild, IHeroesDataXml
     {
         private readonly string HeroesDataZipFileFormat = "heroesdata_{0}_{1}.min.zip";
         private readonly string HeroesDataXmlFileFormat = "heroesdata_{0}_{1}.min.xml";
@@ -20,9 +20,9 @@ namespace Heroes.Icons.Xml
 
         private int SelectedBuild;
 
-        private XDocument HeroesDataXml;
+        private XDocument HeroesDataXmlDocument;
 
-        public HeroDataXml(HeroBuildsXml heroBuildsXml)
+        public HeroesDataXml(HeroBuildsXml heroBuildsXml)
         {
             HeroBuildsXmlDirectory = Path.Combine(XmlFolderPath, "HeroBuilds");
             HeroBuildsXml = heroBuildsXml;
@@ -66,7 +66,7 @@ namespace Heroes.Icons.Xml
             // file in the zip we want to load
             string xmlFile = string.Format(HeroesDataXmlFileFormat, SelectedBuild, "enus");
 
-            HeroesDataXml = LoadZipFile(Path.Combine(HeroBuildsXmlDirectory, zipFile), xmlFile);
+            HeroesDataXmlDocument = LoadZipFile(Path.Combine(HeroBuildsXmlDirectory, zipFile), xmlFile);
         }
 
         public Hero HeroData(string name, bool includeAbilities = true, bool includeTalents = true, bool additionalUnits = true)
@@ -74,28 +74,28 @@ namespace Heroes.Icons.Xml
             string realName = HeroNameFromShortName(name); // check if it's a short name
 
             if (!string.IsNullOrEmpty(realName)) // is a short name
-                return GetHeroDataFromDataXml(HeroesDataXml.Root.Element(name), includeAbilities, includeTalents, additionalUnits);
+                return GetHeroDataFromDataXml(HeroesDataXmlDocument.Root.Element(name), includeAbilities, includeTalents, additionalUnits);
             else // full real name
-                return GetHeroDataFromDataXml(HeroesDataXml.Root.Elements().FirstOrDefault(x => x.Attribute("name")?.Value == name), includeAbilities, includeTalents, additionalUnits);
+                return GetHeroDataFromDataXml(HeroesDataXmlDocument.Root.Elements().FirstOrDefault(x => x.Attribute("name")?.Value == name), includeAbilities, includeTalents, additionalUnits);
         }
 
         public string HeroNameFromShortName(string shortName)
         {
-            XElement heroElement = HeroesDataXml.Root.Elements().FirstOrDefault(x => x.Name.LocalName == shortName);
+            XElement heroElement = HeroesDataXmlDocument.Root.Elements().FirstOrDefault(x => x.Name.LocalName == shortName);
 
             return heroElement?.Attribute("name")?.Value;
         }
 
         public string HeroNameFromAttributeId(string attributeId)
         {
-            XElement heroElement = HeroesDataXml.Root.Elements().FirstOrDefault(x => x.Attribute("attributeId")?.Value == attributeId);
+            XElement heroElement = HeroesDataXmlDocument.Root.Elements().FirstOrDefault(x => x.Attribute("attributeId")?.Value == attributeId);
 
             return heroElement?.Attribute("name")?.Value;
         }
 
         public string HeroNameFromUnitId(string unitId)
         {
-            XElement heroElement = HeroesDataXml.Root.Elements().FirstOrDefault(x => x.Attribute("cUnitId")?.Value == unitId);
+            XElement heroElement = HeroesDataXmlDocument.Root.Elements().FirstOrDefault(x => x.Attribute("cUnitId")?.Value == unitId);
 
             return heroElement?.Attribute("name")?.Value;
         }
@@ -105,13 +105,13 @@ namespace Heroes.Icons.Xml
             if (!string.IsNullOrEmpty(HeroNameFromShortName(name)))
                 return true;
             else
-                return HeroesDataXml.Root.Elements().Any(x => x.Attribute("name")?.Value == name);
+                return HeroesDataXmlDocument.Root.Elements().Any(x => x.Attribute("name")?.Value == name);
         }
 
         public IEnumerable<string> HeroNames()
         {
             List<string> heroNames = new List<string>();
-            foreach (XElement heroElement in HeroesDataXml.Root.Elements())
+            foreach (XElement heroElement in HeroesDataXmlDocument.Root.Elements())
             {
                 heroNames.Add(heroElement.Attribute("name").Value);
             }
@@ -121,7 +121,7 @@ namespace Heroes.Icons.Xml
 
         public int GetTotalAmountOfHeroes()
         {
-            return HeroesDataXml.Root.Elements().Count();
+            return HeroesDataXmlDocument.Root.Elements().Count();
         }
 
         private Hero GetHeroDataFromDataXml(XElement heroElement, bool includeAbilities, bool includeTalents, bool additionalUnits)

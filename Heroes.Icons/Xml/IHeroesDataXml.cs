@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Heroes.Icons.Xml
 {
-    public interface IHeroDataXml
+    public interface IHeroesDataXml
     {
         /// <summary>
         /// Returns a Hero object.

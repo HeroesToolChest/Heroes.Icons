@@ -6,7 +6,7 @@ namespace Heroes.Icons
     public class HeroesIcons : IHeroesIcons
     {
         private readonly HeroBuildsXml HeroBuildsXml;
-        private readonly HeroDataXml HeroDataXml;
+        private readonly HeroesDataXml HeroesDataXml;
         private readonly MatchAwardsXml MatchAwardsXml;
         private readonly BattlegroundsXml BattlegroundsXml;
         private readonly HomescreensXml HomescreensXml;
@@ -24,8 +24,8 @@ namespace Heroes.Icons
             HomescreensXml.Initialize();
 
             // last
-            HeroDataXml = new HeroDataXml(HeroBuildsXml);
-            HeroDataXml.Initialize();
+            HeroesDataXml = new HeroesDataXml(HeroBuildsXml);
+            HeroesDataXml.Initialize();
         }
 
         public static IHeroImagesStream HeroImages()
@@ -38,16 +38,16 @@ namespace Heroes.Icons
             return HeroBuildsXml;
         }
 
-        public IHeroDataXml HeroData()
+        public IHeroesDataXml HeroesData()
         {
-            HeroDataXml.SetSelectedBuild(int.MaxValue);
-            return HeroDataXml;
+            HeroesDataXml.SetSelectedBuild(int.MaxValue);
+            return HeroesDataXml;
         }
 
-        public IHeroDataXml HeroData(int build)
+        public IHeroesDataXml HeroData(int build)
         {
-            HeroDataXml.SetSelectedBuild(build);
-            return HeroDataXml;
+            HeroesDataXml.SetSelectedBuild(build);
+            return HeroesDataXml;
         }
 
         public IMatchAwardsXml MatchAwards()
