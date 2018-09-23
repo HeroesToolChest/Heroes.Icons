@@ -6,6 +6,17 @@ namespace Heroes.Icons.Xml
     public interface IHeroesDataXml
     {
         /// <summary>
+        /// Returns a collection of Hero data.
+        /// </summary>
+        /// <param name="heroNames">The list of hero names to provide.  Names can be real or short names.</param>
+        /// <param name="name">The hero real name or short name.</param>
+        /// <param name="includeAbilities">Include the ability data.</param>
+        /// <param name="includeTalents">Include the talent data.</param>
+        /// <param name="additionalUnits">Include the additional hero units.</param>
+        /// <returns></returns>
+        IEnumerable<Hero> HeroesData(IEnumerable<string> heroNames, bool includeAbilities = true, bool includeTalents = true, bool additionalUnits = true);
+
+        /// <summary>
         /// Returns a Hero object.
         /// </summary>
         /// <param name="name">The hero real name or short name.</param>

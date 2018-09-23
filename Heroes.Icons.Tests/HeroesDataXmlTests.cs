@@ -8,40 +8,40 @@ using Xunit;
 
 namespace Heroes.Icons.Tests
 {
-    public class HeroDataXmlTests : HeroesIconsBase
+    public class HeroesDataXmlTests : HeroesIconsBase
     {
-        private readonly IHeroesDataXml HeroData;
+        private readonly IHeroesDataXml HeroesData;
 
-        public HeroDataXmlTests()
+        public HeroesDataXmlTests()
         {
-            HeroData = HeroesIcons.HeroData(67985);
+            HeroesData = HeroesIcons.HeroData(67985);
         }
 
         [Fact]
         public void HeroExistsTest()
         {
-            Assert.True(HeroData.HeroExists("Mephisto"));
+            Assert.True(HeroesData.HeroExists("Mephisto"));
 
             IHeroesDataXml heroData67621 = HeroesIcons.HeroData(67621);
-            Assert.False(HeroData.HeroExists("Mephisto"));
+            Assert.False(HeroesData.HeroExists("Mephisto"));
 
             IHeroesDataXml heroDataOldSplit = HeroesIcons.HeroData(56705);
             Assert.True(heroDataOldSplit.HeroExists("Abathur"));
 
             IHeroesDataXml heroDataLastest = HeroesIcons.HeroesData();
-            Assert.True(HeroData.HeroExists("Mephisto"));
+            Assert.True(HeroesData.HeroExists("Mephisto"));
         }
 
         [Fact]
         public void TotalCountOfHeroesTest()
         {
-            Assert.Equal(82, HeroData.GetTotalAmountOfHeroes());
+            Assert.Equal(82, HeroesData.GetTotalAmountOfHeroes());
         }
 
         [Fact]
         public void ListOfHeroNamesTest()
         {
-            List<string> heroesList = HeroData.HeroNames().ToList();
+            List<string> heroesList = HeroesData.HeroNames().ToList();
 
             Assert.Equal(82, heroesList.Count);
             Assert.Contains("Anub'arak", heroesList);
@@ -51,28 +51,28 @@ namespace Heroes.Icons.Tests
         [Fact]
         public void HeroNameFromUnitIdTest()
         {
-            Assert.Equal("Valeera", HeroData.HeroNameFromUnitId("HeroValeera"));
-            Assert.Equal("Anub'arak", HeroData.HeroNameFromUnitId("HeroAnubarak"));
+            Assert.Equal("Valeera", HeroesData.HeroNameFromUnitId("HeroValeera"));
+            Assert.Equal("Anub'arak", HeroesData.HeroNameFromUnitId("HeroAnubarak"));
         }
 
         [Fact]
         public void HeroNameFromShortNameTest()
         {
-            Assert.Equal("Valeera", HeroData.HeroNameFromShortName("Valeera"));
-            Assert.Equal("Anub'arak", HeroData.HeroNameFromShortName("Anubarak"));
+            Assert.Equal("Valeera", HeroesData.HeroNameFromShortName("Valeera"));
+            Assert.Equal("Anub'arak", HeroesData.HeroNameFromShortName("Anubarak"));
         }
 
         [Fact]
         public void HeroNameFromAttributeIdTest()
         {
-            Assert.Equal("Valeera", HeroData.HeroNameFromAttributeId("VALE"));
-            Assert.Equal("Anub'arak", HeroData.HeroNameFromAttributeId("Anub"));
+            Assert.Equal("Valeera", HeroesData.HeroNameFromAttributeId("VALE"));
+            Assert.Equal("Anub'arak", HeroesData.HeroNameFromAttributeId("Anub"));
         }
 
         [Fact]
         public void GetHeroDataAbathurTest()
         {
-            Hero hero = HeroData.HeroData("Abathur");
+            Hero hero = HeroesData.HeroData("Abathur");
 
             Assert.Equal("Abathur", hero.ShortName);
             Assert.Equal("Abathur", hero.Name);
@@ -185,7 +185,7 @@ namespace Heroes.Icons.Tests
         [Fact]
         public void GetHeroDataTychusTest()
         {
-            Hero hero = HeroData.HeroData("Tychus");
+            Hero hero = HeroesData.HeroData("Tychus");
 
             // energy
             Assert.Equal(500, hero.Energy.EnergyMax);
@@ -245,16 +245,30 @@ namespace Heroes.Icons.Tests
         [Fact]
         public void HeroDataExistsTests()
         {
-            Assert.NotNull(HeroData.HeroData("Kerrigan"));
-            Assert.NotNull(HeroData.HeroData("The Lost Vikings"));
+            Assert.NotNull(HeroesData.HeroData("Kerrigan"));
+            Assert.NotNull(HeroesData.HeroData("The Lost Vikings"));
         }
 
         [Fact]
         public void HeroDataLimitedDataTests()
         {
-            Assert.Empty(HeroData.HeroData("Ragnaros", includeAbilities: false).Abilities);
-            Assert.Empty(HeroData.HeroData("Ragnaros", includeTalents: false).Talents);
-            Assert.Empty(HeroData.HeroData("Ragnaros", additionalUnits: false).HeroUnits);
+            Assert.Empty(HeroesData.HeroData("Ragnaros", includeAbilities: false).Abilities);
+            Assert.Empty(HeroesData.HeroData("Ragnaros", includeTalents: false).Talents);
+            Assert.Empty(HeroesData.HeroData("Ragnaros", additionalUnits: false).HeroUnits);
+        }
+
+        [Fact]
+        public void MultipleHeroDataTests()
+        {
+            List<string> heroNames = new List<string>
+            {
+                "Ragnaros",
+                "Valeera",
+                "Chen",
+            };
+
+            List<Hero> heroes = HeroesData.HeroesData(heroNames).ToList();
+            Assert.Equal(3, heroes.Count);
         }
     }
 }

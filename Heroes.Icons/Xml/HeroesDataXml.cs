@@ -69,8 +69,26 @@ namespace Heroes.Icons.Xml
             HeroesDataXmlDocument = LoadZipFile(Path.Combine(HeroBuildsXmlDirectory, zipFile), xmlFile);
         }
 
+        public IEnumerable<Hero> HeroesData(IEnumerable<string> heroNames, bool includeAbilities = true, bool includeTalents = true, bool additionalUnits = true)
+        {
+            if (heroNames == null)
+                return null;
+
+            List<Hero> heroes = new List<Hero>();
+
+            foreach (string heroName in heroNames)
+            {
+                heroes.Add(HeroData(heroName, includeAbilities, includeTalents, additionalUnits));
+            }
+
+            return heroes;
+        }
+
         public Hero HeroData(string name, bool includeAbilities = true, bool includeTalents = true, bool additionalUnits = true)
         {
+            if (string.IsNullOrEmpty(name))
+                return null;
+
             string realName = HeroNameFromShortName(name); // check if it's a short name
 
             if (!string.IsNullOrEmpty(realName)) // is a short name
