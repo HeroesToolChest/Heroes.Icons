@@ -248,5 +248,13 @@ namespace Heroes.Icons.Tests
             Assert.NotNull(HeroData.HeroData("Kerrigan"));
             Assert.NotNull(HeroData.HeroData("The Lost Vikings"));
         }
+
+        [Fact]
+        public void HeroDataLimitedDataTests()
+        {
+            Assert.Empty(HeroData.HeroData("Ragnaros", includeAbilities: false).Abilities);
+            Assert.Empty(HeroData.HeroData("Ragnaros", includeTalents: false).Talents);
+            Assert.Empty(HeroData.HeroData("Ragnaros", additionalUnits: false).HeroUnits);
+        }
     }
 }

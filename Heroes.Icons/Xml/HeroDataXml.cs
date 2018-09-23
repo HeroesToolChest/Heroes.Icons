@@ -69,14 +69,14 @@ namespace Heroes.Icons.Xml
             HeroesDataXml = LoadZipFile(Path.Combine(HeroBuildsXmlDirectory, zipFile), xmlFile);
         }
 
-        public Hero HeroData(string name)
+        public Hero HeroData(string name, bool includeAbilities = true, bool includeTalents = true, bool additionalUnits = true)
         {
             string realName = HeroNameFromShortName(name); // check if it's a short name
 
             if (!string.IsNullOrEmpty(realName)) // is a short name
-                return GetHeroDataFromDataXml(HeroesDataXml.Root.Element(name));
+                return GetHeroDataFromDataXml(HeroesDataXml.Root.Element(name), includeAbilities, includeTalents, additionalUnits);
             else // full real name
-                return GetHeroDataFromDataXml(HeroesDataXml.Root.Elements().FirstOrDefault(x => x.Attribute("name")?.Value == name));
+                return GetHeroDataFromDataXml(HeroesDataXml.Root.Elements().FirstOrDefault(x => x.Attribute("name")?.Value == name), includeAbilities, includeTalents, additionalUnits);
         }
 
         public string HeroNameFromShortName(string shortName)
@@ -124,7 +124,7 @@ namespace Heroes.Icons.Xml
             return HeroesDataXml.Root.Elements().Count();
         }
 
-        private Hero GetHeroDataFromDataXml(XElement heroElement)
+        private Hero GetHeroDataFromDataXml(XElement heroElement, bool includeAbilities, bool includeTalents, bool additionalUnits)
         {
             if (heroElement == null)
                 return null;
@@ -256,45 +256,54 @@ namespace Heroes.Icons.Xml
             }
 
             // abilities
-            XElement abilitiesElement = heroElement.Element("Abilities");
-            if (abilitiesElement != null)
+            if (includeAbilities)
             {
-                SetAbilities(abilitiesElement, hero);
-            }
+                XElement abilitiesElement = heroElement.Element("Abilities");
+                if (abilitiesElement != null)
+                {
+                    SetAbilities(abilitiesElement, hero);
+                }
 
-            // sub abilities
-            XElement subAbilitiesElement = heroElement.Element("SubAbilities");
-            if (subAbilitiesElement != null)
-            {
-                XElement parentLinkAbility = subAbilitiesElement.Elements().FirstOrDefault();
-                string parentLink = parentLinkAbility.Name.LocalName;
+                // sub abilities
+                XElement subAbilitiesElement = heroElement.Element("SubAbilities");
+                if (subAbilitiesElement != null)
+                {
+                    XElement parentLinkAbility = subAbilitiesElement.Elements().FirstOrDefault();
+                    string parentLink = parentLinkAbility.Name.LocalName;
 
-                SetAbilities(parentLinkAbility, hero, parentLink);
+                    SetAbilities(parentLinkAbility, hero, parentLink);
+                }
             }
 
             // talents
-            XElement talentsElement = heroElement.Element("Talents");
-            if (talentsElement != null)
+            if (includeTalents)
             {
-                SetTalents(talentsElement, hero);
+                XElement talentsElement = heroElement.Element("Talents");
+                if (talentsElement != null)
+                {
+                    SetTalents(talentsElement, hero);
+                }
             }
 
             // hero units
-            XElement heroUnitsElement = heroElement.Element("HeroUnits");
-            if (heroUnitsElement != null)
+            if (additionalUnits)
             {
-                XElement heroNameElement = heroUnitsElement.Elements().FirstOrDefault();
-
-                List<Unit> heroUnits = new List<Unit>();
-
-                foreach (XElement heroUnitElement in heroNameElement.Elements())
+                XElement heroUnitsElement = heroElement.Element("HeroUnits");
+                if (heroUnitsElement != null)
                 {
-                    Hero heroUnit = GetHeroDataFromDataXml(heroUnitElement);
-                    heroUnit.ParentLink = heroNameElement.Name.LocalName;
-                    heroUnits.Add(heroUnit);
-                }
+                    XElement heroNameElement = heroUnitsElement.Elements().FirstOrDefault();
 
-                hero.HeroUnits = heroUnits;
+                    List<Unit> heroUnits = new List<Unit>();
+
+                    foreach (XElement heroUnitElement in heroNameElement.Elements())
+                    {
+                        Hero heroUnit = GetHeroDataFromDataXml(heroUnitElement, includeAbilities, includeTalents, additionalUnits);
+                        heroUnit.ParentLink = heroNameElement.Name.LocalName;
+                        heroUnits.Add(heroUnit);
+                    }
+
+                    hero.HeroUnits = heroUnits;
+                }
             }
 
             return hero;

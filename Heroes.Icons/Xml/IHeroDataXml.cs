@@ -9,8 +9,11 @@ namespace Heroes.Icons.Xml
         /// Returns a Hero object.
         /// </summary>
         /// <param name="name">The hero real name or short name.</param>
+        /// <param name="includeAbilities">Include the ability data.</param>
+        /// <param name="includeTalents">Include the talent data.</param>
+        /// <param name="additionalUnits">Include the additional hero units.</param>
         /// <returns></returns>
-        Hero HeroData(string name);
+        Hero HeroData(string name, bool includeAbilities = true, bool includeTalents = true, bool additionalUnits = true);
 
         /// <summary>
         /// Returns the hero's name from the attribute id.
