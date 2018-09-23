@@ -34,15 +34,16 @@ namespace Heroes.Icons.Xml
 
         public void SetSelectedBuild(int build)
         {
-            if (HeroesDataXmlDocument != null && SelectedBuild == build)
-                return;
-
             if (build < OldestHeroesDataBuild)
                 SelectedBuild = OldestHeroesDataBuild;
             else if (build > HeroBuildsXml.NewestBuild)
                 SelectedBuild = HeroBuildsXml.NewestBuild;
             else
                 SelectedBuild = build;
+
+            // check if already loaded
+            if (HeroesDataXmlDocument != null && (build == SelectedBuild || build > HeroBuildsXml.NewestBuild || build < OldestHeroesDataBuild))
+                return;
 
             // zip file we want to load
             string zipFile = string.Format(HeroesDataZipFileFormat, SelectedBuild, Localization);
