@@ -44,7 +44,7 @@ namespace Heroes.Icons
             return HeroesDataXml;
         }
 
-        public IHeroesDataXml HeroData(int build)
+        public IHeroesDataXml HeroesData(int build)
         {
             HeroesDataXml.SetSelectedBuild(build);
             return HeroesDataXml;

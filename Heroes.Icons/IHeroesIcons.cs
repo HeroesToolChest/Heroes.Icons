@@ -15,7 +15,7 @@ namespace Heroes.Icons
         /// </summary>
         /// <param name="build">The build number.</param>
         /// <returns></returns>
-        IHeroesDataXml HeroData(int build);
+        IHeroesDataXml HeroesData(int build);
 
         /// <summary>
         /// Returns the interface to access the hero build data.
