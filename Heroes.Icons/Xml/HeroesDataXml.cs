@@ -34,6 +34,9 @@ namespace Heroes.Icons.Xml
 
         public void SetSelectedBuild(int build)
         {
+            if (HeroesDataXmlDocument != null && SelectedBuild == build)
+                return;
+
             if (build < OldestHeroesDataBuild)
                 SelectedBuild = OldestHeroesDataBuild;
             else if (build > HeroBuildsXml.NewestBuild)

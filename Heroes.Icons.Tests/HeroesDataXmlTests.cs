@@ -270,5 +270,11 @@ namespace Heroes.Icons.Tests
             List<Hero> heroes = HeroesData.HeroesData(heroNames).ToList();
             Assert.Equal(3, heroes.Count);
         }
+
+        [Fact]
+        public void HeroDataInMemoryDontLoadFilesTest()
+        {
+            Assert.NotNull(HeroesIcons.HeroesData(67985).HeroData("Abathur"));
+        }
     }
 }

@@ -24,6 +24,9 @@ namespace Heroes.Icons.Xml
 
         public void SetSelectedBuild(int build)
         {
+            if (HomescreenDataXml != null)
+                return;
+
             HomescreenDataXml = LoadZipFile(Path.Combine(HomescreensDirectory, HomescreenZipFileName), Path.ChangeExtension(HomescreenZipFileName, "xml"));
         }
 

@@ -17,6 +17,7 @@ namespace Heroes.Icons.Xml
 
         private int LowestBuild;
         private int HighestBuild;
+        private int SelectedBuild;
         private XDocument MatchAwardsDataXml;
 
         public MatchAwardsXml()
@@ -31,6 +32,9 @@ namespace Heroes.Icons.Xml
 
         public void SetSelectedBuild(int build)
         {
+            if (MatchAwardsDataXml != null && SelectedBuild == build)
+                return;
+
             string zipFileToLoad = MatchAwardsLatestZipFileName;
 
             if (MatchAwardsFilePathsByBuild.Count > 0)
@@ -45,6 +49,7 @@ namespace Heroes.Icons.Xml
                     zipFileToLoad = MatchAwardsFilePathsByBuild.Aggregate((x, y) => Math.Abs(x.Key - build) < Math.Abs(y.Key - build) ? x : y).Value;
             }
 
+            SelectedBuild = build;
             MatchAwardsDataXml = LoadZipFile(Path.Combine(MatchAwardsDirectory, Path.GetFileName(zipFileToLoad)), Path.ChangeExtension(zipFileToLoad, "xml"));
         }
 

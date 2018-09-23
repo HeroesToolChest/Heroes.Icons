@@ -31,6 +31,9 @@ namespace Heroes.Icons.Xml
 
         public void SetSelectedBuild(int build)
         {
+            if (BattlegroundsDataXml != null)
+                return;
+
             string zipFileToLoad = BattlegroundsLatestZipFileName;
 
             if (BattlegroundsFilePathsByBuild.Count > 0)
