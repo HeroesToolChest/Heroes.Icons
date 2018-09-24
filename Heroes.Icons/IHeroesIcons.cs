@@ -8,51 +8,51 @@ namespace Heroes.Icons
         /// Returns the interface to access hero data based on the latest build.
         /// </summary>
         /// <returns></returns>
-        IHeroesDataXml HeroesData();
+        IHeroesData HeroesData();
 
         /// <summary>
         /// Returns the interface to access hero data based on the specified build.
         /// </summary>
         /// <param name="build">The build number.</param>
         /// <returns></returns>
-        IHeroesDataXml HeroesData(int build);
+        IHeroesData HeroesData(int build);
 
         /// <summary>
         /// Returns the interface to access the hero build data.
         /// </summary>
         /// <returns></returns>
-        IHeroBuildsXml HeroBuilds();
+        IHeroBuilds HeroBuilds();
 
         /// <summary>
         /// Returns the interface to access the match award data on the latest build.
         /// </summary>
         /// <returns></returns>
-        IMatchAwardsXml MatchAwards();
+        IMatchAwards MatchAwards();
 
         /// <summary>
         /// Returns the interface to access the match award data on the specified build.
         /// </summary>
         /// <param name="build">The build number.</param>
         /// <returns></returns>
-        IMatchAwardsXml MatchAwards(int build);
+        IMatchAwards MatchAwards(int build);
 
         /// <summary>
         /// Returns the interface to access the battleground data on the latest build.
         /// </summary>
         /// <returns></returns>
-        IBattlegroundsXml Battlegrounds();
+        IBattlegrounds Battlegrounds();
 
         /// <summary>
         /// Returns the interface to access the battleground data on the specified build.
         /// </summary>
         /// <param name="build">The build number.</param>
         /// <returns></returns>
-        IBattlegroundsXml Battlegrounds(int build);
+        IBattlegrounds Battlegrounds(int build);
 
         /// <summary>
         /// Returns the interface to access the homescreens data.
         /// </summary>
         /// <returns></returns>
-        IHomescreensXml Homescreens();
+        IHomescreens Homescreens();
     }
 }

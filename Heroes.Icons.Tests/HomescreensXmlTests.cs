@@ -7,7 +7,7 @@ namespace Heroes.Icons.Tests
 {
     public class HomescreensXmlTests : HeroesIconsBase
     {
-        private readonly IHomescreensXml Homescreens;
+        private readonly IHomescreens Homescreens;
 
         public HomescreensXmlTests()
         {

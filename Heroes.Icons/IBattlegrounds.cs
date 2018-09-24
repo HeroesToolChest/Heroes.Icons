@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Heroes.Icons.Models;
 
-namespace Heroes.Icons.Xml
+namespace Heroes.Icons
 {
-    public interface IBattlegroundsXml
+    public interface IBattlegrounds
     {
         /// <summary>
         /// Returns a Battleground given the map id.

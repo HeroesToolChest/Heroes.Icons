@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Heroes.Icons.Models;
 
-namespace Heroes.Icons.Xml
+namespace Heroes.Icons
 {
-    public interface IHeroBuildsXml
+    public interface IHeroBuilds
     {
         /// <summary>
         /// Gets a list of all builds numbers.

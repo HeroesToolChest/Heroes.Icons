@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace Heroes.Icons.Xml
 {
-    internal class HeroesDataXml : XmlBase, IXml, IXmlMultipleBuild, IHeroesDataXml
+    internal class HeroesDataXml : XmlBase, IInitializable, ISettableBuild, IHeroesData
     {
         private readonly string HeroesDataZipFileFormat = "heroesdata_{0}_{1}.min.zip";
         private readonly string HeroesDataXmlFileFormat = "heroesdata_{0}_{1}.min.xml";

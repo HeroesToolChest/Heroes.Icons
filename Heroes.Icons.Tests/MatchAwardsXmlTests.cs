@@ -7,7 +7,7 @@ namespace Heroes.Icons.Tests
 {
     public class MatchAwardsXmlTests : HeroesIconsBase
     {
-        private readonly IMatchAwardsXml MatchAwards;
+        private readonly IMatchAwards MatchAwards;
 
         public MatchAwardsXmlTests()
         {
@@ -25,7 +25,7 @@ namespace Heroes.Icons.Tests
         {
             Assert.True(MatchAwards.Awards().Count() == MatchAwards.Count());
 
-            IMatchAwardsXml matchAwards = HeroesIcons.MatchAwards();
+            IMatchAwards matchAwards = HeroesIcons.MatchAwards();
             Assert.True(matchAwards.Awards().Count() == MatchAwards.Count());
         }
 

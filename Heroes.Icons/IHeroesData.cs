@@ -1,9 +1,9 @@
 ﻿using Heroes.Models;
 using System.Collections.Generic;
 
-namespace Heroes.Icons.Xml
+namespace Heroes.Icons
 {
-    public interface IHeroesDataXml
+    public interface IHeroesData
     {
         /// <summary>
         /// Returns a collection of Hero data.

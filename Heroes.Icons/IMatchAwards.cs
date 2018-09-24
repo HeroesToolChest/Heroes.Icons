@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Heroes.Icons.Models;
 
-namespace Heroes.Icons.Xml
+namespace Heroes.Icons
 {
-    public interface IMatchAwardsXml
+    public interface IMatchAwards
     {
         /// <summary>
         /// Returns a MatchAward given the award reference id.

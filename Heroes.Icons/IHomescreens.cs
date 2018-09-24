@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Heroes.Icons.Models;
 
-namespace Heroes.Icons.Xml
+namespace Heroes.Icons
 {
-    public interface IHomescreensXml
+    public interface IHomescreens
     {
         /// <summary>
         /// Returns a collection of all homescreens.

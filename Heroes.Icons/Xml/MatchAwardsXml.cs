@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Heroes.Icons.Xml
 {
-    internal class MatchAwardsXml : XmlBase, IXml, IXmlMultipleBuild, IMatchAwardsXml
+    internal class MatchAwardsXml : XmlBase, IInitializable, ISettableBuild, IMatchAwards
     {
         private readonly string MatchAwardsLatestZipFileName = "matchawards.zip";
         private readonly string MatchAwardsZipFileFormat = "matchawards_{0}.zip";

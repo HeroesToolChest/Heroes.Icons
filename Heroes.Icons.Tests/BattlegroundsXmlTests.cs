@@ -7,8 +7,8 @@ namespace Heroes.Icons.Tests
 {
     public class BattlegroundsXmlTests : HeroesIconsBase
     {
-        private readonly IBattlegroundsXml Battlegrounds;
-        private readonly IBattlegroundsXml Battlegrounds67621;
+        private readonly IBattlegrounds Battlegrounds;
+        private readonly IBattlegrounds Battlegrounds67621;
 
         public BattlegroundsXmlTests()
         {
@@ -44,7 +44,7 @@ namespace Heroes.Icons.Tests
         {
             Assert.Equal(11, Battlegrounds67621.BrawlBattlegrounds().Count());
 
-            IBattlegroundsXml battlegrounds = HeroesIcons.Battlegrounds();
+            IBattlegrounds battlegrounds = HeroesIcons.Battlegrounds();
             Assert.Equal(11, battlegrounds.BrawlBattlegrounds().Count());
         }
 

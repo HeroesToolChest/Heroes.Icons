@@ -33,48 +33,48 @@ namespace Heroes.Icons
             return new HeroImageStream();
         }
 
-        public IHeroBuildsXml HeroBuilds()
+        public IHeroBuilds HeroBuilds()
         {
             return HeroBuildsXml;
         }
 
-        public IHeroesDataXml HeroesData()
+        public IHeroesData HeroesData()
         {
             HeroesDataXml.SetSelectedBuild(int.MaxValue);
             return HeroesDataXml;
         }
 
-        public IHeroesDataXml HeroesData(int build)
+        public IHeroesData HeroesData(int build)
         {
             HeroesDataXml.SetSelectedBuild(build);
             return HeroesDataXml;
         }
 
-        public IMatchAwardsXml MatchAwards()
+        public IMatchAwards MatchAwards()
         {
             MatchAwardsXml.SetSelectedBuild(int.MaxValue);
             return MatchAwardsXml;
         }
 
-        public IMatchAwardsXml MatchAwards(int build)
+        public IMatchAwards MatchAwards(int build)
         {
             MatchAwardsXml.SetSelectedBuild(build);
             return MatchAwardsXml;
         }
 
-        public IBattlegroundsXml Battlegrounds()
+        public IBattlegrounds Battlegrounds()
         {
             BattlegroundsXml.SetSelectedBuild(int.MaxValue);
             return BattlegroundsXml;
         }
 
-        public IBattlegroundsXml Battlegrounds(int build)
+        public IBattlegrounds Battlegrounds(int build)
         {
             BattlegroundsXml.SetSelectedBuild(build);
             return BattlegroundsXml;
         }
 
-        public IHomescreensXml Homescreens()
+        public IHomescreens Homescreens()
         {
             HomescreensXml.SetSelectedBuild(int.MaxValue);
             return HomescreensXml;

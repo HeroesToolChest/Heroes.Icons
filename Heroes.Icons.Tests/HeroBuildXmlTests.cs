@@ -7,7 +7,7 @@ namespace Heroes.Icons.Tests
 {
     public class HeroBuildXmlTests : HeroesIconsBase
     {
-        private readonly IHeroBuildsXml HeroBuildsXml;
+        private readonly IHeroBuilds HeroBuildsXml;
 
         public HeroBuildXmlTests()
         {

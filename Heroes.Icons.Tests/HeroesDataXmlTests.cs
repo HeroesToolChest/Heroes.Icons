@@ -10,7 +10,7 @@ namespace Heroes.Icons.Tests
 {
     public class HeroesDataXmlTests : HeroesIconsBase
     {
-        private readonly IHeroesDataXml HeroesData;
+        private readonly IHeroesData HeroesData;
 
         public HeroesDataXmlTests()
         {
@@ -22,13 +22,13 @@ namespace Heroes.Icons.Tests
         {
             Assert.True(HeroesData.HeroExists("Mephisto"));
 
-            IHeroesDataXml heroData67621 = HeroesIcons.HeroesData(67621);
+            IHeroesData heroData67621 = HeroesIcons.HeroesData(67621);
             Assert.False(HeroesData.HeroExists("Mephisto"));
 
-            IHeroesDataXml heroDataOldSplit = HeroesIcons.HeroesData(56705);
+            IHeroesData heroDataOldSplit = HeroesIcons.HeroesData(56705);
             Assert.True(heroDataOldSplit.HeroExists("Abathur"));
 
-            IHeroesDataXml heroDataLastest = HeroesIcons.HeroesData();
+            IHeroesData heroDataLastest = HeroesIcons.HeroesData();
             Assert.True(heroDataLastest.HeroExists("Mephisto"));
         }
 

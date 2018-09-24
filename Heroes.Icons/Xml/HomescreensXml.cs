@@ -6,7 +6,7 @@ using System.Xml.Linq;
 
 namespace Heroes.Icons.Xml
 {
-    internal class HomescreensXml : XmlBase, IXml, IXmlMultipleBuild, IHomescreensXml
+    internal class HomescreensXml : XmlBase, IInitializable, ISettableBuild, IHomescreens
     {
         private readonly string HomescreenZipFileName = "homescreens.zip";
         private readonly string HomescreensDirectory;

@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Heroes.Icons.Xml
 {
-    internal class BattlegroundsXml : XmlBase, IXml, IXmlMultipleBuild, IBattlegroundsXml
+    internal class BattlegroundsXml : XmlBase, IInitializable, ISettableBuild, IBattlegrounds
     {
         private readonly string BattlegroundsLatestZipFileName = "battlegrounds.zip";
         private readonly string BattlegroundsZipFileFormat = "battlegrounds_{0}.zip";

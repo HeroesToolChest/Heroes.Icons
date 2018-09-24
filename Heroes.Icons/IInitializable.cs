@@ -1,6 +1,6 @@
 ﻿namespace Heroes.Icons.Xml
 {
-    internal interface IXml
+    internal interface IInitializable
     {
         void Initialize();
     }
