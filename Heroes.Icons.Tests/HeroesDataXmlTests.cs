@@ -29,7 +29,7 @@ namespace Heroes.Icons.Tests
             Assert.True(heroDataOldSplit.HeroExists("Abathur"));
 
             IHeroesDataXml heroDataLastest = HeroesIcons.HeroesData();
-            Assert.True(HeroesData.HeroExists("Mephisto"));
+            Assert.True(heroDataLastest.HeroExists("Mephisto"));
         }
 
         [Fact]
