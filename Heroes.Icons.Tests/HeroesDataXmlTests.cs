@@ -1,5 +1,4 @@
-﻿using Heroes.Icons.Xml;
-using Heroes.Models;
+﻿using Heroes.Models;
 using Heroes.Models.AbilityTalents;
 using System;
 using System.Collections.Generic;

@@ -1,104 +1,105 @@
 ﻿using Heroes.Icons.Models;
+using Heroes.Models;
+using System.Linq;
 using Xunit;
 
 namespace Heroes.Icons.Tests
 {
     public class HeroImagesTests : HeroesIconsBase
     {
+        private readonly IHeroesData HeroesData;
+        private readonly IMatchAwards MatchAwards;
+        private readonly IBattlegrounds Battlegrounds;
+        private readonly IHomescreens Homescreens;
+
         public HeroImagesTests()
         {
+            HeroesData = HeroesIcons.HeroesData(67143);
+            MatchAwards = HeroesIcons.MatchAwards(67143);
+            Battlegrounds = HeroesIcons.Battlegrounds(67143);
+            Homescreens = HeroesIcons.Homescreens();
         }
 
         [Fact]
         public void GetTalentImageStreamTest()
         {
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().TalentImage("storm_ui_icon_abathur_carapace.png"));
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().TalentImage("storm_btn_d3ros_crusader_blessedhammer.png"));
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().TalentImage("storm_ui_icon_zuljin_guillotine.png"));
+            Hero hero = HeroesData.HeroData("Valeera");
+            Assert.NotNull(hero.GetTalent("ValeeraSinisterStrike").AbilityTalentImage());
+            Assert.NotNull(hero.GetTalent("ValeeraSmokeBomb").AbilityTalentImage());
+            Assert.NotNull(hero.GetTalent("ValeeraStealth").AbilityTalentImage());
+
+            Assert.NotNull(hero.GetTalent("nothing").AbilityTalentImage());
+            Assert.NotNull(hero.GetTalent(null).AbilityTalentImage());
         }
 
         [Fact]
         public void GetMatchAwardImageStreamTest()
         {
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().MatchAwardImage("storm_ui_mvp_teamplayer_{mvpColor}.png", MVPAwardColor.Blue));
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().MatchAwardImage("storm_ui_mvp_teamplayer_{mvpColor}.png", MVPAwardColor.Red));
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().MatchAwardImage("storm_ui_mvp_teamplayer_{mvpColor}.png", MVPAwardColor.Gold));
+            MatchAward matchAward = MatchAwards.MatchAward("ZeroOutnumberedDeaths");
 
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().MatchAwardImage("storm_ui_scorescreen_mvp_teamplayer_{mvpColor}.png", MVPAwardColor.Blue));
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().MatchAwardImage("storm_ui_scorescreen_mvp_teamplayer_{mvpColor}.png", MVPAwardColor.Red));
-            Assert.Null(Icons.HeroesIcons.HeroImages().MatchAwardImage("storm_ui_scorescreen_mvp_teamplayer_{mvpColor}.png", MVPAwardColor.Gold));
+            Assert.NotNull(matchAward.MatchAwardMVPScreenImage(MVPAwardColor.Gold));
+            Assert.NotNull(matchAward.MatchAwardMVPScreenImage(MVPAwardColor.Blue));
+            Assert.NotNull(matchAward.MatchAwardMVPScreenImage(MVPAwardColor.Red));
+
+            Assert.NotNull(matchAward.MatchAwardScoreScreenImage(ScoreScreenAwardColor.Blue));
+            Assert.NotNull(matchAward.MatchAwardScoreScreenImage(ScoreScreenAwardColor.Red));
         }
 
         [Fact]
         public void GetBattlegroundImageStreamTest()
         {
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().BattlegroundImage("ui_ingame_mapmechanic_loadscreen_gardenofterror.jpg"));
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().BattlegroundImage("ui_ingame_mapmechanic_loadscreen_hanamura_rework.jpg"));
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().BattlegroundImage("storm_ui_homescreenbackground_wcav.jpg"));
+            Battleground battleground = Battlegrounds.Battleground("HauntedWoods");
+            Assert.NotNull(battleground.BattlegroundImage());
         }
 
         [Fact]
         public void GetHomescreensImageStreamTest()
         {
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().HomescreenImage("storm_ui_homescreenbackground_diablotristram.jpg"));
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().HomescreenImage("storm_ui_homescreenbackground_greymane.jpg"));
+            Homescreen homescreen = Homescreens.Homescreens().ToList().FirstOrDefault();
+            Assert.NotNull(homescreen.HomescreenImage());
         }
 
         [Fact]
-        public void GetHeroSelectPortraitImageStreamTest()
+        public void GetHeroPortraitImageStreamTests()
         {
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().HeroSelectImage("storm_ui_ingame_heroselect_btn_azmodan.png"));
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().HeroSelectImage("storm_ui_ingame_heroselect_btn_firebat.png"));
-        }
-
-        [Fact]
-        public void GetLeaderboardPortraitsImageStreamTest()
-        {
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().LeaderboardImage("storm_ui_ingame_hero_leaderboard_chen.png"));
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().LeaderboardImage("storm_ui_ingame_hero_leaderboard_femalebarbarian.png"));
-        }
-
-        [Fact]
-        public void GetTargetPortraitsImageStreamTest()
-        {
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().TargetPortraitImage("ui_targetportrait_hero_demonhunter.png"));
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().TargetPortraitImage("ui_targetportrait_hero_junkrat.png"));
+            Hero hero = HeroesData.HeroData("Yrel");
+            Assert.NotNull(hero.HeroPortrait.HeroSelectImage());
+            Assert.NotNull(hero.HeroPortrait.LeaderboardImage());
+            Assert.NotNull(hero.HeroPortrait.TargetPortraitImage());
         }
 
         [Fact]
         public void GetHeroFranchiseImageStreamTest()
         {
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().HeroFranchiseImage(Heroes.Models.HeroFranchise.Classic));
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().HeroFranchiseImage(Heroes.Models.HeroFranchise.Overwatch));
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().HeroFranchiseImage(Heroes.Models.HeroFranchise.Warcraft));
-            Assert.Null(Icons.HeroesIcons.HeroImages().HeroFranchiseImage(Heroes.Models.HeroFranchise.Unknown));
+            Hero hero = HeroesData.HeroData("Zeratul");
+            Assert.NotNull(hero.HeroFranchiseImage());
         }
 
         [Fact]
         public void GetHeroRoleImageStreamTest()
         {
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().HeroRoleImage("Assassin"));
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().HeroRoleImage("warrior"));
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().HeroRoleImage("support"));
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().HeroRoleImage("specialist"));
-            Assert.Null(Icons.HeroesIcons.HeroImages().HeroRoleImage("threeforone."));
+            Hero hero = HeroesData.HeroData("Anubarak");
+            Assert.NotNull(hero.HeroRoleImage());
+
+            hero = HeroesData.HeroData("Varian");
+            Assert.NotNull(hero.HeroRoleImage());
         }
 
         [Fact]
         public void GetPartyIconImageStreamTest()
         {
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().PartyIconImage(PartyIconColor.Blue));
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().PartyIconImage(PartyIconColor.Red));
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().PartyIconImage(PartyIconColor.Yellow));
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().PartyIconImage(PartyIconColor.Teal));
+            Assert.NotNull(ImageStreams.PartyIconImage(PartyIconColor.Blue));
+            Assert.NotNull(ImageStreams.PartyIconImage(PartyIconColor.Red));
+            Assert.NotNull(ImageStreams.PartyIconImage(PartyIconColor.Yellow));
+            Assert.NotNull(ImageStreams.PartyIconImage(PartyIconColor.Teal));
         }
 
         [Fact]
         public void GetOtherIconImageStreamTest()
         {
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().OtherIconImage(OtherIcon.Assist));
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().OtherIconImage(OtherIcon.HeroDamage));
-            Assert.NotNull(Icons.HeroesIcons.HeroImages().OtherIconImage(OtherIcon.TalentUnavailable));
+            Assert.NotNull(ImageStreams.OtherIconImage(OtherIcon.Assist));
+            Assert.NotNull(ImageStreams.OtherIconImage(OtherIcon.HeroDamage));
+            Assert.NotNull(ImageStreams.OtherIconImage(OtherIcon.TalentUnavailable));
         }
     }
 }

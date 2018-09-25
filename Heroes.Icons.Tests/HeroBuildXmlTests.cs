@@ -1,5 +1,4 @@
 using Heroes.Icons.Models;
-using Heroes.Icons.Xml;
 using System.Linq;
 using Xunit;
 

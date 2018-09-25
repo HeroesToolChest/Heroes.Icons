@@ -1,5 +1,4 @@
-﻿using Heroes.Icons.Images;
-using Heroes.Icons.Xml;
+﻿using Heroes.Icons.Xml;
 
 namespace Heroes.Icons
 {
@@ -26,11 +25,6 @@ namespace Heroes.Icons
             // last
             HeroesDataXml = new HeroesDataXml(HeroBuildsXml);
             HeroesDataXml.Initialize();
-        }
-
-        public static IHeroImagesStream HeroImages()
-        {
-            return new HeroImageStream();
         }
 
         public IHeroBuilds HeroBuilds()
