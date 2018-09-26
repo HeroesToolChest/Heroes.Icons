@@ -8,10 +8,13 @@ All data and images are part of the library.
  - Data files are in the [Xml folder](https://github.com/koliva8245/Heroes.Icons/tree/master/Heroes.Icons/Xml)
  - Images are in the [Images folder](https://github.com/koliva8245/Heroes.Icons/tree/master/Heroes.Icons/Images)
 
-In the `Xml->HeroBuilds` folder, the `heroesdata_*_enus.min.zip` files are generated through the tool [HeroesDataParser](https://github.com/koliva8245/HeroesDataParser)
+In the `Xml/HeroBuilds` folder, the `heroesdata_*_enus.min.zip` files are generated through the tool [Heroes Data Parser](https://github.com/koliva8245/HeroesDataParser)
 
 ## Usage
-The library contains a class `HeroesIcons` or `IHeroesIcons` that should be initialized on startup.
+The library contains an interface class `IHeroesIcons'. Methods are available to access all other data.
 ```
-HeroesIcons heroesIcons = new HeroesIcons();
+IHeroesIcons heroesIcons = new HeroesIcons();
+
+// gets the hero data of the hero Abathur
+Hero hero = heroesIcons.HeroesData().HeroData("Abathur");
 ```
