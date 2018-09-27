@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace Heroes.Icons.Xml
@@ -166,7 +167,7 @@ namespace Heroes.Icons.Xml
 
             Hero hero = new Hero
             {
-                ShortName = heroElement.Name.LocalName,
+                ShortName = XmlConvert.DecodeName(heroElement.Name.LocalName),
                 Name = heroElement.Attribute("name")?.Value,
                 CHeroId = heroElement.Attribute("cHeroId")?.Value,
                 CUnitId = heroElement.Attribute("cUnitId")?.Value,
@@ -272,7 +273,7 @@ namespace Heroes.Icons.Xml
                 {
                     UnitWeapon unitWeapon = new UnitWeapon()
                     {
-                        WeaponNameId = weapon.Name.LocalName,
+                        WeaponNameId = XmlConvert.DecodeName(weapon.Name.LocalName),
                         Range = double.Parse(weapon.Attribute("range")?.Value),
                         Period = double.Parse(weapon.Attribute("period")?.Value),
                     };
@@ -351,7 +352,7 @@ namespace Heroes.Icons.Xml
 
             foreach (XElement abilityTierElement in abilityElements.Elements())
             {
-                if (!Enum.TryParse(abilityTierElement.Name.LocalName, out AbilityTier abilityTier))
+                if (!Enum.TryParse(XmlConvert.DecodeName(abilityTierElement.Name.LocalName), out AbilityTier abilityTier))
                     continue;
 
                 // loop though elements in tier
@@ -379,7 +380,7 @@ namespace Heroes.Icons.Xml
 
             foreach (XElement talentTierElement in talentElements.Elements())
             {
-                if (!Enum.TryParse(talentTierElement.Name.LocalName, out TalentTier talentTier))
+                if (!Enum.TryParse(XmlConvert.DecodeName(talentTierElement.Name.LocalName), out TalentTier talentTier))
                     continue;
 
                 foreach (XElement talentElement in talentTierElement.Elements())
@@ -399,7 +400,7 @@ namespace Heroes.Icons.Xml
 
         private void SetAbilityTalentData(XElement abilityTalentElement, Hero hero, AbilityTalentBase abilityTalent)
         {
-            abilityTalent.ReferenceNameId = abilityTalentElement.Name.LocalName;
+            abilityTalent.ReferenceNameId = XmlConvert.DecodeName(abilityTalentElement.Name.LocalName);
             abilityTalent.Name = abilityTalentElement.Attribute("name")?.Value;
             abilityTalent.ShortTooltipNameId = abilityTalentElement.Attribute("shortTooltipId")?.Value;
             abilityTalent.FullTooltipNameId = abilityTalentElement.Attribute("fullTooltipId")?.Value;
