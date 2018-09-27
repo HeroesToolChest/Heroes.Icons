@@ -10,10 +10,10 @@ namespace Heroes.Icons.Xml
     internal class MatchAwardsXml : XmlBase, IInitializable, ISettableBuild, IMatchAwards
     {
         private readonly string MatchAwardsLatestZipFileName = "matchawards.zip";
-        private readonly string MatchAwardsZipFileFormat = "matchawards_{0}.zip";
-        private readonly SortedDictionary<int, string> MatchAwardsFilePathsByBuild = new SortedDictionary<int, string>();
+        private readonly string MatchAwardsZipFilePrefix = "matchawards_";
+        private readonly SortedDictionary<int, string> MatchAwardsZipFileNamesByBuild = new SortedDictionary<int, string>();
 
-        private readonly string MatchAwardsDirectory;
+        private readonly string MatchAwardsAssemblyPath;
 
         private int LowestBuild;
         private int HighestBuild;
@@ -22,7 +22,7 @@ namespace Heroes.Icons.Xml
 
         public MatchAwardsXml()
         {
-            MatchAwardsDirectory = Path.Combine(XmlFolderPath, "MatchAwards");
+            MatchAwardsAssemblyPath = XmlAssemblyPath + ".MatchAwards";
         }
 
         public void Initialize()
@@ -37,20 +37,20 @@ namespace Heroes.Icons.Xml
 
             string zipFileToLoad = MatchAwardsLatestZipFileName;
 
-            if (MatchAwardsFilePathsByBuild.Count > 0)
+            if (MatchAwardsZipFileNamesByBuild.Count > 0)
             {
-                if (MatchAwardsFilePathsByBuild.TryGetValue(build, out string filePath))
-                    zipFileToLoad = Path.GetFileName(filePath);
+                if (MatchAwardsZipFileNamesByBuild.TryGetValue(build, out string zipFileName))
+                    zipFileToLoad = zipFileName;
                 else if (build < LowestBuild)
-                    zipFileToLoad = MatchAwardsFilePathsByBuild[LowestBuild];
+                    zipFileToLoad = MatchAwardsZipFileNamesByBuild[LowestBuild];
                 else if (build > HighestBuild)
                     zipFileToLoad = MatchAwardsLatestZipFileName;
                 else
-                    zipFileToLoad = MatchAwardsFilePathsByBuild.Aggregate((x, y) => Math.Abs(x.Key - build) < Math.Abs(y.Key - build) ? x : y).Value;
+                    zipFileToLoad = MatchAwardsZipFileNamesByBuild.Aggregate((x, y) => Math.Abs(x.Key - build) < Math.Abs(y.Key - build) ? x : y).Value;
             }
 
             SelectedBuild = build;
-            MatchAwardsDataXml = LoadZipFile(Path.Combine(MatchAwardsDirectory, Path.GetFileName(zipFileToLoad)), Path.ChangeExtension(zipFileToLoad, "xml"));
+            MatchAwardsDataXml = LoadZipFileFromManifestStream(HeroesIconsAssembly.GetManifestResourceStream($"{MatchAwardsAssemblyPath}.{zipFileToLoad}"), Path.ChangeExtension(zipFileToLoad, "xml"));
         }
 
         public IEnumerable<MatchAward> Awards()
@@ -76,16 +76,19 @@ namespace Heroes.Icons.Xml
 
         private void LoadMatchAwardZipFiles()
         {
-            foreach (string filePath in Directory.EnumerateFiles(MatchAwardsDirectory, string.Format(MatchAwardsZipFileFormat, "*")))
+            IEnumerable<string> resourceNames = HeroesIconsAssembly.GetManifestResourceNames().Where(x => x.StartsWith($"{MatchAwardsAssemblyPath}.{MatchAwardsZipFilePrefix}"));
+
+            foreach (string assemblyPath in resourceNames)
             {
-                if (int.TryParse(Path.GetFileNameWithoutExtension(filePath).Split('_').Last(), out int buildNumber))
-                    MatchAwardsFilePathsByBuild.Add(buildNumber, filePath);
+                string fileName = GetAssemblyZipFileName(assemblyPath);
+                if (int.TryParse(fileName.Split('_').Last(), out int buildNumber))
+                    MatchAwardsZipFileNamesByBuild.Add(buildNumber, fileName);
             }
 
-            if (MatchAwardsFilePathsByBuild.Count > 0)
+            if (MatchAwardsZipFileNamesByBuild.Count > 0)
             {
-                LowestBuild = MatchAwardsFilePathsByBuild.Keys.Min();
-                HighestBuild = MatchAwardsFilePathsByBuild.Keys.Max();
+                LowestBuild = MatchAwardsZipFileNamesByBuild.Keys.Min();
+                HighestBuild = MatchAwardsZipFileNamesByBuild.Keys.Max();
             }
             else
             {

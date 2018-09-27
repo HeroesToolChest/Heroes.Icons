@@ -1,26 +1,31 @@
 ﻿using System.IO;
 using System.IO.Compression;
+using System.Reflection;
 using System.Xml.Linq;
 
 namespace Heroes.Icons.Xml
 {
     internal abstract class XmlBase
     {
-        protected string XmlFolderPath => "Xml";
+        protected Assembly HeroesIconsAssembly => Assembly.GetExecutingAssembly();
+
+        protected string XmlAssemblyPath => "Heroes.Icons.Xml";
         protected string Localization => "enus";
 
-        protected XDocument LoadZipFile(string zipFilePath, string xmlFile)
+        protected string GetAssemblyZipFileName(string streamPath)
         {
-            xmlFile = Path.GetFileName(xmlFile);
+            string[] parts = streamPath.Split('.');
 
-            using (FileStream fileStream = new FileStream(zipFilePath, FileMode.Open))
+            return parts[parts.Length - 2] + '.' + parts[parts.Length - 1];
+        }
+
+        protected XDocument LoadZipFileFromManifestStream(Stream stream, string xmlFile)
+        {
+            using (ZipArchive zipArchive = new ZipArchive(stream, ZipArchiveMode.Read))
             {
-                using (ZipArchive zipArchive = new ZipArchive(fileStream, ZipArchiveMode.Read))
-                {
-                    ZipArchiveEntry fileEntry = zipArchive.GetEntry(xmlFile);
+                ZipArchiveEntry fileEntry = zipArchive.GetEntry(xmlFile);
 
-                    return XDocument.Load(fileEntry.Open());
-                }
+                return XDocument.Load(fileEntry.Open());
             }
         }
     }

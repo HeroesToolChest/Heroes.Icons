@@ -10,10 +10,10 @@ namespace Heroes.Icons.Xml
     internal class BattlegroundsXml : XmlBase, IInitializable, ISettableBuild, IBattlegrounds
     {
         private readonly string BattlegroundsLatestZipFileName = "battlegrounds.zip";
-        private readonly string BattlegroundsZipFileFormat = "battlegrounds_{0}.zip";
-        private readonly SortedDictionary<int, string> BattlegroundsFilePathsByBuild = new SortedDictionary<int, string>();
+        private readonly string BattlegroundsZipFilePrefix = "battlegrounds_";
+        private readonly SortedDictionary<int, string> BattlegroundsZipFileNamesByBuild = new SortedDictionary<int, string>();
 
-        private readonly string BattlegroundsDirectory;
+        private readonly string BattlegroundsAssemblyPath;
 
         private int LowestBuild;
         private int HighestBuild;
@@ -21,7 +21,7 @@ namespace Heroes.Icons.Xml
 
         public BattlegroundsXml()
         {
-            BattlegroundsDirectory = Path.Combine(XmlFolderPath, "Battlegrounds");
+            BattlegroundsAssemblyPath = XmlAssemblyPath + ".Battlegrounds";
         }
 
         public void Initialize()
@@ -36,19 +36,19 @@ namespace Heroes.Icons.Xml
 
             string zipFileToLoad = BattlegroundsLatestZipFileName;
 
-            if (BattlegroundsFilePathsByBuild.Count > 0)
+            if (BattlegroundsZipFileNamesByBuild.Count > 0)
             {
-                if (BattlegroundsFilePathsByBuild.TryGetValue(build, out string filePath))
-                    zipFileToLoad = Path.GetFileName(filePath);
+                if (BattlegroundsZipFileNamesByBuild.TryGetValue(build, out string zipFileName))
+                    zipFileToLoad = Path.GetFileName(zipFileName);
                 else if (build < LowestBuild)
-                    zipFileToLoad = BattlegroundsFilePathsByBuild[LowestBuild];
+                    zipFileToLoad = BattlegroundsZipFileNamesByBuild[LowestBuild];
                 else if (build > HighestBuild)
                     zipFileToLoad = BattlegroundsLatestZipFileName;
                 else
-                    zipFileToLoad = BattlegroundsFilePathsByBuild.Aggregate((x, y) => Math.Abs(x.Key - build) < Math.Abs(y.Key - build) ? x : y).Value;
+                    zipFileToLoad = BattlegroundsZipFileNamesByBuild.Aggregate((x, y) => Math.Abs(x.Key - build) < Math.Abs(y.Key - build) ? x : y).Value;
             }
 
-            BattlegroundsDataXml = LoadZipFile(Path.Combine(BattlegroundsDirectory, Path.GetFileName(zipFileToLoad)), Path.ChangeExtension(zipFileToLoad, "xml"));
+            BattlegroundsDataXml = LoadZipFileFromManifestStream(HeroesIconsAssembly.GetManifestResourceStream($"{BattlegroundsAssemblyPath}.{zipFileToLoad}"), Path.ChangeExtension(zipFileToLoad, "xml"));
         }
 
         public IEnumerable<Battleground> Battlegrounds(bool includeBrawl = false)
@@ -116,16 +116,19 @@ namespace Heroes.Icons.Xml
 
         private void LoadBattlegroundZipFiles()
         {
-            foreach (string filePath in Directory.EnumerateFiles(BattlegroundsDirectory, string.Format(BattlegroundsZipFileFormat, "*")))
+            IEnumerable<string> resourceNames = HeroesIconsAssembly.GetManifestResourceNames().Where(x => x.StartsWith($"{BattlegroundsAssemblyPath}.{BattlegroundsZipFilePrefix}"));
+
+            foreach (string assemblyPath in resourceNames)
             {
-                if (int.TryParse(Path.GetFileNameWithoutExtension(filePath).Split('_').Last(), out int buildNumber))
-                    BattlegroundsFilePathsByBuild.Add(buildNumber, filePath);
+                string fileName = GetAssemblyZipFileName(assemblyPath);
+                if (int.TryParse(fileName.Split('_').Last(), out int buildNumber))
+                    BattlegroundsZipFileNamesByBuild.Add(buildNumber, fileName);
             }
 
-            if (BattlegroundsFilePathsByBuild.Count > 0)
+            if (BattlegroundsZipFileNamesByBuild.Count > 0)
             {
-                LowestBuild = BattlegroundsFilePathsByBuild.Keys.Min();
-                HighestBuild = BattlegroundsFilePathsByBuild.Keys.Max();
+                LowestBuild = BattlegroundsZipFileNamesByBuild.Keys.Min();
+                HighestBuild = BattlegroundsZipFileNamesByBuild.Keys.Max();
             }
             else
             {

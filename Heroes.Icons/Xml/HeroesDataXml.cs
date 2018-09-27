@@ -10,12 +10,13 @@ namespace Heroes.Icons.Xml
 {
     internal class HeroesDataXml : XmlBase, IInitializable, ISettableBuild, IHeroesData
     {
-        private readonly string HeroesDataZipFileFormat = "heroesdata_{0}_{1}.min.zip";
-        private readonly string HeroesDataXmlFileFormat = "heroesdata_{0}_{1}.min.xml";
+        private readonly string HeroesDataZipFileFormat = "heroesdata_{0}_{1}.zip";
+        private readonly string HeroesDataXmlFileFormat = "heroesdata_{0}_{1}.xml";
+        private readonly string HeroesDataXmlFilePrefix = "heroesdata_";
         private readonly Dictionary<string, Hero> HeroDataByHeroShortName = new Dictionary<string, Hero>();
         private readonly int OldestHeroesDataBuild = 47479;
 
-        private readonly string HeroBuildsXmlDirectory;
+        private readonly string HeroBuildsAssemblyPath;
         private readonly HeroBuildsXml HeroBuildsXml;
 
         private int SelectedBuild;
@@ -24,7 +25,7 @@ namespace Heroes.Icons.Xml
 
         public HeroesDataXml(HeroBuildsXml heroBuildsXml)
         {
-            HeroBuildsXmlDirectory = Path.Combine(XmlFolderPath, "HeroBuilds");
+            HeroBuildsAssemblyPath = XmlAssemblyPath + ".HeroBuilds";
             HeroBuildsXml = heroBuildsXml;
         }
 
@@ -54,12 +55,16 @@ namespace Heroes.Icons.Xml
 
             // zip file we want to load
             string zipFile = string.Format(HeroesDataZipFileFormat, SelectedBuild, Localization);
+            Stream zipFileStream = HeroesIconsAssembly.GetManifestResourceStream($"{HeroBuildsAssemblyPath}.{zipFile}");
 
-            if (!File.Exists(Path.Combine(HeroBuildsXmlDirectory, zipFile)))
+            if (zipFileStream == null)
             {
-                foreach (string filePath in Directory.EnumerateFiles(HeroBuildsXmlDirectory, string.Format(HeroesDataZipFileFormat, "*", Localization)))
+                IEnumerable<string> resourceNames = HeroesIconsAssembly.GetManifestResourceNames().Where(x => x.StartsWith($"{HeroBuildsAssemblyPath}.{HeroesDataXmlFilePrefix}"));
+                foreach (string assemblyPath in resourceNames)
                 {
-                    string[] buildNumbers = Path.GetFileName(filePath).Split('_')[1].Split('-');
+                    string fileName = GetAssemblyZipFileName(assemblyPath);
+
+                    string[] buildNumbers = fileName.Split('_')[1].Split('-');
                     if (buildNumbers.Length == 2)
                     {
                         int beginning = int.Parse(buildNumbers[0]);
@@ -67,7 +72,8 @@ namespace Heroes.Icons.Xml
 
                         if (build >= beginning && build <= end)
                         {
-                            zipFile = Path.GetFileName(filePath);
+                            zipFile = fileName;
+                            zipFileStream = HeroesIconsAssembly.GetManifestResourceStream($"{HeroBuildsAssemblyPath}.{zipFile}");
                             break;
                         }
                     }
@@ -75,9 +81,9 @@ namespace Heroes.Icons.Xml
             }
 
             // file in the zip we want to load
-            string xmlFile = string.Format(HeroesDataXmlFileFormat, SelectedBuild, "enus");
+            string xmlFile = string.Format(HeroesDataXmlFileFormat, SelectedBuild, Localization);
 
-            HeroesDataXmlDocument = LoadZipFile(Path.Combine(HeroBuildsXmlDirectory, zipFile), xmlFile);
+            HeroesDataXmlDocument = LoadZipFileFromManifestStream(zipFileStream, Path.ChangeExtension(xmlFile, ".min.xml"));
         }
 
         public IEnumerable<Hero> HeroesData(IEnumerable<string> heroNames, bool includeAbilities = true, bool includeTalents = true, bool additionalUnits = true)

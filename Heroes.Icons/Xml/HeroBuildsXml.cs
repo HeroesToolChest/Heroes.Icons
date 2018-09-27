@@ -13,11 +13,11 @@ namespace Heroes.Icons.Xml
         private readonly Dictionary<int, int?> PreviousBuildByBuildNumber = new Dictionary<int, int?>();
         private readonly Dictionary<int, HeroPatchInfo> HeroPatchInfoByBuildNumber = new Dictionary<int, HeroPatchInfo>();
 
-        private readonly string HeroBuildsXmlDirectory;
+        private readonly string HeroBuildsXmlAssemblyPath;
 
         public HeroBuildsXml()
         {
-            HeroBuildsXmlDirectory = Path.Combine(XmlFolderPath, "HeroBuilds");
+            HeroBuildsXmlAssemblyPath = XmlAssemblyPath + ".HeroBuilds";
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Heroes.Icons.Xml
 
         private void LoadBuildsXml()
         {
-            XDocument buildsXmlData = XDocument.Load(Path.Combine(HeroBuildsXmlDirectory, BuildsXmlFile));
+            XDocument buildsXmlData = XDocument.Load(HeroesIconsAssembly.GetManifestResourceStream($"{HeroBuildsXmlAssemblyPath}.{BuildsXmlFile}"));
             IEnumerable<XElement> patches = buildsXmlData.Root.Elements("Patch");
 
             foreach (XElement patch in patches)

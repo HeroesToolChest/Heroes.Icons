@@ -9,13 +9,13 @@ namespace Heroes.Icons.Xml
     internal class HomescreensXml : XmlBase, IInitializable, ISettableBuild, IHomescreens
     {
         private readonly string HomescreenZipFileName = "homescreens.zip";
-        private readonly string HomescreensDirectory;
+        private readonly string HomescreensAssembly;
 
         private XDocument HomescreenDataXml;
 
         public HomescreensXml()
         {
-            HomescreensDirectory = Path.Combine(XmlFolderPath, "Homescreens");
+            HomescreensAssembly = XmlAssemblyPath + ".Homescreens";
         }
 
         public void Initialize()
@@ -27,7 +27,7 @@ namespace Heroes.Icons.Xml
             if (HomescreenDataXml != null)
                 return;
 
-            HomescreenDataXml = LoadZipFile(Path.Combine(HomescreensDirectory, HomescreenZipFileName), Path.ChangeExtension(HomescreenZipFileName, "xml"));
+            HomescreenDataXml = LoadZipFileFromManifestStream(HeroesIconsAssembly.GetManifestResourceStream($"{HomescreensAssembly}.{HomescreenZipFileName}"), Path.ChangeExtension(HomescreenZipFileName, "xml"));
         }
 
         public IEnumerable<Homescreen> Homescreens()
