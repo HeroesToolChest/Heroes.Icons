@@ -2,6 +2,7 @@
 using Heroes.Models.AbilityTalents;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -182,19 +183,19 @@ namespace Heroes.Icons.Xml
             if (Enum.TryParse(heroElement.Attribute("gender")?.Value, out HeroGender gender))
                 hero.Gender = gender;
 
-            if (double.TryParse(heroElement.Attribute("innerRadius")?.Value, out double innerRadius))
+            if (double.TryParse(heroElement.Attribute("innerRadius")?.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out double innerRadius))
                 hero.InnerRadius = innerRadius;
 
-            if (double.TryParse(heroElement.Attribute("radius")?.Value, out double radius))
+            if (double.TryParse(heroElement.Attribute("radius")?.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out double radius))
                 hero.Radius = radius;
 
             if (DateTime.TryParse(heroElement.Attribute("releaseDate")?.Value, out DateTime releaseDate))
                 hero.ReleaseDate = releaseDate;
 
-            if (double.TryParse(heroElement.Attribute("sight")?.Value, out double sight))
+            if (double.TryParse(heroElement.Attribute("sight")?.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out double sight))
                 hero.Sight = sight;
 
-            if (double.TryParse(heroElement.Attribute("speed")?.Value, out double speed))
+            if (double.TryParse(heroElement.Attribute("speed")?.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out double speed))
                 hero.Speed = speed;
 
             if (Enum.TryParse(heroElement.Attribute("rarity")?.Value, out HeroRarity rarity))
@@ -217,19 +218,19 @@ namespace Heroes.Icons.Xml
             XElement lifeElement = heroElement.Element("Life");
             if (lifeElement != null)
             {
-                hero.Life.LifeMax = double.Parse(lifeElement.Element("Amount")?.Value);
-                hero.Life.LifeScaling = double.Parse(lifeElement.Element("Amount")?.Attribute("scale")?.Value);
-                hero.Life.LifeRegenerationRate = double.Parse(lifeElement.Element("RegenRate")?.Value);
-                hero.Life.LifeRegenerationRateScaling = double.Parse(lifeElement.Element("RegenRate")?.Attribute("scale")?.Value);
+                hero.Life.LifeMax = double.Parse(lifeElement.Element("Amount")?.Value, CultureInfo.InvariantCulture);
+                hero.Life.LifeScaling = double.Parse(lifeElement.Element("Amount")?.Attribute("scale")?.Value, CultureInfo.InvariantCulture);
+                hero.Life.LifeRegenerationRate = double.Parse(lifeElement.Element("RegenRate")?.Value, CultureInfo.InvariantCulture);
+                hero.Life.LifeRegenerationRateScaling = double.Parse(lifeElement.Element("RegenRate")?.Attribute("scale")?.Value, CultureInfo.InvariantCulture);
             }
 
             // energy
             XElement energyElement = heroElement.Element("Energy");
             if (energyElement != null)
             {
-                hero.Energy.EnergyMax = double.Parse(energyElement.Element("Amount")?.Value);
+                hero.Energy.EnergyMax = double.Parse(energyElement.Element("Amount")?.Value, CultureInfo.InvariantCulture);
                 hero.Energy.EnergyType = energyElement.Element("Amount")?.Attribute("type")?.Value;
-                hero.Energy.EnergyRegenerationRate = double.Parse(energyElement.Element("RegenRate")?.Value);
+                hero.Energy.EnergyRegenerationRate = double.Parse(energyElement.Element("RegenRate")?.Value, CultureInfo.InvariantCulture);
             }
 
             // armor
@@ -257,10 +258,10 @@ namespace Heroes.Icons.Xml
             XElement ratingsElement = heroElement.Element("Ratings");
             if (ratingsElement != null)
             {
-                hero.Ratings.Complexity = double.Parse(ratingsElement.Attribute("complexity")?.Value);
-                hero.Ratings.Damage = double.Parse(ratingsElement.Attribute("damage")?.Value);
-                hero.Ratings.Survivability = double.Parse(ratingsElement.Attribute("survivability")?.Value);
-                hero.Ratings.Utility = double.Parse(ratingsElement.Attribute("utility")?.Value);
+                hero.Ratings.Complexity = double.Parse(ratingsElement.Attribute("complexity")?.Value, CultureInfo.InvariantCulture);
+                hero.Ratings.Damage = double.Parse(ratingsElement.Attribute("damage")?.Value, CultureInfo.InvariantCulture);
+                hero.Ratings.Survivability = double.Parse(ratingsElement.Attribute("survivability")?.Value, CultureInfo.InvariantCulture);
+                hero.Ratings.Utility = double.Parse(ratingsElement.Attribute("utility")?.Value, CultureInfo.InvariantCulture);
             }
 
             // weapons
@@ -274,15 +275,15 @@ namespace Heroes.Icons.Xml
                     UnitWeapon unitWeapon = new UnitWeapon()
                     {
                         WeaponNameId = XmlConvert.DecodeName(weapon.Name.LocalName),
-                        Range = double.Parse(weapon.Attribute("range")?.Value),
-                        Period = double.Parse(weapon.Attribute("period")?.Value),
+                        Range = double.Parse(weapon.Attribute("range")?.Value, CultureInfo.InvariantCulture),
+                        Period = double.Parse(weapon.Attribute("period")?.Value, CultureInfo.InvariantCulture),
                     };
 
                     XElement damageElement = weapon.Element("Damage");
                     if (damageElement != null)
                     {
-                        unitWeapon.Damage = double.Parse(damageElement.Value);
-                        unitWeapon.DamageScaling = double.Parse(damageElement.Attribute("scale")?.Value);
+                        unitWeapon.Damage = double.Parse(damageElement.Value, CultureInfo.InvariantCulture);
+                        unitWeapon.DamageScaling = double.Parse(damageElement.Attribute("scale")?.Value, CultureInfo.InvariantCulture);
                     }
 
                     weapons.Add(unitWeapon);
@@ -416,7 +417,7 @@ namespace Heroes.Icons.Xml
 
             abilityTalent.IconFileName = abilityTalentElement.Element("Icon")?.Value;
 
-            if (double.TryParse(abilityTalentElement.Element("ToggleCooldown")?.Value, out double toggleCooldown))
+            if (double.TryParse(abilityTalentElement.Element("ToggleCooldown")?.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out double toggleCooldown))
                 abilityTalent.Tooltip.Cooldown.ToggleCooldown = toggleCooldown;
 
             abilityTalent.Tooltip.Life.LifeCostTooltip = new TooltipDescription(abilityTalentElement.Element("LifeTooltip")?.Value);
@@ -431,7 +432,7 @@ namespace Heroes.Icons.Xml
                 if (int.TryParse(chargesElement.Attribute("initial")?.Value, out int chargesCountStart))
                     abilityTalent.Tooltip.Charges.CountStart = chargesCountStart;
 
-                if (double.TryParse(chargesElement.Attribute("recastCooldown")?.Value, out double chargesRecastCooldown))
+                if (double.TryParse(chargesElement.Attribute("recastCooldown")?.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out double chargesRecastCooldown))
                     abilityTalent.Tooltip.Charges.RecastCooldown = chargesRecastCooldown;
 
                 abilityTalent.Tooltip.Charges.CountMax = int.Parse(chargesElement.Value);
