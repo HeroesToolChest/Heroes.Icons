@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Heroes.Icons.Models;
+﻿using Heroes.Models;
+using System.Collections.Generic;
 
 namespace Heroes.Icons
 {

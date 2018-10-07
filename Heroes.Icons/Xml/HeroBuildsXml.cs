@@ -1,6 +1,5 @@
 ﻿using Heroes.Icons.Models;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 

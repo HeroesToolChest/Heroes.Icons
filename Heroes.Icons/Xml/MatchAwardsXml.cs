@@ -1,4 +1,4 @@
-﻿using Heroes.Icons.Models;
+﻿using Heroes.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -109,7 +109,7 @@ namespace Heroes.Icons.Xml
                 Name = matchAwardElement.Name.LocalName,
                 MVPScreenImageFileName = matchAwardElement.Element("MVPScreen")?.Value,
                 ScoreScreenImageFileName = matchAwardElement.Element("ScoreScreen")?.Value,
-                Description = matchAwardElement.Element("Description")?.Value,
+                Description = new TooltipDescription(matchAwardElement.Element("Description")?.Value),
             };
 
             string name = matchAwardElement.Attribute("name")?.Value;

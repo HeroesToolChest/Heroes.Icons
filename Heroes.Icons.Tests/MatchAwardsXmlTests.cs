@@ -1,4 +1,4 @@
-﻿using Heroes.Icons.Models;
+﻿using Heroes.Models;
 using System.Linq;
 using Xunit;
 
@@ -37,7 +37,7 @@ namespace Heroes.Icons.Tests
             Assert.Equal("TeamPlayer", matchAward.ShortName);
             Assert.Equal("storm_ui_mvp_teamplayer_{mvpColor}.png", matchAward.MVPScreenImageFileName);
             Assert.Equal("storm_ui_scorescreen_mvp_teamplayer_{mvpColor}.png", matchAward.ScoreScreenImageFileName);
-            Assert.Equal("No Deaths While Outnumbered", matchAward.Description);
+            Assert.Equal("No Deaths While Outnumbered", matchAward.Description.PlainText);
         }
     }
 }
