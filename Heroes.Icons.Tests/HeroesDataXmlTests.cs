@@ -2,7 +2,9 @@
 using Heroes.Models.AbilityTalents;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using Xunit;
 
 namespace Heroes.Icons.Tests
@@ -274,6 +276,41 @@ namespace Heroes.Icons.Tests
         public void HeroDataInMemoryDontLoadFilesTest()
         {
             Assert.NotNull(HeroesIcons.HeroesData(67985).HeroData("Abathur"));
+        }
+
+        [Fact]
+        public void HeroDataLocalizationTest()
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
+
+            Hero hero = HeroesData.HeroData("Abathur");
+            Assert.Equal("0,75", hero.InnerRadius.ToString());
+            Assert.Equal("0,75", hero.Radius.ToString());
+            Assert.Equal(new DateTime(2014, 3, 13), hero.ReleaseDate);
+
+            Assert.Equal(685, hero.Life.LifeMax);
+            Assert.Equal("0,04", hero.Life.LifeScaling.ToString());
+            Assert.Equal("1,4257", hero.Life.LifeRegenerationRate.ToString());
+            Assert.Equal("0,04", hero.Life.LifeRegenerationRateScaling.ToString());
+
+            // energy
+            Assert.Equal(0, hero.Energy.EnergyMax);
+            Assert.Equal(0, hero.Energy.EnergyRegenerationRate);
+
+            // roles
+            Assert.Equal("Specialist", hero.Roles[0]);
+            Assert.Equal(1, hero.Roles.Count);
+
+            // ratings
+            Assert.Equal(9, hero.Ratings.Complexity);
+            Assert.Equal(3, hero.Ratings.Damage);
+            Assert.Equal(1, hero.Ratings.Survivability);
+            Assert.Equal(7, hero.Ratings.Utility);
+
+            // weapons
+            Assert.Equal("HeroAbathur", hero.Weapons[0].WeaponNameId);
+            Assert.Equal("0,7", hero.Weapons[0].Period.ToString());
+            Assert.Equal("26", hero.Weapons[0].Damage.ToString());
         }
     }
 }
