@@ -125,4 +125,6 @@
   <Patch type="Balance" link="https://heroesofthestorm.com/en-us/blog/22484230" version="2.37.1.68509"/>
   <Patch type="Kerrigan/Brightwing" link="https://heroesofthestorm.com/en-us/blog/22535427" version="2.38.0.68740"/>
   <Patch type="Hotfix" link="" version="2.38.1.68778"/>
+  <Patch type="Balance" link="https://heroesofthestorm.com/en-us/blog/22547649" version="2.38.2.69185"/>
+  <Patch type="Hotfix" link="" version="2.38.2.69264"/>
 </Builds>
