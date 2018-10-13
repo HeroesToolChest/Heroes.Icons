@@ -8,7 +8,9 @@ All data and images are part of the library.
  - Data files are in the [Xml folder](https://github.com/koliva8245/Heroes.Icons/tree/master/Heroes.Icons/Xml)
  - Images are in the [Images folder](https://github.com/koliva8245/Heroes.Icons/tree/master/Heroes.Icons/Images)
 
-In the `Xml/HeroBuilds` folder, the `heroesdata_*_enus.zip` files are generated through the tool [Heroes Data Parser](https://github.com/koliva8245/HeroesDataParser)
+The following files are generated through the tool [Heroes Data Parser](https://github.com/koliva8245/HeroesDataParser):
+ - `Xml/HeroBuilds`
+ - `Xml/MatchAwards`
 
 ## Usage
 The library contains an interface class `IHeroesIcons`. Methods are available to access all other data.
