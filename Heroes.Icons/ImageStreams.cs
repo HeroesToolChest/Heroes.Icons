@@ -36,7 +36,7 @@ namespace Heroes.Icons
             if (string.IsNullOrEmpty(matchAward.MVPScreenImageFileName))
                 return null;
 
-            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Awards.{matchAward.MVPScreenImageFileName.Replace("{mvpColor}", awardColor.ToString().ToLower())}");
+            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Awards.{matchAward.MVPScreenImageFileName.Replace("%color%", awardColor.ToString().ToLower())}");
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Heroes.Icons
             if (string.IsNullOrEmpty(matchAward.ScoreScreenImageFileName))
                 return null;
 
-            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Awards.{matchAward.ScoreScreenImageFileName.Replace("{mvpColor}", awardColor.ToString().ToLower())}");
+            return HeroesIconsAssembly.GetManifestResourceStream($"{StreamFilePath}.Awards.{matchAward.ScoreScreenImageFileName.Replace("%team%", awardColor.ToString().ToLower())}");
         }
 
         /// <summary>

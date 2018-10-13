@@ -9,8 +9,8 @@ namespace Heroes.Icons.Xml
 {
     internal class MatchAwardsXml : XmlBase, IInitializable, ISettableBuild, IMatchAwards
     {
-        private readonly string MatchAwardsLatestZipFileName = "matchawards.zip";
-        private readonly string MatchAwardsZipFilePrefix = "matchawards_";
+        private readonly string MatchAwardsLatestZipFileName = "awards_{0}.zip";
+        private readonly string MatchAwardsZipFilePrefix = "awards_";
         private readonly SortedDictionary<int, string> MatchAwardsZipFileNamesByBuild = new SortedDictionary<int, string>();
 
         private readonly string MatchAwardsAssemblyPath;
@@ -23,6 +23,7 @@ namespace Heroes.Icons.Xml
         public MatchAwardsXml()
         {
             MatchAwardsAssemblyPath = XmlAssemblyPath + ".MatchAwards";
+            MatchAwardsLatestZipFileName = string.Format(MatchAwardsLatestZipFileName, Localization);
         }
 
         public void Initialize()
@@ -81,7 +82,7 @@ namespace Heroes.Icons.Xml
             foreach (string assemblyPath in resourceNames)
             {
                 string fileName = GetAssemblyZipFileName(assemblyPath);
-                if (int.TryParse(fileName.Split('_').Last(), out int buildNumber))
+                if (int.TryParse(fileName.Split('_')[1], out int buildNumber))
                     MatchAwardsZipFileNamesByBuild.Add(buildNumber, fileName);
             }
 
@@ -104,17 +105,14 @@ namespace Heroes.Icons.Xml
 
             MatchAward matchAward = new MatchAward()
             {
-                Id = matchAwardElement.Attribute("id")?.Value,
                 ShortName = matchAwardElement.Name.LocalName,
-                Name = matchAwardElement.Name.LocalName,
-                MVPScreenImageFileName = matchAwardElement.Element("MVPScreen")?.Value,
-                ScoreScreenImageFileName = matchAwardElement.Element("ScoreScreen")?.Value,
+                Id = matchAwardElement.Attribute("id")?.Value,
+                Tag = matchAwardElement.Attribute("tag")?.Value,
+                Name = matchAwardElement.Attribute("name")?.Value,
+                MVPScreenImageFileName = matchAwardElement.Element("MVPScreenIcon")?.Value,
+                ScoreScreenImageFileName = matchAwardElement.Element("ScoreScreenIcon")?.Value,
                 Description = new TooltipDescription(matchAwardElement.Element("Description")?.Value),
             };
-
-            string name = matchAwardElement.Attribute("name")?.Value;
-            if (!string.IsNullOrEmpty(name))
-                matchAward.Name = name;
 
             return matchAward;
         }

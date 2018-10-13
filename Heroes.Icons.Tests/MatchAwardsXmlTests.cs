@@ -35,8 +35,8 @@ namespace Heroes.Icons.Tests
             Assert.Equal("Team Player", matchAward.Name);
             Assert.Equal("ZeroOutnumberedDeaths", matchAward.Id);
             Assert.Equal("TeamPlayer", matchAward.ShortName);
-            Assert.Equal("storm_ui_mvp_teamplayer_{mvpColor}.png", matchAward.MVPScreenImageFileName);
-            Assert.Equal("storm_ui_scorescreen_mvp_teamplayer_{mvpColor}.png", matchAward.ScoreScreenImageFileName);
+            Assert.Equal("storm_ui_mvp_teamplayer_%color%.png", matchAward.MVPScreenImageFileName);
+            Assert.Equal("storm_ui_scorescreen_mvp_teamplayer_%team%.png", matchAward.ScoreScreenImageFileName);
             Assert.Equal("No Deaths While Outnumbered", matchAward.Description.PlainText);
         }
     }
