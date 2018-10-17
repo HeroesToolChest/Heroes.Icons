@@ -67,7 +67,7 @@ namespace Heroes.Icons.Xml
 
         public MatchAward MatchAward(string awardId)
         {
-            return GetMatchAwardDataFromDataXml(MatchAwardsDataXml.Root.Elements().Where(x => x.Attribute("id")?.Value == awardId).FirstOrDefault());
+            return GetMatchAwardDataFromDataXml(MatchAwardsDataXml.Root.Element(awardId));
         }
 
         public int Count()
@@ -106,7 +106,6 @@ namespace Heroes.Icons.Xml
             MatchAward matchAward = new MatchAward()
             {
                 ShortName = matchAwardElement.Name.LocalName,
-                Id = matchAwardElement.Attribute("id")?.Value,
                 Tag = matchAwardElement.Attribute("tag")?.Value,
                 Name = matchAwardElement.Attribute("name")?.Value,
                 MVPScreenImageFileName = matchAwardElement.Element("MVPScreenIcon")?.Value,
