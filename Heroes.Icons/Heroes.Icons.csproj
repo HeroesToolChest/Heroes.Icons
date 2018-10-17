@@ -26,6 +26,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Images\AbilityTalents\storm_ui_icon_malganis_blindbat.png" />
+    <None Remove="Images\AbilityTalents\storm_ui_icon_malganis_fel_1.png" />
+    <None Remove="Images\AbilityTalents\storm_ui_icon_malganis_fel_1_b.png" />
+    <None Remove="Images\AbilityTalents\storm_ui_icon_malganis_necrotic.png" />
+    <None Remove="Images\AbilityTalents\storm_ui_icon_malganis_necrotic_b.png" />
+    <None Remove="Images\AbilityTalents\storm_ui_icon_malganis_necrotic_c.png" />
+    <None Remove="Images\AbilityTalents\storm_ui_icon_malganis_nightmarefuel.png" />
+    <None Remove="Images\AbilityTalents\storm_ui_icon_malganis_nightrush.png" />
+    <None Remove="Images\AbilityTalents\storm_ui_icon_malganis_nightrush_b.png" />
+    <None Remove="Images\AbilityTalents\storm_ui_icon_malganis_trait.png" />
+    <None Remove="Images\AbilityTalents\storm_ui_icon_malganis_trait_b.png" />
+    <None Remove="Images\AbilityTalents\storm_ui_icon_malganis_ult_conversion.png" />
+    <None Remove="Images\AbilityTalents\storm_ui_icon_malganis_ult_swarm.png" />
     <None Remove="Images\HeroSelectPortraits\storm_ui_ingame_heroselect_btn_malganis.png" />
     <None Remove="Images\LeaderboardPortraits\storm_ui_ingame_hero_leaderboard_malganis.png" />
     <None Remove="Images\TargetPortraits\ui_targetportrait_hero_malganis.png" />
