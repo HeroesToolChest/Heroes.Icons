@@ -34,5 +34,6 @@
         ExperienceContribution,
         KillsBlue,
         KillsRed,
+        Boost,
     }
 }

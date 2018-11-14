@@ -130,4 +130,5 @@
   <Patch type="Malganis" link="https://heroesofthestorm.com/en-us/blog/22548919" version="2.39.0.69350"/>
   <Patch type="Hotfix" link="https://heroesofthestorm.com/en-us/blog/22630027" version="2.39.1.69790"/>
   <Patch type="Balance" link="https://heroesofthestorm.com/en-us/blog/22636768" version="2.39.2.69823"/>
+  <Patch type="Orphea" link="https://heroesofthestorm.com/en-us/blog/2264795" version="2.40.0.70200"/>
 </Builds>
