@@ -61,5 +61,15 @@ namespace Heroes.Icons.Tests
             Assert.Equal(11, Battlegrounds67621.Battleground("a fuite de Braxis (héroïque)").GetsListOfAliases().Count());
             Assert.Equal(11, Battlegrounds67621.Battleground("Escape From Braxis (Heroic)").GetsListOfAliases().Count());
         }
+
+        [Fact]
+        public void LoadCorrectBattlegroundTests()
+        {
+            IBattlegrounds battleground = HeroesIcons.Battlegrounds(70200);
+            battleground.Battleground("Dragon Shire").ImageFileName = "ui_ingame_mapmechanic_loadscreen_dragonshire2.jpg";
+
+            IBattlegrounds battleground2 = HeroesIcons.Battlegrounds(69823);
+            battleground2.Battleground("Dragon Shire").ImageFileName = "ui_ingame_mapmechanic_loadscreen_dragonshire.jpg";
+        }
     }
 }

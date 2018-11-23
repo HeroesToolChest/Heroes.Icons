@@ -17,6 +17,7 @@ namespace Heroes.Icons.Xml
 
         private int LowestBuild;
         private int HighestBuild;
+        private int SelectedBuild;
         private XDocument BattlegroundsDataXml;
 
         public BattlegroundsXml()
@@ -31,7 +32,7 @@ namespace Heroes.Icons.Xml
 
         public void SetSelectedBuild(int build)
         {
-            if (BattlegroundsDataXml != null)
+            if (SelectedBuild == build)
                 return;
 
             string zipFileToLoad = BattlegroundsLatestZipFileName;
@@ -48,6 +49,7 @@ namespace Heroes.Icons.Xml
                     zipFileToLoad = BattlegroundsZipFileNamesByBuild.Aggregate((x, y) => Math.Abs(x.Key - build) < Math.Abs(y.Key - build) ? x : y).Value;
             }
 
+            SelectedBuild = build;
             BattlegroundsDataXml = LoadZipFileFromManifestStream(HeroesIconsAssembly.GetManifestResourceStream($"{BattlegroundsAssemblyPath}.{zipFileToLoad}"), Path.ChangeExtension(zipFileToLoad, "xml"));
         }
 
