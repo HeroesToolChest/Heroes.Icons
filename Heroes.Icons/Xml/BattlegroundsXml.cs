@@ -123,7 +123,7 @@ namespace Heroes.Icons.Xml
             foreach (string assemblyPath in resourceNames)
             {
                 string fileName = GetAssemblyZipFileName(assemblyPath);
-                if (int.TryParse(fileName.Split('_').Last(), out int buildNumber))
+                if (int.TryParse(Path.GetFileNameWithoutExtension(fileName).Split('_').Last(), out int buildNumber))
                     BattlegroundsZipFileNamesByBuild.Add(buildNumber, fileName);
             }
 

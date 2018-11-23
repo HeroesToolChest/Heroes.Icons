@@ -82,7 +82,7 @@ namespace Heroes.Icons.Xml
             foreach (string assemblyPath in resourceNames)
             {
                 string fileName = GetAssemblyZipFileName(assemblyPath);
-                if (int.TryParse(fileName.Split('_')[1], out int buildNumber))
+                if (int.TryParse(Path.GetFileNameWithoutExtension(fileName).Split('_')[1], out int buildNumber))
                     MatchAwardsZipFileNamesByBuild.Add(buildNumber, fileName);
             }
 
