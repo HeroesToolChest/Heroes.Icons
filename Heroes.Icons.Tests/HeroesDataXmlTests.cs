@@ -312,5 +312,31 @@ namespace Heroes.Icons.Tests
             Assert.Equal("0,7", hero.Weapons[0].Period.ToString());
             Assert.Equal("26", hero.Weapons[0].Damage.ToString());
         }
+
+        [Fact]
+        public void HeroDataAbilityTalentLinkIdsTests()
+        {
+            IHeroesData heroData = HeroesIcons.HeroesData(71138);
+            Hero hero = HeroesData.HeroData("Abathur");
+
+            Talent talent = hero.Talents["AbathurMasteryRegenerativeMicrobes"];
+            Assert.True(talent.AbilityTalentLinkIds.Count == 2);
+            Assert.Contains("AbathurSymbiote", talent.AbilityTalentLinkIds);
+            Assert.Contains("AbathurSymbioteCarapace", talent.AbilityTalentLinkIds);
+        }
+
+        [Fact]
+        public void MountAndHeartLinkIdTests()
+        {
+            IHeroesData heroData = HeroesIcons.HeroesData(71138);
+            Hero hero = HeroesData.HeroData("Abathur");
+
+            Assert.True(hero.Abilities.ContainsKey("PortBackToBaseNoMana"));
+            Assert.True(hero.MountLinkId == "AbathurDeepTunnel");
+
+            hero = HeroesData.HeroData("Tychus");
+            Assert.True(hero.Abilities.ContainsKey("PortBackToBase"));
+            Assert.True(hero.Abilities.ContainsKey("SummonMount"));
+        }
     }
 }

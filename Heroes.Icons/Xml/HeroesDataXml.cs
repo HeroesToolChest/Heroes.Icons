@@ -12,6 +12,7 @@ namespace Heroes.Icons.Xml
 {
     internal class HeroesDataXml : XmlBase, IInitializable, ISettableBuild, IHeroesData
     {
+        private readonly string StormHeroShortName = "_stormhero";
         private readonly string HeroesDataZipFileFormat = "heroesdata_{0}_{1}.zip";
         private readonly string HeroesDataXmlFileFormat = "heroesdata_{0}_{1}.xml";
         private readonly string HeroesDataXmlFilePrefix = "heroesdata_";
@@ -24,6 +25,7 @@ namespace Heroes.Icons.Xml
         private int SelectedBuild;
 
         private XDocument HeroesDataXmlDocument;
+        private Hero StormHero;
 
         public HeroesDataXml(HeroBuildsXml heroBuildsXml)
         {
@@ -86,6 +88,8 @@ namespace Heroes.Icons.Xml
             string xmlFile = string.Format(HeroesDataXmlFileFormat, SelectedBuild, Localization);
 
             HeroesDataXmlDocument = LoadZipFileFromManifestStream(zipFileStream, Path.ChangeExtension(xmlFile, ".min.xml"));
+
+            StormHero = HeroData(StormHeroShortName);
         }
 
         public IEnumerable<Hero> HeroesData(IEnumerable<string> heroNames, bool includeAbilities = true, bool includeTalents = true, bool additionalUnits = true)
@@ -110,7 +114,7 @@ namespace Heroes.Icons.Xml
 
             string realName = HeroNameFromShortName(name); // check if it's a short name
 
-            if (!string.IsNullOrEmpty(realName)) // is a short name
+            if (!string.IsNullOrEmpty(realName) || name == StormHeroShortName) // is a short name
                 return GetHeroDataFromDataXml(HeroesDataXmlDocument.Root.Element(name), includeAbilities, includeTalents, additionalUnits);
             else // full real name
                 return GetHeroDataFromDataXml(HeroesDataXmlDocument.Root.Elements().FirstOrDefault(x => x.Attribute("name")?.Value == name), includeAbilities, includeTalents, additionalUnits);
@@ -200,6 +204,9 @@ namespace Heroes.Icons.Xml
 
             if (Enum.TryParse(heroElement.Attribute("rarity")?.Value, out HeroRarity rarity))
                 hero.Rarity = rarity;
+
+            hero.MountLinkId = heroElement.Element("MountLinkId")?.Value;
+            hero.HearthLinkId = heroElement.Element("HearthLinkId")?.Value;
 
             hero.Description = new TooltipDescription(heroElement.Element("Description")?.Value);
 
@@ -343,6 +350,15 @@ namespace Heroes.Icons.Xml
                 }
             }
 
+            if (StormHero != null && includeAbilities && hero.Abilities != null)
+            {
+                if (!string.IsNullOrEmpty(hero.MountLinkId) && !hero.Abilities.ContainsKey(hero.MountLinkId))
+                    hero.Abilities.Add(hero.MountLinkId, StormHero.Abilities[hero.MountLinkId]);
+
+                if (!string.IsNullOrEmpty(hero.HearthLinkId) && !hero.Abilities.ContainsKey(hero.HearthLinkId))
+                    hero.Abilities.Add(hero.HearthLinkId, StormHero.Abilities[hero.HearthLinkId]);
+            }
+
             return hero;
         }
 
@@ -391,6 +407,15 @@ namespace Heroes.Icons.Xml
                         Tier = talentTier,
                         Column = int.TryParse(talentElement.Attribute("sort")?.Value, out int column) ? column : 0,
                     };
+
+                    XElement abilityTalentLinkIdsElement = talentElement.Element("AbilityTalentLinkIds");
+                    if (abilityTalentLinkIdsElement != null)
+                    {
+                        foreach (XElement abilityTalentLinkIdElement in abilityTalentLinkIdsElement.Elements())
+                        {
+                            talent.AbilityTalentLinkIds.Add(abilityTalentLinkIdElement?.Value);
+                        }
+                    }
 
                     SetAbilityTalentData(talentElement, hero, talent);
 
