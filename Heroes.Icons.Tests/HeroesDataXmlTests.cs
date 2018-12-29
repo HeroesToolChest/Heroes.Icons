@@ -1,14 +1,15 @@
 ﻿using Heroes.Models;
 using Heroes.Models.AbilityTalents;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
-using Xunit;
 
 namespace Heroes.Icons.Tests
 {
+    [TestClass]
     public class HeroesDataXmlTests : HeroesIconsBase
     {
         private readonly IHeroesData HeroesData;
@@ -18,247 +19,247 @@ namespace Heroes.Icons.Tests
             HeroesData = HeroesIcons.HeroesData(67985);
         }
 
-        [Fact]
+        [TestMethod]
         public void HeroExistsTest()
         {
-            Assert.True(HeroesData.HeroExists("Mephisto"));
+            Assert.IsTrue(HeroesData.HeroExists("Mephisto"));
 
             IHeroesData heroData67621 = HeroesIcons.HeroesData(67621);
-            Assert.False(HeroesData.HeroExists("Mephisto"));
+            Assert.IsFalse(HeroesData.HeroExists("Mephisto"));
 
             IHeroesData heroDataOldSplit = HeroesIcons.HeroesData(56705);
-            Assert.True(heroDataOldSplit.HeroExists("Abathur"));
+            Assert.IsTrue(heroDataOldSplit.HeroExists("Abathur"));
 
             IHeroesData heroDataLastest = HeroesIcons.HeroesData();
-            Assert.True(heroDataLastest.HeroExists("Mephisto"));
+            Assert.IsTrue(heroDataLastest.HeroExists("Mephisto"));
         }
 
-        [Fact]
+        [TestMethod]
         public void TotalCountOfHeroesTest()
         {
-            Assert.Equal(82, HeroesData.GetTotalAmountOfHeroes());
+            Assert.AreEqual(82, HeroesData.GetTotalAmountOfHeroes());
         }
 
-        [Fact]
+        [TestMethod]
         public void ListOfHeroNamesTest()
         {
             List<string> heroesList = HeroesData.HeroNames().ToList();
 
-            Assert.Equal(82, heroesList.Count);
-            Assert.Contains("Anub'arak", heroesList);
-            Assert.Contains("Valeera", heroesList);
+            Assert.AreEqual(82, heroesList.Count);
+            Assert.IsTrue(heroesList.Contains("Anub'arak"));
+            Assert.IsTrue(heroesList.Contains("Valeera"));
         }
 
-        [Fact]
+        [TestMethod]
         public void HeroNameFromUnitIdTest()
         {
-            Assert.Equal("Valeera", HeroesData.HeroNameFromUnitId("HeroValeera"));
-            Assert.Equal("Anub'arak", HeroesData.HeroNameFromUnitId("HeroAnubarak"));
+            Assert.AreEqual("Valeera", HeroesData.HeroNameFromUnitId("HeroValeera"));
+            Assert.AreEqual("Anub'arak", HeroesData.HeroNameFromUnitId("HeroAnubarak"));
         }
 
-        [Fact]
+        [TestMethod]
         public void HeroNameFromShortNameTest()
         {
-            Assert.Equal("Valeera", HeroesData.HeroNameFromShortName("Valeera"));
-            Assert.Equal("Anub'arak", HeroesData.HeroNameFromShortName("Anubarak"));
+            Assert.AreEqual("Valeera", HeroesData.HeroNameFromShortName("Valeera"));
+            Assert.AreEqual("Anub'arak", HeroesData.HeroNameFromShortName("Anubarak"));
         }
 
-        [Fact]
+        [TestMethod]
         public void HeroNameFromAttributeIdTest()
         {
-            Assert.Equal("Valeera", HeroesData.HeroNameFromAttributeId("VALE"));
-            Assert.Equal("Anub'arak", HeroesData.HeroNameFromAttributeId("Anub"));
+            Assert.AreEqual("Valeera", HeroesData.HeroNameFromAttributeId("VALE"));
+            Assert.AreEqual("Anub'arak", HeroesData.HeroNameFromAttributeId("Anub"));
         }
 
-        [Fact]
+        [TestMethod]
         public void GetHeroDataAbathurTest()
         {
             Hero hero = HeroesData.HeroData("Abathur");
 
-            Assert.Equal("Abathur", hero.ShortName);
-            Assert.Equal("Abathur", hero.Name);
-            Assert.Equal("Abathur", hero.CHeroId);
-            Assert.Equal("HeroAbathur", hero.CUnitId);
-            Assert.Equal("Abat", hero.AttributeId);
-            Assert.Equal("Very Hard", hero.Difficulty);
-            Assert.Equal(HeroFranchise.Starcraft, hero.Franchise);
-            Assert.Equal(0.75, hero.InnerRadius);
-            Assert.Equal(0.75, hero.Radius);
-            Assert.Equal(new DateTime(2014, 3, 13), hero.ReleaseDate);
-            Assert.Equal(12.0, hero.Sight);
-            Assert.Equal(4.3984, hero.Speed);
-            Assert.Equal("Melee", hero.Type);
-            Assert.Equal(HeroRarity.Legendary, hero.Rarity);
-            Assert.Equal("A unique Hero that can manipulate the battle from anywhere on the map.", hero.Description.RawDescription);
+            Assert.AreEqual("Abathur", hero.ShortName);
+            Assert.AreEqual("Abathur", hero.Name);
+            Assert.AreEqual("Abathur", hero.CHeroId);
+            Assert.AreEqual("HeroAbathur", hero.CUnitId);
+            Assert.AreEqual("Abat", hero.AttributeId);
+            Assert.AreEqual("Very Hard", hero.Difficulty);
+            Assert.AreEqual(HeroFranchise.Starcraft, hero.Franchise);
+            Assert.AreEqual(0.75, hero.InnerRadius);
+            Assert.AreEqual(0.75, hero.Radius);
+            Assert.AreEqual(new DateTime(2014, 3, 13), hero.ReleaseDate);
+            Assert.AreEqual(12.0, hero.Sight);
+            Assert.AreEqual(4.3984, hero.Speed);
+            Assert.AreEqual("Melee", hero.Type);
+            Assert.AreEqual(HeroRarity.Legendary, hero.Rarity);
+            Assert.AreEqual("A unique Hero that can manipulate the battle from anywhere on the map.", hero.Description.RawDescription);
 
             // portraits
-            Assert.Equal("storm_ui_ingame_heroselect_btn_infestor.png", hero.HeroPortrait.HeroSelectPortraitFileName);
-            Assert.Equal("storm_ui_ingame_hero_leaderboard_abathur.png", hero.HeroPortrait.LeaderboardPortraitFileName);
-            Assert.Equal("storm_ui_ingame_hero_loadingscreen_abathur.png", hero.HeroPortrait.LoadingScreenPortraitFileName);
-            Assert.Equal("storm_ui_ingame_partypanel_btn_abathur.png", hero.HeroPortrait.PartyPanelPortraitFileName);
-            Assert.Equal("ui_targetportrait_hero_abathur.png", hero.HeroPortrait.TargetPortraitFileName);
+            Assert.AreEqual("storm_ui_ingame_heroselect_btn_infestor.png", hero.HeroPortrait.HeroSelectPortraitFileName);
+            Assert.AreEqual("storm_ui_ingame_hero_leaderboard_abathur.png", hero.HeroPortrait.LeaderboardPortraitFileName);
+            Assert.AreEqual("storm_ui_ingame_hero_loadingscreen_abathur.png", hero.HeroPortrait.LoadingScreenPortraitFileName);
+            Assert.AreEqual("storm_ui_ingame_partypanel_btn_abathur.png", hero.HeroPortrait.PartyPanelPortraitFileName);
+            Assert.AreEqual("ui_targetportrait_hero_abathur.png", hero.HeroPortrait.TargetPortraitFileName);
 
             // life
-            Assert.Equal(685, hero.Life.LifeMax);
-            Assert.Equal(0.04, hero.Life.LifeScaling);
-            Assert.Equal(1.4257, hero.Life.LifeRegenerationRate);
-            Assert.Equal(0.04, hero.Life.LifeRegenerationRateScaling);
+            Assert.AreEqual(685, hero.Life.LifeMax);
+            Assert.AreEqual(0.04, hero.Life.LifeScaling);
+            Assert.AreEqual(1.4257, hero.Life.LifeRegenerationRate);
+            Assert.AreEqual(0.04, hero.Life.LifeRegenerationRateScaling);
 
             // energy
-            Assert.Equal(0, hero.Energy.EnergyMax);
-            Assert.Equal(0, hero.Energy.EnergyRegenerationRate);
+            Assert.AreEqual(0, hero.Energy.EnergyMax);
+            Assert.AreEqual(0, hero.Energy.EnergyRegenerationRate);
 
             // roles
-            Assert.Equal("Specialist", hero.Roles[0]);
-            Assert.Equal(1, hero.Roles.Count);
+            Assert.AreEqual("Specialist", hero.Roles[0]);
+            Assert.AreEqual(1, hero.Roles.Count);
 
             // ratings
-            Assert.Equal(9, hero.Ratings.Complexity);
-            Assert.Equal(3, hero.Ratings.Damage);
-            Assert.Equal(1, hero.Ratings.Survivability);
-            Assert.Equal(7, hero.Ratings.Utility);
+            Assert.AreEqual(9, hero.Ratings.Complexity);
+            Assert.AreEqual(3, hero.Ratings.Damage);
+            Assert.AreEqual(1, hero.Ratings.Survivability);
+            Assert.AreEqual(7, hero.Ratings.Utility);
 
             // weapons
-            Assert.Equal("HeroAbathur", hero.Weapons[0].WeaponNameId);
-            Assert.Equal(1, hero.Weapons[0].Range);
-            Assert.Equal(0.7, hero.Weapons[0].Period);
-            Assert.Equal(26, hero.Weapons[0].Damage);
-            Assert.Equal(0.04, hero.Weapons[0].DamageScaling);
+            Assert.AreEqual("HeroAbathur", hero.Weapons[0].WeaponNameId);
+            Assert.AreEqual(1, hero.Weapons[0].Range);
+            Assert.AreEqual(0.7, hero.Weapons[0].Period);
+            Assert.AreEqual(26, hero.Weapons[0].Damage);
+            Assert.AreEqual(0.04, hero.Weapons[0].DamageScaling);
 
             // abilities
             Ability firstAbility = hero.Abilities["AbathurSymbiote"];
-            Assert.Equal("AbathurSymbiote", firstAbility.ReferenceNameId);
-            Assert.Equal("Symbiote", firstAbility.Name);
-            Assert.Equal("AbathurSymbiote", firstAbility.ShortTooltipNameId);
-            Assert.Equal("AbathurSymbiote", firstAbility.FullTooltipNameId);
-            Assert.Equal("storm_ui_icon_abathur_symbiote.png", firstAbility.IconFileName);
-            Assert.Equal("Cooldown: 4 seconds", firstAbility.Tooltip.Cooldown.CooldownTooltip.RawDescription);
-            Assert.Equal("Assist an ally and gain new abilities", firstAbility.Tooltip.ShortTooltip.RawDescription);
-            Assert.Equal("Spawn and attach a Symbiote to a target ally or Structure. While active, Abathur controls the Symbiote, gaining access to new Abilities. The Symbiote is able to gain XP from nearby enemy deaths.", firstAbility.Tooltip.FullTooltip.RawDescription);
-            Assert.Equal(AbilityType.Q, firstAbility.AbilityType);
+            Assert.AreEqual("AbathurSymbiote", firstAbility.ReferenceNameId);
+            Assert.AreEqual("Symbiote", firstAbility.Name);
+            Assert.AreEqual("AbathurSymbiote", firstAbility.ShortTooltipNameId);
+            Assert.AreEqual("AbathurSymbiote", firstAbility.FullTooltipNameId);
+            Assert.AreEqual("storm_ui_icon_abathur_symbiote.png", firstAbility.IconFileName);
+            Assert.AreEqual("Cooldown: 4 seconds", firstAbility.Tooltip.Cooldown.CooldownTooltip.RawDescription);
+            Assert.AreEqual("Assist an ally and gain new abilities", firstAbility.Tooltip.ShortTooltip.RawDescription);
+            Assert.AreEqual("Spawn and attach a Symbiote to a target ally or Structure. While active, Abathur controls the Symbiote, gaining access to new Abilities. The Symbiote is able to gain XP from nearby enemy deaths.", firstAbility.Tooltip.FullTooltip.RawDescription);
+            Assert.AreEqual(AbilityType.Q, firstAbility.AbilityType);
 
             Ability secondAbility = hero.Abilities["AbathurToxicNest"];
-            Assert.Equal(3, secondAbility.Tooltip.Charges.CountMax);
-            Assert.Equal(1, secondAbility.Tooltip.Charges.CountUse);
-            Assert.Equal(3, secondAbility.Tooltip.Charges.CountStart);
-            Assert.Equal(0.0625, secondAbility.Tooltip.Charges.RecastCooldown);
-            Assert.Null(secondAbility.Tooltip.Charges.IsHideCount);
-            Assert.Equal(AbilityType.W, secondAbility.AbilityType);
+            Assert.AreEqual(3, secondAbility.Tooltip.Charges.CountMax);
+            Assert.AreEqual(1, secondAbility.Tooltip.Charges.CountUse);
+            Assert.AreEqual(3, secondAbility.Tooltip.Charges.CountStart);
+            Assert.AreEqual(0.0625, secondAbility.Tooltip.Charges.RecastCooldown);
+            Assert.IsNull(secondAbility.Tooltip.Charges.IsHideCount);
+            Assert.AreEqual(AbilityType.W, secondAbility.AbilityType);
 
             // talents
             Talent talent = hero.Talents["AbathurHeroicAbilityUltimateEvolution"];
-            Assert.Equal("AbathurHeroicAbilityUltimateEvolution", talent.ReferenceNameId);
-            Assert.Equal("Ultimate Evolution", talent.Name);
-            Assert.Equal("AbathurUltimateEvolution", talent.ShortTooltipNameId);
-            Assert.Equal("AbathurUltimateEvolution", talent.FullTooltipNameId);
-            Assert.Equal("storm_ui_icon_abathur_ultimateevolution.png", talent.IconFileName);
-            Assert.Equal("Cooldown: 70 seconds", talent.Tooltip.Cooldown.CooldownTooltip.RawDescription);
-            Assert.Equal("Clone target allied Hero and control it", talent.Tooltip.ShortTooltip.RawDescription);
-            Assert.Equal("Clone target allied Hero and control it for <c val=\"#TooltipNumbers\">20</c> seconds. Abathur has perfected the clone, granting it <c val=\"#TooltipNumbers\">20%</c> Spell Power, <c val=\"#TooltipNumbers\">20%</c> bonus Attack Damage, and <c val=\"#TooltipNumbers\">10%</c> bonus Movement Speed. Cannot use their Heroic Ability.", talent.Tooltip.FullTooltip.RawDescription);
-            Assert.Equal(AbilityType.Heroic, talent.AbilityType);
-            Assert.True(talent.IsActive);
+            Assert.AreEqual("AbathurHeroicAbilityUltimateEvolution", talent.ReferenceNameId);
+            Assert.AreEqual("Ultimate Evolution", talent.Name);
+            Assert.AreEqual("AbathurUltimateEvolution", talent.ShortTooltipNameId);
+            Assert.AreEqual("AbathurUltimateEvolution", talent.FullTooltipNameId);
+            Assert.AreEqual("storm_ui_icon_abathur_ultimateevolution.png", talent.IconFileName);
+            Assert.AreEqual("Cooldown: 70 seconds", talent.Tooltip.Cooldown.CooldownTooltip.RawDescription);
+            Assert.AreEqual("Clone target allied Hero and control it", talent.Tooltip.ShortTooltip.RawDescription);
+            Assert.AreEqual("Clone target allied Hero and control it for <c val=\"#TooltipNumbers\">20</c> seconds. Abathur has perfected the clone, granting it <c val=\"#TooltipNumbers\">20%</c> Spell Power, <c val=\"#TooltipNumbers\">20%</c> bonus Attack Damage, and <c val=\"#TooltipNumbers\">10%</c> bonus Movement Speed. Cannot use their Heroic Ability.", talent.Tooltip.FullTooltip.RawDescription);
+            Assert.AreEqual(AbilityType.Heroic, talent.AbilityType);
+            Assert.IsTrue(talent.IsActive);
 
             // hero units
             Unit heroUnit = hero.HeroUnits[0];
 
-            Assert.Equal("AbathurSymbiote", heroUnit.ShortName);
-            Assert.Equal("Symbiote", heroUnit.Name);
-            Assert.Equal("AbathurSymbiote", heroUnit.CUnitId);
-            Assert.Equal(0, heroUnit.InnerRadius);
-            Assert.Equal(0, heroUnit.Radius);
-            Assert.Equal(4.0, heroUnit.Sight);
-            Assert.Equal(0.0117, heroUnit.Speed);
-            Assert.Equal("Ranged", heroUnit.Type);
-            Assert.Empty(heroUnit.Description.RawDescription);
+            Assert.AreEqual("AbathurSymbiote", heroUnit.ShortName);
+            Assert.AreEqual("Symbiote", heroUnit.Name);
+            Assert.AreEqual("AbathurSymbiote", heroUnit.CUnitId);
+            Assert.AreEqual(0, heroUnit.InnerRadius);
+            Assert.AreEqual(0, heroUnit.Radius);
+            Assert.AreEqual(4.0, heroUnit.Sight);
+            Assert.AreEqual(0.0117, heroUnit.Speed);
+            Assert.AreEqual("Ranged", heroUnit.Type);
+            Assert.IsTrue(string.IsNullOrEmpty(heroUnit.Description.RawDescription));
 
             Ability heroUnitAbility = heroUnit.Abilities["AbathurSymbioteCarapace"];
-            Assert.Equal("AbathurSymbioteCarapace", heroUnitAbility.ReferenceNameId);
-            Assert.Equal("Carapace", heroUnitAbility.Name);
-            Assert.Equal("AbathurSymbioteCarapace", heroUnitAbility.ShortTooltipNameId);
-            Assert.Equal("AbathurSymbioteCarapace", heroUnitAbility.FullTooltipNameId);
-            Assert.Equal("storm_ui_icon_abathur_carapace.png", heroUnitAbility.IconFileName);
-            Assert.Equal("Cooldown: 12 seconds", heroUnitAbility.Tooltip.Cooldown.CooldownTooltip.RawDescription);
-            Assert.Empty(heroUnitAbility.Tooltip.ShortTooltip.RawDescription);
-            Assert.Equal("Shields the assisted ally for <c val=\"#TooltipNumbers\">157~~0.04~~</c>. Lasts for <c val=\"#TooltipNumbers\">8</c> seconds.", heroUnitAbility.Tooltip.FullTooltip.RawDescription);
-            Assert.Equal(AbilityType.E, heroUnitAbility.AbilityType);
+            Assert.AreEqual("AbathurSymbioteCarapace", heroUnitAbility.ReferenceNameId);
+            Assert.AreEqual("Carapace", heroUnitAbility.Name);
+            Assert.AreEqual("AbathurSymbioteCarapace", heroUnitAbility.ShortTooltipNameId);
+            Assert.AreEqual("AbathurSymbioteCarapace", heroUnitAbility.FullTooltipNameId);
+            Assert.AreEqual("storm_ui_icon_abathur_carapace.png", heroUnitAbility.IconFileName);
+            Assert.AreEqual("Cooldown: 12 seconds", heroUnitAbility.Tooltip.Cooldown.CooldownTooltip.RawDescription);
+            Assert.IsTrue(string.IsNullOrEmpty(heroUnitAbility.Tooltip.ShortTooltip.RawDescription));
+            Assert.AreEqual("Shields the assisted ally for <c val=\"#TooltipNumbers\">157~~0.04~~</c>. Lasts for <c val=\"#TooltipNumbers\">8</c> seconds.", heroUnitAbility.Tooltip.FullTooltip.RawDescription);
+            Assert.AreEqual(AbilityType.E, heroUnitAbility.AbilityType);
         }
 
-        [Fact]
+        [TestMethod]
         public void GetHeroDataTychusTest()
         {
             Hero hero = HeroesData.HeroData("Tychus");
 
             // energy
-            Assert.Equal(500, hero.Energy.EnergyMax);
-            Assert.Equal(3, hero.Energy.EnergyRegenerationRate);
-            Assert.Equal("Mana", hero.Energy.EnergyType);
+            Assert.AreEqual(500, hero.Energy.EnergyMax);
+            Assert.AreEqual(3, hero.Energy.EnergyRegenerationRate);
+            Assert.AreEqual("Mana", hero.Energy.EnergyType);
 
             // roles
-            Assert.Equal("Assassin", hero.Roles[0]);
-            Assert.Equal(1, hero.Roles.Count);
+            Assert.AreEqual("Assassin", hero.Roles[0]);
+            Assert.AreEqual(1, hero.Roles.Count);
 
             // abilities
             Ability ability = hero.Abilities["TychusRunAndGun"];
-            Assert.Equal(1, ability.Tooltip.Charges.CountMax);
-            Assert.Equal(1, ability.Tooltip.Charges.CountUse);
-            Assert.Equal(1, ability.Tooltip.Charges.CountStart);
-            Assert.Equal(0.5, ability.Tooltip.Charges.RecastCooldown);
-            Assert.True(ability.Tooltip.Charges.IsHideCount);
-            Assert.Equal(AbilityType.E, ability.AbilityType);
+            Assert.AreEqual(1, ability.Tooltip.Charges.CountMax);
+            Assert.AreEqual(1, ability.Tooltip.Charges.CountUse);
+            Assert.AreEqual(1, ability.Tooltip.Charges.CountStart);
+            Assert.AreEqual(0.5, ability.Tooltip.Charges.RecastCooldown);
+            Assert.IsTrue(ability.Tooltip.Charges.IsHideCount.Value);
+            Assert.AreEqual(AbilityType.E, ability.AbilityType);
 
             ability = hero.GetAbility("TychusRunAndGun");
-            Assert.True(ability.Tooltip.Charges.IsHideCount);
-            Assert.Equal(AbilityType.E, ability.AbilityType);
+            Assert.IsTrue(ability.Tooltip.Charges.IsHideCount.Value);
+            Assert.AreEqual(AbilityType.E, ability.AbilityType);
 
             // talents
             Talent talent = hero.Talents["TychusMasteryRunandGunDash"];
-            Assert.Equal("TychusMasteryRunandGunDash", talent.ReferenceNameId);
-            Assert.Equal("Dash", talent.Name);
-            Assert.Equal("TychusRunandGunDashTalent", talent.ShortTooltipNameId);
-            Assert.Equal("TychusRunandGunDashTalent", talent.FullTooltipNameId);
-            Assert.Equal("storm_ui_icon_tychus_runandgun_a.png", talent.IconFileName);
-            Assert.Empty(talent.Tooltip.Cooldown.CooldownTooltip.RawDescription);
-            Assert.Equal(AbilityType.E, talent.AbilityType);
-            Assert.False(talent.IsActive);
-            Assert.True(talent.IsQuest);
+            Assert.AreEqual("TychusMasteryRunandGunDash", talent.ReferenceNameId);
+            Assert.AreEqual("Dash", talent.Name);
+            Assert.AreEqual("TychusRunandGunDashTalent", talent.ShortTooltipNameId);
+            Assert.AreEqual("TychusRunandGunDashTalent", talent.FullTooltipNameId);
+            Assert.AreEqual("storm_ui_icon_tychus_runandgun_a.png", talent.IconFileName);
+            Assert.IsTrue(string.IsNullOrEmpty(talent.Tooltip.Cooldown.CooldownTooltip.RawDescription));
+            Assert.AreEqual(AbilityType.E, talent.AbilityType);
+            Assert.IsFalse(talent.IsActive);
+            Assert.IsTrue(talent.IsQuest);
 
             talent = hero.GetTalent("TychusMasteryRunandGunDash");
-            Assert.Empty(talent.Tooltip.Cooldown.CooldownTooltip.RawDescription);
-            Assert.Equal(AbilityType.E, talent.AbilityType);
+            Assert.IsTrue(string.IsNullOrEmpty(talent.Tooltip.Cooldown.CooldownTooltip.RawDescription));
+            Assert.AreEqual(AbilityType.E, talent.AbilityType);
 
             talent = hero.GetTalent(string.Empty);
-            Assert.Equal("No Pick", talent.Name);
+            Assert.AreEqual("No Pick", talent.Name);
 
             talent = hero.GetTalent("SomeTalent");
-            Assert.Equal("SomeTalent", talent.Name);
+            Assert.AreEqual("SomeTalent", talent.Name);
 
             // subAbilities
             ability = hero.SubAbilities(AbilityTier.Basic).ToList().First();
-            Assert.Equal("TychusOdinAnnihilate", ability.ReferenceNameId);
-            Assert.Equal("Annihilate", ability.Name);
-            Assert.Equal("TychusCommandeerOdinAnnihilate", ability.ShortTooltipNameId);
-            Assert.Equal("TychusCommandeerOdinAnnihilate", ability.FullTooltipNameId);
-            Assert.Equal("storm_ui_icon_tychus_annihilate.png", ability.IconFileName);
-            Assert.Equal("Cooldown: 7 seconds", ability.Tooltip.Cooldown.CooldownTooltip.RawDescription);
-            Assert.Equal(AbilityType.Q, ability.AbilityType);
+            Assert.AreEqual("TychusOdinAnnihilate", ability.ReferenceNameId);
+            Assert.AreEqual("Annihilate", ability.Name);
+            Assert.AreEqual("TychusCommandeerOdinAnnihilate", ability.ShortTooltipNameId);
+            Assert.AreEqual("TychusCommandeerOdinAnnihilate", ability.FullTooltipNameId);
+            Assert.AreEqual("storm_ui_icon_tychus_annihilate.png", ability.IconFileName);
+            Assert.AreEqual("Cooldown: 7 seconds", ability.Tooltip.Cooldown.CooldownTooltip.RawDescription);
+            Assert.AreEqual(AbilityType.Q, ability.AbilityType);
         }
 
-        [Fact]
+        [TestMethod]
         public void HeroDataExistsTests()
         {
-            Assert.NotNull(HeroesData.HeroData("Kerrigan"));
-            Assert.NotNull(HeroesData.HeroData("The Lost Vikings"));
+            Assert.IsNotNull(HeroesData.HeroData("Kerrigan"));
+            Assert.IsNotNull(HeroesData.HeroData("The Lost Vikings"));
         }
 
-        [Fact]
+        [TestMethod]
         public void HeroDataLimitedDataTests()
         {
-            Assert.Empty(HeroesData.HeroData("Ragnaros", includeAbilities: false).Abilities);
-            Assert.Empty(HeroesData.HeroData("Ragnaros", includeTalents: false).Talents);
-            Assert.Empty(HeroesData.HeroData("Ragnaros", additionalUnits: false).HeroUnits);
+            Assert.IsTrue(HeroesData.HeroData("Ragnaros", includeAbilities: false).Abilities.Count == 0);
+            Assert.IsTrue(HeroesData.HeroData("Ragnaros", includeTalents: false).Talents.Count == 0);
+            Assert.IsTrue(HeroesData.HeroData("Ragnaros", additionalUnits: false).HeroUnits.Count == 0);
         }
 
-        [Fact]
+        [TestMethod]
         public void MultipleHeroDataTests()
         {
             List<string> heroNames = new List<string>
@@ -269,74 +270,74 @@ namespace Heroes.Icons.Tests
             };
 
             List<Hero> heroes = HeroesData.HeroesData(heroNames).ToList();
-            Assert.Equal(3, heroes.Count);
+            Assert.AreEqual(3, heroes.Count);
         }
 
-        [Fact]
+        [TestMethod]
         public void HeroDataInMemoryDontLoadFilesTest()
         {
-            Assert.NotNull(HeroesIcons.HeroesData(67985).HeroData("Abathur"));
+            Assert.IsNotNull(HeroesIcons.HeroesData(67985).HeroData("Abathur"));
         }
 
-        [Fact]
+        [TestMethod]
         public void HeroDataLocalizationTest()
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
 
             Hero hero = HeroesData.HeroData("Abathur");
-            Assert.Equal("0,75", hero.InnerRadius.ToString());
-            Assert.Equal("0,75", hero.Radius.ToString());
-            Assert.Equal(new DateTime(2014, 3, 13), hero.ReleaseDate);
+            Assert.AreEqual("0,75", hero.InnerRadius.ToString());
+            Assert.AreEqual("0,75", hero.Radius.ToString());
+            Assert.AreEqual(new DateTime(2014, 3, 13), hero.ReleaseDate);
 
-            Assert.Equal(685, hero.Life.LifeMax);
-            Assert.Equal("0,04", hero.Life.LifeScaling.ToString());
-            Assert.Equal("1,4257", hero.Life.LifeRegenerationRate.ToString());
-            Assert.Equal("0,04", hero.Life.LifeRegenerationRateScaling.ToString());
+            Assert.AreEqual(685, hero.Life.LifeMax);
+            Assert.AreEqual("0,04", hero.Life.LifeScaling.ToString());
+            Assert.AreEqual("1,4257", hero.Life.LifeRegenerationRate.ToString());
+            Assert.AreEqual("0,04", hero.Life.LifeRegenerationRateScaling.ToString());
 
             // energy
-            Assert.Equal(0, hero.Energy.EnergyMax);
-            Assert.Equal(0, hero.Energy.EnergyRegenerationRate);
+            Assert.AreEqual(0, hero.Energy.EnergyMax);
+            Assert.AreEqual(0, hero.Energy.EnergyRegenerationRate);
 
             // roles
-            Assert.Equal("Specialist", hero.Roles[0]);
-            Assert.Equal(1, hero.Roles.Count);
+            Assert.AreEqual("Specialist", hero.Roles[0]);
+            Assert.AreEqual(1, hero.Roles.Count);
 
             // ratings
-            Assert.Equal(9, hero.Ratings.Complexity);
-            Assert.Equal(3, hero.Ratings.Damage);
-            Assert.Equal(1, hero.Ratings.Survivability);
-            Assert.Equal(7, hero.Ratings.Utility);
+            Assert.AreEqual(9, hero.Ratings.Complexity);
+            Assert.AreEqual(3, hero.Ratings.Damage);
+            Assert.AreEqual(1, hero.Ratings.Survivability);
+            Assert.AreEqual(7, hero.Ratings.Utility);
 
             // weapons
-            Assert.Equal("HeroAbathur", hero.Weapons[0].WeaponNameId);
-            Assert.Equal("0,7", hero.Weapons[0].Period.ToString());
-            Assert.Equal("26", hero.Weapons[0].Damage.ToString());
+            Assert.AreEqual("HeroAbathur", hero.Weapons[0].WeaponNameId);
+            Assert.AreEqual("0,7", hero.Weapons[0].Period.ToString());
+            Assert.AreEqual("26", hero.Weapons[0].Damage.ToString());
         }
 
-        [Fact]
+        [TestMethod]
         public void HeroDataAbilityTalentLinkIdsTests()
         {
             IHeroesData heroData = HeroesIcons.HeroesData(71138);
             Hero hero = HeroesData.HeroData("Abathur");
 
             Talent talent = hero.Talents["AbathurMasteryRegenerativeMicrobes"];
-            Assert.True(talent.AbilityTalentLinkIds.Count == 2);
-            Assert.Contains("AbathurSymbiote", talent.AbilityTalentLinkIds);
-            Assert.Contains("AbathurSymbioteCarapace", talent.AbilityTalentLinkIds);
+            Assert.IsTrue(talent.AbilityTalentLinkIds.Count == 2);
+            Assert.IsTrue(talent.AbilityTalentLinkIds.Contains("AbathurSymbiote"));
+            Assert.IsTrue(talent.AbilityTalentLinkIds.Contains("AbathurSymbioteCarapace"));
         }
 
-        [Fact]
+        [TestMethod]
         public void MountAndHeartLinkIdTests()
         {
             IHeroesData heroData = HeroesIcons.HeroesData(71138);
             Hero hero = HeroesData.HeroData("Abathur");
 
-            Assert.True(hero.Abilities.ContainsKey("PortBackToBaseNoMana"));
-            Assert.True(hero.MountLinkId == "AbathurDeepTunnel");
+            Assert.IsTrue(hero.Abilities.ContainsKey("PortBackToBaseNoMana"));
+            Assert.IsTrue(hero.MountLinkId == "AbathurDeepTunnel");
 
             hero = HeroesData.HeroData("Tychus");
-            Assert.True(hero.Abilities.ContainsKey("PortBackToBase"));
-            Assert.True(hero.Abilities.ContainsKey("SummonMount"));
+            Assert.IsTrue(hero.Abilities.ContainsKey("PortBackToBase"));
+            Assert.IsTrue(hero.Abilities.ContainsKey("SummonMount"));
         }
     }
 }

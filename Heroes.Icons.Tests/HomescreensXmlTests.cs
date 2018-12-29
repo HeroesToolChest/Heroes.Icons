@@ -1,9 +1,10 @@
 ﻿using Heroes.Icons.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using Xunit;
 
 namespace Heroes.Icons.Tests
 {
+    [TestClass]
     public class HomescreensXmlTests : HeroesIconsBase
     {
         private readonly IHomescreens Homescreens;
@@ -13,24 +14,24 @@ namespace Heroes.Icons.Tests
             Homescreens = HeroesIcons.Homescreens();
         }
 
-        [Fact]
+        [TestMethod]
         public void GetTotalCountOfHomescreensTest()
         {
-            Assert.True(Homescreens.Count() >= 4);
+            Assert.IsTrue(Homescreens.Count() >= 4);
         }
 
-        [Fact]
+        [TestMethod]
         public void ListOfHomescreensTest()
         {
-            Assert.True(Homescreens.Homescreens().Count() >= 4);
+            Assert.IsTrue(Homescreens.Homescreens().Count() >= 4);
         }
 
-        [Fact]
+        [TestMethod]
         public void HomeScreenImageFileNameTests()
         {
             foreach (Homescreen homescreen in Homescreens.Homescreens().ToList())
             {
-                Assert.False(string.IsNullOrEmpty(homescreen.ImageFileName));
+                Assert.IsFalse(string.IsNullOrEmpty(homescreen.ImageFileName));
             }
         }
     }

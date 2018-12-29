@@ -1,10 +1,11 @@
 ﻿using Heroes.Icons.Models;
 using Heroes.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using Xunit;
 
 namespace Heroes.Icons.Tests
 {
+    [TestClass]
     public class HeroImagesTests : HeroesIconsBase
     {
         private readonly IHeroesData HeroesData;
@@ -20,86 +21,86 @@ namespace Heroes.Icons.Tests
             Homescreens = HeroesIcons.Homescreens();
         }
 
-        [Fact]
+        [TestMethod]
         public void GetTalentImageStreamTest()
         {
             Hero hero = HeroesData.HeroData("Valeera");
-            Assert.NotNull(hero.GetTalent("ValeeraSinisterStrike").AbilityTalentImage());
-            Assert.NotNull(hero.GetTalent("ValeeraSmokeBomb").AbilityTalentImage());
-            Assert.NotNull(hero.GetTalent("ValeeraStealth").AbilityTalentImage());
+            Assert.IsNotNull(hero.GetTalent("ValeeraSinisterStrike").AbilityTalentImage());
+            Assert.IsNotNull(hero.GetTalent("ValeeraSmokeBomb").AbilityTalentImage());
+            Assert.IsNotNull(hero.GetTalent("ValeeraStealth").AbilityTalentImage());
 
-            Assert.NotNull(hero.GetTalent("nothing").AbilityTalentImage());
-            Assert.NotNull(hero.GetTalent(null).AbilityTalentImage());
+            Assert.IsNotNull(hero.GetTalent("nothing").AbilityTalentImage());
+            Assert.IsNotNull(hero.GetTalent(null).AbilityTalentImage());
         }
 
-        [Fact]
+        [TestMethod]
         public void GetMatchAwardImageStreamTest()
         {
             MatchAward matchAward = MatchAwards.MatchAward("ZeroOutnumberedDeaths");
 
-            Assert.NotNull(matchAward.MatchAwardMVPScreenImage(MVPAwardColor.Gold));
-            Assert.NotNull(matchAward.MatchAwardMVPScreenImage(MVPAwardColor.Blue));
-            Assert.NotNull(matchAward.MatchAwardMVPScreenImage(MVPAwardColor.Red));
+            Assert.IsNotNull(matchAward.MatchAwardMVPScreenImage(MVPAwardColor.Gold));
+            Assert.IsNotNull(matchAward.MatchAwardMVPScreenImage(MVPAwardColor.Blue));
+            Assert.IsNotNull(matchAward.MatchAwardMVPScreenImage(MVPAwardColor.Red));
 
-            Assert.NotNull(matchAward.MatchAwardScoreScreenImage(ScoreScreenAwardColor.Blue));
-            Assert.NotNull(matchAward.MatchAwardScoreScreenImage(ScoreScreenAwardColor.Red));
+            Assert.IsNotNull(matchAward.MatchAwardScoreScreenImage(ScoreScreenAwardColor.Blue));
+            Assert.IsNotNull(matchAward.MatchAwardScoreScreenImage(ScoreScreenAwardColor.Red));
         }
 
-        [Fact]
+        [TestMethod]
         public void GetBattlegroundImageStreamTest()
         {
             Battleground battleground = Battlegrounds.Battleground("HauntedWoods");
-            Assert.NotNull(battleground.BattlegroundImage());
+            Assert.IsNotNull(battleground.BattlegroundImage());
         }
 
-        [Fact]
+        [TestMethod]
         public void GetHomescreensImageStreamTest()
         {
             Homescreen homescreen = Homescreens.Homescreens().ToList().FirstOrDefault();
-            Assert.NotNull(homescreen.HomescreenImage());
+            Assert.IsNotNull(homescreen.HomescreenImage());
         }
 
-        [Fact]
+        [TestMethod]
         public void GetHeroPortraitImageStreamTests()
         {
             Hero hero = HeroesData.HeroData("Yrel");
-            Assert.NotNull(hero.HeroPortrait.HeroSelectImage());
-            Assert.NotNull(hero.HeroPortrait.LeaderboardImage());
-            Assert.NotNull(hero.HeroPortrait.TargetPortraitImage());
+            Assert.IsNotNull(hero.HeroPortrait.HeroSelectImage());
+            Assert.IsNotNull(hero.HeroPortrait.LeaderboardImage());
+            Assert.IsNotNull(hero.HeroPortrait.TargetPortraitImage());
         }
 
-        [Fact]
+        [TestMethod]
         public void GetHeroFranchiseImageStreamTest()
         {
             Hero hero = HeroesData.HeroData("Zeratul");
-            Assert.NotNull(hero.HeroFranchiseImage());
+            Assert.IsNotNull(hero.HeroFranchiseImage());
         }
 
-        [Fact]
+        [TestMethod]
         public void GetHeroRoleImageStreamTest()
         {
             Hero hero = HeroesData.HeroData("Anubarak");
-            Assert.NotNull(hero.HeroRoleImage());
+            Assert.IsNotNull(hero.HeroRoleImage());
 
             hero = HeroesData.HeroData("Varian");
-            Assert.NotNull(hero.HeroRoleImage());
+            Assert.IsNotNull(hero.HeroRoleImage());
         }
 
-        [Fact]
+        [TestMethod]
         public void GetPartyIconImageStreamTest()
         {
-            Assert.NotNull(ImageStreams.PartyIconImage(PartyIconColor.Blue));
-            Assert.NotNull(ImageStreams.PartyIconImage(PartyIconColor.Red));
-            Assert.NotNull(ImageStreams.PartyIconImage(PartyIconColor.Yellow));
-            Assert.NotNull(ImageStreams.PartyIconImage(PartyIconColor.Teal));
+            Assert.IsNotNull(ImageStreams.PartyIconImage(PartyIconColor.Blue));
+            Assert.IsNotNull(ImageStreams.PartyIconImage(PartyIconColor.Red));
+            Assert.IsNotNull(ImageStreams.PartyIconImage(PartyIconColor.Yellow));
+            Assert.IsNotNull(ImageStreams.PartyIconImage(PartyIconColor.Teal));
         }
 
-        [Fact]
+        [TestMethod]
         public void GetOtherIconImageStreamTest()
         {
-            Assert.NotNull(ImageStreams.OtherIconImage(OtherIcon.Assist));
-            Assert.NotNull(ImageStreams.OtherIconImage(OtherIcon.HeroDamage));
-            Assert.NotNull(ImageStreams.OtherIconImage(OtherIcon.TalentUnavailable));
+            Assert.IsNotNull(ImageStreams.OtherIconImage(OtherIcon.Assist));
+            Assert.IsNotNull(ImageStreams.OtherIconImage(OtherIcon.HeroDamage));
+            Assert.IsNotNull(ImageStreams.OtherIconImage(OtherIcon.TalentUnavailable));
         }
     }
 }

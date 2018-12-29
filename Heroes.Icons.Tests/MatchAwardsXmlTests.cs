@@ -1,9 +1,10 @@
 ﻿using Heroes.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using Xunit;
 
 namespace Heroes.Icons.Tests
 {
+    [TestClass]
     public class MatchAwardsXmlTests : HeroesIconsBase
     {
         private readonly IMatchAwards MatchAwards;
@@ -13,30 +14,30 @@ namespace Heroes.Icons.Tests
             MatchAwards = HeroesIcons.MatchAwards(67985);
         }
 
-        [Fact]
+        [TestMethod]
         public void GetTotalCountOfAwardsTest()
         {
-            Assert.True(MatchAwards.Count() >= 37);
+            Assert.IsTrue(MatchAwards.Count() >= 37);
         }
 
-        [Fact]
+        [TestMethod]
         public void GetListOfAwardsTest()
         {
-            Assert.True(MatchAwards.Awards().Count() == MatchAwards.Count());
+            Assert.IsTrue(MatchAwards.Awards().Count() == MatchAwards.Count());
 
             IMatchAwards matchAwards = HeroesIcons.MatchAwards();
-            Assert.True(matchAwards.Awards().Count() == MatchAwards.Count());
+            Assert.IsTrue(matchAwards.Awards().Count() == MatchAwards.Count());
         }
 
-        [Fact]
+        [TestMethod]
         public void MatchAwardsFromIdTest()
         {
             MatchAward matchAward = MatchAwards.MatchAward("ZeroOutnumberedDeaths");
-            Assert.Equal("Team Player", matchAward.Name);
-            Assert.Equal("ZeroOutnumberedDeaths", matchAward.ShortName);
-            Assert.Equal("storm_ui_mvp_teamplayer_%color%.png", matchAward.MVPScreenImageFileName);
-            Assert.Equal("storm_ui_scorescreen_mvp_teamplayer_%team%.png", matchAward.ScoreScreenImageFileName);
-            Assert.Equal("No Deaths While Outnumbered", matchAward.Description.PlainText);
+            Assert.AreEqual("Team Player", matchAward.Name);
+            Assert.AreEqual("ZeroOutnumberedDeaths", matchAward.ShortName);
+            Assert.AreEqual("storm_ui_mvp_teamplayer_%color%.png", matchAward.MVPScreenImageFileName);
+            Assert.AreEqual("storm_ui_scorescreen_mvp_teamplayer_%team%.png", matchAward.ScoreScreenImageFileName);
+            Assert.AreEqual("No Deaths While Outnumbered", matchAward.Description.PlainText);
         }
     }
 }
