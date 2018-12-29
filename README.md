@@ -1,6 +1,5 @@
 # Heroes Icons
-[![Build status](https://ci.appveyor.com/api/projects/status/kjiv2swardk47ltt?svg=true)](https://ci.appveyor.com/project/koliva8245/heroes-icons)
-[![Build Status](https://travis-ci.com/koliva8245/Heroes.Icons.svg?branch=master)](https://travis-ci.com/koliva8245/Heroes.Icons)
+[![Build Status](https://dev.azure.com/kevinkoliva/Heroes%20of%20the%20Storm%20Projects/_apis/build/status/koliva8245.Heroes.Icons?branchName=master)](https://dev.azure.com/kevinkoliva/Heroes%20of%20the%20Storm%20Projects/_build/latest?definitionId=4?branchName=master)
 
 Heroes Icons is a .NET Standard 2.0 library that contains Heroes of the Storm game data, such as Hero data, abilities, talents, match awards, battlegrounds and much more.
 
