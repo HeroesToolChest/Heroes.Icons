@@ -154,7 +154,10 @@ namespace Heroes.Icons.Xml
             List<string> heroNames = new List<string>();
             foreach (XElement heroElement in HeroesDataXmlDocument.Root.Elements())
             {
-                heroNames.Add(heroElement.Attribute("name").Value);
+                string heroName = heroElement.Attribute("name")?.Value;
+
+                if (!string.IsNullOrEmpty(heroName))
+                    heroNames.Add(heroElement.Attribute("name").Value);
             }
 
             return heroNames;
