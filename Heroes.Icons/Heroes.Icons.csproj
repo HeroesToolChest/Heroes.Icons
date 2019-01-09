@@ -24,6 +24,11 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Images\LeaderboardPortraits\storm_ui_ingame_hero_leaderboard_imperius.png" />
+    <None Remove="Images\TargetPortraits\ui_targetportrait_hero_imperius.png" />
+  </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\Heroes.Models\Heroes.Models\Heroes.Models.csproj" />
