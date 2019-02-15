@@ -136,4 +136,10 @@
   <Patch type="Hotfix" link="https://heroesofthestorm.com/en-us/blog/22819173" version="2.41.1.71040"/>
   <Patch type="Balance" link="https://heroesofthestorm.com/en-us/blog/22819175" version="2.41.2.71138"/>
   <Patch type="Imperius" link="https://heroesofthestorm.com/en-us/blog/22856152" version="2.42.0.71449"/>
+  <Patch type="Balance" link="https://heroesofthestorm.com/en-us/blog/22863339" version="2.42.1.71652"/>
+  <Patch type="Hotfix" link="https://heroesofthestorm.com/en-us/blog/22887051" version="2.42.2.71931"/>
+  <Patch type="Abathur/Ana" link="https://heroesofthestorm.com/en-us/blog/22887055" version="2.43.0.72191"/>
+  <Patch type="Hotfix" link="https://heroesofthestorm.com/en-us/blog/22887058" version="2.43.1.72307"/>
+  <Patch type="Balance" link="https://heroesofthestorm.com/en-us/blog/22911361" version="2.43.2.72481"/>
+  <Patch type="Hotfix" link="https://heroesofthestorm.com/en-us/blog/22921912" version="2.43.3.72649"/>
 </Builds>
