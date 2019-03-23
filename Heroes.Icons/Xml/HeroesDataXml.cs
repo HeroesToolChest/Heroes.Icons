@@ -205,7 +205,7 @@ namespace Heroes.Icons.Xml
             if (double.TryParse(heroElement.Attribute("speed")?.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out double speed))
                 hero.Speed = speed;
 
-            if (Enum.TryParse(heroElement.Attribute("rarity")?.Value, out HeroRarity rarity))
+            if (Enum.TryParse(heroElement.Attribute("rarity")?.Value, out Rarity rarity))
                 hero.Rarity = rarity;
 
             hero.MountLinkId = heroElement.Element("MountLinkId")?.Value;
@@ -263,6 +263,9 @@ namespace Heroes.Icons.Xml
 
                 hero.Roles = roles.ToList();
             }
+
+            // expanded roles
+            hero.ExpandedRole = heroElement.Element("ExpandedRole")?.Value;
 
             // ratings
             XElement ratingsElement = heroElement.Element("Ratings");

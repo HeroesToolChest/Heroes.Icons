@@ -89,7 +89,7 @@ namespace Heroes.Icons.Tests
             Assert.AreEqual(12.0, hero.Sight);
             Assert.AreEqual(4.3984, hero.Speed);
             Assert.AreEqual("Melee", hero.Type);
-            Assert.AreEqual(HeroRarity.Legendary, hero.Rarity);
+            Assert.AreEqual(Rarity.Legendary, hero.Rarity);
             Assert.AreEqual("A unique Hero that can manipulate the battle from anywhere on the map.", hero.Description.RawDescription);
 
             // portraits
