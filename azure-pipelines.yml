@@ -9,10 +9,10 @@ jobs:
   parameters:
     name: macOS
     pool:
-      vmImage: 'macOS-10.13'
+      vmImage: 'macOS-10.14'
   
 - template: azure-pipelines-template.yml
   parameters:
     name: Windows
     pool:
-      vmImage: 'vs2017-win2016'
+      vmImage: 'windows-2019'
