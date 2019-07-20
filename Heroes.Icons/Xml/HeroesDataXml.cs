@@ -173,16 +173,27 @@ namespace Heroes.Icons.Xml
             if (heroElement == null)
                 return null;
 
-            Hero hero = new Hero
+            Hero hero = new Hero();
+
+            if (!string.IsNullOrEmpty(heroElement.Attribute("unitId")?.Value))
             {
-                ShortName = XmlConvert.DecodeName(heroElement.Name.LocalName),
-                Name = heroElement.Attribute("name")?.Value,
-                CHeroId = heroElement.Attribute("cHeroId")?.Value,
-                CUnitId = heroElement.Attribute("cUnitId")?.Value,
-                AttributeId = heroElement.Attribute("attributeId")?.Value,
-                Difficulty = heroElement.Attribute("difficulty")?.Value,
-                Type = heroElement.Attribute("type")?.Value,
-            };
+                hero.ShortName = heroElement.Attribute("hyperlinkId")?.Value;
+                hero.CUnitId = heroElement.Attribute("unitId")?.Value;
+                hero.CHeroId = XmlConvert.DecodeName(heroElement.Name.LocalName);
+            }
+            else
+            {
+                hero.ShortName = XmlConvert.DecodeName(heroElement.Name.LocalName);
+
+                hero.CHeroId = heroElement.Attribute("cHeroId")?.Value;
+                hero.CUnitId = heroElement.Attribute("cUnitId")?.Value;
+
+            }
+
+            hero.Name = heroElement.Attribute("name")?.Value;
+            hero.AttributeId = heroElement.Attribute("attributeId")?.Value;
+            hero.Difficulty = heroElement.Attribute("difficulty")?.Value;
+            hero.Type = heroElement.Attribute("type")?.Value;
 
             if (Enum.TryParse(heroElement.Attribute("franchise")?.Value, out HeroFranchise franchise))
                 hero.Franchise = franchise;
