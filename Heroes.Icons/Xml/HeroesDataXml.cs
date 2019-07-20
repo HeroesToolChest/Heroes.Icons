@@ -179,7 +179,7 @@ namespace Heroes.Icons.Xml
 
             Hero hero = new Hero();
 
-            if (!string.IsNullOrEmpty(heroElement.Attribute("unitId")?.Value))
+            if (!string.IsNullOrEmpty(heroElement.Attribute("hyperlinkId")?.Value))
             {
                 hero.ShortName = heroElement.Attribute("hyperlinkId")?.Value;
                 hero.CUnitId = heroElement.Attribute("unitId")?.Value;
