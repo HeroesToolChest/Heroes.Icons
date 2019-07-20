@@ -175,6 +175,8 @@ namespace Heroes.Icons.Xml
             if (heroElement == null)
                 return null;
 
+            bool isNewFormat = false;
+
             Hero hero = new Hero();
 
             if (!string.IsNullOrEmpty(heroElement.Attribute("unitId")?.Value))
@@ -182,6 +184,7 @@ namespace Heroes.Icons.Xml
                 hero.ShortName = heroElement.Attribute("hyperlinkId")?.Value;
                 hero.CUnitId = heroElement.Attribute("unitId")?.Value;
                 hero.CHeroId = XmlConvert.DecodeName(heroElement.Name.LocalName);
+                isNewFormat = true;
             }
             else
             {
@@ -232,8 +235,16 @@ namespace Heroes.Icons.Xml
                 hero.HeroPortrait.HeroSelectPortraitFileName = portraitElement.Element("HeroSelect")?.Value;
                 hero.HeroPortrait.LeaderboardPortraitFileName = portraitElement.Element("Leaderboard")?.Value;
                 hero.HeroPortrait.LoadingScreenPortraitFileName = portraitElement.Element("Loading")?.Value;
-                hero.HeroPortrait.PartyPanelPortraitFileName = portraitElement.Element("PartyFrame")?.Value;
                 hero.HeroPortrait.TargetPortraitFileName = portraitElement.Element("Target")?.Value;
+
+                if (isNewFormat)
+                {
+                    // blank out
+                }
+                else
+                {
+                    hero.HeroPortrait.PartyPanelPortraitFileName = portraitElement.Element("PartyFrame")?.Value;
+                }
             }
 
             // life
@@ -323,7 +334,7 @@ namespace Heroes.Icons.Xml
                 XElement abilitiesElement = heroElement.Element("Abilities");
                 if (abilitiesElement != null)
                 {
-                    SetAbilities(abilitiesElement, hero);
+                    SetAbilities(abilitiesElement, hero, isNewFormat);
                 }
 
                 // sub abilities
@@ -333,7 +344,7 @@ namespace Heroes.Icons.Xml
                     XElement parentLinkAbility = subAbilitiesElement.Elements().FirstOrDefault();
                     string parentLink = parentLinkAbility.Name.LocalName;
 
-                    SetAbilities(parentLinkAbility, hero, parentLink);
+                    SetAbilities(parentLinkAbility, hero, isNewFormat, parentLink);
                 }
             }
 
@@ -343,7 +354,7 @@ namespace Heroes.Icons.Xml
                 XElement talentsElement = heroElement.Element("Talents");
                 if (talentsElement != null)
                 {
-                    SetTalents(talentsElement, hero);
+                    SetTalents(talentsElement, hero, isNewFormat);
                 }
             }
 
@@ -380,7 +391,7 @@ namespace Heroes.Icons.Xml
             return hero;
         }
 
-        private void SetAbilities(XElement abilityElements, Hero hero, string parentLink = "")
+        private void SetAbilities(XElement abilityElements, Hero hero, bool isNewFormat, string parentLink = "")
         {
             if (abilityElements == null)
                 return;
@@ -398,17 +409,17 @@ namespace Heroes.Icons.Xml
                         Tier = abilityTier,
                     };
 
-                    SetAbilityTalentData(abilityElement, hero, ability);
+                    SetAbilityTalentData(abilityElement, ability, isNewFormat);
 
                     if (!string.IsNullOrEmpty(parentLink))
                         ability.ParentLink = parentLink;
 
-                    hero.Abilities.Add(ability.ReferenceNameId, ability);
+                    hero.Abilities.Add($"{ability.ReferenceNameId}|{ability.ButtonName}", ability);
                 }
             }
         }
 
-        private void SetTalents(XElement talentElements, Hero hero)
+        private void SetTalents(XElement talentElements, Hero hero, bool isNewFormat)
         {
             if (talentElements == null)
                 return;
@@ -435,16 +446,26 @@ namespace Heroes.Icons.Xml
                         }
                     }
 
-                    SetAbilityTalentData(talentElement, hero, talent);
+                    SetAbilityTalentData(talentElement, talent, false);
 
                     hero.Talents.Add(talent.ReferenceNameId, talent);
                 }
             }
         }
 
-        private void SetAbilityTalentData(XElement abilityTalentElement, Hero hero, AbilityTalentBase abilityTalent)
+        private void SetAbilityTalentData(XElement abilityTalentElement, AbilityTalentBase abilityTalent, bool isNewFormat)
         {
-            abilityTalent.ReferenceNameId = XmlConvert.DecodeName(abilityTalentElement.Name.LocalName);
+            if (isNewFormat)
+            {
+                string abilityId = XmlConvert.DecodeName(abilityTalentElement.Name.LocalName);
+                string buttonId = abilityTalentElement.Attribute("buttonId")?.Value;
+                abilityTalent.ReferenceNameId = $"{abilityId}|{buttonId}";
+            }
+            else
+            {
+                abilityTalent.ReferenceNameId = XmlConvert.DecodeName(abilityTalentElement.Name.LocalName);
+            }
+
             abilityTalent.Name = abilityTalentElement.Attribute("name")?.Value;
             abilityTalent.ShortTooltipNameId = abilityTalentElement.Attribute("shortTooltipId")?.Value;
             abilityTalent.FullTooltipNameId = abilityTalentElement.Attribute("fullTooltipId")?.Value;
