@@ -136,7 +136,9 @@ namespace Heroes.Icons.Xml
 
         public string HeroNameFromUnitId(string unitId)
         {
-            XElement heroElement = HeroesDataXmlDocument.Root.Elements().FirstOrDefault(x => x.Attribute("cUnitId")?.Value == unitId);
+            XElement heroElement = HeroesDataXmlDocument.Root.Elements().FirstOrDefault(x => x.Attribute("unitId")?.Value == unitId);
+            if (heroElement == null)
+                heroElement = HeroesDataXmlDocument.Root.Elements().FirstOrDefault(x => x.Attribute("cUnitId")?.Value == unitId);
 
             return heroElement?.Attribute("name")?.Value;
         }
@@ -187,7 +189,6 @@ namespace Heroes.Icons.Xml
 
                 hero.CHeroId = heroElement.Attribute("cHeroId")?.Value;
                 hero.CUnitId = heroElement.Attribute("cUnitId")?.Value;
-
             }
 
             hero.Name = heroElement.Attribute("name")?.Value;
