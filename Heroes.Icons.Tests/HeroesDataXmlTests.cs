@@ -127,7 +127,7 @@ namespace Heroes.Icons.Tests
             Assert.AreEqual(0.04, hero.Weapons[0].DamageScaling);
 
             // abilities
-            Ability firstAbility = hero.Abilities["AbathurSymbiote"];
+            Ability firstAbility = hero.Abilities["AbathurSymbiote|"];
             Assert.AreEqual("AbathurSymbiote", firstAbility.ReferenceNameId);
             Assert.AreEqual("Symbiote", firstAbility.Name);
             Assert.AreEqual("AbathurSymbiote", firstAbility.ShortTooltipNameId);
@@ -138,7 +138,7 @@ namespace Heroes.Icons.Tests
             Assert.AreEqual("Spawn and attach a Symbiote to a target ally or Structure. While active, Abathur controls the Symbiote, gaining access to new Abilities. The Symbiote is able to gain XP from nearby enemy deaths.", firstAbility.Tooltip.FullTooltip.RawDescription);
             Assert.AreEqual(AbilityType.Q, firstAbility.AbilityType);
 
-            Ability secondAbility = hero.Abilities["AbathurToxicNest"];
+            Ability secondAbility = hero.Abilities["AbathurToxicNest|"];
             Assert.AreEqual(3, secondAbility.Tooltip.Charges.CountMax);
             Assert.AreEqual(1, secondAbility.Tooltip.Charges.CountUse);
             Assert.AreEqual(3, secondAbility.Tooltip.Charges.CountStart);
@@ -158,30 +158,6 @@ namespace Heroes.Icons.Tests
             Assert.AreEqual("Clone target allied Hero and control it for <c val=\"#TooltipNumbers\">20</c> seconds. Abathur has perfected the clone, granting it <c val=\"#TooltipNumbers\">20%</c> Spell Power, <c val=\"#TooltipNumbers\">20%</c> bonus Attack Damage, and <c val=\"#TooltipNumbers\">10%</c> bonus Movement Speed. Cannot use their Heroic Ability.", talent.Tooltip.FullTooltip.RawDescription);
             Assert.AreEqual(AbilityType.Heroic, talent.AbilityType);
             Assert.IsTrue(talent.IsActive);
-
-            // hero units
-            Unit heroUnit = hero.HeroUnits[0];
-
-            Assert.AreEqual("AbathurSymbiote", heroUnit.ShortName);
-            Assert.AreEqual("Symbiote", heroUnit.Name);
-            Assert.AreEqual("AbathurSymbiote", heroUnit.CUnitId);
-            Assert.AreEqual(0, heroUnit.InnerRadius);
-            Assert.AreEqual(0, heroUnit.Radius);
-            Assert.AreEqual(4.0, heroUnit.Sight);
-            Assert.AreEqual(0.0117, heroUnit.Speed);
-            Assert.AreEqual("Ranged", heroUnit.Type);
-            Assert.IsTrue(string.IsNullOrEmpty(heroUnit.Description.RawDescription));
-
-            Ability heroUnitAbility = heroUnit.Abilities["AbathurSymbioteCarapace"];
-            Assert.AreEqual("AbathurSymbioteCarapace", heroUnitAbility.ReferenceNameId);
-            Assert.AreEqual("Carapace", heroUnitAbility.Name);
-            Assert.AreEqual("AbathurSymbioteCarapace", heroUnitAbility.ShortTooltipNameId);
-            Assert.AreEqual("AbathurSymbioteCarapace", heroUnitAbility.FullTooltipNameId);
-            Assert.AreEqual("storm_ui_icon_abathur_carapace.png", heroUnitAbility.IconFileName);
-            Assert.AreEqual("Cooldown: 12 seconds", heroUnitAbility.Tooltip.Cooldown.CooldownTooltip.RawDescription);
-            Assert.IsTrue(string.IsNullOrEmpty(heroUnitAbility.Tooltip.ShortTooltip.RawDescription));
-            Assert.AreEqual("Shields the assisted ally for <c val=\"#TooltipNumbers\">157~~0.04~~</c>. Lasts for <c val=\"#TooltipNumbers\">8</c> seconds.", heroUnitAbility.Tooltip.FullTooltip.RawDescription);
-            Assert.AreEqual(AbilityType.E, heroUnitAbility.AbilityType);
         }
 
         [TestMethod]
@@ -199,7 +175,7 @@ namespace Heroes.Icons.Tests
             Assert.AreEqual(1, hero.Roles.Count);
 
             // abilities
-            Ability ability = hero.Abilities["TychusRunAndGun"];
+            Ability ability = hero.Abilities["TychusRunAndGun|"];
             Assert.AreEqual(1, ability.Tooltip.Charges.CountMax);
             Assert.AreEqual(1, ability.Tooltip.Charges.CountUse);
             Assert.AreEqual(1, ability.Tooltip.Charges.CountStart);
@@ -207,7 +183,7 @@ namespace Heroes.Icons.Tests
             Assert.IsTrue(ability.Tooltip.Charges.IsHideCount.Value);
             Assert.AreEqual(AbilityType.E, ability.AbilityType);
 
-            ability = hero.GetAbility("TychusRunAndGun");
+            ability = hero.GetAbility("TychusRunAndGun|");
             Assert.IsTrue(ability.Tooltip.Charges.IsHideCount.Value);
             Assert.AreEqual(AbilityType.E, ability.AbilityType);
 
@@ -324,20 +300,6 @@ namespace Heroes.Icons.Tests
             Assert.IsTrue(talent.AbilityTalentLinkIds.Count == 2);
             Assert.IsTrue(talent.AbilityTalentLinkIds.Contains("AbathurSymbiote"));
             Assert.IsTrue(talent.AbilityTalentLinkIds.Contains("AbathurSymbioteCarapace"));
-        }
-
-        [TestMethod]
-        public void MountAndHeartLinkIdTests()
-        {
-            IHeroesData heroData = HeroesIcons.HeroesData(71138);
-            Hero hero = HeroesData.HeroData("Abathur");
-
-            Assert.IsTrue(hero.Abilities.ContainsKey("PortBackToBaseNoMana"));
-            Assert.IsTrue(hero.MountLinkId == "AbathurDeepTunnel");
-
-            hero = HeroesData.HeroData("Tychus");
-            Assert.IsTrue(hero.Abilities.ContainsKey("PortBackToBase"));
-            Assert.IsTrue(hero.Abilities.ContainsKey("SummonMount"));
         }
     }
 }

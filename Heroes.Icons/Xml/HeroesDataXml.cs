@@ -358,36 +358,6 @@ namespace Heroes.Icons.Xml
                 }
             }
 
-            // hero units
-            if (additionalUnits)
-            {
-                XElement heroUnitsElement = heroElement.Element("HeroUnits");
-                if (heroUnitsElement != null)
-                {
-                    XElement heroNameElement = heroUnitsElement.Elements().FirstOrDefault();
-
-                    List<Unit> heroUnits = new List<Unit>();
-
-                    foreach (XElement heroUnitElement in heroNameElement.Elements())
-                    {
-                        Hero heroUnit = GetHeroDataFromDataXml(heroUnitElement, includeAbilities, includeTalents, additionalUnits);
-                        heroUnit.ParentLink = heroNameElement.Name.LocalName;
-                        heroUnits.Add(heroUnit);
-                    }
-
-                    hero.HeroUnits = heroUnits;
-                }
-            }
-
-            if (StormHero != null && includeAbilities && hero.Abilities != null)
-            {
-                if (!string.IsNullOrEmpty(hero.MountLinkId) && !hero.Abilities.ContainsKey(hero.MountLinkId))
-                    hero.Abilities.Add(hero.MountLinkId, StormHero.Abilities[hero.MountLinkId]);
-
-                if (!string.IsNullOrEmpty(hero.HearthLinkId) && !hero.Abilities.ContainsKey(hero.HearthLinkId))
-                    hero.Abilities.Add(hero.HearthLinkId, StormHero.Abilities[hero.HearthLinkId]);
-            }
-
             return hero;
         }
 
