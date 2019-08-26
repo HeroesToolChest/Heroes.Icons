@@ -384,7 +384,12 @@ namespace Heroes.Icons.Xml
                     if (!string.IsNullOrEmpty(parentLink))
                         ability.ParentLink = parentLink;
 
-                    hero.Abilities.Add($"{ability.ReferenceNameId}|{ability.ButtonName}", ability);
+                    string abilityKey = $"{ability.ReferenceNameId}|{ability.ButtonName}";
+
+                    if (!hero.Abilities.ContainsKey(abilityKey))
+                    {
+                        hero.Abilities.Add(abilityKey, ability);
+                    }
                 }
             }
         }
