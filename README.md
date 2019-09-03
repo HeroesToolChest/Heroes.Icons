@@ -1,7 +1,7 @@
 # Heroes Icons
 [![Build Status](https://dev.azure.com/kevinkoliva/Heroes%20of%20the%20Storm%20Projects/_apis/build/status/koliva8245.Heroes.Icons?branchName=master)](https://dev.azure.com/kevinkoliva/Heroes%20of%20the%20Storm%20Projects/_build/latest?definitionId=4)
 
-**This library is now deprecated and a new version will be created to support Heroes Data Parser version 4**
+**This library is now deprecated and a new version is under development which will support Heroes Data Parser version 4. The new version will be a dotnet core 3.0 library. .NET Framework support will no longer be supported.**
 
 Heroes Icons is a .NET Standard 2.0 library that contains Heroes of the Storm game data, such as Hero data, abilities, talents, match awards, battlegrounds and much more.
 
