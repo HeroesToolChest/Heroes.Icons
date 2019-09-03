@@ -16,9 +16,9 @@ jobs:
           configuration: $(config_release)
     steps:
     - task: DotNetCoreInstaller@0
-      displayName: dotnet installer 2.2.105
+      displayName: dotnet installer 3.0.100-preview8-013656
       inputs:
-        version: '2.2.105'
+        version: '3.0.100-preview8-013656'
         
     - script: dotnet build -c $(configuration)
       displayName: Build
