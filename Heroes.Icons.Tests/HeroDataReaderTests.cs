@@ -11,8 +11,8 @@ namespace Heroes.Icons.Tests
         [TestMethod]
         public void GetHeroTests()
         {
-            HeroDataReader heroDataReader = HeroDataReader.Parse(@"F:\heroes\heroes_76003\data\json\herodata_76003_enus.json");
-            var a = heroDataReader.GetHero("Alexstrasza");
+            //HeroDataReader heroDataReader = HeroDataReader.Parse(@"F:\heroes\heroes_76003\data\json\herodata_76003_enus.json");
+            //var a = heroDataReader.GetHero("Alexstrasza");
 
         }
     }
