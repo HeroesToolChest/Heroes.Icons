@@ -11,8 +11,13 @@ namespace Heroes.Icons.Tests
         [TestMethod]
         public void GetHeroTests()
         {
-            //HeroDataReader heroDataReader = HeroDataReader.Parse(@"F:\heroes\heroes_76003\data\json\herodata_76003_enus.json");
-            //var a = heroDataReader.GetHero("Alexstrasza");
+            //using HeroDataReader heroDataReader = HeroDataReader.Parse(@"F:\heroes\heroes_76003\data\json\herodata_76003_enus.json");
+            //using HeroDataReader heroDataReader2 = HeroDataReader.Parse(@"F:\heroes\heroes_76003\json\herodata_76003_localized.min.json");
+
+            //var a = heroDataReader2.GetHeroById("Zuljin", abilities: true, talents: true);
+            //var b = heroDataReader2.GetHeroByName("Zul'jin", abilities: true);
+
+            //GamestringReader gamestringReader = new GamestringReader(@"F:\heroes\heroes_76003\gamestrings-76003\gamestrings_76003_enus.txt");
 
         }
     }

@@ -1,28 +1,33 @@
 ﻿using Heroes.Models;
+using Heroes.Models.AbilityTalents;
 using System;
-using System.Buffers;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Text.Json;
-using System.Xml.Linq;
 
 namespace Heroes.Icons
 {
-    public sealed class HeroDataReader : IDisposable
+    public sealed class HeroDataReader : UnitData
     {
-        private readonly string _filePath;
-        private readonly JsonDocument _jsonDocument;
 
-        private HeroDataReader(string filePath)
+
+        private HeroDataReader(string dataFilePath)
+            : base(dataFilePath)
         {
-            _filePath = filePath;
-            _jsonDocument = JsonDocument.Parse(File.ReadAllBytes(_filePath));
         }
 
-        public static HeroDataReader Parse(string filePath)
+        private HeroDataReader(string dataFilePath, string gameStringFilePath)
+            : base(dataFilePath, gameStringFilePath)
         {
-            return new HeroDataReader(filePath);
+        }
+
+        public static HeroDataReader Parse(string jsonHeroData)
+        {
+            return new HeroDataReader(jsonHeroData);
+        }
+
+        public static HeroDataReader Parse(string jsonHeroData, string jsonGameStrings)
+        {
+            return new HeroDataReader(jsonHeroData, jsonGameStrings);
         }
 
         //public HeroData()
@@ -42,206 +47,266 @@ namespace Heroes.Icons
         //    LoadData();
         //}
 
-        public Hero GetHero(string heroId)
+        public Hero GetHeroById(string heroId, bool abilities = false, bool subAbilities = false, bool talents = false, bool heroUnits = false)
         {
-            Hero hero = new Hero();
-
-            JsonElement jsonElement = _jsonDocument.RootElement;
-
-            if (jsonElement.TryGetProperty(heroId, out JsonElement heroIdElement))
+            if (JsonDataDocument.RootElement.TryGetProperty(heroId, out JsonElement heroElement))
             {
+                Hero hero = GetHeroData(heroElement, abilities, subAbilities, talents, heroUnits);
                 hero.Id = heroId;
-                hero.Name = heroIdElement.GetProperty("name").GetString();
-                hero.CUnitId = heroIdElement.GetProperty("unitId").GetString();
-                hero.HyperlinkId = heroIdElement.GetProperty("hyperlinkId").GetString();
-                hero.AttributeId = heroIdElement.GetProperty("attributeId").GetString();
-                hero.Difficulty = heroIdElement.GetProperty("difficulty").GetString();
+                hero.CHeroId = heroId;
 
-                if (Enum.TryParse(heroIdElement.GetProperty("franchise").GetString(), out HeroFranchise heroFranchise))
-                    hero.Franchise = heroFranchise;
-                else
-                    hero.Franchise = HeroFranchise.Unknown;
+                return hero;
+            }
 
-                if (Enum.TryParse(heroIdElement.GetProperty("gender").GetString(), out UnitGender unitGender))
-                    hero.Gender = unitGender;
-                else
-                    hero.Gender = UnitGender.Neutral;
+            throw new KeyNotFoundException();
+        }
 
-                if (heroIdElement.TryGetProperty("title", out JsonElement title))
-                    hero.Title = title.GetString();
+        public Hero GetHeroByName(string name, bool abilities = false, bool subAbilities = false, bool talents = false, bool heroUnits = false)
+        {
+            JsonElement jsonElement = JsonDataDocument.RootElement;
 
-                hero.InnerRadius = heroIdElement.GetProperty("innerRadius").GetDouble();
-                hero.Radius = heroIdElement.GetProperty("radius").GetDouble();
-
-                if (heroIdElement.GetProperty("releaseDate").TryGetDateTime(out DateTime releaseDate))
-                    hero.ReleaseDate = releaseDate;
-
-                hero.Sight = heroIdElement.GetProperty("sight").GetDouble();
-                hero.Speed = heroIdElement.GetProperty("speed").GetDouble();
-                hero.Type = heroIdElement.GetProperty("type").GetString();
-
-                if (Enum.TryParse(heroIdElement.GetProperty("rarity").GetString(), out Rarity rarity))
-                    hero.Rarity = rarity;
-                else
-                    hero.Rarity = Rarity.Unknown;
-
-                if (heroIdElement.TryGetProperty("scalingLinkId", out JsonElement scalingLinkId))
-                    hero.ScalingBehaviorLink = scalingLinkId.GetString();
-
-                if (heroIdElement.TryGetProperty("searchText", out JsonElement searchText))
-                    hero.SearchText = searchText.GetString();
-
-                if (heroIdElement.TryGetProperty("description", out JsonElement description))
-                    hero.Description = new TooltipDescription(description.GetString());
-
-                if (heroIdElement.TryGetProperty("descriptors", out JsonElement descriptors))
+            foreach (JsonProperty heroElement in jsonElement.EnumerateObject())
+            {
+                if (heroElement.Value.TryGetProperty("name", out JsonElement nameElement) && nameElement.ValueEquals(name))
                 {
-                    foreach (JsonElement descriptorArrayElement in descriptors.EnumerateArray())
-                        hero.AddHeroDescriptor(descriptorArrayElement.GetString());
+                    Hero hero = GetHeroData(heroElement.Value, abilities, subAbilities, talents, heroUnits);
+                    hero.Id = heroElement.Name;
+                    hero.CHeroId = heroElement.Name;
+
+                    return hero;
                 }
+            }
 
-                if (heroIdElement.TryGetProperty("units", out JsonElement units))
-                {
-                    foreach (JsonElement unitArrayElement in units.EnumerateArray())
-                        hero.AddUnitId(unitArrayElement.GetString());
-                }
+            throw new KeyNotFoundException();
+        }
 
-                // portraits
-                if (heroIdElement.TryGetProperty("portraits", out JsonElement portraits))
+        private Hero GetHeroData(JsonElement heroElement, bool includeAbilities, bool includeSubAbilities, bool includeTalents, bool includeHeroUnits)
+        {
+            Hero hero = new Hero
+            {
+                CUnitId = heroElement.GetProperty("unitId").GetString(),
+                HyperlinkId = heroElement.GetProperty("hyperlinkId").GetString(),
+                AttributeId = heroElement.GetProperty("attributeId").GetString(),
+            };
+
+            if (heroElement.TryGetProperty("name", out JsonElement name))
+                hero.Name = name.GetString();
+
+            if (heroElement.TryGetProperty("difficulty", out JsonElement difficulty))
+                hero.Difficulty = difficulty.GetString();
+
+            if (Enum.TryParse(heroElement.GetProperty("franchise").GetString(), out HeroFranchise heroFranchise))
+                hero.Franchise = heroFranchise;
+            else
+                hero.Franchise = HeroFranchise.Unknown;
+
+            if (Enum.TryParse(heroElement.GetProperty("gender").GetString(), out UnitGender unitGender))
+                hero.Gender = unitGender;
+            else
+                hero.Gender = UnitGender.Neutral;
+
+            if (heroElement.TryGetProperty("title", out JsonElement title))
+                hero.Title = title.GetString();
+
+            hero.InnerRadius = heroElement.GetProperty("innerRadius").GetDouble();
+            hero.Radius = heroElement.GetProperty("radius").GetDouble();
+
+            if (heroElement.GetProperty("releaseDate").TryGetDateTime(out DateTime releaseDate))
+                hero.ReleaseDate = releaseDate;
+
+            hero.Sight = heroElement.GetProperty("sight").GetDouble();
+            hero.Speed = heroElement.GetProperty("speed").GetDouble();
+
+            if (heroElement.TryGetProperty("type", out JsonElement type))
+                hero.Type = type.GetString();
+
+            if (Enum.TryParse(heroElement.GetProperty("rarity").GetString(), out Rarity rarity))
+                hero.Rarity = rarity;
+            else
+                hero.Rarity = Rarity.Unknown;
+
+            if (heroElement.TryGetProperty("scalingLinkId", out JsonElement scalingLinkId))
+                hero.ScalingBehaviorLink = scalingLinkId.GetString();
+
+            if (heroElement.TryGetProperty("searchText", out JsonElement searchText))
+                hero.SearchText = searchText.GetString();
+
+            if (heroElement.TryGetProperty("description", out JsonElement description))
+                hero.Description = new TooltipDescription(description.GetString());
+
+            if (heroElement.TryGetProperty("descriptors", out JsonElement descriptors))
+            {
+                foreach (JsonElement descriptorArrayElement in descriptors.EnumerateArray())
+                    hero.AddHeroDescriptor(descriptorArrayElement.GetString());
+            }
+
+            if (heroElement.TryGetProperty("units", out JsonElement units))
+            {
+                foreach (JsonElement unitArrayElement in units.EnumerateArray())
+                    hero.AddUnitId(unitArrayElement.GetString());
+            }
+
+            // portraits
+            if (heroElement.TryGetProperty("portraits", out JsonElement portraits))
+            {
+                if (portraits.TryGetProperty("heroSelect", out JsonElement heroSelect))
+                    hero.HeroPortrait.HeroSelectPortraitFileName = heroSelect.GetString();
+                if (portraits.TryGetProperty("leaderboard", out JsonElement leaderboard))
+                    hero.HeroPortrait.LeaderboardPortraitFileName = leaderboard.GetString();
+                if (portraits.TryGetProperty("loading", out JsonElement loading))
+                    hero.HeroPortrait.LoadingScreenPortraitFileName = loading.GetString();
+                if (portraits.TryGetProperty("partyPanel", out JsonElement partyPanel))
+                    hero.HeroPortrait.PartyPanelPortraitFileName = partyPanel.GetString();
+                if (portraits.TryGetProperty("target", out JsonElement target))
+                    hero.HeroPortrait.TargetPortraitFileName = target.GetString();
+                if (portraits.TryGetProperty("draftScreen", out JsonElement draftScreen))
+                    hero.HeroPortrait.DraftScreenFileName = draftScreen.GetString();
+                if (portraits.TryGetProperty("partyFrames", out JsonElement partyFrames))
                 {
-                    if (portraits.TryGetProperty("heroSelect", out JsonElement heroSelect))
-                        hero.HeroPortrait.HeroSelectPortraitFileName = heroSelect.GetString();
-                    if (portraits.TryGetProperty("leaderboard", out JsonElement leaderboard))
-                        hero.HeroPortrait.LeaderboardPortraitFileName = leaderboard.GetString();
-                    if (portraits.TryGetProperty("loading", out JsonElement loading))
-                        hero.HeroPortrait.LoadingScreenPortraitFileName = loading.GetString();
-                    if (portraits.TryGetProperty("partyPanel", out JsonElement partyPanel))
-                        hero.HeroPortrait.PartyPanelPortraitFileName = partyPanel.GetString();
-                    if (portraits.TryGetProperty("target", out JsonElement target))
-                        hero.HeroPortrait.TargetPortraitFileName = target.GetString();
-                    if (portraits.TryGetProperty("draftScreen", out JsonElement draftScreen))
-                        hero.HeroPortrait.DraftScreenFileName = draftScreen.GetString();
-                    if (portraits.TryGetProperty("partyFrames", out JsonElement partyFrames))
+                    foreach (JsonElement partyFrameArrayElement in partyFrames.EnumerateArray())
                     {
-                        foreach (JsonElement partyFrameArrayElement in partyFrames.EnumerateArray())
-                        {
-                            hero.HeroPortrait.PartyFrameFileName.Add(partyFrameArrayElement.GetString());
-                        }
-                    }
-                }
-
-                // life
-                if (heroIdElement.TryGetProperty("life", out JsonElement life))
-                {
-                    hero.Life.LifeMax = life.GetProperty("amount").GetDouble();
-                    hero.Life.LifeScaling = life.GetProperty("scale").GetDouble();
-
-                    if (life.TryGetProperty("type", out JsonElement type))
-                        hero.Life.LifeType = type.GetString();
-
-                    hero.Life.LifeRegenerationRate = life.GetProperty("regenRate").GetDouble();
-                    hero.Life.LifeRegenerationRateScaling = life.GetProperty("regenScale").GetDouble();
-                }
-
-                // shields
-                if (heroIdElement.TryGetProperty("shield", out JsonElement shield))
-                {
-                    hero.Shield.ShieldMax = shield.GetProperty("amount").GetDouble();
-                    hero.Shield.ShieldScaling = shield.GetProperty("scale").GetDouble();
-
-                    if (shield.TryGetProperty("type", out JsonElement type))
-                        hero.Shield.ShieldType = type.GetString();
-
-                    hero.Shield.ShieldRegenerationDelay = shield.GetProperty("regenDelay").GetDouble();
-                    hero.Shield.ShieldRegenerationRate = shield.GetProperty("regenRate").GetDouble();
-                    hero.Shield.ShieldRegenerationRateScaling = shield.GetProperty("regenScale").GetDouble();
-                }
-
-                // energy
-                if (heroIdElement.TryGetProperty("energy", out JsonElement energy))
-                {
-                    hero.Energy.EnergyMax = energy.GetProperty("amount").GetDouble();
-
-                    if (energy.TryGetProperty("type", out JsonElement type))
-                        hero.Energy.EnergyType = type.GetString();
-
-                    hero.Energy.EnergyRegenerationRate = energy.GetProperty("regenRate").GetDouble();
-                }
-
-                // armor
-                if (heroIdElement.TryGetProperty("armor", out JsonElement armor))
-                {
-                    foreach (JsonProperty armorProperty in armor.EnumerateObject())
-                    {
-                        UnitArmor unitArmor = new UnitArmor
-                        {
-                            Type = armorProperty.Name,
-                            BasicArmor = armorProperty.Value.GetProperty("basic").GetInt32(),
-                            AbilityArmor = armorProperty.Value.GetProperty("ability").GetInt32(),
-                            SplashArmor = armorProperty.Value.GetProperty("splash").GetInt32(),
-                        };
-
-                        hero.AddUnitArmor(unitArmor);
-                    }
-                }
-
-                // roles
-                foreach (JsonElement roleArrayElement in heroIdElement.GetProperty("roles").EnumerateArray())
-                    hero.AddRole(roleArrayElement.GetString());
-
-                // expandedRole
-                if (heroIdElement.TryGetProperty("expandedRole", out JsonElement expandedRole))
-                    hero.ExpandedRole = expandedRole.GetString();
-
-                // ratings
-                if (heroIdElement.TryGetProperty("ratings", out JsonElement ratings))
-                {
-                    hero.Ratings.Complexity = ratings.GetProperty("complexity").GetDouble();
-                    hero.Ratings.Damage = ratings.GetProperty("damage").GetDouble();
-                    hero.Ratings.Survivability = ratings.GetProperty("survivability").GetDouble();
-                    hero.Ratings.Utility = ratings.GetProperty("utility").GetDouble();
-                }
-
-                // weapons
-                if (heroIdElement.TryGetProperty("weapons", out JsonElement weapons))
-                {
-                    foreach (JsonElement weaponArrayElement in weapons.EnumerateArray())
-                    {
-                        UnitWeapon unitWeapon = new UnitWeapon
-                        {
-                            WeaponNameId = weaponArrayElement.GetProperty("nameId").GetString(),
-                            Range = weaponArrayElement.GetProperty("range").GetDouble(),
-                            Period = weaponArrayElement.GetProperty("period").GetDouble(),
-                            Damage = weaponArrayElement.GetProperty("damage").GetDouble(),
-                            DamageScaling = weaponArrayElement.GetProperty("damageScale").GetDouble(),
-                        };
-
-                        // attribute factors
-                        if (weaponArrayElement.TryGetProperty("damageFactor", out JsonElement damageFactor))
-                        {
-                            foreach (JsonProperty attributeFactorProperty in damageFactor.EnumerateObject())
-                            {
-                                WeaponAttributeFactor weaponAttributeFactor = new WeaponAttributeFactor
-                                {
-                                    Type = attributeFactorProperty.Name,
-                                    Value = attributeFactorProperty.Value.GetDouble(),
-                                };
-
-                                unitWeapon.AddAttributeFactor(weaponAttributeFactor);
-                            }
-                        }
-
-                        hero.AddUnitWeapon(unitWeapon);
+                        hero.HeroPortrait.PartyFrameFileName.Add(partyFrameArrayElement.GetString());
                     }
                 }
             }
 
+            // life
+            SetUnitLife(heroElement, hero);
+
+            // shield
+            SetUnitShield(heroElement, hero);
+
+            // energy
+            SetUnitEnergy(heroElement, hero);
+
+            // armor
+            SetUnitArmor(heroElement, hero);
+
+            // roles
+            if (heroElement.TryGetProperty("roles", out JsonElement roles))
+            {
+                foreach (JsonElement roleArrayElement in roles.EnumerateArray())
+                    hero.AddRole(roleArrayElement.GetString());
+            }
+
+            // expandedRole
+            if (heroElement.TryGetProperty("expandedRole", out JsonElement expandedRole))
+                hero.ExpandedRole = expandedRole.GetString();
+
+            // ratings
+            if (heroElement.TryGetProperty("ratings", out JsonElement ratings))
+            {
+                hero.Ratings.Complexity = ratings.GetProperty("complexity").GetDouble();
+                hero.Ratings.Damage = ratings.GetProperty("damage").GetDouble();
+                hero.Ratings.Survivability = ratings.GetProperty("survivability").GetDouble();
+                hero.Ratings.Utility = ratings.GetProperty("utility").GetDouble();
+            }
+
+            // weapons
+            SetUnitWeapons(heroElement, hero);
+
+            // abilities
+            if (includeAbilities && heroElement.TryGetProperty("abilities", out JsonElement abilities))
+            {
+                AddAbilities(hero, abilities);
+            }
+
+            // TODO: subAbilities
+            /*if (includeSubAbilities && heroElement.TryGetProperty("subAbilities", out JsonElement subAbilities))
+            //{
+            //    foreach (JsonElement subAbilityArrayElement in subAbilities.EnumerateArray())
+            //    {
+            //        foreach (JsonProperty subAbilityProperty in subAbilityArrayElement.EnumerateObject())
+            //        {
+            //            string parentLink = subAbilityProperty.Name;
+            //            subAbilityProperty.Value
+            //        }
+            //    }
+            }*/
+
+            // talents
+            if (includeTalents && heroElement.TryGetProperty("talents", out JsonElement talents))
+            {
+                if (talents.TryGetProperty("level1", out JsonElement tierElement))
+                    AddTierTalents(hero, tierElement, TalentTier.Level1);
+                if (talents.TryGetProperty("level4", out tierElement))
+                    AddTierTalents(hero, tierElement, TalentTier.Level4);
+                if (talents.TryGetProperty("level7", out tierElement))
+                    AddTierTalents(hero, tierElement, TalentTier.Level7);
+                if (talents.TryGetProperty("level10", out tierElement))
+                    AddTierTalents(hero, tierElement, TalentTier.Level10);
+                if (talents.TryGetProperty("level13", out tierElement))
+                    AddTierTalents(hero, tierElement, TalentTier.Level13);
+                if (talents.TryGetProperty("level16", out tierElement))
+                    AddTierTalents(hero, tierElement, TalentTier.Level16);
+                if (talents.TryGetProperty("level20", out tierElement))
+                    AddTierTalents(hero, tierElement, TalentTier.Level20);
+            }
+
+            SetLocalizedGameStrings(hero);
+            SetLocalizedHeroGameStrings(hero);
+
             return hero;
         }
 
-        public void Dispose()
+        private void AddTierTalents(Hero hero, JsonElement tierElement, TalentTier talentTier)
         {
-            _jsonDocument.Dispose();
+            foreach (JsonElement element in tierElement.EnumerateArray())
+            {
+                Talent talent = new Talent
+                {
+                    Tier = talentTier,
+                };
+
+                SetAbilityTalentBase(talent, element);
+
+                if (element.TryGetProperty("sort", out JsonElement sort))
+                    talent.Column = sort.GetInt32();
+
+                if (element.TryGetProperty("abilityTalentLinkIds", out JsonElement abilityTalentLinkIds))
+                {
+                    foreach (JsonElement abilityTalentLinkIdElement in abilityTalentLinkIds.EnumerateArray())
+                        talent.AddAbilityTalentLinkId(abilityTalentLinkIdElement.GetString());
+                }
+
+                if (element.TryGetProperty("prerequisiteTalentIds", out JsonElement prerequisiteTalentIds))
+                {
+                    foreach (JsonElement prerequisiteTalentIdElement in prerequisiteTalentIds.EnumerateArray())
+                        talent.AddPrerequisiteTalentId(prerequisiteTalentIdElement.GetString());
+                }
+
+                hero.AddTalent(talent);
+            }
+        }
+
+        private void SetLocalizedHeroGameStrings(Hero hero)
+        {
+            if (JsonGameStringDocument != null)
+            {
+                JsonElement element = JsonGameStringDocument.RootElement;
+
+                if (element.TryGetProperty($"unit/difficulty/{hero.CHeroId}", out JsonElement value))
+                    hero.Difficulty = value.ToString();
+                if (element.TryGetProperty($"unit/expandedrole/{hero.CHeroId}", out value))
+                    hero.ExpandedRole = value.ToString();
+
+                if (element.TryGetProperty($"unit/role/{hero.CHeroId}", out value))
+                {
+                    string[] roles = value.ToString().Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (string role in roles)
+                    {
+                        hero.AddRole(role);
+                    }
+                }
+
+                if (element.TryGetProperty($"unit/searchtext/{hero.CHeroId}", out value))
+                    hero.SearchText = value.ToString();
+                if (element.TryGetProperty($"unit/title/{hero.CHeroId}", out value))
+                    hero.Title = value.ToString();
+                if (element.TryGetProperty($"unit/type/{hero.CHeroId}", out value))
+                    hero.Type = value.ToString();
+            }
         }
 
         /// <summary>
