@@ -149,4 +149,9 @@
   <Patch type="Chen" link="https://heroesofthestorm.com/en-us/blog/23013882" version="2.46.0.74739"/>
   <Patch type="Balance" link="https://heroesofthestorm.com/en-us/blog/23057727" version="2.46.1.75132"/>
   <Patch type="Qhira" link="https://heroesofthestorm.com/en-us/blog/23066828" version="2.47.0.75589"/>
+  <Patch type="Hotfix" link="https://heroesofthestorm.com/en-us/blog/23096767" version="2.47.1.75792"/>
+  <Patch type="Balance" link="https://heroesofthestorm.com/en-us/blog/23090872" version="2.47.2.76003"/>
+  <Patch type="Hotfix" link="https://heroesofthestorm.com/en-us/blog/23114897" version="2.47.3.76124"/>
+  <Patch type="Junkrat/Whitemane" link="https://heroesofthestorm.com/en-us/blog/23157783" version="2.48.0.76389"/>
+  <Patch type="Hotfix" link="" version="2.48.1.76437"/>
 </Builds>
