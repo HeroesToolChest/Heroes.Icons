@@ -5,77 +5,89 @@ using System.Text.Json;
 
 namespace Heroes.Icons
 {
-    public class UnitDataReader : UnitData
+    /// <summary>
+    /// Provides access to obtain unit data as well as updating localized strings.
+    /// </summary>
+    public class UnitDataReader : UnitBaseData
     {
         /// <summary>
-        /// Loads the JSON file containing the unit data.
+        /// Initializes a new reader for the json data file.
         /// </summary>
-        /// <param name="jsonData">JSON file containing unit data.</param>
+        /// <param name="jsonDataFilePath">JSON file containing unit data.</param>
+        public UnitDataReader(string jsonDataFilePath)
+            : base(jsonDataFilePath)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new reader for the json data file.
+        /// </summary>
+        /// <param name="jsonDataFilePath">JSON file containing unit data.</param>
+        /// <param name="localization">Localization of data.</param>
+        public UnitDataReader(string jsonDataFilePath, Localization localization)
+            : base(jsonDataFilePath, localization)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new reader for the json data.
+        /// </summary>
+        /// <param name="jsonData">JSON data containing unit data.</param>
         public UnitDataReader(ReadOnlyMemory<byte> jsonData)
             : base(jsonData)
         {
         }
 
         /// <summary>
-        /// Loads the JSON file containing the unit data.
+        /// Initializes a new reader for the json data.
         /// </summary>
-        /// <param name="jsonData">JSON file containing unit data.</param>
-        public UnitDataReader(string jsonData)
-            : base(jsonData)
+        /// <param name="jsonData">JSON data containing unit data.</param>
+        /// <param name="localization">Localization of data.</param>
+        public UnitDataReader(ReadOnlyMemory<byte> jsonData, Localization localization)
+            : base(jsonData, localization)
         {
         }
 
         /// <summary>
-        /// Loads the JSON file containing the unit data along with the gamestring data.
+        /// Initializes a new reader for the json data file.
         /// </summary>
-        /// <param name="jsonData">JSON file containing unit data.</param>
-        /// <param name="gameStringData">JSON file containing gamestrings.</param>
-        public UnitDataReader(string jsonData, string jsonGameStringData)
-            : base(jsonData, jsonGameStringData)
+        /// <param name="jsonDataFilePath">JSON file containing unit data.</param>
+        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
+        public UnitDataReader(string jsonDataFilePath, GameStringReader gameStringReader)
+            : base(jsonDataFilePath, gameStringReader)
         {
         }
 
         /// <summary>
-        /// Parses the JSON file containing the unit data.
+        /// Initializes a new reader for the json data file.
         /// </summary>
-        /// <param name="jsonHeroData">JSON file containing unit data.</param>
-        /// <returns></returns>
-        public static UnitDataReader Parse(ReadOnlyMemory<byte> jsonData)
+        /// <param name="jsonDataFilePath">JSON file containing unit data.</param>
+        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
+        /// <param name="localization">Localization of data.</param>
+        public UnitDataReader(string jsonDataFilePath, GameStringReader gameStringReader, Localization localization)
+            : base(jsonDataFilePath, gameStringReader, localization)
         {
-            return new UnitDataReader(jsonData);
         }
 
         /// <summary>
-        /// Parses the JSON file containing the unit data.
+        /// Initializes a new reader for the json data.
         /// </summary>
-        /// <param name="jsonHeroData">JSON file containing unit data.</param>
-        /// <returns></returns>
-        public static UnitDataReader Parse(string jsonData)
+        /// <param name="jsonData">JSON data containing unit data.</param>
+        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
+        public UnitDataReader(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader)
+            : base(jsonData, gameStringReader)
         {
-            return new UnitDataReader(jsonData);
         }
 
         /// <summary>
-        /// Parses the JSON file containing the unit data along with the locale gamestrings file.
+        /// Initializes a new reader for the json data.
         /// </summary>
-        /// <param name="jsonData">JSON file containing unit data.</param>
-        /// <param name="jsonGameStrings">JSON file containing gamestrings.</param>
-        /// <returns></returns>
-        public static UnitDataReader Parse(string jsonData, string jsonGameStrings)
+        /// <param name="jsonData">JSON data containing unit data.</param>
+        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
+        /// <param name="localization">Localization of data.</param>
+        public UnitDataReader(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader, Localization localization)
+            : base(jsonData, gameStringReader, localization)
         {
-            return new UnitDataReader(jsonData, jsonGameStrings);
-        }
-
-        /// <summary>
-        /// Updates the localized gamestrings for the given <see cref="Unit"/>.
-        /// </summary>
-        /// <param name="unit">Unit id to update.</param>
-        /// <param name="jsonGameStrings">Gamestrings json file with localized text.</param>
-        public static void UpdateGameStrings(Unit unit, string jsonGameStrings)
-        {
-            using UnitDataReader unitDataReader = new UnitDataReader(string.Empty, jsonGameStrings);
-
-            unitDataReader.SetLocalizedGameStrings(unit);
         }
 
         /// <summary>
@@ -86,7 +98,7 @@ namespace Heroes.Icons
         /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
         /// <exception cref="KeyNotFoundException" />
         /// <returns></returns>
-        public Unit GetUnitById(string id, bool abilities = false, bool subAbilities = false)
+        public Unit GetUnitById(string id, bool abilities, bool subAbilities)
         {
             if (id is null)
             {
@@ -107,20 +119,18 @@ namespace Heroes.Icons
         /// <param name="abilities">Value indicating to include abilities.</param>
         /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
         /// <returns></returns>
-        public bool TryGetUnitById(string id, out Unit value, bool abilities = false, bool subAbilities = false)
+        public bool TryGetUnitById(string id, out Unit value, bool abilities, bool subAbilities)
         {
             if (id is null)
-            {
                 throw new ArgumentNullException(nameof(id));
-            }
+            if (JsonDataDocument is null)
+                throw new NullReferenceException(nameof(JsonDataDocument));
 
             value = new Unit();
 
             if (JsonDataDocument.RootElement.TryGetProperty(id, out JsonElement element))
             {
-                value = GetUnitData(element, abilities, subAbilities);
-                value.Id = id;
-                value.CUnitId = id;
+                value = GetUnitData(id, element, abilities, subAbilities);
 
                 return true;
             }
@@ -128,12 +138,38 @@ namespace Heroes.Icons
             return false;
         }
 
-        private Unit GetUnitData(JsonElement element, bool includeAbilities, bool includeSubAbilities)
+        /// <summary>
+        /// Gets a collection of all units.
+        /// </summary>
+        /// <param name="abilities">Value indicating to include abilities.</param>
+        /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
+        /// <returns></returns>
+        public IEnumerable<Unit> GetUnits(bool abilities, bool subAbilities)
+        {
+            List<Unit> unitList = new List<Unit>();
+
+            foreach (JsonProperty unit in JsonDataDocument.RootElement.EnumerateObject())
+            {
+                unitList.Add(GetUnitById(unit.Name, abilities, subAbilities));
+            }
+
+            return unitList;
+        }
+
+        private Unit GetUnitData(string id, JsonElement element, bool includeAbilities, bool includeSubAbilities)
         {
             Unit unit = new Unit
             {
                 HyperlinkId = element.GetProperty("hyperlinkId").GetString(),
+                Id = id,
+                CUnitId = id,
             };
+
+            int index = id.IndexOf('-');
+            if (index > -1)
+            {
+                unit.MapName = id.Substring(0, index);
+            }
 
             if (element.TryGetProperty("name", out JsonElement value))
                 unit.Name = value.GetString();
@@ -202,20 +238,20 @@ namespace Heroes.Icons
                 AddAbilities(unit, abilities);
             }
 
-            // TODO: subAbilities
-            /*if (includeSubAbilities && heroElement.TryGetProperty("subAbilities", out JsonElement subAbilities))
-            //{
-            //    foreach (JsonElement subAbilityArrayElement in subAbilities.EnumerateArray())
-            //    {
-            //        foreach (JsonProperty subAbilityProperty in subAbilityArrayElement.EnumerateObject())
-            //        {
-            //            string parentLink = subAbilityProperty.Name;
-            //            subAbilityProperty.Value
-            //        }
-            //    }
-            }*/
+            if (includeSubAbilities && element.TryGetProperty("subAbilities", out JsonElement subAbilities))
+            {
+                foreach (JsonElement subAbilityArrayElement in subAbilities.EnumerateArray())
+                {
+                    foreach (JsonProperty subAbilityProperty in subAbilityArrayElement.EnumerateObject())
+                    {
+                        string parentLink = subAbilityProperty.Name;
 
-            SetLocalizedGameStrings(unit);
+                        AddAbilities(unit, subAbilityProperty.Value, parentLink);
+                    }
+                }
+            }
+
+            GameStringReader?.UpdateGameStrings(unit);
 
             return unit;
         }

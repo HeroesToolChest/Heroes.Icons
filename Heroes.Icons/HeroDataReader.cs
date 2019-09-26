@@ -6,46 +6,90 @@ using System.Text.Json;
 
 namespace Heroes.Icons
 {
-    public sealed class HeroDataReader : UnitData
+    /// <summary>
+    /// Provides access to obtain hero data as well as updating localized strings.
+    /// </summary>
+    public class HeroDataReader : UnitBaseData
     {
-
-
-        private HeroDataReader(string dataFilePath)
-            : base(dataFilePath)
+        /// <summary>
+        /// Initializes a new reader for the json data file.
+        /// </summary>
+        /// <param name="jsonDataFilePath">JSON file containing hero data.</param>
+        public HeroDataReader(string jsonDataFilePath)
+            : base(jsonDataFilePath)
         {
         }
 
-        private HeroDataReader(string dataFilePath, string gameStringFilePath)
-            : base(dataFilePath, gameStringFilePath)
+        /// <summary>
+        /// Initializes a new reader for the json data file.
+        /// </summary>
+        /// <param name="jsonDataFilePath">JSON file containing hero data.</param>
+        /// <param name="localization">Localization of data.</param>
+        public HeroDataReader(string jsonDataFilePath, Localization localization)
+            : base(jsonDataFilePath, localization)
         {
         }
 
-        public static HeroDataReader Parse(string jsonHeroData)
+        /// <summary>
+        /// Initializes a new reader for the json data.
+        /// </summary>
+        /// <param name="jsonData">JSON data containing hero data.</param>
+        public HeroDataReader(ReadOnlyMemory<byte> jsonData)
+            : base(jsonData)
         {
-            return new HeroDataReader(jsonHeroData);
         }
 
-        public static HeroDataReader Parse(string jsonHeroData, string jsonGameStrings)
+        /// <summary>
+        /// Initializes a new reader for the json data.
+        /// </summary>
+        /// <param name="jsonData">JSON data containing hero data.</param>
+        /// <param name="localization">Localization of data.</param>
+        public HeroDataReader(ReadOnlyMemory<byte> jsonData, Localization localization)
+            : base(jsonData, localization)
         {
-            return new HeroDataReader(jsonHeroData, jsonGameStrings);
         }
 
-        //public HeroData()
-        //{
-        //    Build = int.MaxValue;
+        /// <summary>
+        /// Initializes a new reader for the json data file.
+        /// </summary>
+        /// <param name="jsonDataFilePath">JSON file containing hero data.</param>
+        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
+        public HeroDataReader(string jsonDataFilePath, GameStringReader gameStringReader)
+            : base(jsonDataFilePath, gameStringReader)
+        {
+        }
 
-        //    LoadData();
-        //}
+        /// <summary>
+        /// Initializes a new reader for the json data file.
+        /// </summary>
+        /// <param name="jsonDataFilePath">JSON file containing hero data.</param>
+        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
+        /// <param name="localization">Localization of data.</param>
+        public HeroDataReader(string jsonDataFilePath, GameStringReader gameStringReader, Localization localization)
+            : base(jsonDataFilePath, gameStringReader, localization)
+        {
+        }
 
-        //public HeroData(int build)
-        //{
-        //    if (build < 0)
-        //        Build = 0;
+        /// <summary>
+        /// Initializes a new reader for the json data.
+        /// </summary>
+        /// <param name="jsonData">JSON data containing hero data.</param>
+        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
+        public HeroDataReader(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader)
+            : base(jsonData, gameStringReader)
+        {
+        }
 
-        //    Build = build;
-
-        //    LoadData();
-        //}
+        /// <summary>
+        /// Initializes a new reader for the json data.
+        /// </summary>
+        /// <param name="jsonData">JSON data containing hero data.</param>
+        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
+        /// <param name="localization">Localization of data.</param>
+        public HeroDataReader(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader, Localization localization)
+            : base(jsonData, gameStringReader, localization)
+        {
+        }
 
         public Hero GetHeroById(string heroId, bool abilities = false, bool subAbilities = false, bool talents = false, bool heroUnits = false)
         {
@@ -243,7 +287,7 @@ namespace Heroes.Icons
                     AddTierTalents(hero, tierElement, TalentTier.Level20);
             }
 
-            SetLocalizedGameStrings(hero);
+           // SetLocalizedGameStrings(hero);
             SetLocalizedHeroGameStrings(hero);
 
             return hero;
@@ -281,32 +325,32 @@ namespace Heroes.Icons
 
         private void SetLocalizedHeroGameStrings(Hero hero)
         {
-            if (JsonGameStringDocument != null)
-            {
-                JsonElement element = JsonGameStringDocument.RootElement;
+            //if (JsonGameStringDocument != null)
+            //{
+            //    JsonElement element = JsonGameStringDocument.RootElement;
 
-                if (element.TryGetProperty($"unit/difficulty/{hero.CHeroId}", out JsonElement value))
-                    hero.Difficulty = value.ToString();
-                if (element.TryGetProperty($"unit/expandedrole/{hero.CHeroId}", out value))
-                    hero.ExpandedRole = value.ToString();
+            //    if (element.TryGetProperty($"unit/difficulty/{hero.CHeroId}", out JsonElement value))
+            //        hero.Difficulty = value.ToString();
+            //    if (element.TryGetProperty($"unit/expandedrole/{hero.CHeroId}", out value))
+            //        hero.ExpandedRole = value.ToString();
 
-                if (element.TryGetProperty($"unit/role/{hero.CHeroId}", out value))
-                {
-                    string[] roles = value.ToString().Split(',', StringSplitOptions.RemoveEmptyEntries);
+            //    if (element.TryGetProperty($"unit/role/{hero.CHeroId}", out value))
+            //    {
+            //        string[] roles = value.ToString().Split(',', StringSplitOptions.RemoveEmptyEntries);
 
-                    foreach (string role in roles)
-                    {
-                        hero.AddRole(role);
-                    }
-                }
+            //        foreach (string role in roles)
+            //        {
+            //            hero.AddRole(role);
+            //        }
+            //    }
 
-                if (element.TryGetProperty($"unit/searchtext/{hero.CHeroId}", out value))
-                    hero.SearchText = value.ToString();
-                if (element.TryGetProperty($"unit/title/{hero.CHeroId}", out value))
-                    hero.Title = value.ToString();
-                if (element.TryGetProperty($"unit/type/{hero.CHeroId}", out value))
-                    hero.Type = value.ToString();
-            }
+            //    if (element.TryGetProperty($"unit/searchtext/{hero.CHeroId}", out value))
+            //        hero.SearchText = value.ToString();
+            //    if (element.TryGetProperty($"unit/title/{hero.CHeroId}", out value))
+            //        hero.Title = value.ToString();
+            //    if (element.TryGetProperty($"unit/type/{hero.CHeroId}", out value))
+            //        hero.Type = value.ToString();
+            //}
         }
 
         /// <summary>

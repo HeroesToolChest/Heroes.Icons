@@ -5,20 +5,48 @@ using System.Text.Json;
 
 namespace Heroes.Icons
 {
-    public abstract class UnitData : DataReader
+    /// <summary>
+    /// Abtract base class reader for unit and hero related data.
+    /// </summary>
+    public abstract class UnitBaseData : DataReader
     {
-        public UnitData(ReadOnlyMemory<byte> jsonData)
+        public UnitBaseData(string jsonDataFilePath)
+            : base(jsonDataFilePath)
+        {
+        }
+
+        public UnitBaseData(string jsonDataFilePath, Localization localization)
+            : base(jsonDataFilePath, localization)
+        {
+        }
+
+        public UnitBaseData(ReadOnlyMemory<byte> jsonData)
             : base(jsonData)
         {
         }
 
-        public UnitData(string dataFilePath)
-            : base(dataFilePath)
+        public UnitBaseData(ReadOnlyMemory<byte> jsonData, Localization localization)
+            : base(jsonData, localization)
         {
         }
 
-        public UnitData(string dataFilePath, string gameStringFilePath)
-            : base(dataFilePath, gameStringFilePath)
+        public UnitBaseData(string jsonDataFilePath, GameStringReader gameStringReader)
+            : base(jsonDataFilePath, gameStringReader)
+        {
+        }
+
+        public UnitBaseData(string jsonDataFilePath, GameStringReader gameStringReader, Localization localization)
+            : base(jsonDataFilePath, gameStringReader, localization)
+        {
+        }
+
+        public UnitBaseData(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader)
+            : base(jsonData, gameStringReader)
+        {
+        }
+
+        public UnitBaseData(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader, Localization localization)
+            : base(jsonData, gameStringReader, localization)
         {
         }
 
@@ -120,41 +148,41 @@ namespace Heroes.Icons
             }
         }
 
-        protected virtual void AddAbilities(Unit unit, JsonElement abilitiesElement)
+        protected virtual void AddAbilities(Unit unit, JsonElement abilitiesElement, string? parentLink = null)
         {
             if (abilitiesElement.TryGetProperty("basic", out JsonElement tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Basic);
+                AddTierAbilities(unit, tierElement, AbilityTier.Basic, parentLink);
             if (abilitiesElement.TryGetProperty("heroic", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Heroic);
+                AddTierAbilities(unit, tierElement, AbilityTier.Heroic, parentLink);
             if (abilitiesElement.TryGetProperty("trait", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Trait);
+                AddTierAbilities(unit, tierElement, AbilityTier.Trait, parentLink);
             if (abilitiesElement.TryGetProperty("mount", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Mount);
+                AddTierAbilities(unit, tierElement, AbilityTier.Mount, parentLink);
             if (abilitiesElement.TryGetProperty("activable", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Activable);
+                AddTierAbilities(unit, tierElement, AbilityTier.Activable, parentLink);
             if (abilitiesElement.TryGetProperty("hearth", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Hearth);
+                AddTierAbilities(unit, tierElement, AbilityTier.Hearth, parentLink);
             if (abilitiesElement.TryGetProperty("taunt", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Taunt);
+                AddTierAbilities(unit, tierElement, AbilityTier.Taunt, parentLink);
             if (abilitiesElement.TryGetProperty("dance", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Dance);
+                AddTierAbilities(unit, tierElement, AbilityTier.Dance, parentLink);
             if (abilitiesElement.TryGetProperty("spray", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Spray);
+                AddTierAbilities(unit, tierElement, AbilityTier.Spray, parentLink);
             if (abilitiesElement.TryGetProperty("voice", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Voice);
+                AddTierAbilities(unit, tierElement, AbilityTier.Voice, parentLink);
             if (abilitiesElement.TryGetProperty("mapMechanic", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.MapMechanic);
+                AddTierAbilities(unit, tierElement, AbilityTier.MapMechanic, parentLink);
             if (abilitiesElement.TryGetProperty("interact", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Interact);
+                AddTierAbilities(unit, tierElement, AbilityTier.Interact, parentLink);
             if (abilitiesElement.TryGetProperty("action", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Activable);
+                AddTierAbilities(unit, tierElement, AbilityTier.Action, parentLink);
             if (abilitiesElement.TryGetProperty("hidden", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Hidden);
+                AddTierAbilities(unit, tierElement, AbilityTier.Hidden, parentLink);
             if (abilitiesElement.TryGetProperty("unknown", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Unknown);
+                AddTierAbilities(unit, tierElement, AbilityTier.Unknown, parentLink);
         }
 
-        protected virtual void AddTierAbilities(Unit unit, JsonElement tierElement, AbilityTier abilityTier)
+        protected virtual void AddTierAbilities(Unit unit, JsonElement tierElement, AbilityTier abilityTier, string? parentLink)
         {
             foreach (JsonElement element in tierElement.EnumerateArray())
             {
@@ -162,6 +190,15 @@ namespace Heroes.Icons
                 {
                     Tier = abilityTier,
                 };
+
+                if (parentLink != null)
+                {
+                    string[] ids = parentLink.Split('|', StringSplitOptions.RemoveEmptyEntries);
+                    if (ids.Length == 2)
+                        ability.ParentLink = new AbilityTalentId(ids[0], ids[1]);
+                    else
+                        ability.ParentLink = new AbilityTalentId(parentLink, parentLink);
+                }
 
                 SetAbilityTalentBase(ability, element);
 
@@ -218,46 +255,6 @@ namespace Heroes.Icons
                 abilityTalentBase.IsPassive = isPassive.GetBoolean();
             if (abilityTalentElement.TryGetProperty("isQuest", out JsonElement isQuest))
                 abilityTalentBase.IsQuest = isQuest.GetBoolean();
-        }
-
-        protected virtual void SetLocalizedGameStrings(Unit unit)
-        {
-            if (JsonGameStringDocument != null)
-            {
-                JsonElement element = JsonGameStringDocument.RootElement;
-
-                if (element.TryGetProperty($"unit/damagetype/{unit.CUnitId}", out JsonElement value))
-                    unit.DamageType = value.ToString();
-                if (element.TryGetProperty($"unit/description/{unit.CUnitId}", out value))
-                    unit.Description = new TooltipDescription(value.ToString(), Localization);
-                if (element.TryGetProperty($"unit/energytype/{unit.CUnitId}", out value))
-                    unit.Energy.EnergyType = value.ToString();
-                if (element.TryGetProperty($"unit/lifetype/{unit.CUnitId}", out value))
-                    unit.Life.LifeType = value.ToString();
-                if (element.TryGetProperty($"unit/name/{unit.CUnitId}", out value))
-                    unit.Name = value.ToString();
-                if (element.TryGetProperty($"unit/shieldtype/{unit.CUnitId}", out value))
-                    unit.Shield.ShieldType = value.ToString();
-
-                foreach (Ability ability in unit.Abilities)
-                {
-                    if (ability.AbilityTalentId is null)
-                        continue;
-
-                    if (element.TryGetProperty($"abiltalent/cooldown/{ability.AbilityTalentId.Id}", out value))
-                        ability.Tooltip.Cooldown.CooldownTooltip = new TooltipDescription(value.ToString(), Localization);
-                    if (element.TryGetProperty($"abiltalent/energy/{ability.AbilityTalentId.Id}", out value))
-                        ability.Tooltip.Energy.EnergyTooltip = new TooltipDescription(value.ToString(), Localization);
-                    if (element.TryGetProperty($"abiltalent/full/{ability.AbilityTalentId.Id}", out value))
-                        ability.Tooltip.FullTooltip = new TooltipDescription(value.ToString(), Localization);
-                    if (element.TryGetProperty($"abiltalent/life/{ability.AbilityTalentId.Id}", out value))
-                        ability.Tooltip.Life.LifeCostTooltip = new TooltipDescription(value.ToString(), Localization);
-                    if (element.TryGetProperty($"abiltalent/name/{ability.AbilityTalentId.Id}", out value))
-                        ability.Name = value.ToString();
-                    if (element.TryGetProperty($"abiltalent/short/{ability.AbilityTalentId.Id}", out value))
-                        ability.Tooltip.ShortTooltip = new TooltipDescription(value.ToString(), Localization);
-                }
-            }
         }
     }
 }
