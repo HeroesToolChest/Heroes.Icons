@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heroes.Icons.Tests", "Heroe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heroes.Icons.Benchmarks", "Heroes.Icons.Benchmarks\Heroes.Icons.Benchmarks.csproj", "{B1FFDB75-2130-4219-9F51-8A5E1CE85304}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heroes.TextToJson", "Heroes.TextToJson\Heroes.TextToJson.csproj", "{52FA9253-13CD-4332-9177-BAB0E2D25342}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{B1FFDB75-2130-4219-9F51-8A5E1CE85304}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1FFDB75-2130-4219-9F51-8A5E1CE85304}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1FFDB75-2130-4219-9F51-8A5E1CE85304}.Release|Any CPU.Build.0 = Release|Any CPU
-		{52FA9253-13CD-4332-9177-BAB0E2D25342}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{52FA9253-13CD-4332-9177-BAB0E2D25342}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{52FA9253-13CD-4332-9177-BAB0E2D25342}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{52FA9253-13CD-4332-9177-BAB0E2D25342}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
