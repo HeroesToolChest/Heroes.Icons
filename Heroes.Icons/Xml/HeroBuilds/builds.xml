@@ -154,4 +154,9 @@
   <Patch type="Hotfix" link="https://heroesofthestorm.com/en-us/blog/23114897" version="2.47.3.76124"/>
   <Patch type="Junkrat/Whitemane" link="https://heroesofthestorm.com/en-us/blog/23157783" version="2.48.0.76389"/>
   <Patch type="Hotfix" link="" version="2.48.1.76437"/>
+
+  <Patch type="Hotfix" link="" version="2.48.1.76517"/>
+  <Patch type="Balance" link="https://heroesofthestorm.com/en-us/blog/23181746" version="2.48.2.76753"/>
+  <Patch type="Hotfix" link="" version="2.48.2.76781"/>
+  <Patch type="Hotfix" link="" version="2.48.2.76893"/>
 </Builds>
