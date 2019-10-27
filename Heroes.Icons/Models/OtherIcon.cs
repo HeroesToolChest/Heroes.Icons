@@ -32,6 +32,7 @@
         HealAbsorbedDamage,
         DamageTaken,
         ExperienceContribution,
+        SelfHealing,
         KillsBlue,
         KillsRed,
         Boost,

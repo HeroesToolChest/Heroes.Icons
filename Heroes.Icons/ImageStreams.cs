@@ -262,6 +262,9 @@ namespace Heroes.Icons
                 case OtherIcon.ExperienceContribution:
                     fileName = "storm_ui_scorescreen_icon_xpcontribution.png";
                     break;
+                case OtherIcon.SelfHealing:
+                    fileName = "storm_ui_scorescreen_icon_selfhealingshielding.png";
+                    break;
                 case OtherIcon.KillsBlue:
                     fileName = "storm_ui_scorescreen_icon_kills_blue.png";
                     break;
