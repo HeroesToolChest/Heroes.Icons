@@ -91,47 +91,92 @@ namespace Heroes.Icons
         {
         }
 
-        public Hero GetHeroById(string heroId, bool abilities = false, bool subAbilities = false, bool talents = false, bool heroUnits = false)
+        /// <summary>
+        /// Gets a <see cref="Hero"/> from the given hero <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">Hero id to find.</param>
+        /// <param name="abilities">Value indicating to include abilities.</param>
+        /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
+        /// <param name="talents">Value indicating to include talents.</param>
+        /// <param name="heroUnits">Value indicating to include hero units.</param>
+        /// <exception cref="ArgumentNullException" />
+        /// <exception cref="KeyNotFoundException" />
+        /// <returns></returns>
+        public Hero GetHeroById(string id, bool abilities, bool subAbilities, bool talents, bool heroUnits)
         {
-            if (JsonDataDocument.RootElement.TryGetProperty(heroId, out JsonElement heroElement))
+            if (id is null)
             {
-                Hero hero = GetHeroData(heroElement, abilities, subAbilities, talents, heroUnits);
-                hero.Id = heroId;
-                hero.CHeroId = heroId;
-
-                return hero;
+                throw new ArgumentNullException(nameof(id));
             }
 
-            throw new KeyNotFoundException();
+            if (TryGetHeroById(id, out Hero value, abilities, subAbilities, talents, heroUnits))
+                return value;
+            else
+                throw new KeyNotFoundException();
         }
 
-        public Hero GetHeroByName(string name, bool abilities = false, bool subAbilities = false, bool talents = false, bool heroUnits = false)
+        /// <summary>
+        /// Looks for a hero with the given <paramref name="id"/>, returning a value that indicates whether such value exists.
+        /// </summary>
+        /// <param name="id">Hero id to find.</param>
+        /// <param name="value">When this method returns, a <see cref="Hero"/> object.</param>
+        /// <param name="abilities">Value indicating to include abilities.</param>
+        /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
+        /// <param name="talents">Value indicating to include talents.</param>
+        /// <param name="heroUnits">Value indicating to include hero units.</param>
+        /// <exception cref="ArgumentNullException" />
+        /// <returns></returns>
+        public bool TryGetHeroById(string id, out Hero value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
         {
-            JsonElement jsonElement = JsonDataDocument.RootElement;
+            if (id is null)
+                throw new ArgumentNullException(nameof(id));
 
-            foreach (JsonProperty heroElement in jsonElement.EnumerateObject())
+            value = new Hero();
+
+            if (JsonDataDocument.RootElement.TryGetProperty(id, out JsonElement element))
             {
-                if (heroElement.Value.TryGetProperty("name", out JsonElement nameElement) && nameElement.ValueEquals(name))
-                {
-                    Hero hero = GetHeroData(heroElement.Value, abilities, subAbilities, talents, heroUnits);
-                    hero.Id = heroElement.Name;
-                    hero.CHeroId = heroElement.Name;
+                value = GetHeroData(id, element, abilities, subAbilities, talents, heroUnits);
 
-                    return hero;
-                }
+                return true;
             }
 
-            throw new KeyNotFoundException();
+            return false;
         }
 
-        private Hero GetHeroData(JsonElement heroElement, bool includeAbilities, bool includeSubAbilities, bool includeTalents, bool includeHeroUnits)
+        //public Hero GetHeroByName(string name, bool abilities = false, bool subAbilities = false, bool talents = false, bool heroUnits = false)
+        //{
+        //    JsonElement jsonElement = JsonDataDocument.RootElement;
+
+        //    foreach (JsonProperty heroElement in jsonElement.EnumerateObject())
+        //    {
+        //        if (heroElement.Value.TryGetProperty("name", out JsonElement nameElement) && nameElement.ValueEquals(name))
+        //        {
+        //            Hero hero = GetHeroData(heroElement.Value, abilities, subAbilities, talents, heroUnits);
+        //            hero.Id = heroElement.Name;
+        //            hero.CHeroId = heroElement.Name;
+
+        //            return hero;
+        //        }
+        //    }
+
+        //    throw new KeyNotFoundException();
+        //}
+
+        private Hero GetHeroData(string id, JsonElement heroElement, bool includeAbilities, bool includeSubAbilities, bool includeTalents, bool includeHeroUnits)
         {
             Hero hero = new Hero
             {
-                CUnitId = heroElement.GetProperty("unitId").GetString(),
-                HyperlinkId = heroElement.GetProperty("hyperlinkId").GetString(),
-                AttributeId = heroElement.GetProperty("attributeId").GetString(),
+                CHeroId = id,
             };
+
+            if (heroElement.TryGetProperty("unitId", out JsonElement unitId))
+                hero.CUnitId = unitId.GetString();
+
+            if (heroElement.TryGetProperty("hyperlinkId", out JsonElement hyperlinkId))
+                hero.HyperlinkId = hyperlinkId.GetString();
+
+            if (heroElement.TryGetProperty("attributeId", out JsonElement attributeId))
+                hero.AttributeId = attributeId.GetString();
 
             if (heroElement.TryGetProperty("name", out JsonElement name))
                 hero.Name = name.GetString();
@@ -139,12 +184,12 @@ namespace Heroes.Icons
             if (heroElement.TryGetProperty("difficulty", out JsonElement difficulty))
                 hero.Difficulty = difficulty.GetString();
 
-            if (Enum.TryParse(heroElement.GetProperty("franchise").GetString(), out HeroFranchise heroFranchise))
+            if (heroElement.TryGetProperty("franchise", out JsonElement franchise) && Enum.TryParse(franchise.GetString(), out HeroFranchise heroFranchise))
                 hero.Franchise = heroFranchise;
             else
                 hero.Franchise = HeroFranchise.Unknown;
 
-            if (Enum.TryParse(heroElement.GetProperty("gender").GetString(), out UnitGender unitGender))
+            if (heroElement.TryGetProperty("gender", out JsonElement gender) && Enum.TryParse(gender.GetString(), out UnitGender unitGender))
                 hero.Gender = unitGender;
             else
                 hero.Gender = UnitGender.Neutral;
@@ -152,19 +197,25 @@ namespace Heroes.Icons
             if (heroElement.TryGetProperty("title", out JsonElement title))
                 hero.Title = title.GetString();
 
-            hero.InnerRadius = heroElement.GetProperty("innerRadius").GetDouble();
-            hero.Radius = heroElement.GetProperty("radius").GetDouble();
+            if (heroElement.TryGetProperty("innerRadius", out JsonElement innerRadius))
+                hero.InnerRadius = innerRadius.GetDouble();
 
-            if (heroElement.GetProperty("releaseDate").TryGetDateTime(out DateTime releaseDate))
+            if (heroElement.TryGetProperty("radius", out JsonElement radius))
+                hero.Radius = radius.GetDouble();
+
+            if (heroElement.TryGetProperty("releaseDate", out JsonElement releaseDateElement) && releaseDateElement.TryGetDateTime(out DateTime releaseDate))
                 hero.ReleaseDate = releaseDate;
 
-            hero.Sight = heroElement.GetProperty("sight").GetDouble();
-            hero.Speed = heroElement.GetProperty("speed").GetDouble();
+            if (heroElement.TryGetProperty("sight", out JsonElement sight))
+                hero.Sight = sight.GetDouble();
+
+            if (heroElement.TryGetProperty("speed", out JsonElement speed))
+                hero.Speed = speed.GetDouble();
 
             if (heroElement.TryGetProperty("type", out JsonElement type))
                 hero.Type = type.GetString();
 
-            if (Enum.TryParse(heroElement.GetProperty("rarity").GetString(), out Rarity rarity))
+            if (heroElement.TryGetProperty("rarity", out JsonElement rarityElement) && Enum.TryParse(rarityElement.GetString(), out Rarity rarity))
                 hero.Rarity = rarity;
             else
                 hero.Rarity = Rarity.Unknown;
@@ -212,6 +263,11 @@ namespace Heroes.Icons
                         hero.HeroPortrait.PartyFrameFileName.Add(partyFrameArrayElement.GetString());
                     }
                 }
+
+                if (portraits.TryGetProperty("minimap", out JsonElement miniMap))
+                    hero.UnitPortrait.MiniMapIconFileName = miniMap.GetString();
+                if (portraits.TryGetProperty("targetInfo", out JsonElement targetInfo))
+                    hero.UnitPortrait.TargetInfoPanelFileName = targetInfo.GetString();
             }
 
             // life
@@ -255,18 +311,18 @@ namespace Heroes.Icons
                 AddAbilities(hero, abilities);
             }
 
-            // TODO: subAbilities
-            /*if (includeSubAbilities && heroElement.TryGetProperty("subAbilities", out JsonElement subAbilities))
-            //{
-            //    foreach (JsonElement subAbilityArrayElement in subAbilities.EnumerateArray())
-            //    {
-            //        foreach (JsonProperty subAbilityProperty in subAbilityArrayElement.EnumerateObject())
-            //        {
-            //            string parentLink = subAbilityProperty.Name;
-            //            subAbilityProperty.Value
-            //        }
-            //    }
-            }*/
+            if (includeSubAbilities && heroElement.TryGetProperty("subAbilities", out JsonElement subAbilities))
+            {
+                foreach (JsonElement subAbilityArrayElement in subAbilities.EnumerateArray())
+                {
+                    foreach (JsonProperty subAbilityProperty in subAbilityArrayElement.EnumerateObject())
+                    {
+                        string parentLink = subAbilityProperty.Name;
+
+                        AddAbilities(hero, subAbilityProperty.Value, parentLink);
+                    }
+                }
+            }
 
             // talents
             if (includeTalents && heroElement.TryGetProperty("talents", out JsonElement talents))
@@ -287,7 +343,17 @@ namespace Heroes.Icons
                     AddTierTalents(hero, tierElement, TalentTier.Level20);
             }
 
-           // SetLocalizedGameStrings(hero);
+            if (includeHeroUnits && heroElement.TryGetProperty("heroUnits", out JsonElement heroUnits))
+            {
+                foreach (JsonElement heroUnitArrayElement in heroUnits.EnumerateArray())
+                {
+                    foreach (JsonProperty heroUnitProperty in heroUnitArrayElement.EnumerateObject())
+                    {
+                        hero.AddHeroUnit(GetHeroData(heroUnitProperty.Name, heroUnitProperty.Value, true, true, true, true));
+                    }
+                }
+            }
+
             SetLocalizedHeroGameStrings(hero);
 
             return hero;

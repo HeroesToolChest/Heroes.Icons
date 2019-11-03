@@ -194,10 +194,17 @@ namespace Heroes.Icons
                 if (parentLink != null)
                 {
                     string[] ids = parentLink.Split('|', StringSplitOptions.RemoveEmptyEntries);
-                    if (ids.Length == 2)
+
+                    if (ids.Length >= 2)
+                    {
                         ability.ParentLink = new AbilityTalentId(ids[0], ids[1]);
-                    else
-                        ability.ParentLink = new AbilityTalentId(parentLink, parentLink);
+
+                        if (ids.Length >= 3 && Enum.TryParse(ids[2], true, out AbilityType abilityType))
+                            ability.ParentLink.AbilityType = abilityType;
+
+                        if (ids.Length == 4 && bool.TryParse(ids[3], out bool isPassive))
+                            ability.ParentLink.IsPassive = isPassive;
+                    }
                 }
 
                 SetAbilityTalentBase(ability, element);
@@ -208,53 +215,56 @@ namespace Heroes.Icons
 
         protected virtual void SetAbilityTalentBase(AbilityTalentBase abilityTalentBase, JsonElement abilityTalentElement)
         {
-            abilityTalentBase.AbilityTalentId = new AbilityTalentId(abilityTalentElement.GetProperty("nameId").GetString(), abilityTalentElement.GetProperty("buttonId").GetString());
+            abilityTalentBase.AbilityTalentId.ReferenceId = abilityTalentElement.GetProperty("nameId").GetString();
 
-            if (abilityTalentElement.TryGetProperty("name", out JsonElement name))
-                abilityTalentBase.Name = name.GetString();
+            if (abilityTalentElement.TryGetProperty("buttonId", out JsonElement value))
+                abilityTalentBase.AbilityTalentId.ButtonId = value.GetString();
 
-            if (abilityTalentElement.TryGetProperty("icon", out JsonElement icon))
-                abilityTalentBase.IconFileName = icon.GetString();
-            if (abilityTalentElement.TryGetProperty("toggleCooldown", out JsonElement toggleCooldown))
-                abilityTalentBase.Tooltip.Cooldown.ToggleCooldown = toggleCooldown.GetDouble();
-            if (abilityTalentElement.TryGetProperty("lifeTooltip", out JsonElement lifeTooltip))
-                abilityTalentBase.Tooltip.Life.LifeCostTooltip = new TooltipDescription(lifeTooltip.GetString(), Localization);
-            if (abilityTalentElement.TryGetProperty("energyTooltip", out JsonElement energyTooltip))
-                abilityTalentBase.Tooltip.Energy.EnergyTooltip = new TooltipDescription(energyTooltip.GetString(), Localization);
+            if (abilityTalentElement.TryGetProperty("name", out value))
+                abilityTalentBase.Name = value.GetString();
+
+            if (abilityTalentElement.TryGetProperty("icon", out value))
+                abilityTalentBase.IconFileName = value.GetString();
+            if (abilityTalentElement.TryGetProperty("toggleCooldown", out value))
+                abilityTalentBase.Tooltip.Cooldown.ToggleCooldown = value.GetDouble();
+            if (abilityTalentElement.TryGetProperty("lifeTooltip", out value))
+                abilityTalentBase.Tooltip.Life.LifeCostTooltip = new TooltipDescription(value.GetString(), Localization);
+            if (abilityTalentElement.TryGetProperty("energyTooltip", out value))
+                abilityTalentBase.Tooltip.Energy.EnergyTooltip = new TooltipDescription(value.GetString(), Localization);
 
             // charges
-            if (abilityTalentElement.TryGetProperty("charges", out JsonElement charges))
+            if (abilityTalentElement.TryGetProperty("charges", out JsonElement chargeElement))
             {
-                abilityTalentBase.Tooltip.Charges.CountMax = charges.GetProperty("countMax").GetInt32();
+                abilityTalentBase.Tooltip.Charges.CountMax = chargeElement.GetProperty("countMax").GetInt32();
 
-                if (charges.TryGetProperty("countUse", out JsonElement countUse))
-                    abilityTalentBase.Tooltip.Charges.CountUse = countUse.GetInt32();
-                if (charges.TryGetProperty("countStart", out JsonElement countStart))
-                    abilityTalentBase.Tooltip.Charges.CountStart = countStart.GetInt32();
-                if (charges.TryGetProperty("hideCount", out JsonElement hideCount))
-                    abilityTalentBase.Tooltip.Charges.IsHideCount = hideCount.GetBoolean();
-                if (charges.TryGetProperty("recastCooldown", out JsonElement recastCooldown))
-                    abilityTalentBase.Tooltip.Charges.RecastCooldown = recastCooldown.GetDouble();
+                if (chargeElement.TryGetProperty("countUse", out value))
+                    abilityTalentBase.Tooltip.Charges.CountUse = value.GetInt32();
+                if (chargeElement.TryGetProperty("countStart", out value))
+                    abilityTalentBase.Tooltip.Charges.CountStart = value.GetInt32();
+                if (chargeElement.TryGetProperty("hideCount", out value))
+                    abilityTalentBase.Tooltip.Charges.IsHideCount = value.GetBoolean();
+                if (chargeElement.TryGetProperty("recastCooldown", out value))
+                    abilityTalentBase.Tooltip.Charges.RecastCooldown = value.GetDouble();
             }
 
-            if (abilityTalentElement.TryGetProperty("cooldownTooltip", out JsonElement cooldownTooltip))
-                abilityTalentBase.Tooltip.Cooldown.CooldownTooltip = new TooltipDescription(cooldownTooltip.GetString(), Localization);
-            if (abilityTalentElement.TryGetProperty("shortTooltip", out JsonElement shortTooltip))
-                abilityTalentBase.Tooltip.ShortTooltip = new TooltipDescription(shortTooltip.GetString(), Localization);
-            if (abilityTalentElement.TryGetProperty("fullTooltip", out JsonElement fullTooltip))
-                abilityTalentBase.Tooltip.FullTooltip = new TooltipDescription(fullTooltip.GetString(), Localization);
+            if (abilityTalentElement.TryGetProperty("cooldownTooltip", out value))
+                abilityTalentBase.Tooltip.Cooldown.CooldownTooltip = new TooltipDescription(value.GetString(), Localization);
+            if (abilityTalentElement.TryGetProperty("shortTooltip", out value))
+                abilityTalentBase.Tooltip.ShortTooltip = new TooltipDescription(value.GetString(), Localization);
+            if (abilityTalentElement.TryGetProperty("fullTooltip", out value))
+                abilityTalentBase.Tooltip.FullTooltip = new TooltipDescription(value.GetString(), Localization);
 
             if (Enum.TryParse(abilityTalentElement.GetProperty("abilityType").GetString(), out AbilityType abilityType))
-                abilityTalentBase.AbilityType = abilityType;
+                abilityTalentBase.AbilityTalentId.AbilityType = abilityType;
             else
-                abilityTalentBase.AbilityType = AbilityType.Unknown;
+                abilityTalentBase.AbilityTalentId.AbilityType = AbilityType.Unknown;
 
-            if (abilityTalentElement.TryGetProperty("isActive", out JsonElement isActive))
-                abilityTalentBase.IsActive = isActive.GetBoolean();
-            if (abilityTalentElement.TryGetProperty("isPassive", out JsonElement isPassive))
-                abilityTalentBase.IsPassive = isPassive.GetBoolean();
-            if (abilityTalentElement.TryGetProperty("isQuest", out JsonElement isQuest))
-                abilityTalentBase.IsQuest = isQuest.GetBoolean();
+            if (abilityTalentElement.TryGetProperty("isActive", out value))
+                abilityTalentBase.IsActive = value.GetBoolean();
+            if (abilityTalentElement.TryGetProperty("isPassive", out value))
+                abilityTalentBase.AbilityTalentId.IsPassive = value.GetBoolean();
+            if (abilityTalentElement.TryGetProperty("isQuest", out value))
+                abilityTalentBase.IsQuest = value.GetBoolean();
         }
     }
 }

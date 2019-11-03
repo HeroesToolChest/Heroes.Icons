@@ -26,15 +26,13 @@ namespace Heroes.Icons.Tests
         [DataRow("AbathurEvolvedMonstrosity", true, true)]
         [DataRow(null, true, true)]
         [DataRow("asdf", true, true)]
-        public void GetUnitByIdTests(string id, bool abilities, bool subAbilities)
+        public void GetUnitByIdTest(string id, bool abilities, bool subAbilities)
         {
             if (id is null)
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-#pragma warning disable CS8604 // Possible null reference argument.
-                    _ = _unitDataReader.GetUnitById(id, abilities, subAbilities);
-#pragma warning restore CS8604 // Possible null reference argument.
+                    _ = _unitDataReader.GetUnitById(id!, abilities, subAbilities);
                 });
 
                 return;
@@ -125,7 +123,7 @@ namespace Heroes.Icons.Tests
                 Assert.AreEqual("storm_ui_icon_sonya_whirlwind.png", abilitiesList[0].IconFileName);
                 Assert.AreEqual("Cooldown: 12 seconds", abilitiesList[0].Tooltip.Cooldown.CooldownTooltip?.RawDescription);
                 Assert.AreEqual("Damage nearby enemies", abilitiesList[0].Tooltip.ShortTooltip?.RawDescription);
-                Assert.AreEqual(AbilityType.Q, abilitiesList[0].AbilityType);
+                Assert.AreEqual(AbilityType.Q, abilitiesList[0].AbilityTalentId.AbilityType);
 
                 Assert.AreEqual(AbilityTier.Hidden, abilitiesList[2].Tier);
                 Assert.AreEqual("AlteracBossChargeApproach", abilitiesList[2].AbilityTalentId?.ReferenceId);
@@ -153,26 +151,20 @@ namespace Heroes.Icons.Tests
                 Assert.AreEqual("MapMechanicAbilityInstant", abilitiesList[2].AbilityTalentId?.ReferenceId);
                 Assert.AreEqual("MapMechanicAbility", abilitiesList[2].AbilityTalentId?.ButtonId);
 
-                Assert.AreEqual(AbilityTier.Action, abilitiesList[3].Tier);
+                Assert.AreEqual(AbilityTier.Hidden, abilitiesList[3].Tier);
+                Assert.AreEqual("AlteracBossChargeApproach", abilitiesList[3].ParentLink?.ReferenceId);
+                Assert.AreEqual("AlteracBossCharge", abilitiesList[3].ParentLink?.ButtonId);
+                Assert.AreEqual(AbilityType.Hidden, abilitiesList[3].ParentLink?.AbilityType);
+                Assert.AreEqual(true, abilitiesList[3].ParentLink?.IsPassive);
                 Assert.AreEqual("AbathurAssumingDirectControlCancel", abilitiesList[3].AbilityTalentId?.ReferenceId);
                 Assert.AreEqual("AbathurSymbioteCancel", abilitiesList[3].AbilityTalentId?.ButtonId);
-                Assert.AreEqual(AbilityType.Heroic, abilitiesList[3].AbilityType);
-
-                Assert.AreEqual(AbilityTier.Hidden, abilitiesList[4].Tier);
-                Assert.AreEqual("nameId1", abilitiesList[4].AbilityTalentId?.ReferenceId);
-                Assert.AreEqual("buttonId1", abilitiesList[4].AbilityTalentId?.ButtonId);
-
-                Assert.AreEqual(AbilityTier.Unknown, abilitiesList[5].Tier);
-                Assert.AreEqual("nameId2", abilitiesList[5].AbilityTalentId?.ReferenceId);
-                Assert.AreEqual("buttonId2", abilitiesList[5].AbilityTalentId?.ButtonId);
-                Assert.AreEqual("ParentLinkNameId3", abilitiesList[5].ParentLink?.ReferenceId);
-                Assert.AreEqual("ParentLinkbuttonId3", abilitiesList[5].ParentLink?.ButtonId);
+                Assert.AreEqual(AbilityType.Heroic, abilitiesList[3].AbilityTalentId.AbilityType);
             }
         }
 
         [DataTestMethod]
         [DataRow(null, true, true)]
-        public void TryGetUnitByIdTests(string id, bool abilities, bool subAbilities)
+        public void TryGetUnitByIdTest(string id, bool abilities, bool subAbilities)
         {
             if (id is null)
             {
@@ -188,7 +180,7 @@ namespace Heroes.Icons.Tests
         }
 
         [TestMethod]
-        public void GetMapUniqueUnitTests()
+        public void GetMapUniqueUnitTest()
         {
             Unit unit = _unitDataReader.GetUnitById("tombofthespiderqueen-JungleGraveGolemLaner", false, false);
             Assert.IsTrue(unit.IsMapUnique);
@@ -196,7 +188,7 @@ namespace Heroes.Icons.Tests
         }
 
         [TestMethod]
-        public void GetUnitsTests()
+        public void GetUnitsTest()
         {
             List<Unit> units = _unitDataReader.GetUnits(true, true).ToList();
             Assert.AreEqual("AbathurEvolvedMonstrosity", units[0].CUnitId);
@@ -204,7 +196,7 @@ namespace Heroes.Icons.Tests
         }
 
         [TestMethod]
-        public void UpdateGameStringsTests()
+        public void UpdateGameStringsTest()
         {
             Unit unit = new Unit
             {
@@ -214,6 +206,9 @@ namespace Heroes.Icons.Tests
 
             using GameStringReader gameStringReader = new GameStringReader(LoadEnusLocalizedStringData());
             gameStringReader.UpdateGameStrings(unit);
+
+            Assert.AreEqual("A long description", unit.Description!.RawDescription);
+            Assert.AreEqual("Shield", unit.Shield.ShieldType);
         }
 
         private byte[] LoadJsonTestData()
@@ -342,6 +337,7 @@ namespace Heroes.Icons.Tests
             writer.WriteString("name", "Charge");
             writer.WriteString("icon", "storm_ui_icon_varian_charge.png");
             writer.WriteString("shortTooltip", "Charge to an enemy and damage them");
+            writer.WriteBoolean("isPassive", true);
             writer.WriteString("abilityType", "Hidden");
             writer.WriteEndObject();
             writer.WriteEndArray();
@@ -349,7 +345,7 @@ namespace Heroes.Icons.Tests
 
             writer.WriteStartArray("subAbilities");
             writer.WriteStartObject();
-            writer.WriteStartObject("AlteracBossWhirlwind");
+            writer.WriteStartObject("AlteracBossWhirlwind|AlteracBossWhirlwind|Q");
             writer.WriteStartArray("interact");
             writer.WriteStartObject();
             writer.WriteString("nameId", "WitchDoctorGargantuanStomp");
@@ -363,7 +359,7 @@ namespace Heroes.Icons.Tests
             writer.WriteEndObject();
             writer.WriteEndArray();
             writer.WriteEndObject();
-            writer.WriteStartObject("AlteracBossCharge");
+            writer.WriteStartObject("AlteracBossCharge|AlteracBossCharge|W");
             writer.WriteStartArray("mapMechanic");
             writer.WriteStartObject();
             writer.WriteString("nameId", "VoidPrisonCancel");
@@ -382,33 +378,13 @@ namespace Heroes.Icons.Tests
             writer.WriteEndObject();
             writer.WriteEndArray();
             writer.WriteEndObject();
-            writer.WriteStartObject("AbathurSymbiote");
-            writer.WriteStartArray("action");
+            writer.WriteStartObject("AlteracBossChargeApproach|AlteracBossCharge|Hidden|True");
+            writer.WriteStartArray("hidden");
             writer.WriteStartObject();
             writer.WriteString("nameId", "AbathurAssumingDirectControlCancel");
             writer.WriteString("buttonId", "AbathurSymbioteCancel");
             writer.WriteString("icon", "hud_btn_bg_ability_cancel.png");
             writer.WriteString("abilityType", "Heroic");
-            writer.WriteEndObject();
-            writer.WriteEndArray();
-            writer.WriteEndObject();
-            writer.WriteStartObject("ParentLink2");
-            writer.WriteStartArray("hidden");
-            writer.WriteStartObject();
-            writer.WriteString("nameId", "nameId1");
-            writer.WriteString("buttonId", "buttonId1");
-            writer.WriteString("icon", "image.png");
-            writer.WriteString("abilityType", "Q");
-            writer.WriteEndObject();
-            writer.WriteEndArray();
-            writer.WriteEndObject();
-            writer.WriteStartObject("ParentLinkNameId3|ParentLinkbuttonId3");
-            writer.WriteStartArray("unknown");
-            writer.WriteStartObject();
-            writer.WriteString("nameId", "nameId2");
-            writer.WriteString("buttonId", "buttonId2");
-            writer.WriteString("icon", "image.png");
-            writer.WriteString("abilityType", "Q");
             writer.WriteEndObject();
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -441,13 +417,39 @@ namespace Heroes.Icons.Tests
 
             writer.WriteStartObject();
 
+            writer.WriteStartObject("meta");
             writer.WriteString("locale", "enus");
-            writer.WriteString("unit/damagetype/AbathurEvolvedMonstrosity", "Summon");
-            writer.WriteString("unit/description/AbathurEvolvedMonstrosity", "A long description");
-            writer.WriteString("unit/energytype/AbathurEvolvedMonstrosity", "Mana");
-            writer.WriteString("unit/lifetype/AbathurEvolvedMonstrosity", "Life");
-            writer.WriteString("unit/name/AbathurEvolvedMonstrosity", "Evolved Monstrosity");
-            writer.WriteString("unit/shieldtype/AbathurEvolvedMonstrosity", "Shield");
+            writer.WriteEndObject(); // meta
+
+            writer.WriteStartObject("gamestrings");
+            writer.WriteStartObject("unit");
+
+            writer.WriteStartObject("damagetype");
+            writer.WriteString("AbathurEvolvedMonstrosity", "Summon");
+            writer.WriteEndObject();
+
+            writer.WriteStartObject("description");
+            writer.WriteString("AbathurEvolvedMonstrosity", "A long description");
+            writer.WriteEndObject();
+
+            writer.WriteStartObject("energytype");
+            writer.WriteString("AbathurEvolvedMonstrosity", "Mana");
+            writer.WriteEndObject();
+
+            writer.WriteStartObject("lifetype");
+            writer.WriteString("AbathurEvolvedMonstrosity", "Life");
+            writer.WriteEndObject();
+
+            writer.WriteStartObject("name");
+            writer.WriteString("AbathurEvolvedMonstrosity", "Evolved Monstrosity");
+            writer.WriteEndObject();
+
+            writer.WriteStartObject("shieldtype");
+            writer.WriteString("AbathurEvolvedMonstrosity", "Shield");
+            writer.WriteEndObject();
+
+            writer.WriteEndObject(); // unit
+            writer.WriteEndObject(); // gamestrings
 
             writer.WriteEndObject();
 

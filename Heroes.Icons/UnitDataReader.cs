@@ -96,6 +96,7 @@ namespace Heroes.Icons
         /// <param name="id">Unit id to find.</param>
         /// <param name="abilities">Value indicating to include abilities.</param>
         /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
+        /// <exception cref="ArgumentNullException" />
         /// <exception cref="KeyNotFoundException" />
         /// <returns></returns>
         public Unit GetUnitById(string id, bool abilities, bool subAbilities)
@@ -118,13 +119,12 @@ namespace Heroes.Icons
         /// <param name="value">When this method returns, a <see cref="Unit"/> object.</param>
         /// <param name="abilities">Value indicating to include abilities.</param>
         /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
+        /// <exception cref="ArgumentNullException" />
         /// <returns></returns>
         public bool TryGetUnitById(string id, out Unit value, bool abilities, bool subAbilities)
         {
             if (id is null)
                 throw new ArgumentNullException(nameof(id));
-            if (JsonDataDocument is null)
-                throw new NullReferenceException(nameof(JsonDataDocument));
 
             value = new Unit();
 
