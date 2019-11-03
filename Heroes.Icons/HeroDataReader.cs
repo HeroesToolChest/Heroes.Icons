@@ -354,7 +354,7 @@ namespace Heroes.Icons
                 }
             }
 
-            SetLocalizedHeroGameStrings(hero);
+            GameStringReader?.UpdateGameStrings(hero);
 
             return hero;
         }

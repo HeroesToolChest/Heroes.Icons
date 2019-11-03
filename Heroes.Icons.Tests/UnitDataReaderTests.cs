@@ -170,9 +170,7 @@ namespace Heroes.Icons.Tests
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-#pragma warning disable CS8604 // Possible null reference argument.
-                    _ = _unitDataReader.TryGetUnitById(id, out Unit unit, abilities, subAbilities);
-#pragma warning restore CS8604 // Possible null reference argument.
+                    _ = _unitDataReader.TryGetUnitById(id!, out Unit unit, abilities, subAbilities);
                 });
 
                 return;
