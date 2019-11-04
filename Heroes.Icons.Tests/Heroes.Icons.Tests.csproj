@@ -22,4 +22,13 @@
   <ItemGroup>
     <ProjectReference Include="..\Heroes.Icons\Heroes.Icons.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="JsonData\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="JsonGameStrings\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

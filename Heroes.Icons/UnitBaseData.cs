@@ -20,11 +20,6 @@ namespace Heroes.Icons
         {
         }
 
-        public UnitBaseData(ReadOnlyMemory<byte> jsonData)
-            : base(jsonData)
-        {
-        }
-
         public UnitBaseData(ReadOnlyMemory<byte> jsonData, Localization localization)
             : base(jsonData, localization)
         {
@@ -35,18 +30,8 @@ namespace Heroes.Icons
         {
         }
 
-        public UnitBaseData(string jsonDataFilePath, GameStringReader gameStringReader, Localization localization)
-            : base(jsonDataFilePath, gameStringReader, localization)
-        {
-        }
-
         public UnitBaseData(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader)
             : base(jsonData, gameStringReader)
-        {
-        }
-
-        public UnitBaseData(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader, Localization localization)
-            : base(jsonData, gameStringReader, localization)
         {
         }
 

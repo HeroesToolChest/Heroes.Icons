@@ -1,0 +1,13 @@
+{
+  "meta": {
+    "version": "76893",
+    "locale": "kokr"
+  },
+  "gamestrings": {
+    "abiltalent": {
+      "cooldown": {
+        "AbathurAssumingDirectControlCancel|AbathurSymbioteCancel|Heroic|False": "재사용 대기시간: 1.5초"
+      }
+    }
+  }
+}

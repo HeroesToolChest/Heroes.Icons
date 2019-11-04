@@ -12,28 +12,20 @@ namespace Heroes.Icons
     {
         public DataReader(string jsonDataFilePath)
         {
-            if (jsonDataFilePath is null)
-            {
-                throw new ArgumentNullException(nameof(jsonDataFilePath));
-            }
-
             JsonDataDocument = JsonDocument.Parse(File.ReadAllBytes(jsonDataFilePath));
 
-            int index = jsonDataFilePath.LastIndexOf('_');
+            string? file = Path.GetFileNameWithoutExtension(jsonDataFilePath);
+
+            int index = file.LastIndexOf('_');
             if (index > -1)
             {
-                if (Enum.TryParse(jsonDataFilePath.Substring(index), true, out Localization localization))
+                if (Enum.TryParse(file.Substring(index + 1), true, out Localization localization))
                     Localization = localization;
             }
         }
 
         public DataReader(string jsonDataFilePath, Localization localization)
         {
-            if (jsonDataFilePath is null)
-            {
-                throw new ArgumentNullException(nameof(jsonDataFilePath));
-            }
-
             JsonDataDocument = JsonDocument.Parse(File.ReadAllBytes(jsonDataFilePath));
 
             Localization = localization;
@@ -45,9 +37,6 @@ namespace Heroes.Icons
 
             if (JsonDataDocument is null)
                 throw new NullReferenceException(nameof(JsonDataDocument));
-
-            if (JsonDataDocument.RootElement.TryGetProperty("locale", out JsonElement locale) && Enum.TryParse(locale.ToString(), true, out Localization localization))
-                Localization = localization;
         }
 
         public DataReader(ReadOnlyMemory<byte> jsonData, Localization localization)
@@ -60,24 +49,14 @@ namespace Heroes.Icons
             : this(jsonDataFilePath)
         {
             GameStringReader = gameStringReader;
-        }
-
-        public DataReader(string jsonDataFilePath, GameStringReader gameStringReader, Localization localization)
-         : this(jsonDataFilePath, localization)
-        {
-            GameStringReader = gameStringReader;
+            Localization = GameStringReader.Localization;
         }
 
         public DataReader(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader)
             : this(jsonData)
         {
             GameStringReader = gameStringReader;
-        }
-
-        public DataReader(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader, Localization localization)
-            : this(jsonData, localization)
-        {
-            GameStringReader = gameStringReader;
+            Localization = GameStringReader.Localization;
         }
 
         /// <summary>

@@ -8,21 +8,20 @@ namespace Heroes.Icons
 {
     public class GameStringReader : IDisposable
     {
-        private readonly JsonDocument _jsonGameStringDocument;
-        private readonly Localization _localization;
-
         /// <summary>
         /// Initializes a new reader for the gamestrings file.
         /// </summary>
         /// <param name="jsonGameStringFilePath">JSON file containing gamestrings.</param>
         public GameStringReader(string jsonGameStringFilePath)
         {
-            _jsonGameStringDocument = JsonDocument.Parse(File.ReadAllBytes(jsonGameStringFilePath));
+            JsonGameStringDocument = JsonDocument.Parse(File.ReadAllBytes(jsonGameStringFilePath));
 
-            int index = jsonGameStringFilePath.LastIndexOf('_');
+            string? file = Path.GetFileNameWithoutExtension(jsonGameStringFilePath);
+
+            int index = file.LastIndexOf('_');
             if (index > -1)
             {
-                if (Enum.TryParse(jsonGameStringFilePath.Substring(index), true, out Localization localization))
+                if (Enum.TryParse(file.Substring(index + 1), true, out Localization localization))
                     Localization = localization;
             }
         }
@@ -34,8 +33,8 @@ namespace Heroes.Icons
         /// <param name="localization">Localization of data.</param>
         public GameStringReader(string jsonGameStringFilePath, Localization localization)
         {
-            _jsonGameStringDocument = JsonDocument.Parse(File.ReadAllBytes(jsonGameStringFilePath));
-            _localization = localization;
+            JsonGameStringDocument = JsonDocument.Parse(File.ReadAllBytes(jsonGameStringFilePath));
+            Localization = localization;
         }
 
         /// <summary>
@@ -44,10 +43,13 @@ namespace Heroes.Icons
         /// <param name="jsonGameStrings">JSON data containing gamestrings.</param>
         public GameStringReader(ReadOnlyMemory<byte> jsonGameStrings)
         {
-            _jsonGameStringDocument = JsonDocument.Parse(jsonGameStrings);
+            JsonGameStringDocument = JsonDocument.Parse(jsonGameStrings);
 
-            if (_jsonGameStringDocument.RootElement.TryGetProperty("locale", out JsonElement locale) && Enum.TryParse(locale.ToString(), true, out Localization localization))
-                Localization = localization;
+            if (JsonGameStringDocument.RootElement.TryGetProperty("meta", out JsonElement metaElement))
+            {
+                if (metaElement.TryGetProperty("locale", out JsonElement locale) && Enum.TryParse(locale.ToString(), true, out Localization localization))
+                    Localization = localization;
+            }
         }
 
         /// <summary>
@@ -57,8 +59,8 @@ namespace Heroes.Icons
         /// <param name="localization">Localization of data.</param>
         public GameStringReader(ReadOnlyMemory<byte> jsonGameStrings, Localization localization)
         {
-            _jsonGameStringDocument = JsonDocument.Parse(jsonGameStrings);
-            _localization = localization;
+            JsonGameStringDocument = JsonDocument.Parse(jsonGameStrings);
+            Localization = localization;
         }
 
         /// <summary>
@@ -66,9 +68,14 @@ namespace Heroes.Icons
         /// </summary>
         public Localization Localization { get; } = Localization.ENUS;
 
+        /// <summary>
+        /// Gets the <see cref="JsonDataDocument"/> to allow for manually parsing.
+        /// </summary>
+        public JsonDocument JsonGameStringDocument { get; }
+
         public void Dispose()
         {
-            _jsonGameStringDocument.Dispose();
+            JsonGameStringDocument.Dispose();
         }
 
         /// <summary>
@@ -77,7 +84,7 @@ namespace Heroes.Icons
         /// <param name="hero"></param>
         public void UpdateGameStrings(Hero hero)
         {
-            JsonElement element = _jsonGameStringDocument.RootElement;
+            JsonElement element = JsonGameStringDocument.RootElement;
 
             UpdateGameStrings(unit: hero);
 
@@ -117,7 +124,7 @@ namespace Heroes.Icons
         /// <param name="unit"></param>
         public void UpdateGameStrings(Unit unit)
         {
-            JsonElement element = _jsonGameStringDocument.RootElement;
+            JsonElement element = JsonGameStringDocument.RootElement;
 
             if (element.TryGetProperty("gamestrings", out JsonElement gameStringElement))
             {
@@ -126,7 +133,7 @@ namespace Heroes.Icons
                     if (TryGetValueFromJsonElement(keyValue, "damagetype", unit.Id, out JsonElement value))
                         unit.DamageType = value.ToString();
                     if (TryGetValueFromJsonElement(keyValue, "description", unit.Id, out value))
-                        unit.Description = new TooltipDescription(value.ToString(), _localization);
+                        unit.Description = new TooltipDescription(value.ToString(), Localization);
                     if (TryGetValueFromJsonElement(keyValue, "energytype", unit.Id, out value))
                         unit.Energy.EnergyType = value.ToString();
                     if (TryGetValueFromJsonElement(keyValue, "lifetype", unit.Id, out value))
@@ -145,17 +152,17 @@ namespace Heroes.Icons
                     if (gameStringElement.TryGetProperty("abiltalent", out keyValue))
                     {
                         if (TryGetValueFromJsonElement(keyValue, "cooldown", ability.AbilityTalentId.Id, out JsonElement value))
-                            ability.Tooltip.Cooldown.CooldownTooltip = new TooltipDescription(value.ToString(), _localization);
+                            ability.Tooltip.Cooldown.CooldownTooltip = new TooltipDescription(value.ToString(), Localization);
                         if (TryGetValueFromJsonElement(keyValue, "energy", ability.AbilityTalentId.Id, out value))
-                            ability.Tooltip.Energy.EnergyTooltip = new TooltipDescription(value.ToString(), _localization);
+                            ability.Tooltip.Energy.EnergyTooltip = new TooltipDescription(value.ToString(), Localization);
                         if (TryGetValueFromJsonElement(keyValue, "full", ability.AbilityTalentId.Id, out value))
-                            ability.Tooltip.FullTooltip = new TooltipDescription(value.ToString(), _localization);
+                            ability.Tooltip.FullTooltip = new TooltipDescription(value.ToString(), Localization);
                         if (TryGetValueFromJsonElement(keyValue, "life", ability.AbilityTalentId.Id, out value))
-                            ability.Tooltip.Life.LifeCostTooltip = new TooltipDescription(value.ToString(), _localization);
+                            ability.Tooltip.Life.LifeCostTooltip = new TooltipDescription(value.ToString(), Localization);
                         if (TryGetValueFromJsonElement(keyValue, "name", ability.AbilityTalentId.Id, out value))
                             ability.Name = value.ToString();
                         if (TryGetValueFromJsonElement(keyValue, "short", ability.AbilityTalentId.Id, out value))
-                            ability.Tooltip.ShortTooltip = new TooltipDescription(value.ToString(), _localization);
+                            ability.Tooltip.ShortTooltip = new TooltipDescription(value.ToString(), Localization);
                     }
                 }
             }

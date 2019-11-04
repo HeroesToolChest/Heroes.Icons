@@ -12,7 +12,8 @@ namespace Heroes.Icons
     public class HeroDataReader : UnitBaseData
     {
         /// <summary>
-        /// Initializes a new reader for the json data file.
+        /// Initializes a new reader for the json data file. <see cref="Localization"/> will be
+        /// inferred from the <paramref name="jsonDataFilePath"/>.
         /// </summary>
         /// <param name="jsonDataFilePath">JSON file containing hero data.</param>
         public HeroDataReader(string jsonDataFilePath)
@@ -34,15 +35,6 @@ namespace Heroes.Icons
         /// Initializes a new reader for the json data.
         /// </summary>
         /// <param name="jsonData">JSON data containing hero data.</param>
-        public HeroDataReader(ReadOnlyMemory<byte> jsonData)
-            : base(jsonData)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new reader for the json data.
-        /// </summary>
-        /// <param name="jsonData">JSON data containing hero data.</param>
         /// <param name="localization">Localization of data.</param>
         public HeroDataReader(ReadOnlyMemory<byte> jsonData, Localization localization)
             : base(jsonData, localization)
@@ -50,23 +42,13 @@ namespace Heroes.Icons
         }
 
         /// <summary>
-        /// Initializes a new reader for the json data file.
+        /// Initializes a new reader for the json data file. The <paramref name="gameStringReader"/>
+        /// overrides the <paramref name="jsonDataFilePath"/> <see cref="Localization"/>.
         /// </summary>
         /// <param name="jsonDataFilePath">JSON file containing hero data.</param>
         /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
         public HeroDataReader(string jsonDataFilePath, GameStringReader gameStringReader)
             : base(jsonDataFilePath, gameStringReader)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new reader for the json data file.
-        /// </summary>
-        /// <param name="jsonDataFilePath">JSON file containing hero data.</param>
-        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
-        /// <param name="localization">Localization of data.</param>
-        public HeroDataReader(string jsonDataFilePath, GameStringReader gameStringReader, Localization localization)
-            : base(jsonDataFilePath, gameStringReader, localization)
         {
         }
 
@@ -77,17 +59,6 @@ namespace Heroes.Icons
         /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
         public HeroDataReader(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader)
             : base(jsonData, gameStringReader)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new reader for the json data.
-        /// </summary>
-        /// <param name="jsonData">JSON data containing hero data.</param>
-        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
-        /// <param name="localization">Localization of data.</param>
-        public HeroDataReader(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader, Localization localization)
-            : base(jsonData, gameStringReader, localization)
         {
         }
 
@@ -143,30 +114,163 @@ namespace Heroes.Icons
             return false;
         }
 
-        //public Hero GetHeroByName(string name, bool abilities = false, bool subAbilities = false, bool talents = false, bool heroUnits = false)
-        //{
-        //    JsonElement jsonElement = JsonDataDocument.RootElement;
+        /// <summary>
+        /// Gets a <see cref="Hero"/> from the given hero <paramref name="name"/>.
+        /// </summary>
+        /// <param name="name">Hero name to find.</param>
+        /// <param name="abilities">Value indicating to include abilities.</param>
+        /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
+        /// <param name="talents">Value indicating to include talents.</param>
+        /// <param name="heroUnits">Value indicating to include hero units.</param>
+        /// <exception cref="ArgumentNullException" />
+        /// <exception cref="KeyNotFoundException" />
+        /// <returns></returns>
+        public Hero GetHeroByName(string name, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        {
+            if (name is null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
-        //    foreach (JsonProperty heroElement in jsonElement.EnumerateObject())
-        //    {
-        //        if (heroElement.Value.TryGetProperty("name", out JsonElement nameElement) && nameElement.ValueEquals(name))
-        //        {
-        //            Hero hero = GetHeroData(heroElement.Value, abilities, subAbilities, talents, heroUnits);
-        //            hero.Id = heroElement.Name;
-        //            hero.CHeroId = heroElement.Name;
+            if (TryGetHeroByName(name, out Hero value, abilities, subAbilities, talents, heroUnits))
+                return value;
+            else
+                throw new KeyNotFoundException();
+        }
 
-        //            return hero;
-        //        }
-        //    }
+        /// <summary>
+        /// Looks for a hero with the given <paramref name="name"/>, returning a value that indicates whether such value exists.
+        /// </summary>
+        /// <param name="name">Hero name to find.</param>
+        /// <param name="value">When this method returns, a <see cref="Hero"/> object.</param>
+        /// <param name="abilities">Value indicating to include abilities.</param>
+        /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
+        /// <param name="talents">Value indicating to include talents.</param>
+        /// <param name="heroUnits">Value indicating to include hero units.</param>
+        /// <exception cref="ArgumentNullException" />
+        /// <returns></returns>
+        public bool TryGetHeroByName(string name, out Hero value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+            => PropertyLookup("name", name, out value, abilities, subAbilities, talents, heroUnits);
 
-        //    throw new KeyNotFoundException();
-        //}
+        /// <summary>
+        /// Gets a <see cref="Hero"/> from the given hero <paramref name="hyperlinkId"/>.
+        /// </summary>
+        /// <param name="unitId">Hero unitId to find.</param>
+        /// <param name="abilities">Value indicating to include abilities.</param>
+        /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
+        /// <param name="talents">Value indicating to include talents.</param>
+        /// <param name="heroUnits">Value indicating to include hero units.</param>
+        /// <exception cref="ArgumentNullException" />
+        /// <exception cref="KeyNotFoundException" />
+        /// <returns></returns>
+        public Hero GetHeroByUnitId(string unitId, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        {
+            if (unitId is null)
+            {
+                throw new ArgumentNullException(nameof(unitId));
+            }
 
-        private Hero GetHeroData(string id, JsonElement heroElement, bool includeAbilities, bool includeSubAbilities, bool includeTalents, bool includeHeroUnits)
+            if (TryGetHeroByUnitId(unitId, out Hero value, abilities, subAbilities, talents, heroUnits))
+                return value;
+            else
+                throw new KeyNotFoundException();
+        }
+
+        /// <summary>
+        /// Looks for a hero with the given <paramref name="unitId"/>, returning a value that indicates whether such value exists.
+        /// </summary>
+        /// <param name="unitId">Hero unitId to find.</param>
+        /// <param name="value">When this method returns, a <see cref="Hero"/> object.</param>
+        /// <param name="abilities">Value indicating to include abilities.</param>
+        /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
+        /// <param name="talents">Value indicating to include talents.</param>
+        /// <param name="heroUnits">Value indicating to include hero units.</param>
+        /// <exception cref="ArgumentNullException" />
+        /// <returns></returns>
+        public bool TryGetHeroByUnitId(string unitId, out Hero value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+            => PropertyLookup("unitId", unitId, out value, abilities, subAbilities, talents, heroUnits);
+
+        /// <summary>
+        /// Gets a <see cref="Hero"/> from the given hero <paramref name="hyperlinkId"/>.
+        /// </summary>
+        /// <param name="hyperlinkId">Hero hyperlinkId to find.</param>
+        /// <param name="abilities">Value indicating to include abilities.</param>
+        /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
+        /// <param name="talents">Value indicating to include talents.</param>
+        /// <param name="heroUnits">Value indicating to include hero units.</param>
+        /// <exception cref="ArgumentNullException" />
+        /// <exception cref="KeyNotFoundException" />
+        /// <returns></returns>
+        public Hero GetHeroByHyperlinkId(string hyperlinkId, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        {
+            if (hyperlinkId is null)
+            {
+                throw new ArgumentNullException(nameof(hyperlinkId));
+            }
+
+            if (TryGetHeroByHyperlinkId(hyperlinkId, out Hero value, abilities, subAbilities, talents, heroUnits))
+                return value;
+            else
+                throw new KeyNotFoundException();
+        }
+
+        /// <summary>
+        /// Looks for a hero with the given <paramref name="hyperlinkId"/>, returning a value that indicates whether such value exists.
+        /// </summary>
+        /// <param name="hyperlinkId">Hero hyperlinkId to find.</param>
+        /// <param name="value">When this method returns, a <see cref="Hero"/> object.</param>
+        /// <param name="abilities">Value indicating to include abilities.</param>
+        /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
+        /// <param name="talents">Value indicating to include talents.</param>
+        /// <param name="heroUnits">Value indicating to include hero units.</param>
+        /// <exception cref="ArgumentNullException" />
+        /// <returns></returns>
+        public bool TryGetHeroByHyperlinkId(string hyperlinkId, out Hero value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+            => PropertyLookup("hyperlinkId", hyperlinkId, out value, abilities, subAbilities, talents, heroUnits);
+
+        /// <summary>
+        /// Gets a <see cref="Hero"/> from the given hero <paramref name="attributeId"/>.
+        /// </summary>
+        /// <param name="attributeId">Hero attributeId to find.</param>
+        /// <param name="abilities">Value indicating to include abilities.</param>
+        /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
+        /// <param name="talents">Value indicating to include talents.</param>
+        /// <param name="heroUnits">Value indicating to include hero units.</param>
+        /// <exception cref="ArgumentNullException" />
+        /// <exception cref="KeyNotFoundException" />
+        /// <returns></returns>
+        public Hero GetHeroByAttributeId(string attributeId, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        {
+            if (attributeId is null)
+            {
+                throw new ArgumentNullException(nameof(attributeId));
+            }
+
+            if (TryGetHeroByAttributeId(attributeId, out Hero value, abilities, subAbilities, talents, heroUnits))
+                return value;
+            else
+                throw new KeyNotFoundException();
+        }
+
+        /// <summary>
+        /// Looks for a hero with the given <paramref name="attributeId"/>, returning a value that indicates whether such value exists.
+        /// </summary>
+        /// <param name="attributeId">Hero attributeId to find.</param>
+        /// <param name="value">When this method returns, a <see cref="Hero"/> object.</param>
+        /// <param name="abilities">Value indicating to include abilities.</param>
+        /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
+        /// <param name="talents">Value indicating to include talents.</param>
+        /// <param name="heroUnits">Value indicating to include hero units.</param>
+        /// <exception cref="ArgumentNullException" />
+        /// <returns></returns>
+        public bool TryGetHeroByAttributeId(string attributeId, out Hero value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+            => PropertyLookup("attributeId", attributeId, out value, abilities, subAbilities, talents, heroUnits);
+
+        private Hero GetHeroData(string heroId, JsonElement heroElement, bool includeAbilities, bool includeSubAbilities, bool includeTalents, bool includeHeroUnits)
         {
             Hero hero = new Hero
             {
-                CHeroId = id,
+                CHeroId = heroId,
             };
 
             if (heroElement.TryGetProperty("unitId", out JsonElement unitId))
@@ -389,48 +493,24 @@ namespace Heroes.Icons
             }
         }
 
-        private void SetLocalizedHeroGameStrings(Hero hero)
+        private bool PropertyLookup(string propertyId, string propertyValue, out Hero value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
         {
-            //if (JsonGameStringDocument != null)
-            //{
-            //    JsonElement element = JsonGameStringDocument.RootElement;
+            if (propertyValue is null)
+                throw new ArgumentNullException(nameof(propertyValue));
 
-            //    if (element.TryGetProperty($"unit/difficulty/{hero.CHeroId}", out JsonElement value))
-            //        hero.Difficulty = value.ToString();
-            //    if (element.TryGetProperty($"unit/expandedrole/{hero.CHeroId}", out value))
-            //        hero.ExpandedRole = value.ToString();
+            value = new Hero();
 
-            //    if (element.TryGetProperty($"unit/role/{hero.CHeroId}", out value))
-            //    {
-            //        string[] roles = value.ToString().Split(',', StringSplitOptions.RemoveEmptyEntries);
+            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+            {
+                if (heroProperty.Value.TryGetProperty(propertyId, out JsonElement nameElement) && nameElement.GetString() == propertyValue)
+                {
+                    value = GetHeroData(heroProperty.Name, heroProperty.Value, abilities, subAbilities, talents, heroUnits);
 
-            //        foreach (string role in roles)
-            //        {
-            //            hero.AddRole(role);
-            //        }
-            //    }
+                    return true;
+                }
+            }
 
-            //    if (element.TryGetProperty($"unit/searchtext/{hero.CHeroId}", out value))
-            //        hero.SearchText = value.ToString();
-            //    if (element.TryGetProperty($"unit/title/{hero.CHeroId}", out value))
-            //        hero.Title = value.ToString();
-            //    if (element.TryGetProperty($"unit/type/{hero.CHeroId}", out value))
-            //        hero.Type = value.ToString();
-            //}
+            return false;
         }
-
-        /// <summary>
-        /// Returns the hero's name from the attribute id.
-        /// </summary>
-        /// <param name="attributeId">Four character hero id.</param>
-        /// <returns></returns>
-        //string HeroNameFromAttributeId(string attributeId);
-
-        /// <summary>
-        /// Returns the hero's name from the short name.
-        /// </summary>
-        /// <param name="shortName">Short name of hero.</param>
-        /// <returns></returns>
-        //string HeroNameFromShortName(string shortName);
     }
 }

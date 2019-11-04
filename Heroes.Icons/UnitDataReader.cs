@@ -11,7 +11,8 @@ namespace Heroes.Icons
     public class UnitDataReader : UnitBaseData
     {
         /// <summary>
-        /// Initializes a new reader for the json data file.
+        /// Initializes a new reader for the json data file. <see cref="Localization"/> will be
+        /// inferred from the <paramref name="jsonDataFilePath"/>.
         /// </summary>
         /// <param name="jsonDataFilePath">JSON file containing unit data.</param>
         public UnitDataReader(string jsonDataFilePath)
@@ -33,15 +34,6 @@ namespace Heroes.Icons
         /// Initializes a new reader for the json data.
         /// </summary>
         /// <param name="jsonData">JSON data containing unit data.</param>
-        public UnitDataReader(ReadOnlyMemory<byte> jsonData)
-            : base(jsonData)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new reader for the json data.
-        /// </summary>
-        /// <param name="jsonData">JSON data containing unit data.</param>
         /// <param name="localization">Localization of data.</param>
         public UnitDataReader(ReadOnlyMemory<byte> jsonData, Localization localization)
             : base(jsonData, localization)
@@ -49,23 +41,13 @@ namespace Heroes.Icons
         }
 
         /// <summary>
-        /// Initializes a new reader for the json data file.
+        /// Initializes a new reader for the json data file. The <paramref name="gameStringReader"/>
+        /// overrides the <paramref name="jsonDataFilePath"/> <see cref="Localization"/>.
         /// </summary>
         /// <param name="jsonDataFilePath">JSON file containing unit data.</param>
         /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
         public UnitDataReader(string jsonDataFilePath, GameStringReader gameStringReader)
             : base(jsonDataFilePath, gameStringReader)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new reader for the json data file.
-        /// </summary>
-        /// <param name="jsonDataFilePath">JSON file containing unit data.</param>
-        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
-        /// <param name="localization">Localization of data.</param>
-        public UnitDataReader(string jsonDataFilePath, GameStringReader gameStringReader, Localization localization)
-            : base(jsonDataFilePath, gameStringReader, localization)
         {
         }
 
@@ -76,17 +58,6 @@ namespace Heroes.Icons
         /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
         public UnitDataReader(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader)
             : base(jsonData, gameStringReader)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new reader for the json data.
-        /// </summary>
-        /// <param name="jsonData">JSON data containing unit data.</param>
-        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
-        /// <param name="localization">Localization of data.</param>
-        public UnitDataReader(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader, Localization localization)
-            : base(jsonData, gameStringReader, localization)
         {
         }
 
@@ -160,10 +131,12 @@ namespace Heroes.Icons
         {
             Unit unit = new Unit
             {
-                HyperlinkId = element.GetProperty("hyperlinkId").GetString(),
                 Id = id,
                 CUnitId = id,
             };
+
+            if (element.TryGetProperty("hyperlinkId", out JsonElement value))
+                unit.HyperlinkId = value.GetString();
 
             int index = id.IndexOf('-');
             if (index > -1)
@@ -171,7 +144,7 @@ namespace Heroes.Icons
                 unit.MapName = id.Substring(0, index);
             }
 
-            if (element.TryGetProperty("name", out JsonElement value))
+            if (element.TryGetProperty("name", out value))
                 unit.Name = value.GetString();
             if (element.TryGetProperty("innerRadius", out value))
                 unit.InnerRadius = value.GetDouble();

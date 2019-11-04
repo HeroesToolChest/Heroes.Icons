@@ -10,8 +10,12 @@ using System.Text.Json;
 namespace Heroes.Icons.Tests
 {
     [TestClass]
-    public class UnitDataReaderTests
+    public class UnitDataReaderTests : IDataReader
     {
+        private readonly string _dataFile = Path.Combine("JsonData", "unitdata_76003_kokr.json");
+        private readonly string _jsonGameStringFileKOKR = Path.Combine("JsonGameStrings", "gamestrings_76893_kokr.json");
+        private readonly string _jsonGameStringFileFRFR = Path.Combine("JsonGameStrings", "gamestrings_76893_frfr.json");
+
         private readonly UnitDataReader _unitDataReader;
 
         public UnitDataReaderTests()
@@ -207,6 +211,79 @@ namespace Heroes.Icons.Tests
 
             Assert.AreEqual("A long description", unit.Description!.RawDescription);
             Assert.AreEqual("Shield", unit.Shield.ShieldType);
+        }
+
+        [TestMethod]
+        public void DataReaderFileTest()
+        {
+            using UnitDataReader unitDataReader = new UnitDataReader(_dataFile);
+
+            Assert.AreEqual(Localization.KOKR, unitDataReader.Localization);
+            Assert.IsTrue(unitDataReader.JsonDataDocument.RootElement.TryGetProperty("AbathurEvolvedMonstrosity", out JsonElement _));
+        }
+
+        [TestMethod]
+        public void DataReaderFileLocaleTest()
+        {
+            using UnitDataReader unitDataReader = new UnitDataReader(_dataFile, Localization.FRFR);
+
+            Assert.AreEqual(Localization.FRFR, unitDataReader.Localization);
+            Assert.IsTrue(unitDataReader.JsonDataDocument.RootElement.TryGetProperty("AbathurEvolvedMonstrosity", out JsonElement _));
+        }
+
+        [TestMethod]
+        public void DataReaderRomLocaleTest()
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+            writer.WriteStartObject();
+
+            writer.WriteStartObject("AbathurEvolvedMonstrosity");
+            writer.WriteEndObject();
+
+            writer.WriteEndObject();
+
+            writer.Flush();
+
+            byte[] bytes = memoryStream.ToArray();
+
+            using UnitDataReader unitDataReader = new UnitDataReader(bytes, Localization.FRFR);
+
+            Assert.AreEqual(Localization.FRFR, unitDataReader.Localization);
+            Assert.IsTrue(unitDataReader.JsonDataDocument.RootElement.TryGetProperty("AbathurEvolvedMonstrosity", out JsonElement _));
+        }
+
+        [TestMethod]
+        public void DataReaderFileGSRTest()
+        {
+            using GameStringReader gameStringReader = new GameStringReader(_jsonGameStringFileFRFR);
+            using UnitDataReader unitDataReader = new UnitDataReader(_dataFile, gameStringReader);
+
+            Assert.AreEqual(Localization.FRFR, unitDataReader.Localization);
+            Assert.IsTrue(unitDataReader.TryGetUnitById("AbathurEvolvedMonstrosity", out Unit _, false, false));
+        }
+
+        [TestMethod]
+        public void DataReaderROMGSRTest()
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+            writer.WriteStartObject();
+
+            writer.WriteStartObject("AbathurEvolvedMonstrosity");
+            writer.WriteEndObject();
+
+            writer.WriteEndObject();
+
+            writer.Flush();
+
+            byte[] bytes = memoryStream.ToArray();
+
+            using GameStringReader gameStringReader = new GameStringReader(_jsonGameStringFileKOKR);
+            using UnitDataReader unitDataReader = new UnitDataReader(bytes, gameStringReader);
+
+            Assert.AreEqual(Localization.KOKR, unitDataReader.Localization);
+            Assert.IsTrue(unitDataReader.TryGetUnitById("AbathurEvolvedMonstrosity", out Unit _, false, false));
         }
 
         private byte[] LoadJsonTestData()

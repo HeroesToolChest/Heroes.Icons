@@ -1,0 +1,13 @@
+{
+  "meta": {
+    "version": "76893",
+    "locale": "enus"
+  },
+  "gamestrings": {
+    "abiltalent": {
+      "cooldown": {
+        "AbathurAssumingDirectControlCancel|AbathurSymbioteCancel|Heroic|False": "Cooldown: 1.5 seconds"
+      }
+    }
+  }
+}

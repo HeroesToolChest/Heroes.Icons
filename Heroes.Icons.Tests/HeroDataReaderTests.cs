@@ -10,8 +10,12 @@ using System.Text.Json;
 namespace Heroes.Icons.Tests
 {
     [TestClass]
-    public class HeroDataReaderTests
+    public class HeroDataReaderTests : IDataReader
     {
+        private readonly string _dataFile = Path.Combine("JsonData", "herodata_76003_kokr.json");
+        private readonly string _jsonGameStringFileKOKR = Path.Combine("JsonGameStrings", "gamestrings_76893_kokr.json");
+        private readonly string _jsonGameStringFileFRFR = Path.Combine("JsonGameStrings", "gamestrings_76893_frfr.json");
+
         private readonly HeroDataReader _heroDataReader;
 
         public HeroDataReaderTests()
@@ -249,7 +253,7 @@ namespace Heroes.Icons.Tests
 
                 Ability ability = hero.GetAbility(new AbilityTalentId("Dismount", "UnsummonMount")
                 {
-                     AbilityType = AbilityType.Z,
+                    AbilityType = AbilityType.Z,
                 });
 
                 Assert.AreEqual("Unsummon Mount", ability.Name);
@@ -281,79 +285,85 @@ namespace Heroes.Icons.Tests
                 return;
             }
 
-            if (_heroDataReader.TryGetHeroById(id, out Hero hero, abilities, subAbilities, talents, heroUnits))
+            Assert.IsTrue(_heroDataReader.TryGetHeroById(id, out Hero hero, abilities, subAbilities, talents, heroUnits));
+            Assert.AreEqual("Ragnaros", hero.CHeroId);
+            Assert.AreEqual("Ragnaros", hero.Name);
+            Assert.AreEqual("HeroRagnaros", hero.CUnitId);
+
+            Assert.AreEqual("Ragnaros", hero.HyperlinkId);
+            Assert.AreEqual("Ragn", hero.AttributeId);
+            Assert.AreEqual("Medium", hero.Difficulty);
+            Assert.AreEqual(HeroFranchise.Unknown, hero.Franchise);
+            Assert.AreEqual(UnitGender.Neutral, hero.Gender);
+            Assert.AreEqual(Rarity.Unknown, hero.Rarity);
+
+            if (talents)
             {
-                Assert.AreEqual("Ragnaros", hero.CHeroId);
-                Assert.AreEqual("Ragnaros", hero.Name);
-                Assert.AreEqual("HeroRagnaros", hero.CUnitId);
+                Talent talent = hero.GetTalent("RagnarosEmpowerSulfurasSulfurasHungers");
+                Assert.AreEqual("RagnarosEmpowerSulfurasSulfurasHungers", talent.AbilityTalentId.ReferenceId);
+                Assert.AreEqual("RagnarosEmpowerSulfurasSulfurasHungers", talent.AbilityTalentId.ButtonId);
+                Assert.AreEqual("Sulfuras Hungers", talent.Name);
+                Assert.AreEqual("storm_ui_icon_ragnaros_empowersulfuras.png", talent.IconFileName);
+                Assert.AreEqual("<c val=\"e4b800\">Quest:</c> Kill Minions with Empower Sulfuras to increase its damage", talent.Tooltip.ShortTooltip!.ColoredText);
+                Assert.AreEqual("This is a full tooltip", talent.Tooltip.FullTooltip!.ColoredText);
+                Assert.AreEqual(AbilityType.Q, talent.AbilityTalentId.AbilityType);
+                Assert.IsTrue(talent.IsQuest);
+                Assert.AreEqual(1, talent.Column);
+                Assert.AreEqual(2, talent.AbilityTalentLinkIdsCount);
+                Assert.AreEqual("RagnarosEmpowerSulfurasActive", talent.AbilityTalentLinkIds.ToList()[0]);
+                Assert.AreEqual("RagnarosEmpowerSulfuras", talent.AbilityTalentLinkIds.ToList()[1]);
 
-                Assert.AreEqual("Ragnaros", hero.HyperlinkId);
-                Assert.AreEqual("Ragn", hero.AttributeId);
-                Assert.AreEqual("Medium", hero.Difficulty);
-                Assert.AreEqual(HeroFranchise.Unknown, hero.Franchise);
-                Assert.AreEqual(UnitGender.Neutral, hero.Gender);
-                Assert.AreEqual(Rarity.Unknown, hero.Rarity);
+                talent = hero.GetTalent("RagnarosLivingMeteorShiftingMeteor");
+                Assert.AreEqual(AbilityType.W, talent.AbilityTalentId.AbilityType);
+                Assert.AreEqual(2, talent.Column);
 
-                if (talents)
-                {
-                    Talent talent = hero.GetTalent("RagnarosEmpowerSulfurasSulfurasHungers");
-                    Assert.AreEqual("RagnarosEmpowerSulfurasSulfurasHungers", talent.AbilityTalentId.ReferenceId);
-                    Assert.AreEqual("RagnarosEmpowerSulfurasSulfurasHungers", talent.AbilityTalentId.ButtonId);
-                    Assert.AreEqual("Sulfuras Hungers", talent.Name);
-                    Assert.AreEqual("storm_ui_icon_ragnaros_empowersulfuras.png", talent.IconFileName);
-                    Assert.AreEqual("<c val=\"e4b800\">Quest:</c> Kill Minions with Empower Sulfuras to increase its damage", talent.Tooltip.ShortTooltip!.ColoredText);
-                    Assert.AreEqual("This is a full tooltip", talent.Tooltip.FullTooltip!.ColoredText);
-                    Assert.AreEqual(AbilityType.Q, talent.AbilityTalentId.AbilityType);
-                    Assert.IsTrue(talent.IsQuest);
-                    Assert.AreEqual(1, talent.Column);
-                    Assert.AreEqual(2, talent.AbilityTalentLinkIdsCount);
-                    Assert.AreEqual("RagnarosEmpowerSulfurasActive", talent.AbilityTalentLinkIds.ToList()[0]);
-                    Assert.AreEqual("RagnarosEmpowerSulfuras", talent.AbilityTalentLinkIds.ToList()[1]);
+                talent = hero.GetTalent("RagnarosCatchingFire");
+                Assert.AreEqual(AbilityType.Active, talent.AbilityTalentId.AbilityType);
+                Assert.AreEqual(3, talent.Column);
+                Assert.IsTrue(talent.IsActive);
 
-                    talent = hero.GetTalent("RagnarosLivingMeteorShiftingMeteor");
-                    Assert.AreEqual(AbilityType.W, talent.AbilityTalentId.AbilityType);
-                    Assert.AreEqual(2, talent.Column);
+                talent = hero.GetTalent("RagnarosEmpowerSulfurasHandOfRagnaros");
+                Assert.AreEqual(AbilityType.Q, talent.AbilityTalentId.AbilityType);
+                Assert.AreEqual(1, talent.Column);
+                Assert.IsFalse(talent.IsActive);
 
-                    talent = hero.GetTalent("RagnarosCatchingFire");
-                    Assert.AreEqual(AbilityType.Active, talent.AbilityTalentId.AbilityType);
-                    Assert.AreEqual(3, talent.Column);
-                    Assert.IsTrue(talent.IsActive);
+                talent = hero.GetTalent("RagnarosSulfurasSmash");
+                Assert.AreEqual(AbilityType.Heroic, talent.AbilityTalentId.AbilityType);
+                Assert.AreEqual(1, talent.Column);
 
-                    talent = hero.GetTalent("RagnarosEmpowerSulfurasHandOfRagnaros");
-                    Assert.AreEqual(AbilityType.Q, talent.AbilityTalentId.AbilityType);
-                    Assert.AreEqual(1, talent.Column);
-                    Assert.IsFalse(talent.IsActive);
+                talent = hero.GetTalent("RagnarosEmpowerSulfurasCauterizeWounds");
+                Assert.AreEqual(AbilityType.Q, talent.AbilityTalentId.AbilityType);
+                Assert.AreEqual(1, talent.Column);
 
-                    talent = hero.GetTalent("RagnarosSulfurasSmash");
-                    Assert.AreEqual(AbilityType.Heroic, talent.AbilityTalentId.AbilityType);
-                    Assert.AreEqual(1, talent.Column);
+                talent = hero.GetTalent("RagnarosLivingMeteorMeteorBomb");
+                Assert.AreEqual(AbilityType.W, talent.AbilityTalentId.AbilityType);
+                Assert.AreEqual(2, talent.Column);
 
-                    talent = hero.GetTalent("RagnarosEmpowerSulfurasCauterizeWounds");
-                    Assert.AreEqual(AbilityType.Q, talent.AbilityTalentId.AbilityType);
-                    Assert.AreEqual(1, talent.Column);
+                talent = hero.GetTalent("RagnarosSulfurasSmashFlamesOfSulfuron");
+                Assert.AreEqual(AbilityType.Heroic, talent.AbilityTalentId.AbilityType);
+                Assert.AreEqual(1, talent.Column);
+                Assert.AreEqual(1, talent.PrerequisiteTalentIdCount);
+                Assert.AreEqual("RagnarosSulfurasSmash", talent.PrerequisiteTalentIds.ToList()[0]);
+            }
+            else
+            {
+                Assert.AreEqual(0, hero.TalentsCount);
+            }
 
-                    talent = hero.GetTalent("RagnarosLivingMeteorMeteorBomb");
-                    Assert.AreEqual(AbilityType.W, talent.AbilityTalentId.AbilityType);
-                    Assert.AreEqual(2, talent.Column);
+            if (heroUnits)
+            {
+                List<Hero> heroUnitList = hero.HeroUnits.ToList();
+                Hero ragnarosHero = heroUnitList[0];
 
-                    talent = hero.GetTalent("RagnarosSulfurasSmashFlamesOfSulfuron");
-                    Assert.AreEqual(AbilityType.Heroic, talent.AbilityTalentId.AbilityType);
-                    Assert.AreEqual(1, talent.Column);
-                    Assert.AreEqual(1, talent.PrerequisiteTalentIdCount);
-                    Assert.AreEqual("RagnarosSulfurasSmash", talent.PrerequisiteTalentIds.ToList()[0]);
-                }
-
-                if (heroUnits)
-                {
-                    List<Hero> heroUnitList = hero.HeroUnits.ToList();
-                    Hero ragnarosHero = heroUnitList[0];
-
-                    Assert.AreEqual("Ragnaros", ragnarosHero.Name);
-                    Assert.AreEqual("RagnarosBigRag", ragnarosHero.HyperlinkId);
-                    Assert.AreEqual(3, ragnarosHero.Radius);
-                    Assert.AreEqual(12, ragnarosHero.Sight);
-                    Assert.AreEqual(4.8398, ragnarosHero.Speed);
-                }
+                Assert.AreEqual("Ragnaros", ragnarosHero.Name);
+                Assert.AreEqual("RagnarosBigRag", ragnarosHero.HyperlinkId);
+                Assert.AreEqual(3, ragnarosHero.Radius);
+                Assert.AreEqual(12, ragnarosHero.Sight);
+                Assert.AreEqual(4.8398, ragnarosHero.Speed);
+            }
+            else
+            {
+                Assert.AreEqual(0, hero.HeroUnitCount);
             }
         }
 
@@ -398,6 +408,309 @@ namespace Heroes.Icons.Tests
             Assert.AreEqual("After a <c val=\"bfd4fd\">0.5</c> second delay, enemies in front of Alarak take <c val=\"bfd4fd\">175~~0.04~~</c> damage and are silenced for <c val=\"bfd4fd\">1.5</c> seconds. ", ability.Tooltip.FullTooltip!.RawDescription);
             Assert.AreEqual("Damage and silence enemies in an area", ability.Tooltip.ShortTooltip!.RawDescription);
             Assert.AreEqual("No life", ability.Tooltip.Life.LifeCostTooltip!.RawDescription);
+        }
+
+        [DataTestMethod]
+        [DataRow(null, true, true, true, true)]
+        [DataRow("Ragnaros", true, true, true, true)]
+        [DataRow("asdf", true, true, true, true)]
+        public void TryGetHeroByNameTest(string name, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        {
+            if (name is null)
+            {
+                Assert.ThrowsException<ArgumentNullException>(() =>
+                {
+                    _ = _heroDataReader.TryGetHeroByName(name!, out _, abilities, subAbilities, talents, heroUnits);
+                });
+
+                return;
+            }
+            else if (name == "asdf")
+            {
+                Assert.IsFalse(_heroDataReader.TryGetHeroByName(name!, out _, abilities, subAbilities, talents, heroUnits));
+
+                return;
+            }
+
+            Assert.IsTrue(_heroDataReader.TryGetHeroByName(name, out Hero hero, abilities, subAbilities, talents, heroUnits));
+            BasicRagnarosAsserts(hero);
+        }
+
+        [DataTestMethod]
+        [DataRow(null, true, true, true, true)]
+        [DataRow("Ragnaros", true, true, true, true)]
+        [DataRow("asdf", true, true, true, true)]
+        public void GetHeroByNameTest(string name, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        {
+            if (name is null)
+            {
+                Assert.ThrowsException<ArgumentNullException>(() =>
+                {
+                    _ = _heroDataReader.GetHeroByName(name!, abilities, subAbilities, talents, heroUnits);
+                });
+
+                return;
+            }
+            else if (name == "asdf")
+            {
+                Assert.ThrowsException<KeyNotFoundException>(() =>
+                {
+                    _ = _heroDataReader.GetHeroByName(name, abilities, subAbilities, talents, heroUnits);
+                });
+
+                return;
+            }
+
+            BasicRagnarosAsserts(_heroDataReader.GetHeroByName(name, abilities, subAbilities, talents, heroUnits));
+        }
+
+        [DataTestMethod]
+        [DataRow(null, true, true, true, true)]
+        [DataRow("HeroRagnaros", true, true, true, true)]
+        [DataRow("asdf", true, true, true, true)]
+        public void TryGetHeroByUnitIdTest(string unitId, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        {
+            if (unitId is null)
+            {
+                Assert.ThrowsException<ArgumentNullException>(() =>
+                {
+                    _ = _heroDataReader.TryGetHeroByUnitId(unitId!, out _, abilities, subAbilities, talents, heroUnits);
+                });
+
+                return;
+            }
+            else if (unitId == "asdf")
+            {
+                Assert.IsFalse(_heroDataReader.TryGetHeroByUnitId(unitId!, out _, abilities, subAbilities, talents, heroUnits));
+
+                return;
+            }
+
+            Assert.IsTrue(_heroDataReader.TryGetHeroByUnitId(unitId, out Hero hero, abilities, subAbilities, talents, heroUnits));
+            BasicRagnarosAsserts(hero);
+        }
+
+        [DataTestMethod]
+        [DataRow(null, true, true, true, true)]
+        [DataRow("HeroRagnaros", true, true, true, true)]
+        [DataRow("asdf", true, true, true, true)]
+        public void GetHeroByUnitIdTest(string unitId, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        {
+            if (unitId is null)
+            {
+                Assert.ThrowsException<ArgumentNullException>(() =>
+                {
+                    _ = _heroDataReader.GetHeroByUnitId(unitId!, abilities, subAbilities, talents, heroUnits);
+                });
+
+                return;
+            }
+            else if (unitId == "asdf")
+            {
+                Assert.ThrowsException<KeyNotFoundException>(() =>
+                {
+                    _ = _heroDataReader.GetHeroByUnitId(unitId, abilities, subAbilities, talents, heroUnits);
+                });
+
+                return;
+            }
+
+            BasicRagnarosAsserts(_heroDataReader.GetHeroByUnitId(unitId, abilities, subAbilities, talents, heroUnits));
+        }
+
+        [DataTestMethod]
+        [DataRow(null, true, true, true, true)]
+        [DataRow("Ragnaros", true, true, true, true)]
+        [DataRow("asdf", true, true, true, true)]
+        public void TryGetHeroByHyperlinkIdTest(string hyperlinkId, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        {
+            if (hyperlinkId is null)
+            {
+                Assert.ThrowsException<ArgumentNullException>(() =>
+                {
+                    _ = _heroDataReader.TryGetHeroByHyperlinkId(hyperlinkId!, out _, abilities, subAbilities, talents, heroUnits);
+                });
+
+                return;
+            }
+            else if (hyperlinkId == "asdf")
+            {
+                Assert.IsFalse(_heroDataReader.TryGetHeroByHyperlinkId(hyperlinkId!, out _, abilities, subAbilities, talents, heroUnits));
+
+                return;
+            }
+
+            Assert.IsTrue(_heroDataReader.TryGetHeroByHyperlinkId(hyperlinkId, out Hero hero, abilities, subAbilities, talents, heroUnits));
+            BasicRagnarosAsserts(hero);
+        }
+
+        [DataTestMethod]
+        [DataRow(null, true, true, true, true)]
+        [DataRow("Ragnaros", true, true, true, true)]
+        [DataRow("asdf", true, true, true, true)]
+        public void GetHeroByHyperlinkIdTest(string hyperlinkId, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        {
+            if (hyperlinkId is null)
+            {
+                Assert.ThrowsException<ArgumentNullException>(() =>
+                {
+                    _ = _heroDataReader.GetHeroByHyperlinkId(hyperlinkId!, abilities, subAbilities, talents, heroUnits);
+                });
+
+                return;
+            }
+            else if (hyperlinkId == "asdf")
+            {
+                Assert.ThrowsException<KeyNotFoundException>(() =>
+                {
+                    _ = _heroDataReader.GetHeroByHyperlinkId(hyperlinkId, abilities, subAbilities, talents, heroUnits);
+                });
+
+                return;
+            }
+
+            BasicRagnarosAsserts(_heroDataReader.GetHeroByHyperlinkId(hyperlinkId, abilities, subAbilities, talents, heroUnits));
+        }
+
+        [DataTestMethod]
+        [DataRow(null, true, true, true, true)]
+        [DataRow("Ragn", true, true, true, true)]
+        [DataRow("asdf", true, true, true, true)]
+        public void TryGetHeroByAttributeIdTest(string attributeId, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        {
+            if (attributeId is null)
+            {
+                Assert.ThrowsException<ArgumentNullException>(() =>
+                {
+                    _ = _heroDataReader.TryGetHeroByAttributeId(attributeId!, out _, abilities, subAbilities, talents, heroUnits);
+                });
+
+                return;
+            }
+            else if (attributeId == "asdf")
+            {
+                Assert.IsFalse(_heroDataReader.TryGetHeroByAttributeId(attributeId!, out _, abilities, subAbilities, talents, heroUnits));
+
+                return;
+            }
+
+            Assert.IsTrue(_heroDataReader.TryGetHeroByAttributeId(attributeId, out Hero hero, abilities, subAbilities, talents, heroUnits));
+            BasicRagnarosAsserts(hero);
+        }
+
+        [DataTestMethod]
+        [DataRow(null, true, true, true, true)]
+        [DataRow("Ragn", true, true, true, true)]
+        [DataRow("asdf", true, true, true, true)]
+        public void GetHeroByAttributeIdTest(string attributeId, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        {
+            if (attributeId is null)
+            {
+                Assert.ThrowsException<ArgumentNullException>(() =>
+                {
+                    _ = _heroDataReader.GetHeroByAttributeId(attributeId!, abilities, subAbilities, talents, heroUnits);
+                });
+
+                return;
+            }
+            else if (attributeId == "asdf")
+            {
+                Assert.ThrowsException<KeyNotFoundException>(() =>
+                {
+                    _ = _heroDataReader.GetHeroByAttributeId(attributeId, abilities, subAbilities, talents, heroUnits);
+                });
+
+                return;
+            }
+
+            BasicRagnarosAsserts(_heroDataReader.GetHeroByAttributeId(attributeId, abilities, subAbilities, talents, heroUnits));
+        }
+
+        [TestMethod]
+        public void DataReaderFileTest()
+        {
+            using HeroDataReader heroDataReader = new HeroDataReader(_dataFile);
+
+            Assert.AreEqual(Localization.KOKR, heroDataReader.Localization);
+            Assert.IsTrue(heroDataReader.JsonDataDocument.RootElement.TryGetProperty("Abathur", out JsonElement _));
+        }
+
+        [TestMethod]
+        public void DataReaderFileLocaleTest()
+        {
+            using HeroDataReader heroDataReader = new HeroDataReader(_dataFile, Localization.FRFR);
+
+            Assert.AreEqual(Localization.FRFR, heroDataReader.Localization);
+            Assert.IsTrue(heroDataReader.JsonDataDocument.RootElement.TryGetProperty("Abathur", out JsonElement _));
+        }
+
+        [TestMethod]
+        public void DataReaderRomLocaleTest()
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+            writer.WriteStartObject();
+
+            writer.WriteStartObject("Abathur");
+            writer.WriteEndObject();
+
+            writer.WriteEndObject();
+
+            writer.Flush();
+
+            byte[] bytes = memoryStream.ToArray();
+
+            using HeroDataReader heroDataReader = new HeroDataReader(bytes, Localization.FRFR);
+
+            Assert.AreEqual(Localization.FRFR, heroDataReader.Localization);
+            Assert.IsTrue(heroDataReader.JsonDataDocument.RootElement.TryGetProperty("Abathur", out JsonElement _));
+        }
+
+        [TestMethod]
+        public void DataReaderFileGSRTest()
+        {
+            using GameStringReader gameStringReader = new GameStringReader(_jsonGameStringFileFRFR);
+            using HeroDataReader heroDataReader = new HeroDataReader(_dataFile, gameStringReader);
+
+            Assert.AreEqual(Localization.FRFR, heroDataReader.Localization);
+            Assert.IsTrue(heroDataReader.TryGetHeroById("Abathur", out Hero _, false, false, false, false));
+        }
+
+        [TestMethod]
+        public void DataReaderROMGSRTest()
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+            writer.WriteStartObject();
+
+            writer.WriteStartObject("Abathur");
+            writer.WriteEndObject();
+
+            writer.WriteEndObject();
+
+            writer.Flush();
+
+            byte[] bytes = memoryStream.ToArray();
+
+            using GameStringReader gameStringReader = new GameStringReader(_jsonGameStringFileKOKR);
+            using HeroDataReader heroDataReader = new HeroDataReader(bytes, gameStringReader);
+
+            Assert.AreEqual(Localization.KOKR, heroDataReader.Localization);
+            Assert.IsTrue(heroDataReader.TryGetHeroById("Abathur", out Hero _, false, false, false, false));
+        }
+
+        private void BasicRagnarosAsserts(Hero hero)
+        {
+            Assert.AreEqual("Ragnaros", hero.CHeroId);
+            Assert.AreEqual("Ragnaros", hero.Name);
+            Assert.AreEqual("HeroRagnaros", hero.CUnitId);
+
+            Assert.AreEqual("Ragnaros", hero.HyperlinkId);
+            Assert.AreEqual("Ragn", hero.AttributeId);
+            Assert.AreEqual("Medium", hero.Difficulty);
+            Assert.AreEqual(HeroFranchise.Unknown, hero.Franchise);
+            Assert.AreEqual(UnitGender.Neutral, hero.Gender);
+            Assert.AreEqual(Rarity.Unknown, hero.Rarity);
         }
 
         private byte[] LoadJsonTestData()
