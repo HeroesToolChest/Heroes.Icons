@@ -627,6 +627,525 @@ namespace Heroes.Icons.Tests
         }
 
         [TestMethod]
+        [TestCategory("Helper")]
+        public void GetNameFromHeroIdTest()
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+            writer.WriteStartObject();
+
+            writer.WriteStartObject("Abathur");
+            writer.WriteString("name", "AbathurName");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Alarak");
+            writer.WriteString("name", "AlarakName");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Murky");
+            writer.WriteString("name", "MurkyName");
+            writer.WriteEndObject();
+
+            writer.WriteEndObject();
+
+            writer.Flush();
+
+            byte[] bytes = memoryStream.ToArray();
+
+            using HeroDataReader heroDataReader = new HeroDataReader(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.GetNameFromHeroId(null!));
+            Assert.AreEqual("MurkyName", heroDataReader.GetNameFromHeroId("Murky"));
+            Assert.IsNull(heroDataReader.GetNameFromHeroId("hero5"));
+        }
+
+        [TestMethod]
+        [TestCategory("Helper")]
+        public void GetNameFromUnitIdTest()
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+            writer.WriteStartObject();
+
+            writer.WriteStartObject("Abathur");
+            writer.WriteString("name", "AbathurName");
+            writer.WriteString("unitId", "hero1");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Alarak");
+            writer.WriteString("name", "AlarakName");
+            writer.WriteString("unitId", "hero2");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Murky");
+            writer.WriteString("name", "MurkyName");
+            writer.WriteString("unitId", "hero3");
+            writer.WriteEndObject();
+
+            writer.WriteEndObject();
+
+            writer.Flush();
+
+            byte[] bytes = memoryStream.ToArray();
+
+            using HeroDataReader heroDataReader = new HeroDataReader(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.GetNameFromUnitId(null!));
+            Assert.AreEqual("MurkyName", heroDataReader.GetNameFromUnitId("hero3"));
+            Assert.IsNull(heroDataReader.GetNameFromUnitId("hero5"));
+        }
+
+        [TestMethod]
+        [TestCategory("Helper")]
+        public void GetNameFromHyperlinkIdTest()
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+            writer.WriteStartObject();
+
+            writer.WriteStartObject("Abathur");
+            writer.WriteString("name", "AbathurName");
+            writer.WriteString("hyperlinkId", "hero1");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Alarak");
+            writer.WriteString("name", "AlarakName");
+            writer.WriteString("hyperlinkId", "hero2");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Murky");
+            writer.WriteString("name", "MurkyName");
+            writer.WriteString("hyperlinkId", "hero3");
+            writer.WriteEndObject();
+
+            writer.WriteEndObject();
+
+            writer.Flush();
+
+            byte[] bytes = memoryStream.ToArray();
+
+            using HeroDataReader heroDataReader = new HeroDataReader(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.GetNameFromHyperlinkId(null!));
+            Assert.AreEqual("MurkyName", heroDataReader.GetNameFromHyperlinkId("hero3"));
+            Assert.IsNull(heroDataReader.GetNameFromHyperlinkId("hero5"));
+        }
+
+        [TestMethod]
+        [TestCategory("Helper")]
+        public void GetNameFromAttributeIdTest()
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+            writer.WriteStartObject();
+
+            writer.WriteStartObject("Abathur");
+            writer.WriteString("name", "AbathurName");
+            writer.WriteString("attributeId", "hero1");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Alarak");
+            writer.WriteString("name", "AlarakName");
+            writer.WriteString("attributeId", "hero2");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Murky");
+            writer.WriteString("name", "MurkyName");
+            writer.WriteString("attributeId", "hero3");
+            writer.WriteEndObject();
+
+            writer.WriteEndObject();
+
+            writer.Flush();
+
+            byte[] bytes = memoryStream.ToArray();
+
+            using HeroDataReader heroDataReader = new HeroDataReader(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.GetNameFromAttributeId(null!));
+            Assert.AreEqual("MurkyName", heroDataReader.GetNameFromAttributeId("hero3"));
+            Assert.IsNull(heroDataReader.GetNameFromAttributeId("hero5"));
+        }
+
+        [TestMethod]
+        [TestCategory("Helper")]
+        public void GetHeroIdFromNameTest()
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+            writer.WriteStartObject();
+
+            writer.WriteStartObject("Abathur");
+            writer.WriteString("name", "AbathurName");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Alarak");
+            writer.WriteString("name", "AlarakName");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Murky");
+            writer.WriteString("name", "MurkyName");
+            writer.WriteEndObject();
+
+            writer.WriteEndObject();
+
+            writer.Flush();
+
+            byte[] bytes = memoryStream.ToArray();
+
+            using HeroDataReader heroDataReader = new HeroDataReader(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.GetHeroIdFromName(null!));
+            Assert.AreEqual("Alarak", heroDataReader.GetHeroIdFromName("AlarakName"));
+            Assert.IsNull(heroDataReader.GetHeroIdFromName("hero5"));
+        }
+
+        [TestMethod]
+        [TestCategory("Helper")]
+        public void GetHeroIdFromUnitIdTest()
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+            writer.WriteStartObject();
+
+            writer.WriteStartObject("Abathur");
+            writer.WriteString("name", "AbathurName");
+            writer.WriteString("unitId", "hero1");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Alarak");
+            writer.WriteString("name", "AlarakName");
+            writer.WriteString("unitId", "hero2");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Murky");
+            writer.WriteString("name", "MurkyName");
+            writer.WriteString("unitId", "hero3");
+            writer.WriteEndObject();
+
+            writer.WriteEndObject();
+
+            writer.Flush();
+
+            byte[] bytes = memoryStream.ToArray();
+
+            using HeroDataReader heroDataReader = new HeroDataReader(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.GetHeroIdFromUnitId(null!));
+            Assert.AreEqual("Murky", heroDataReader.GetHeroIdFromUnitId("hero3"));
+            Assert.IsNull(heroDataReader.GetHeroIdFromUnitId("hero5"));
+        }
+
+        [TestMethod]
+        [TestCategory("Helper")]
+        public void GetHeroIdFromHyperlinkIdTest()
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+            writer.WriteStartObject();
+
+            writer.WriteStartObject("Abathur");
+            writer.WriteString("name", "AbathurName");
+            writer.WriteString("hyperlinkId", "hero1");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Alarak");
+            writer.WriteString("name", "AlarakName");
+            writer.WriteString("hyperlinkId", "hero2");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Murky");
+            writer.WriteString("name", "MurkyName");
+            writer.WriteString("hyperlinkId", "hero3");
+            writer.WriteEndObject();
+
+            writer.WriteEndObject();
+
+            writer.Flush();
+
+            byte[] bytes = memoryStream.ToArray();
+
+            using HeroDataReader heroDataReader = new HeroDataReader(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.GetHeroIdFromHyperlinkId(null!));
+            Assert.AreEqual("Murky", heroDataReader.GetHeroIdFromHyperlinkId("hero3"));
+            Assert.IsNull(heroDataReader.GetHeroIdFromHyperlinkId("hero5"));
+        }
+
+        [TestMethod]
+        [TestCategory("Helper")]
+        public void GetGetHeroIdFromAttributeIdTest()
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+            writer.WriteStartObject();
+
+            writer.WriteStartObject("Abathur");
+            writer.WriteString("name", "AbathurName");
+            writer.WriteString("attributeId", "hero1");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Alarak");
+            writer.WriteString("name", "AlarakName");
+            writer.WriteString("attributeId", "hero2");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Murky");
+            writer.WriteString("name", "MurkyName");
+            writer.WriteString("attributeId", "hero3");
+            writer.WriteEndObject();
+
+            writer.WriteEndObject();
+
+            writer.Flush();
+
+            byte[] bytes = memoryStream.ToArray();
+
+            using HeroDataReader heroDataReader = new HeroDataReader(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.GetHeroIdFromAttributeId(null!));
+            Assert.AreEqual("Murky", heroDataReader.GetHeroIdFromAttributeId("hero3"));
+            Assert.IsNull(heroDataReader.GetHeroIdFromAttributeId("hero5"));
+        }
+
+        [TestMethod]
+        [TestCategory("Helper")]
+        public void IsHeroExistsByHeroIdTest()
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+            writer.WriteStartObject();
+
+            writer.WriteStartObject("Abathur");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Alarak");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Murky");
+            writer.WriteEndObject();
+
+            writer.WriteEndObject();
+
+            writer.Flush();
+
+            byte[] bytes = memoryStream.ToArray();
+
+            using HeroDataReader heroDataReader = new HeroDataReader(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.IsHeroExistsByHeroId(null!));
+            Assert.IsTrue(heroDataReader.IsHeroExistsByHeroId("Alarak"));
+            Assert.IsFalse(heroDataReader.IsHeroExistsByHeroId("Peon"));
+        }
+
+        [TestMethod]
+        [TestCategory("Helper")]
+        public void IsHeroExistsByNameTest()
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+            writer.WriteStartObject();
+
+            writer.WriteStartObject("Abathur");
+            writer.WriteString("name", "AbathurName");
+            writer.WriteString("attributeId", "hero1");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Alarak");
+            writer.WriteString("name", "AlarakName");
+            writer.WriteString("attributeId", "hero2");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Murky");
+            writer.WriteString("name", "MurkyName");
+            writer.WriteString("attributeId", "hero3");
+            writer.WriteEndObject();
+
+            writer.WriteEndObject();
+
+            writer.Flush();
+
+            byte[] bytes = memoryStream.ToArray();
+
+            using HeroDataReader heroDataReader = new HeroDataReader(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.IsHeroExistsByName(null!));
+            Assert.IsTrue(heroDataReader.IsHeroExistsByName("AlarakName"));
+            Assert.IsFalse(heroDataReader.IsHeroExistsByName("Peon"));
+        }
+
+        [TestMethod]
+        [TestCategory("Helper")]
+        public void IsHeroExistsByUnitIdTest()
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+            writer.WriteStartObject();
+
+            writer.WriteStartObject("Abathur");
+            writer.WriteString("name", "AbathurName");
+            writer.WriteString("unitId", "hero1");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Alarak");
+            writer.WriteString("name", "AlarakName");
+            writer.WriteString("unitId", "hero2");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Murky");
+            writer.WriteString("name", "MurkyName");
+            writer.WriteString("unitId", "hero3");
+            writer.WriteEndObject();
+
+            writer.WriteEndObject();
+
+            writer.Flush();
+
+            byte[] bytes = memoryStream.ToArray();
+
+            using HeroDataReader heroDataReader = new HeroDataReader(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.IsHeroExistsByUnitId(null!));
+            Assert.IsTrue(heroDataReader.IsHeroExistsByUnitId("hero2"));
+            Assert.IsFalse(heroDataReader.IsHeroExistsByUnitId("Peon"));
+        }
+
+        [TestMethod]
+        [TestCategory("Helper")]
+        public void IsHeroExistsByHyperlinkIdTest()
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+            writer.WriteStartObject();
+
+            writer.WriteStartObject("Abathur");
+            writer.WriteString("name", "AbathurName");
+            writer.WriteString("hyperlinkId", "hero1");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Alarak");
+            writer.WriteString("name", "AlarakName");
+            writer.WriteString("hyperlinkId", "hero2");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Murky");
+            writer.WriteString("name", "MurkyName");
+            writer.WriteString("hyperlinkId", "hero3");
+            writer.WriteEndObject();
+
+            writer.WriteEndObject();
+
+            writer.Flush();
+
+            byte[] bytes = memoryStream.ToArray();
+
+            using HeroDataReader heroDataReader = new HeroDataReader(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.IsHeroExistsByHyperlinkId(null!));
+            Assert.IsTrue(heroDataReader.IsHeroExistsByHyperlinkId("hero2"));
+            Assert.IsFalse(heroDataReader.IsHeroExistsByHyperlinkId("Peon"));
+        }
+
+        [TestMethod]
+        [TestCategory("Helper")]
+        public void IsHeroExistsByAttributeIdTest()
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+            writer.WriteStartObject();
+
+            writer.WriteStartObject("Abathur");
+            writer.WriteString("name", "AbathurName");
+            writer.WriteString("attributeId", "hero1");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Alarak");
+            writer.WriteString("name", "AlarakName");
+            writer.WriteString("attributeId", "hero2");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Murky");
+            writer.WriteString("name", "MurkyName");
+            writer.WriteString("attributeId", "hero3");
+            writer.WriteEndObject();
+
+            writer.WriteEndObject();
+
+            writer.Flush();
+
+            byte[] bytes = memoryStream.ToArray();
+
+            using HeroDataReader heroDataReader = new HeroDataReader(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.IsHeroExistsByAttributeId(null!));
+            Assert.IsTrue(heroDataReader.IsHeroExistsByAttributeId("hero2"));
+            Assert.IsFalse(heroDataReader.IsHeroExistsByAttributeId("Peon"));
+        }
+
+        [TestMethod]
+        [TestCategory("Helper")]
+        public void GetHeroIdsTest()
+        {
+            List<string> items = _heroDataReader.GetHeroIds().ToList();
+
+            Assert.AreEqual(2, items.Count);
+            Assert.IsTrue(items.Contains("Alarak"));
+            Assert.IsTrue(items.Contains("Ragnaros"));
+        }
+
+        [TestMethod]
+        [TestCategory("Helper")]
+        public void GetHeroNamesTest()
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+            writer.WriteStartObject();
+
+            writer.WriteStartObject("Abathur");
+            writer.WriteString("name", "AbathurName");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Alarak");
+            writer.WriteString("name", "AlarakName");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Murky");
+            writer.WriteString("name", "MurkyName");
+            writer.WriteEndObject();
+
+            writer.WriteEndObject();
+
+            writer.Flush();
+
+            byte[] bytes = memoryStream.ToArray();
+
+            using HeroDataReader heroDataReader = new HeroDataReader(bytes, Localization.ENUS);
+
+            List<string> items = heroDataReader.GetHeroNames().ToList();
+
+            Assert.AreEqual(3, items.Count);
+            Assert.IsTrue(items.Contains("AbathurName"));
+            Assert.IsTrue(items.Contains("AlarakName"));
+            Assert.IsTrue(items.Contains("MurkyName"));
+        }
+
+        [TestMethod]
+        [TestCategory("Helper")]
+        public void GetHeroUnitIds()
+        {
+            List<string> items = _heroDataReader.GetHeroUnitIds().ToList();
+
+            Assert.AreEqual(2, items.Count);
+            Assert.IsTrue(items.Contains("HeroAlarak"));
+            Assert.IsTrue(items.Contains("HeroRagnaros"));
+        }
+
+        [TestMethod]
+        [TestCategory("Helper")]
+        public void GetHeroHyperlinkIdsTest()
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+            writer.WriteStartObject();
+
+            writer.WriteStartObject("Abathur");
+            writer.WriteString("hyperlinkId", "AbathurName");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Alarak");
+            writer.WriteString("hyperlinkId", "AlarakName");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Murky");
+            writer.WriteString("hyperlinkId", "MurkyName");
+            writer.WriteEndObject();
+
+            writer.WriteEndObject();
+
+            writer.Flush();
+
+            byte[] bytes = memoryStream.ToArray();
+
+            using HeroDataReader heroDataReader = new HeroDataReader(bytes, Localization.ENUS);
+
+            List<string> items = heroDataReader.GetHeroHyperlinkIds().ToList();
+
+            Assert.AreEqual(3, items.Count);
+            Assert.IsTrue(items.Contains("AbathurName"));
+            Assert.IsTrue(items.Contains("AlarakName"));
+            Assert.IsTrue(items.Contains("MurkyName"));
+        }
+
+        [TestMethod]
+        [TestCategory("Helper")]
+        public void GetHeroAttributeIdsTest()
+        {
+            List<string> items = _heroDataReader.GetHeroAttributeIds().ToList();
+
+            Assert.AreEqual(2, items.Count);
+            Assert.IsTrue(items.Contains("Alar"));
+            Assert.IsTrue(items.Contains("Ragn"));
+        }
+
+        [TestMethod]
+        [TestCategory("DataReader")]
         public void DataReaderFileTest()
         {
             using HeroDataReader heroDataReader = new HeroDataReader(_dataFile);
@@ -636,6 +1155,7 @@ namespace Heroes.Icons.Tests
         }
 
         [TestMethod]
+        [TestCategory("DataReader")]
         public void DataReaderFileLocaleTest()
         {
             using HeroDataReader heroDataReader = new HeroDataReader(_dataFile, Localization.FRFR);
@@ -645,6 +1165,7 @@ namespace Heroes.Icons.Tests
         }
 
         [TestMethod]
+        [TestCategory("DataReader")]
         public void DataReaderRomLocaleTest()
         {
             using MemoryStream memoryStream = new MemoryStream();
@@ -667,6 +1188,7 @@ namespace Heroes.Icons.Tests
         }
 
         [TestMethod]
+        [TestCategory("DataReader")]
         public void DataReaderFileGSRTest()
         {
             using GameStringReader gameStringReader = new GameStringReader(_jsonGameStringFileFRFR);
@@ -677,6 +1199,7 @@ namespace Heroes.Icons.Tests
         }
 
         [TestMethod]
+        [TestCategory("DataReader")]
         public void DataReaderROMGSRTest()
         {
             using MemoryStream memoryStream = new MemoryStream();

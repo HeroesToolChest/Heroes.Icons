@@ -266,6 +266,363 @@ namespace Heroes.Icons
         public bool TryGetHeroByAttributeId(string attributeId, out Hero value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
             => PropertyLookup("attributeId", attributeId, out value, abilities, subAbilities, talents, heroUnits);
 
+        /// <summary>
+        /// Gets the hero's name from the <paramref name="heroId"/>. If not found returns null.
+        /// </summary>
+        /// <param name="heroId">The hero's heroId.</param>
+        /// <returns>The hero's name.</returns>
+        public string? GetNameFromHeroId(string heroId)
+        {
+            if (heroId is null)
+            {
+                throw new ArgumentNullException(nameof(heroId));
+            }
+
+            if (JsonDataDocument.RootElement.TryGetProperty(heroId, out JsonElement element) && element.TryGetProperty("name", out JsonElement nameElement))
+                return nameElement.GetString();
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the hero's name from the <paramref name="unitId"/>. If not found returns null.
+        /// </summary>
+        /// <param name="unitId">The hero's unitId.</param>
+        /// <returns>The hero's name.</returns>
+        public string? GetNameFromUnitId(string unitId)
+        {
+            if (unitId is null)
+            {
+                throw new ArgumentNullException(nameof(unitId));
+            }
+
+            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+            {
+                if (heroProperty.Value.TryGetProperty("unitId", out JsonElement element) && element.ValueEquals(unitId) &&
+                    heroProperty.Value.TryGetProperty("name", out JsonElement nameElement))
+                {
+                    return nameElement.GetString();
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the hero's name from the <paramref name="hyperlinkId"/>. If not found returns null.
+        /// </summary>
+        /// <param name="hyperlinkId">The hero's hyperlinkId.</param>
+        /// <returns>The hero's name.</returns>
+        public string? GetNameFromHyperlinkId(string hyperlinkId)
+        {
+            if (hyperlinkId is null)
+            {
+                throw new ArgumentNullException(nameof(hyperlinkId));
+            }
+
+            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+            {
+                if (heroProperty.Value.TryGetProperty("hyperlinkId", out JsonElement element) && element.ValueEquals(hyperlinkId) &&
+                    heroProperty.Value.TryGetProperty("name", out JsonElement nameElement))
+                {
+                    return nameElement.GetString();
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the hero's name from the <paramref name="attributeId"/>. If not found returns null.
+        /// </summary>
+        /// <param name="attributeId">The hero's attributeId.</param>
+        /// <returns>The hero's name.</returns>
+        public string? GetNameFromAttributeId(string attributeId)
+        {
+            if (attributeId is null)
+            {
+                throw new ArgumentNullException(nameof(attributeId));
+            }
+
+            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+            {
+                if (heroProperty.Value.TryGetProperty("attributeId", out JsonElement element) && element.ValueEquals(attributeId) &&
+                    heroProperty.Value.TryGetProperty("name", out JsonElement nameElement))
+                {
+                    return nameElement.GetString();
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the hero's id from the <paramref name="name"/>. If not found returns null.
+        /// </summary>
+        /// <param name="name">The hero's name.</param>
+        /// <returns>The hero's id.</returns>
+        public string? GetHeroIdFromName(string name)
+        {
+            if (name is null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+            {
+                if (heroProperty.Value.TryGetProperty("name", out JsonElement element) && element.ValueEquals(name))
+                    return heroProperty.Name;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the hero's id from the <paramref name="unitId"/>. If not found returns null.
+        /// </summary>
+        /// <param name="unitId">The hero's unitId.</param>
+        /// <returns>The hero's id.</returns>
+        public string? GetHeroIdFromUnitId(string unitId)
+        {
+            if (unitId is null)
+            {
+                throw new ArgumentNullException(nameof(unitId));
+            }
+
+            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+            {
+                if (heroProperty.Value.TryGetProperty("unitId", out JsonElement element) && element.ValueEquals(unitId))
+                    return heroProperty.Name;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the hero's id from the <paramref name="hyperlinkId"/>. If not found returns null.
+        /// </summary>
+        /// <param name="hyperlinkId">The hero's hyperlinkId.</param>
+        /// <returns>The hero's id.</returns>
+        public string? GetHeroIdFromHyperlinkId(string hyperlinkId)
+        {
+            if (hyperlinkId is null)
+            {
+                throw new ArgumentNullException(nameof(hyperlinkId));
+            }
+
+            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+            {
+                if (heroProperty.Value.TryGetProperty("hyperlinkId", out JsonElement element) && element.ValueEquals(hyperlinkId))
+                    return heroProperty.Name;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the hero's id from the <paramref name="attributeId"/>. If not found returns null.
+        /// </summary>
+        /// <param name="hyperlinkId">The hero's hyperlinkId.</param>
+        /// <returns>The hero's id.</returns>
+        public string? GetHeroIdFromAttributeId(string attributeId)
+        {
+            if (attributeId is null)
+            {
+                throw new ArgumentNullException(nameof(attributeId));
+            }
+
+            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+            {
+                if (heroProperty.Value.TryGetProperty("attributeId", out JsonElement element) && element.ValueEquals(attributeId))
+                    return heroProperty.Name;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Returns the value indicating if the <paramref name="heroId"/> was found.
+        /// </summary>
+        /// <param name="heroId">The hero's id.</param>
+        /// <returns>Value indicating if found.</returns>
+        public bool IsHeroExistsByHeroId(string heroId)
+        {
+            if (heroId is null)
+            {
+                throw new ArgumentNullException(nameof(heroId));
+            }
+
+            return JsonDataDocument.RootElement.TryGetProperty(heroId, out JsonElement _);
+        }
+
+        /// <summary>
+        /// Returns the value indicating if the <paramref name="name"/> was found.
+        /// </summary>
+        /// <param name="name">The hero's name.</param>
+        /// <returns>Value indicating if found.</returns>
+        public bool IsHeroExistsByName(string name)
+        {
+            if (name is null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+            {
+                if (heroProperty.Value.TryGetProperty("name", out JsonElement element) && element.ValueEquals(name))
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns the value indicating if the <paramref name="unitId"/> was found.
+        /// </summary>
+        /// <param name="unitId">The hero's unitId.</param>
+        /// <returns>Value indicating if found.</returns>
+        public bool IsHeroExistsByUnitId(string unitId)
+        {
+            if (unitId is null)
+            {
+                throw new ArgumentNullException(nameof(unitId));
+            }
+
+            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+            {
+                if (heroProperty.Value.TryGetProperty("unitId", out JsonElement element) && element.ValueEquals(unitId))
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns the value indicating if the <paramref name="hyperlinkId"/> was found.
+        /// </summary>
+        /// <param name="hyperlinkId">The hero's hyperlinkId.</param>
+        /// <returns>Value indicating if found.</returns>
+        public bool IsHeroExistsByHyperlinkId(string hyperlinkId)
+        {
+            if (hyperlinkId is null)
+            {
+                throw new ArgumentNullException(nameof(hyperlinkId));
+            }
+
+            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+            {
+                if (heroProperty.Value.TryGetProperty("hyperlinkId", out JsonElement element) && element.ValueEquals(hyperlinkId))
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns the value indicating if the <paramref name="attributeId"/> was found.
+        /// </summary>
+        /// <param name="attributeId">The hero's attributeId.</param>
+        /// <returns>Value indicating if found.</returns>
+        public bool IsHeroExistsByAttributeId(string attributeId)
+        {
+            if (attributeId is null)
+            {
+                throw new ArgumentNullException(nameof(attributeId));
+            }
+
+            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+            {
+                if (heroProperty.Value.TryGetProperty("attributeId", out JsonElement element) && element.ValueEquals(attributeId))
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Gets a collection of all hero ids.
+        /// </summary>
+        /// <returns>A collection of hero ids.</returns>
+        public IEnumerable<string> GetHeroIds()
+        {
+            List<string> items = new List<string>();
+
+            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+            {
+                items.Add(heroProperty.Name);
+            }
+
+            return items;
+        }
+
+        /// <summary>
+        /// Gets a collection of all hero names.
+        /// </summary>
+        /// <returns>A collection of hero names.</returns>
+        public IEnumerable<string> GetHeroNames()
+        {
+            List<string> items = new List<string>();
+
+            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+            {
+                if (heroProperty.Value.TryGetProperty("name", out JsonElement element))
+                    items.Add(element.GetString());
+            }
+
+            return items;
+        }
+
+        /// <summary>
+        /// Gets a collection of all hero unit ids.
+        /// </summary>
+        /// <returns>A collection of hero unit ids.</returns>
+        public IEnumerable<string> GetHeroUnitIds()
+        {
+            List<string> items = new List<string>();
+
+            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+            {
+                if (heroProperty.Value.TryGetProperty("unitId", out JsonElement element))
+                    items.Add(element.GetString());
+            }
+
+            return items;
+        }
+
+        /// <summary>
+        /// Gets a collection of all hero hyperlink ids.
+        /// </summary>
+        /// <returns>A collection of hero hyperlink ids.</returns>
+        public IEnumerable<string> GetHeroHyperlinkIds()
+        {
+            List<string> items = new List<string>();
+
+            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+            {
+                if (heroProperty.Value.TryGetProperty("hyperlinkId", out JsonElement element))
+                    items.Add(element.GetString());
+            }
+
+            return items;
+        }
+
+        /// <summary>
+        /// Gets a collection of all hero attribute ids.
+        /// </summary>
+        /// <returns>A collection of hero attribute ids.</returns>
+        public IEnumerable<string> GetHeroAttributeIds()
+        {
+            List<string> items = new List<string>();
+
+            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+            {
+                if (heroProperty.Value.TryGetProperty("attributeId", out JsonElement element))
+                    items.Add(element.GetString());
+            }
+
+            return items;
+        }
+
         private Hero GetHeroData(string heroId, JsonElement heroElement, bool includeAbilities, bool includeSubAbilities, bool includeTalents, bool includeHeroUnits)
         {
             Hero hero = new Hero
@@ -502,7 +859,7 @@ namespace Heroes.Icons
 
             foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
             {
-                if (heroProperty.Value.TryGetProperty(propertyId, out JsonElement nameElement) && nameElement.GetString() == propertyValue)
+                if (heroProperty.Value.TryGetProperty(propertyId, out JsonElement nameElement) && nameElement.ValueEquals(propertyValue))
                 {
                     value = GetHeroData(heroProperty.Name, heroProperty.Value, abilities, subAbilities, talents, heroUnits);
 

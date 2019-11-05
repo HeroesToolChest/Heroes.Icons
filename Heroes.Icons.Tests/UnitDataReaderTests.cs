@@ -214,6 +214,7 @@ namespace Heroes.Icons.Tests
         }
 
         [TestMethod]
+        [TestCategory("DataReader")]
         public void DataReaderFileTest()
         {
             using UnitDataReader unitDataReader = new UnitDataReader(_dataFile);
@@ -223,6 +224,7 @@ namespace Heroes.Icons.Tests
         }
 
         [TestMethod]
+        [TestCategory("DataReader")]
         public void DataReaderFileLocaleTest()
         {
             using UnitDataReader unitDataReader = new UnitDataReader(_dataFile, Localization.FRFR);
@@ -232,6 +234,7 @@ namespace Heroes.Icons.Tests
         }
 
         [TestMethod]
+        [TestCategory("DataReader")]
         public void DataReaderRomLocaleTest()
         {
             using MemoryStream memoryStream = new MemoryStream();
@@ -254,6 +257,7 @@ namespace Heroes.Icons.Tests
         }
 
         [TestMethod]
+        [TestCategory("DataReader")]
         public void DataReaderFileGSRTest()
         {
             using GameStringReader gameStringReader = new GameStringReader(_jsonGameStringFileFRFR);
@@ -264,6 +268,7 @@ namespace Heroes.Icons.Tests
         }
 
         [TestMethod]
+        [TestCategory("DataReader")]
         public void DataReaderROMGSRTest()
         {
             using MemoryStream memoryStream = new MemoryStream();
