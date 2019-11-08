@@ -1045,9 +1045,9 @@ namespace Heroes.Icons.Tests
 
         [TestMethod]
         [TestCategory("Helper")]
-        public void GetHeroIdsTest()
+        public void GetIdsTest()
         {
-            List<string> items = _heroDataReader.GetHeroIds().ToList();
+            List<string> items = _heroDataReader.GetIds.ToList();
 
             Assert.AreEqual(2, items.Count);
             Assert.IsTrue(items.Contains("Alarak"));
@@ -1080,7 +1080,7 @@ namespace Heroes.Icons.Tests
 
             using HeroDataReader heroDataReader = new HeroDataReader(bytes, Localization.ENUS);
 
-            List<string> items = heroDataReader.GetHeroNames().ToList();
+            List<string> items = heroDataReader.GetNames.ToList();
 
             Assert.AreEqual(3, items.Count);
             Assert.IsTrue(items.Contains("AbathurName"));
@@ -1092,7 +1092,7 @@ namespace Heroes.Icons.Tests
         [TestCategory("Helper")]
         public void GetHeroUnitIds()
         {
-            List<string> items = _heroDataReader.GetHeroUnitIds().ToList();
+            List<string> items = _heroDataReader.GetUnitIds.ToList();
 
             Assert.AreEqual(2, items.Count);
             Assert.IsTrue(items.Contains("HeroAlarak"));
@@ -1125,7 +1125,7 @@ namespace Heroes.Icons.Tests
 
             using HeroDataReader heroDataReader = new HeroDataReader(bytes, Localization.ENUS);
 
-            List<string> items = heroDataReader.GetHeroHyperlinkIds().ToList();
+            List<string> items = heroDataReader.GetHyperlinkIds.ToList();
 
             Assert.AreEqual(3, items.Count);
             Assert.IsTrue(items.Contains("AbathurName"));
@@ -1137,11 +1137,18 @@ namespace Heroes.Icons.Tests
         [TestCategory("Helper")]
         public void GetHeroAttributeIdsTest()
         {
-            List<string> items = _heroDataReader.GetHeroAttributeIds().ToList();
+            List<string> items = _heroDataReader.GetAttributeIds.ToList();
 
             Assert.AreEqual(2, items.Count);
             Assert.IsTrue(items.Contains("Alar"));
             Assert.IsTrue(items.Contains("Ragn"));
+        }
+
+        [TestMethod]
+        [TestCategory("Helper")]
+        public void GCountTest()
+        {
+            Assert.AreEqual(2, _heroDataReader.Count);
         }
 
         [TestMethod]

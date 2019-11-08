@@ -9,7 +9,7 @@ namespace Heroes.Icons
     /// <summary>
     /// Provides access to obtain hero data as well as updating localized strings.
     /// </summary>
-    public class HeroDataReader : UnitBaseData
+    public class HeroDataReader : UnitBaseData, IDataReader
     {
         /// <summary>
         /// Initializes a new reader for the json data file. <see cref="Localization"/> will be
@@ -61,6 +61,26 @@ namespace Heroes.Icons
             : base(jsonData, gameStringReader)
         {
         }
+
+        /// <summary>
+        /// Gets a collection of all hero names.
+        /// </summary>
+        public IEnumerable<string> GetNames => GetCollectionOfPropety("name");
+
+        /// <summary>
+        /// Gets a collectin of all hyperlink ids.
+        /// </summary>
+        public IEnumerable<string> GetHyperlinkIds => GetCollectionOfPropety("hyperlinkId");
+
+        /// <summary>
+        /// Gets a collectin of all hero unit ids.
+        /// </summary>
+        public IEnumerable<string> GetUnitIds => GetCollectionOfPropety("unitId");
+
+        /// <summary>
+        /// Gets a collectin of all hero attribute ids.
+        /// </summary>
+        public IEnumerable<string> GetAttributeIds => GetCollectionOfPropety("attributeId");
 
         /// <summary>
         /// Gets a <see cref="Hero"/> from the given hero <paramref name="id"/>.
@@ -537,90 +557,6 @@ namespace Heroes.Icons
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// Gets a collection of all hero ids.
-        /// </summary>
-        /// <returns>A collection of hero ids.</returns>
-        public IEnumerable<string> GetHeroIds()
-        {
-            List<string> items = new List<string>();
-
-            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
-            {
-                items.Add(heroProperty.Name);
-            }
-
-            return items;
-        }
-
-        /// <summary>
-        /// Gets a collection of all hero names.
-        /// </summary>
-        /// <returns>A collection of hero names.</returns>
-        public IEnumerable<string> GetHeroNames()
-        {
-            List<string> items = new List<string>();
-
-            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
-            {
-                if (heroProperty.Value.TryGetProperty("name", out JsonElement element))
-                    items.Add(element.GetString());
-            }
-
-            return items;
-        }
-
-        /// <summary>
-        /// Gets a collection of all hero unit ids.
-        /// </summary>
-        /// <returns>A collection of hero unit ids.</returns>
-        public IEnumerable<string> GetHeroUnitIds()
-        {
-            List<string> items = new List<string>();
-
-            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
-            {
-                if (heroProperty.Value.TryGetProperty("unitId", out JsonElement element))
-                    items.Add(element.GetString());
-            }
-
-            return items;
-        }
-
-        /// <summary>
-        /// Gets a collection of all hero hyperlink ids.
-        /// </summary>
-        /// <returns>A collection of hero hyperlink ids.</returns>
-        public IEnumerable<string> GetHeroHyperlinkIds()
-        {
-            List<string> items = new List<string>();
-
-            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
-            {
-                if (heroProperty.Value.TryGetProperty("hyperlinkId", out JsonElement element))
-                    items.Add(element.GetString());
-            }
-
-            return items;
-        }
-
-        /// <summary>
-        /// Gets a collection of all hero attribute ids.
-        /// </summary>
-        /// <returns>A collection of hero attribute ids.</returns>
-        public IEnumerable<string> GetHeroAttributeIds()
-        {
-            List<string> items = new List<string>();
-
-            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
-            {
-                if (heroProperty.Value.TryGetProperty("attributeId", out JsonElement element))
-                    items.Add(element.GetString());
-            }
-
-            return items;
         }
 
         private Hero GetHeroData(string heroId, JsonElement heroElement, bool includeAbilities, bool includeSubAbilities, bool includeTalents, bool includeHeroUnits)
