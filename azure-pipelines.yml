@@ -1,5 +1,5 @@
 variables:
-  main_project: Heroes.Icons\heroes.icons.csproj
+  main_project: Heroes.Icons\Heroes.Icons.csproj
   publish_any_path: .\bin\publish\any\
   nupkg_path: .\bin\nupkg\any\
 
