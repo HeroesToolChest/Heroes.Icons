@@ -83,21 +83,35 @@ jobs:
       displayName: Prep
 
     - task: ArchiveFiles@2
-      displayName: Archive Release Files
+      displayName: Archive Release Files - Zip
       inputs:
         archiveType: 'zip'
         rootFolderOrFile: '$(publish_any_path)'
         includeRootFolder: false
         archiveFile: '$(Build.ArtifactStagingDirectory)\Heroes.Icons.$(version).zip'
 
+    - task: ArchiveFiles@2
+      displayName: Archive Release Files - Tar
+      inputs:
+        archiveType: 'zip'
+        rootFolderOrFile: '$(publish_any_path)'
+        includeRootFolder: false
+        archiveFile: '$(Build.ArtifactStagingDirectory)\Heroes.Icons.$(version).tar.gz'
+        
     - task: PublishBuildArtifacts@1
-      displayName: Publish Artifacts - Release Files
+      displayName: Publish Artifacts - Release Files - Zip
       inputs:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)\Heroes.Icons.$(version).zip'
-        artifactName: 'HeroesDataParser'
+        artifactName: 'Heroes.Icons'
 
+    - task: PublishBuildArtifacts@1
+      displayName: Publish Artifacts - Release Files - Tar
+      inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)\Heroes.Icons.$(version).tar.gz'
+        artifactName: 'Heroes.Icons'
+        
     - task: PublishBuildArtifacts@1
       displayName: Publish Artifact - Nuget
       inputs:
         pathtoPublish: '$(nupkg_path)'
-        artifactName: 'HeroesDataParser-Nuget'
+        artifactName: 'Heroes.Icons-Nuget'
