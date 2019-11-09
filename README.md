@@ -1,40 +1,40 @@
 # Heroes Icons
-[![Build Status](https://dev.azure.com/kevinkoliva/Heroes%20of%20the%20Storm%20Projects/_apis/build/status/koliva8245.Heroes.Icons?branchName=master)](https://dev.azure.com/kevinkoliva/Heroes%20of%20the%20Storm%20Projects/_build/latest?definitionId=4)
+[![Build Status](https://dev.azure.com/kevinkoliva/Heroes%20of%20the%20Storm%20Projects/_apis/build/status/HeroesToolChest.Heroes.Icons?branchName=master)](https://dev.azure.com/kevinkoliva/Heroes%20of%20the%20Storm%20Projects/_build/latest?definitionId=4&branchName=master)
 
-**This library is now deprecated and a new version is under development which will support Heroes Data Parser version 4. The new version will be a dotnet core 3.0 library. .NET Framework support will no longer be supported.**
+**This library is currently under development**
 
-Heroes Icons is a .NET Standard 2.0 library that contains Heroes of the Storm game data, such as Hero data, abilities, talents, match awards, battlegrounds and much more.
+Heroes Icons is a dotnet core library that parses the json data extracted from [Heroes Data Parser](https://github.com/HeroesToolChest/HeroesDataParser) and provides an api to access the data along with multi-localization support.
 
-All data and images are part of the library.
- - Data files are in the [Xml folder](https://github.com/koliva8245/Heroes.Icons/tree/master/Heroes.Icons/Xml)
- - Images are in the [Images folder](https://github.com/koliva8245/Heroes.Icons/tree/master/Heroes.Icons/Images)
+The gamestrings can be either part of the json data files or be in localized form. If there is only going to be one supported locale, then have HDP leave it as is, otherwise include the option `--localized-text`. 
 
-The following files are generated through the tool [Heroes Data Parser](https://github.com/koliva8245/HeroesDataParser):
- - `Xml/HeroBuilds`
- - `Xml/MatchAwards`
+If using localized-text, the command `localized-json` must be used to convert the gamestring text files into json files. 
+
+Another choice instead of using HDP is to use the already extracted data files at [heroes-data](https://github.com/HeroesToolChest/heroes-data).
+
+All data files will eventually be supported (strike-through is completed)
+- ~~Heroes~~
+- ~~Units~~
+- Match Awards
+- Hero Skins
+- Mounts
+- Banners
+- Sprays
+- Announcers
+- Voice Lines
+- Portraits
+- Emoticons
+- Emoticon Packs
+- Veterancy data
 
 ## Usage
-The library contains an interface class `IHeroesIcons`. Methods are available to access all other data.
-```
-IHeroesIcons heroesIcons = new HeroesIcons();
+Look through source code for now, examples will be provided later.
 
-// example of one method that gets the hero data of the hero Abathur for the latest build
-Hero hero = heroesIcons.HeroesData().HeroData("Abathur");
-```
+## Developing
+To build and compile the code, it is recommended to use the latest version of [Visual Studio 2019 or Visual Studio Code](https://visualstudio.microsoft.com/downloads/).
 
-There is also an `ImageStreams` class that adds extension methods to some of the classes in the `Heroes.Models` project, such as the `HeroPortrait` class.
-```
-// continuing from code above
-// gets the stream data for the hero's hero portrait
-Stream heroSelectImageStream = hero.HeroPortrait().HeroSelectImage();
-```
+Another option is to use the dotnet CLI tools from the [.NET Core 3.0 SDK](https://dotnet.microsoft.com/download).
 
-
-The `ImageStreams` class also contains static methods to access some other images, such as party icons
-```
-// gets the teal party icons data stream
-Stream partyIconTeal = ImageStreams.PartyIconImage(PartyIconColor.Teal);
-```
+`Heroes.Models.csproj` project is a submodule. Any code changes should be commited to that repository.
 
 ## License
 [MIT license](/LICENSE)

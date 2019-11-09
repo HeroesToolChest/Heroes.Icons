@@ -1,0 +1,22 @@
+{
+  "Abathur": {
+    "name": "Abathur",
+    "unitId": "HeroAbathur",
+    "hyperlinkId": "Abathur",
+    "attributeId": "Abat",
+    "difficulty": "Very Hard",
+    "franchise": "Starcraft",
+    "gender": "Neutral",
+    "title": "Evolution Master",
+    "innerRadius": 0.75,
+    "radius": 0.75,
+    "releaseDate": "2014-03-13",
+    "sight": 12.0,
+    "speed": 4.8398,
+    "type": "Melee",
+    "rarity": "Legendary",
+    "scalingLinkId": "HeroDummyVeterancy",
+    "searchText": "Abathur Zerg Swarm HotS Heart of the Swarm StarCraft II 2 SC2 Star2 Starcraft2 SC slug",
+    "description": "A unique Hero that can manipulate the battle from anywhere on the map."
+  }
+}

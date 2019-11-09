@@ -1,4 +1,4 @@
 [submodule "Heroes.Models"]
 	path = Heroes.Models
 	url = https://github.com/koliva8245/Heroes.Models.git
-	branch = v3
+	branch = dnc3
