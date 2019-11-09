@@ -13,6 +13,7 @@
     <PackageReleaseNotes>https://github.com/HeroesToolChest/Heroes.Icons/releases</PackageReleaseNotes>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageTags>C# dotnet core json</PackageTags>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
