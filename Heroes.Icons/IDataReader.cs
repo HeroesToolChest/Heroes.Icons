@@ -2,6 +2,9 @@
 
 namespace Heroes.Icons
 {
+    /// <summary>
+    /// Provides the basic properties for a data reader.
+    /// </summary>
     public interface IDataReader
     {
         /// <summary>

@@ -11,8 +11,8 @@ namespace Heroes.Icons
     public class UnitDataReader : UnitBaseData
     {
         /// <summary>
-        /// Initializes a new reader for the json data file. <see cref="Localization"/> will be
-        /// inferred from the <paramref name="jsonDataFilePath"/>.
+        /// Initializes a new instance of the <see cref="UnitDataReader"/> class.
+        /// <see cref="Localization"/> will be inferred from the <paramref name="jsonDataFilePath"/>.
         /// </summary>
         /// <param name="jsonDataFilePath">JSON file containing unit data.</param>
         public UnitDataReader(string jsonDataFilePath)
@@ -21,28 +21,28 @@ namespace Heroes.Icons
         }
 
         /// <summary>
-        /// Initializes a new reader for the json data file.
+        /// Initializes a new instance of the <see cref="UnitDataReader"/> class.
         /// </summary>
         /// <param name="jsonDataFilePath">JSON file containing unit data.</param>
-        /// <param name="localization">Localization of data.</param>
+        /// <param name="localization">The localization of the file.</param>
         public UnitDataReader(string jsonDataFilePath, Localization localization)
             : base(jsonDataFilePath, localization)
         {
         }
 
         /// <summary>
-        /// Initializes a new reader for the json data.
+        /// Initializes a new instance of the <see cref="UnitDataReader"/> class.
         /// </summary>
-        /// <param name="jsonData">JSON data containing unit data.</param>
-        /// <param name="localization">Localization of data.</param>
+        /// <param name="jsonData">JSON data containing the unit data.</param>
+        /// <param name="localization">The localization of the file.</param>
         public UnitDataReader(ReadOnlyMemory<byte> jsonData, Localization localization)
             : base(jsonData, localization)
         {
         }
 
         /// <summary>
-        /// Initializes a new reader for the json data file. The <paramref name="gameStringReader"/>
-        /// overrides the <paramref name="jsonDataFilePath"/> <see cref="Localization"/>.
+        /// Initializes a new instance of the <see cref="UnitDataReader"/> class.
+        /// The <paramref name="gameStringReader"/> overrides the <paramref name="jsonDataFilePath"/> <see cref="Localization"/>.
         /// </summary>
         /// <param name="jsonDataFilePath">JSON file containing unit data.</param>
         /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
@@ -52,9 +52,9 @@ namespace Heroes.Icons
         }
 
         /// <summary>
-        /// Initializes a new reader for the json data.
+        /// Initializes a new instance of the <see cref="UnitDataReader"/> class.
         /// </summary>
-        /// <param name="jsonData">JSON data containing unit data.</param>
+        /// <param name="jsonData">JSON data containing the unit data.</param>
         /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
         public UnitDataReader(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader)
             : base(jsonData, gameStringReader)

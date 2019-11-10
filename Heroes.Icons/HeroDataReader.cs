@@ -12,8 +12,8 @@ namespace Heroes.Icons
     public class HeroDataReader : UnitBaseData, IDataReader
     {
         /// <summary>
-        /// Initializes a new reader for the json data file. <see cref="Localization"/> will be
-        /// inferred from the <paramref name="jsonDataFilePath"/>.
+        /// Initializes a new instance of the <see cref="HeroDataReader"/> class.
+        /// <see cref="Localization"/> will be inferred from the <paramref name="jsonDataFilePath"/>.
         /// </summary>
         /// <param name="jsonDataFilePath">JSON file containing hero data.</param>
         public HeroDataReader(string jsonDataFilePath)
@@ -22,28 +22,28 @@ namespace Heroes.Icons
         }
 
         /// <summary>
-        /// Initializes a new reader for the json data file.
+        /// Initializes a new instance of the <see cref="HeroDataReader"/> class.
         /// </summary>
         /// <param name="jsonDataFilePath">JSON file containing hero data.</param>
-        /// <param name="localization">Localization of data.</param>
+        /// <param name="localization">The localization of the file.</param>
         public HeroDataReader(string jsonDataFilePath, Localization localization)
             : base(jsonDataFilePath, localization)
         {
         }
 
         /// <summary>
-        /// Initializes a new reader for the json data.
+        /// Initializes a new instance of the <see cref="HeroDataReader"/> class.
         /// </summary>
-        /// <param name="jsonData">JSON data containing hero data.</param>
-        /// <param name="localization">Localization of data.</param>
+        /// <param name="jsonData">JSON data containing the hero data.</param>
+        /// <param name="localization">The localization of the file.</param>
         public HeroDataReader(ReadOnlyMemory<byte> jsonData, Localization localization)
             : base(jsonData, localization)
         {
         }
 
         /// <summary>
-        /// Initializes a new reader for the json data file. The <paramref name="gameStringReader"/>
-        /// overrides the <paramref name="jsonDataFilePath"/> <see cref="Localization"/>.
+        /// Initializes a new instance of the <see cref="HeroDataReader"/> class.
+        /// The <paramref name="gameStringReader"/> overrides the <paramref name="jsonDataFilePath"/> <see cref="Localization"/>.
         /// </summary>
         /// <param name="jsonDataFilePath">JSON file containing hero data.</param>
         /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
@@ -53,9 +53,9 @@ namespace Heroes.Icons
         }
 
         /// <summary>
-        /// Initializes a new reader for the json data.
+        /// Initializes a new instance of the <see cref="HeroDataReader"/> class.
         /// </summary>
-        /// <param name="jsonData">JSON data containing hero data.</param>
+        /// <param name="jsonData">JSON data containing the hero data.</param>
         /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
         public HeroDataReader(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader)
             : base(jsonData, gameStringReader)
@@ -173,7 +173,7 @@ namespace Heroes.Icons
             => PropertyLookup("name", name, out value, abilities, subAbilities, talents, heroUnits);
 
         /// <summary>
-        /// Gets a <see cref="Hero"/> from the given hero <paramref name="hyperlinkId"/>.
+        /// Gets a <see cref="Hero"/> from the given hero <paramref name="unitId"/>.
         /// </summary>
         /// <param name="unitId">Hero unitId to find.</param>
         /// <param name="abilities">Value indicating to include abilities.</param>
@@ -442,7 +442,7 @@ namespace Heroes.Icons
         /// <summary>
         /// Gets the hero's id from the <paramref name="attributeId"/>. If not found returns null.
         /// </summary>
-        /// <param name="hyperlinkId">The hero's hyperlinkId.</param>
+        /// <param name="attributeId">The hero's attributeId.</param>
         /// <returns>The hero's id.</returns>
         public string? GetHeroIdFromAttributeId(string attributeId)
         {

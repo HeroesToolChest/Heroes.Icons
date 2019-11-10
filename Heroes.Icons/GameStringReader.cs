@@ -69,10 +69,11 @@ namespace Heroes.Icons
         public Localization Localization { get; } = Localization.ENUS;
 
         /// <summary>
-        /// Gets the <see cref="JsonDataDocument"/> to allow for manually parsing.
+        /// Gets the <see cref="JsonDocument"/> to allow for manually parsing.
         /// </summary>
         public JsonDocument JsonGameStringDocument { get; }
 
+        /// <inheritdoc/>
         public void Dispose()
         {
             JsonGameStringDocument.Dispose();

@@ -6,35 +6,64 @@ using System.Text.Json;
 namespace Heroes.Icons
 {
     /// <summary>
-    /// Abtract base class reader for unit and hero related data.
+    /// Base class reader for unit and hero related data.
     /// </summary>
     public abstract class UnitBaseData : DataReader
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnitBaseData"/> class.
+        /// </summary>
+        /// <param name="jsonDataFilePath">JSON file containing the data.</param>
         public UnitBaseData(string jsonDataFilePath)
             : base(jsonDataFilePath)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnitBaseData"/> class.
+        /// </summary>
+        /// <param name="jsonDataFilePath">JSON file containing the data.</param>
+        /// <param name="localization">The localization of the file.</param>
         public UnitBaseData(string jsonDataFilePath, Localization localization)
             : base(jsonDataFilePath, localization)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnitBaseData"/> class.
+        /// </summary>
+        /// <param name="jsonData">JSON data containing the data.</param>
+        /// <param name="localization">The localization of the file.</param>
         public UnitBaseData(ReadOnlyMemory<byte> jsonData, Localization localization)
             : base(jsonData, localization)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnitBaseData"/> class.
+        /// </summary>
+        /// <param name="jsonDataFilePath">JSON file containing the data.</param>
+        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
         public UnitBaseData(string jsonDataFilePath, GameStringReader gameStringReader)
             : base(jsonDataFilePath, gameStringReader)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnitBaseData"/> class.
+        /// </summary>
+        /// <param name="jsonData">JSON data containing the data.</param>
+        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
         public UnitBaseData(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader)
             : base(jsonData, gameStringReader)
         {
         }
 
+        /// <summary>
+        /// Sets the unit's life data.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="unit"></param>
         protected virtual void SetUnitLife(JsonElement element, Unit unit)
         {
             if (element.TryGetProperty("life", out JsonElement value))
@@ -50,6 +79,11 @@ namespace Heroes.Icons
             }
         }
 
+        /// <summary>
+        /// Sets the unit's shield data.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="unit"></param>
         protected virtual void SetUnitShield(JsonElement element, Unit unit)
         {
             if (element.TryGetProperty("shield", out JsonElement value))
@@ -66,6 +100,11 @@ namespace Heroes.Icons
             }
         }
 
+        /// <summary>
+        /// Sets the unit's energy data.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="unit"></param>
         protected virtual void SetUnitEnergy(JsonElement element, Unit unit)
         {
             if (element.TryGetProperty("energy", out JsonElement value))
@@ -79,6 +118,11 @@ namespace Heroes.Icons
             }
         }
 
+        /// <summary>
+        /// Sets the unit's armor data.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="unit"></param>
         protected virtual void SetUnitArmor(JsonElement element, Unit unit)
         {
             if (element.TryGetProperty("armor", out JsonElement value))
@@ -98,6 +142,11 @@ namespace Heroes.Icons
             }
         }
 
+        /// <summary>
+        /// Sets the unit's weapon data.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="unit"></param>
         protected virtual void SetUnitWeapons(JsonElement element, Unit unit)
         {
             if (element.TryGetProperty("weapons", out JsonElement weapons))
@@ -133,6 +182,12 @@ namespace Heroes.Icons
             }
         }
 
+        /// <summary>
+        /// Adds the unit's abilities.
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="abilitiesElement"></param>
+        /// <param name="parentLink">Indicates if the ability is a sub-ability.</param>
         protected virtual void AddAbilities(Unit unit, JsonElement abilitiesElement, string? parentLink = null)
         {
             if (abilitiesElement.TryGetProperty("basic", out JsonElement tierElement))
@@ -167,6 +222,13 @@ namespace Heroes.Icons
                 AddTierAbilities(unit, tierElement, AbilityTier.Unknown, parentLink);
         }
 
+        /// <summary>
+        /// Adds the ability data.
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="tierElement"></param>
+        /// <param name="abilityTier">The tier of the ability.</param>
+        /// <param name="parentLink">Indicates if the ability is a sub-ability.</param>
         protected virtual void AddTierAbilities(Unit unit, JsonElement tierElement, AbilityTier abilityTier, string? parentLink)
         {
             foreach (JsonElement element in tierElement.EnumerateArray())
@@ -198,6 +260,11 @@ namespace Heroes.Icons
             }
         }
 
+        /// <summary>
+        /// Sets the base data of the abilityTalent.
+        /// </summary>
+        /// <param name="abilityTalentBase"></param>
+        /// <param name="abilityTalentElement"></param>
         protected virtual void SetAbilityTalentBase(AbilityTalentBase abilityTalentBase, JsonElement abilityTalentElement)
         {
             abilityTalentBase.AbilityTalentId.ReferenceId = abilityTalentElement.GetProperty("nameId").GetString();

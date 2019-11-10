@@ -7,10 +7,14 @@ using System.Text.Json;
 namespace Heroes.Icons
 {
     /// <summary>
-    /// Abstract data reader class.
+    /// Base class for the data reader classes.
     /// </summary>
     public abstract class DataReader : IDisposable
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataReader"/> class.
+        /// </summary>
+        /// <param name="jsonDataFilePath">JSON file containing the data.</param>
         public DataReader(string jsonDataFilePath)
         {
             JsonDataDocument = JsonDocument.Parse(File.ReadAllBytes(jsonDataFilePath));
@@ -25,6 +29,11 @@ namespace Heroes.Icons
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataReader"/> class.
+        /// </summary>
+        /// <param name="jsonDataFilePath">JSON file containing the data.</param>
+        /// <param name="localization">The localization of the file.</param>
         public DataReader(string jsonDataFilePath, Localization localization)
         {
             JsonDataDocument = JsonDocument.Parse(File.ReadAllBytes(jsonDataFilePath));
@@ -32,6 +41,10 @@ namespace Heroes.Icons
             Localization = localization;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataReader"/> class.
+        /// </summary>
+        /// <param name="jsonData">JSON data containing the data.</param>
         public DataReader(ReadOnlyMemory<byte> jsonData)
         {
             JsonDataDocument = JsonDocument.Parse(jsonData);
@@ -40,12 +53,22 @@ namespace Heroes.Icons
                 throw new NullReferenceException(nameof(JsonDataDocument));
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataReader"/> class.
+        /// </summary>
+        /// <param name="jsonData">JSON data containing the data.</param>
+        /// <param name="localization">The localization of the file.</param>
         public DataReader(ReadOnlyMemory<byte> jsonData, Localization localization)
         {
             JsonDataDocument = JsonDocument.Parse(jsonData);
             Localization = localization;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataReader"/> class.
+        /// </summary>
+        /// <param name="jsonDataFilePath">JSON file containing the data.</param>
+        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
         public DataReader(string jsonDataFilePath, GameStringReader gameStringReader)
             : this(jsonDataFilePath)
         {
@@ -53,6 +76,11 @@ namespace Heroes.Icons
             Localization = GameStringReader.Localization;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataReader"/> class.
+        /// </summary>
+        /// <param name="jsonData">JSON data containing the data.</param>
+        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
         public DataReader(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader)
             : this(jsonData)
         {
@@ -105,8 +133,12 @@ namespace Heroes.Icons
             }
         }
 
+        /// <summary>
+        /// Gets the current <see cref="GameStringReader"/> associated with this reader.
+        /// </summary>
         protected GameStringReader? GameStringReader { get; } = null;
 
+        /// <inheritdoc/>
         public void Dispose()
         {
             JsonDataDocument.Dispose();
