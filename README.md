@@ -26,6 +26,9 @@ All data files will eventually be supported (strike-through is completed)
 - Emoticon Packs
 - Veterancy data
 
+## Supported Platforms
+- .Net Core 3.0+
+
 ## Usage
 Look through source code for now, examples will be provided later.
 
