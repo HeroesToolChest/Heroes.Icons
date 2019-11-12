@@ -1,4 +1,5 @@
-﻿using Heroes.Models;
+﻿using Heroes.Icons.DataReader;
+using Heroes.Models;
 using Heroes.Models.AbilityTalents;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -7,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 
-namespace Heroes.Icons.Tests
+namespace Heroes.Icons.Tests.DataReader
 {
     [TestClass]
     public class UnitDataReaderTests : IDataReader
@@ -53,23 +54,7 @@ namespace Heroes.Icons.Tests
 
             Unit unit = _unitDataReader.GetUnitById(id, abilities, subAbilities);
 
-            Assert.AreEqual("AbathurEvolvedMonstrosity", unit.CUnitId);
-            Assert.AreEqual("AbathurEvolvedMonstrosity", unit.Id);
-            Assert.AreEqual("Evolved Monstrosity", unit.Name);
-            Assert.IsFalse(unit.IsMapUnique);
-            Assert.AreEqual(0.375, unit.InnerRadius);
-            Assert.AreEqual(1.0, unit.Radius);
-            Assert.AreEqual(9.0, unit.Sight);
-            Assert.AreEqual(4.0, unit.Speed);
-            Assert.AreEqual(100, unit.KillXP);
-            Assert.AreEqual("Summon", unit.DamageType);
-            Assert.AreEqual("linkId", unit.ScalingBehaviorLink);
-            Assert.AreEqual("description", unit.Description?.RawDescription);
-            Assert.AreEqual("Suicidal", unit.HeroDescriptors.ToList()[1]);
-            Assert.AreEqual("Heroic", unit.Attributes.ToList()[0]);
-            Assert.AreEqual("unit2", unit.UnitIds.ToList()[1]);
-            Assert.AreEqual("storm_ui_ingame_targetinfopanel_unit_abathur_monstrosity.png", unit.UnitPortrait.TargetInfoPanelFileName);
-            Assert.AreEqual("storm_ui_minimapicon_monstrosity.png", unit.UnitPortrait.MiniMapIconFileName);
+            BasicAbathurEvolvedMonstrosityAsserts(unit);
 
             Assert.AreEqual(755, unit.Life.LifeMax);
             Assert.AreEqual(0.04, unit.Life.LifeScaling);
@@ -167,18 +152,86 @@ namespace Heroes.Icons.Tests
         }
 
         [DataTestMethod]
+        [DataRow("AbathurEvolvedMonstrosity", true, true)]
         [DataRow(null, true, true)]
+        [DataRow("asdf", true, true)]
         public void TryGetUnitByIdTest(string id, bool abilities, bool subAbilities)
         {
             if (id is null)
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _unitDataReader.TryGetUnitById(id!, out Unit unit, abilities, subAbilities);
+                    _ = _unitDataReader.TryGetUnitById(id!, out Unit? unit, abilities, subAbilities);
                 });
 
                 return;
             }
+            else if (id == "asdf")
+            {
+                Assert.IsFalse(_unitDataReader.TryGetUnitById(id, out _, abilities, subAbilities));
+
+                return;
+            }
+
+            Assert.IsTrue(_unitDataReader.TryGetUnitById(id, out Unit? unit, abilities, subAbilities));
+            BasicAbathurEvolvedMonstrosityAsserts(unit!);
+        }
+
+        [DataTestMethod]
+        [DataRow("AbathurEvolvedMonstrosity2", false, false)]
+        [DataRow("AbathurEvolvedMonstrosity2", true, false)]
+        [DataRow("AbathurEvolvedMonstrosity2", false, true)]
+        [DataRow("AbathurEvolvedMonstrosity2", true, true)]
+        [DataRow(null, true, true)]
+        [DataRow("asdf", true, true)]
+        public void GetUnitByHyperlinkIdTest(string id, bool abilities, bool subAbilities)
+        {
+            if (id is null)
+            {
+                Assert.ThrowsException<ArgumentNullException>(() =>
+                {
+                    _ = _unitDataReader.GetUnitByHyperlinkId(id!, abilities, subAbilities);
+                });
+
+                return;
+            }
+            else if (id == "asdf")
+            {
+                Assert.ThrowsException<KeyNotFoundException>(() =>
+                {
+                    _ = _unitDataReader.GetUnitByHyperlinkId(id, abilities, subAbilities);
+                });
+
+                return;
+            }
+
+            BasicAbathurEvolvedMonstrosityAsserts(_unitDataReader.GetUnitByHyperlinkId(id, abilities, subAbilities));
+        }
+
+        [DataTestMethod]
+        [DataRow("AbathurEvolvedMonstrosity2", true, true)]
+        [DataRow(null, true, true)]
+        [DataRow("asdf", true, true)]
+        public void TryGetUnitByHyperlinkIdTest(string id, bool abilities, bool subAbilities)
+        {
+            if (id is null)
+            {
+                Assert.ThrowsException<ArgumentNullException>(() =>
+                {
+                    _ = _unitDataReader.TryGetUnitByHyperlinkId(id!, out Unit? unit, abilities, subAbilities);
+                });
+
+                return;
+            }
+            else if (id == "asdf")
+            {
+                Assert.IsFalse(_unitDataReader.TryGetUnitByHyperlinkId(id, out _, abilities, subAbilities));
+
+                return;
+            }
+
+            Assert.IsTrue(_unitDataReader.TryGetUnitByHyperlinkId(id, out Unit? unit, abilities, subAbilities));
+            BasicAbathurEvolvedMonstrosityAsserts(unit!);
         }
 
         [TestMethod]
@@ -299,7 +352,7 @@ namespace Heroes.Icons.Tests
 
             writer.WriteStartObject("AbathurEvolvedMonstrosity");
             writer.WriteString("name", "Evolved Monstrosity");
-            writer.WriteString("hyperlinkId", "AbathurEvolvedMonstrosity");
+            writer.WriteString("hyperlinkId", "AbathurEvolvedMonstrosity2");
             writer.WriteNumber("innerRadius", 0.375);
             writer.WriteNumber("radius", 1.0);
             writer.WriteNumber("sight", 9.0);
@@ -536,6 +589,27 @@ namespace Heroes.Icons.Tests
             writer.Flush();
 
             return memoryStream.ToArray();
+        }
+
+        private void BasicAbathurEvolvedMonstrosityAsserts(Unit unit)
+        {
+            Assert.AreEqual("AbathurEvolvedMonstrosity", unit.CUnitId);
+            Assert.AreEqual("AbathurEvolvedMonstrosity", unit.Id);
+            Assert.AreEqual("Evolved Monstrosity", unit.Name);
+            Assert.IsFalse(unit.IsMapUnique);
+            Assert.AreEqual(0.375, unit.InnerRadius);
+            Assert.AreEqual(1.0, unit.Radius);
+            Assert.AreEqual(9.0, unit.Sight);
+            Assert.AreEqual(4.0, unit.Speed);
+            Assert.AreEqual(100, unit.KillXP);
+            Assert.AreEqual("Summon", unit.DamageType);
+            Assert.AreEqual("linkId", unit.ScalingBehaviorLink);
+            Assert.AreEqual("description", unit.Description?.RawDescription);
+            Assert.AreEqual("Suicidal", unit.HeroDescriptors.ToList()[1]);
+            Assert.AreEqual("Heroic", unit.Attributes.ToList()[0]);
+            Assert.AreEqual("unit2", unit.UnitIds.ToList()[1]);
+            Assert.AreEqual("storm_ui_ingame_targetinfopanel_unit_abathur_monstrosity.png", unit.UnitPortrait.TargetInfoPanelFileName);
+            Assert.AreEqual("storm_ui_minimapicon_monstrosity.png", unit.UnitPortrait.MiniMapIconFileName);
         }
     }
 }

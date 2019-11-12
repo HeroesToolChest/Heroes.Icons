@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Heroes.Icons
+namespace Heroes.Icons.DataReader
 {
     /// <summary>
     /// Provides the basic properties for a data reader.

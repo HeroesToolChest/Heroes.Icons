@@ -1,9 +1,10 @@
 ﻿using Heroes.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
-namespace Heroes.Icons
+namespace Heroes.Icons.DataReader
 {
     /// <summary>
     /// Provides access to obtain unit data as well as updating localized strings.
@@ -77,7 +78,7 @@ namespace Heroes.Icons
                 throw new ArgumentNullException(nameof(id));
             }
 
-            if (TryGetUnitById(id, out Unit value, abilities, subAbilities))
+            if (TryGetUnitById(id, out Unit? value, abilities, subAbilities))
                 return value;
             else
                 throw new KeyNotFoundException();
@@ -87,17 +88,17 @@ namespace Heroes.Icons
         /// Looks for a unit with the given <paramref name="id"/>, returning a value that indicates whether such value exists.
         /// </summary>
         /// <param name="id">Unit id to find.</param>
-        /// <param name="value">When this method returns, a <see cref="Unit"/> object.</param>
+        /// <param name="value"></param>
         /// <param name="abilities">Value indicating to include abilities.</param>
         /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
         /// <exception cref="ArgumentNullException" />
         /// <returns></returns>
-        public bool TryGetUnitById(string id, out Unit value, bool abilities, bool subAbilities)
+        public bool TryGetUnitById(string id, [NotNullWhen(true)] out Unit? value, bool abilities, bool subAbilities)
         {
             if (id is null)
                 throw new ArgumentNullException(nameof(id));
 
-            value = new Unit();
+            value = null;
 
             if (JsonDataDocument.RootElement.TryGetProperty(id, out JsonElement element))
             {
@@ -108,6 +109,40 @@ namespace Heroes.Icons
 
             return false;
         }
+
+        /// <summary>
+        /// Gets a <see cref="Unit"/> from the given unit <paramref name="hyperlinkId"/>.
+        /// </summary>
+        /// <param name="hyperlinkId">Unit hyperlinkId to find.</param>
+        /// <param name="abilities">Value indicating to include abilities.</param>
+        /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
+        /// <exception cref="ArgumentNullException" />
+        /// <exception cref="KeyNotFoundException" />
+        /// <returns></returns>
+        public Unit GetUnitByHyperlinkId(string hyperlinkId, bool abilities, bool subAbilities)
+        {
+            if (hyperlinkId is null)
+            {
+                throw new ArgumentNullException(nameof(hyperlinkId));
+            }
+
+            if (TryGetUnitByHyperlinkId(hyperlinkId, out Unit? value, abilities, subAbilities))
+                return value;
+            else
+                throw new KeyNotFoundException();
+        }
+
+        /// <summary>
+        /// Looks for a unit with the given <paramref name="hyperlinkId"/>, returning a value that indicates whether such value exists.
+        /// </summary>
+        /// <param name="hyperlinkId">Unit hyperlinkId to find.</param>
+        /// <param name="value"></param>
+        /// <param name="abilities">Value indicating to include abilities.</param>
+        /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
+        /// <exception cref="ArgumentNullException" />
+        /// <returns></returns>
+        public bool TryGetUnitByHyperlinkId(string hyperlinkId, [NotNullWhen(true)] out Unit? value, bool abilities, bool subAbilities)
+            => PropertyLookup("hyperlinkId", hyperlinkId, out value, abilities, subAbilities);
 
         /// <summary>
         /// Gets a collection of all units.
@@ -161,7 +196,7 @@ namespace Heroes.Icons
             if (element.TryGetProperty("scalingLinkId", out value))
                 unit.ScalingBehaviorLink = value.GetString();
             if (element.TryGetProperty("description", out value))
-                unit.Description = new TooltipDescription(value.GetString());
+                unit.Description = new TooltipDescription(value.GetString(), Localization);
 
             if (element.TryGetProperty("descriptors", out value))
             {
@@ -227,6 +262,26 @@ namespace Heroes.Icons
             GameStringReader?.UpdateGameStrings(unit);
 
             return unit;
+        }
+
+        private bool PropertyLookup(string propertyId, string propertyValue, [NotNullWhen(true)] out Unit? value, bool abilities, bool subAbilities)
+        {
+            if (propertyValue is null)
+                throw new ArgumentNullException(nameof(propertyValue));
+
+            value = null;
+
+            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+            {
+                if (heroProperty.Value.TryGetProperty(propertyId, out JsonElement nameElement) && nameElement.ValueEquals(propertyValue))
+                {
+                    value = GetUnitData(heroProperty.Name, heroProperty.Value, abilities, subAbilities);
+
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using Heroes.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
 
-namespace Heroes.Icons
+namespace Heroes.Icons.DataReader
 {
     /// <summary>
     /// Base class for the data reader classes.
@@ -45,18 +46,6 @@ namespace Heroes.Icons
         /// Initializes a new instance of the <see cref="DataReader"/> class.
         /// </summary>
         /// <param name="jsonData">JSON data containing the data.</param>
-        public DataReader(ReadOnlyMemory<byte> jsonData)
-        {
-            JsonDataDocument = JsonDocument.Parse(jsonData);
-
-            if (JsonDataDocument is null)
-                throw new NullReferenceException(nameof(JsonDataDocument));
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataReader"/> class.
-        /// </summary>
-        /// <param name="jsonData">JSON data containing the data.</param>
         /// <param name="localization">The localization of the file.</param>
         public DataReader(ReadOnlyMemory<byte> jsonData, Localization localization)
         {
@@ -88,6 +77,14 @@ namespace Heroes.Icons
             Localization = GameStringReader.Localization;
         }
 
+        private DataReader(ReadOnlyMemory<byte> jsonData)
+        {
+            JsonDataDocument = JsonDocument.Parse(jsonData);
+
+            if (JsonDataDocument is null)
+                throw new NullReferenceException(nameof(JsonDataDocument));
+        }
+
         /// <summary>
         /// Gets the current selected localization.
         /// </summary>
@@ -97,6 +94,16 @@ namespace Heroes.Icons
         /// Gets the <see cref="JsonDataDocument"/> to allow for manually parsing.
         /// </summary>
         public JsonDocument JsonDataDocument { get; }
+
+        /// <summary>
+        /// Gets a collection of all names.
+        /// </summary>
+        public IEnumerable<string> GetNames => GetCollectionOfPropety("name");
+
+        /// <summary>
+        /// Gets a collection of all hyperlink ids.
+        /// </summary>
+        public IEnumerable<string> GetHyperlinkIds => GetCollectionOfPropety("hyperlinkId");
 
         /// <summary>
         /// Gets a collection of all ids.
@@ -124,6 +131,7 @@ namespace Heroes.Icons
             get
             {
                 int count = 0;
+
                 foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
                 {
                     count++;
@@ -161,6 +169,36 @@ namespace Heroes.Icons
             }
 
             return items;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="propertyId"></param>
+        /// <param name="propertyValue"></param>
+        /// <param name="getData"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        protected virtual bool PropertyLookup<T>(string propertyId, string propertyValue, Func<string, JsonElement, T> getData, [NotNullWhen(true)] out T? value)
+            where T : class, IExtractable, new()
+        {
+            if (propertyValue is null)
+                throw new ArgumentNullException(nameof(propertyValue));
+
+            value = null;
+
+            foreach (JsonProperty property in JsonDataDocument.RootElement.EnumerateObject())
+            {
+                if (property.Value.TryGetProperty(propertyId, out JsonElement nameElement) && nameElement.ValueEquals(propertyValue))
+                {
+                    value = getData(property.Name, property.Value);
+
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

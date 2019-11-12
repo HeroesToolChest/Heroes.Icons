@@ -1,4 +1,5 @@
-﻿using Heroes.Models;
+﻿using Heroes.Icons.DataReader;
+using Heroes.Models;
 using Heroes.Models.AbilityTalents;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -7,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 
-namespace Heroes.Icons.Tests
+namespace Heroes.Icons.Tests.DataReader
 {
     [TestClass]
     public class HeroDataReaderTests : IDataReader
@@ -285,8 +286,8 @@ namespace Heroes.Icons.Tests
                 return;
             }
 
-            Assert.IsTrue(_heroDataReader.TryGetHeroById(id, out Hero hero, abilities, subAbilities, talents, heroUnits));
-            Assert.AreEqual("Ragnaros", hero.CHeroId);
+            Assert.IsTrue(_heroDataReader.TryGetHeroById(id, out Hero? hero, abilities, subAbilities, talents, heroUnits));
+            Assert.AreEqual("Ragnaros", hero!.CHeroId);
             Assert.AreEqual("Ragnaros", hero.Name);
             Assert.AreEqual("HeroRagnaros", hero.CUnitId);
 
@@ -432,8 +433,8 @@ namespace Heroes.Icons.Tests
                 return;
             }
 
-            Assert.IsTrue(_heroDataReader.TryGetHeroByName(name, out Hero hero, abilities, subAbilities, talents, heroUnits));
-            BasicRagnarosAsserts(hero);
+            Assert.IsTrue(_heroDataReader.TryGetHeroByName(name, out Hero? hero, abilities, subAbilities, talents, heroUnits));
+            BasicRagnarosAsserts(hero!);
         }
 
         [DataTestMethod]
@@ -486,8 +487,8 @@ namespace Heroes.Icons.Tests
                 return;
             }
 
-            Assert.IsTrue(_heroDataReader.TryGetHeroByUnitId(unitId, out Hero hero, abilities, subAbilities, talents, heroUnits));
-            BasicRagnarosAsserts(hero);
+            Assert.IsTrue(_heroDataReader.TryGetHeroByUnitId(unitId, out Hero? hero, abilities, subAbilities, talents, heroUnits));
+            BasicRagnarosAsserts(hero!);
         }
 
         [DataTestMethod]
@@ -540,8 +541,8 @@ namespace Heroes.Icons.Tests
                 return;
             }
 
-            Assert.IsTrue(_heroDataReader.TryGetHeroByHyperlinkId(hyperlinkId, out Hero hero, abilities, subAbilities, talents, heroUnits));
-            BasicRagnarosAsserts(hero);
+            Assert.IsTrue(_heroDataReader.TryGetHeroByHyperlinkId(hyperlinkId, out Hero? hero, abilities, subAbilities, talents, heroUnits));
+            BasicRagnarosAsserts(hero!);
         }
 
         [DataTestMethod]
@@ -594,8 +595,8 @@ namespace Heroes.Icons.Tests
                 return;
             }
 
-            Assert.IsTrue(_heroDataReader.TryGetHeroByAttributeId(attributeId, out Hero hero, abilities, subAbilities, talents, heroUnits));
-            BasicRagnarosAsserts(hero);
+            Assert.IsTrue(_heroDataReader.TryGetHeroByAttributeId(attributeId, out Hero? hero, abilities, subAbilities, talents, heroUnits));
+            BasicRagnarosAsserts(hero!);
         }
 
         [DataTestMethod]

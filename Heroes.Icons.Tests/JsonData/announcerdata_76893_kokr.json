@@ -1,0 +1,13 @@
+{
+  "AbathurA": {
+    "name": "아바투르 아나운서",
+    "hyperlinkId": "AbathurAnnouncer",
+    "attributeId": "AB01",
+    "rarity": "Legendary",
+    "category": "Starcraft",
+    "gender": "Unknown",
+    "heroId": "Abathur",
+    "releaseDate": "2014-03-13",
+    "image": "storm_ui_announcer_abathur.png"
+  }
+}

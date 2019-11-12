@@ -3,7 +3,7 @@ using Heroes.Models.AbilityTalents;
 using System;
 using System.Text.Json;
 
-namespace Heroes.Icons
+namespace Heroes.Icons.DataReader
 {
     /// <summary>
     /// Base class reader for unit and hero related data.

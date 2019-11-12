@@ -2,9 +2,10 @@
 using Heroes.Models.AbilityTalents;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
-namespace Heroes.Icons
+namespace Heroes.Icons.DataReader
 {
     /// <summary>
     /// Provides access to obtain hero data as well as updating localized strings.
@@ -63,22 +64,12 @@ namespace Heroes.Icons
         }
 
         /// <summary>
-        /// Gets a collection of all hero names.
-        /// </summary>
-        public IEnumerable<string> GetNames => GetCollectionOfPropety("name");
-
-        /// <summary>
-        /// Gets a collectin of all hyperlink ids.
-        /// </summary>
-        public IEnumerable<string> GetHyperlinkIds => GetCollectionOfPropety("hyperlinkId");
-
-        /// <summary>
-        /// Gets a collectin of all hero unit ids.
+        /// Gets a collection of all hero unit ids.
         /// </summary>
         public IEnumerable<string> GetUnitIds => GetCollectionOfPropety("unitId");
 
         /// <summary>
-        /// Gets a collectin of all hero attribute ids.
+        /// Gets a collection of all hero attribute ids.
         /// </summary>
         public IEnumerable<string> GetAttributeIds => GetCollectionOfPropety("attributeId");
 
@@ -100,7 +91,7 @@ namespace Heroes.Icons
                 throw new ArgumentNullException(nameof(id));
             }
 
-            if (TryGetHeroById(id, out Hero value, abilities, subAbilities, talents, heroUnits))
+            if (TryGetHeroById(id, out Hero? value, abilities, subAbilities, talents, heroUnits))
                 return value;
             else
                 throw new KeyNotFoundException();
@@ -110,19 +101,19 @@ namespace Heroes.Icons
         /// Looks for a hero with the given <paramref name="id"/>, returning a value that indicates whether such value exists.
         /// </summary>
         /// <param name="id">Hero id to find.</param>
-        /// <param name="value">When this method returns, a <see cref="Hero"/> object.</param>
+        /// <param name="value"></param>
         /// <param name="abilities">Value indicating to include abilities.</param>
         /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
         /// <param name="talents">Value indicating to include talents.</param>
         /// <param name="heroUnits">Value indicating to include hero units.</param>
         /// <exception cref="ArgumentNullException" />
         /// <returns></returns>
-        public bool TryGetHeroById(string id, out Hero value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        public bool TryGetHeroById(string id, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
         {
             if (id is null)
                 throw new ArgumentNullException(nameof(id));
 
-            value = new Hero();
+            value = null;
 
             if (JsonDataDocument.RootElement.TryGetProperty(id, out JsonElement element))
             {
@@ -152,7 +143,7 @@ namespace Heroes.Icons
                 throw new ArgumentNullException(nameof(name));
             }
 
-            if (TryGetHeroByName(name, out Hero value, abilities, subAbilities, talents, heroUnits))
+            if (TryGetHeroByName(name, out Hero? value, abilities, subAbilities, talents, heroUnits))
                 return value;
             else
                 throw new KeyNotFoundException();
@@ -162,14 +153,14 @@ namespace Heroes.Icons
         /// Looks for a hero with the given <paramref name="name"/>, returning a value that indicates whether such value exists.
         /// </summary>
         /// <param name="name">Hero name to find.</param>
-        /// <param name="value">When this method returns, a <see cref="Hero"/> object.</param>
+        /// <param name="value"></param>
         /// <param name="abilities">Value indicating to include abilities.</param>
         /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
         /// <param name="talents">Value indicating to include talents.</param>
         /// <param name="heroUnits">Value indicating to include hero units.</param>
         /// <exception cref="ArgumentNullException" />
         /// <returns></returns>
-        public bool TryGetHeroByName(string name, out Hero value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        public bool TryGetHeroByName(string name, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
             => PropertyLookup("name", name, out value, abilities, subAbilities, talents, heroUnits);
 
         /// <summary>
@@ -190,7 +181,7 @@ namespace Heroes.Icons
                 throw new ArgumentNullException(nameof(unitId));
             }
 
-            if (TryGetHeroByUnitId(unitId, out Hero value, abilities, subAbilities, talents, heroUnits))
+            if (TryGetHeroByUnitId(unitId, out Hero? value, abilities, subAbilities, talents, heroUnits))
                 return value;
             else
                 throw new KeyNotFoundException();
@@ -200,14 +191,14 @@ namespace Heroes.Icons
         /// Looks for a hero with the given <paramref name="unitId"/>, returning a value that indicates whether such value exists.
         /// </summary>
         /// <param name="unitId">Hero unitId to find.</param>
-        /// <param name="value">When this method returns, a <see cref="Hero"/> object.</param>
+        /// <param name="value"></param>
         /// <param name="abilities">Value indicating to include abilities.</param>
         /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
         /// <param name="talents">Value indicating to include talents.</param>
         /// <param name="heroUnits">Value indicating to include hero units.</param>
         /// <exception cref="ArgumentNullException" />
         /// <returns></returns>
-        public bool TryGetHeroByUnitId(string unitId, out Hero value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        public bool TryGetHeroByUnitId(string unitId, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
             => PropertyLookup("unitId", unitId, out value, abilities, subAbilities, talents, heroUnits);
 
         /// <summary>
@@ -228,7 +219,7 @@ namespace Heroes.Icons
                 throw new ArgumentNullException(nameof(hyperlinkId));
             }
 
-            if (TryGetHeroByHyperlinkId(hyperlinkId, out Hero value, abilities, subAbilities, talents, heroUnits))
+            if (TryGetHeroByHyperlinkId(hyperlinkId, out Hero? value, abilities, subAbilities, talents, heroUnits))
                 return value;
             else
                 throw new KeyNotFoundException();
@@ -238,14 +229,14 @@ namespace Heroes.Icons
         /// Looks for a hero with the given <paramref name="hyperlinkId"/>, returning a value that indicates whether such value exists.
         /// </summary>
         /// <param name="hyperlinkId">Hero hyperlinkId to find.</param>
-        /// <param name="value">When this method returns, a <see cref="Hero"/> object.</param>
+        /// <param name="value"></param>
         /// <param name="abilities">Value indicating to include abilities.</param>
         /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
         /// <param name="talents">Value indicating to include talents.</param>
         /// <param name="heroUnits">Value indicating to include hero units.</param>
         /// <exception cref="ArgumentNullException" />
         /// <returns></returns>
-        public bool TryGetHeroByHyperlinkId(string hyperlinkId, out Hero value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        public bool TryGetHeroByHyperlinkId(string hyperlinkId, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
             => PropertyLookup("hyperlinkId", hyperlinkId, out value, abilities, subAbilities, talents, heroUnits);
 
         /// <summary>
@@ -266,7 +257,7 @@ namespace Heroes.Icons
                 throw new ArgumentNullException(nameof(attributeId));
             }
 
-            if (TryGetHeroByAttributeId(attributeId, out Hero value, abilities, subAbilities, talents, heroUnits))
+            if (TryGetHeroByAttributeId(attributeId, out Hero? value, abilities, subAbilities, talents, heroUnits))
                 return value;
             else
                 throw new KeyNotFoundException();
@@ -276,14 +267,14 @@ namespace Heroes.Icons
         /// Looks for a hero with the given <paramref name="attributeId"/>, returning a value that indicates whether such value exists.
         /// </summary>
         /// <param name="attributeId">Hero attributeId to find.</param>
-        /// <param name="value">When this method returns, a <see cref="Hero"/> object.</param>
+        /// <param name="value"></param>
         /// <param name="abilities">Value indicating to include abilities.</param>
         /// <param name="subAbilities">Value indicating to include sub-abilities.</param>
         /// <param name="talents">Value indicating to include talents.</param>
         /// <param name="heroUnits">Value indicating to include hero units.</param>
         /// <exception cref="ArgumentNullException" />
         /// <returns></returns>
-        public bool TryGetHeroByAttributeId(string attributeId, out Hero value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        public bool TryGetHeroByAttributeId(string attributeId, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
             => PropertyLookup("attributeId", attributeId, out value, abilities, subAbilities, talents, heroUnits);
 
         /// <summary>
@@ -624,7 +615,7 @@ namespace Heroes.Icons
                 hero.SearchText = searchText.GetString();
 
             if (heroElement.TryGetProperty("description", out JsonElement description))
-                hero.Description = new TooltipDescription(description.GetString());
+                hero.Description = new TooltipDescription(description.GetString(), Localization);
 
             if (heroElement.TryGetProperty("descriptors", out JsonElement descriptors))
             {
@@ -786,12 +777,12 @@ namespace Heroes.Icons
             }
         }
 
-        private bool PropertyLookup(string propertyId, string propertyValue, out Hero value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        private bool PropertyLookup(string propertyId, string propertyValue, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
         {
             if (propertyValue is null)
                 throw new ArgumentNullException(nameof(propertyValue));
 
-            value = new Hero();
+            value = null;
 
             foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
             {

@@ -1,4 +1,4 @@
-﻿namespace Heroes.Icons
+﻿namespace Heroes.Icons.DataReader
 {
     class MatchAwardDataReader
     {

@@ -1,4 +1,4 @@
-﻿namespace Heroes.Icons.Tests
+﻿namespace Heroes.Icons.Tests.DataReader
 {
     public interface IDataReader
     {

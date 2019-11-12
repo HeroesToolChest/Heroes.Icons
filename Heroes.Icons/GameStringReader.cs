@@ -6,6 +6,9 @@ using System.Text.Json;
 
 namespace Heroes.Icons
 {
+    /// <summary>
+    /// Provides the methods to update gamestrings for game data objects.
+    /// </summary>
     public class GameStringReader : IDisposable
     {
         /// <summary>
