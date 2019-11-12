@@ -234,6 +234,8 @@ namespace Heroes.Icons.DataReader
             if (announcerElement.TryGetProperty("image", out JsonElement image))
                 announcer.ImageFileName = image.GetString();
 
+            GameStringReader?.UpdateGameStrings(announcer);
+
             return announcer;
         }
     }

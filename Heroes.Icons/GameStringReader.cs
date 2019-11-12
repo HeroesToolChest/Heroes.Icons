@@ -172,6 +172,28 @@ namespace Heroes.Icons
             }
         }
 
+        /// <summary>
+        /// Updates the object's localized gamestrings to the currently selected <see cref="Localization"/>.
+        /// </summary>
+        /// <param name="announcer"></param>
+        public void UpdateGameStrings(Announcer announcer)
+        {
+            JsonElement element = JsonGameStringDocument.RootElement;
+
+            if (element.TryGetProperty("gamestrings", out JsonElement gameStringElement))
+            {
+                if (gameStringElement.TryGetProperty("announcer", out JsonElement keyValue))
+                {
+                    if (TryGetValueFromJsonElement(keyValue, "name", announcer.Id, out JsonElement value))
+                        announcer.Name = value.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "sortName", announcer.Id, out value))
+                        announcer.SortName = value.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "description", announcer.Id, out value))
+                        announcer.Description = new TooltipDescription(value.ToString());
+                }
+            }
+        }
+
         private bool TryGetValueFromJsonElement(JsonElement element, string key, string id, out JsonElement value)
         {
             value = default;

@@ -306,6 +306,21 @@ namespace Heroes.Icons.Tests.DataReader
             BasicAdjutantAsserts(announcer!);
         }
 
+        [TestMethod]
+        public void UpdateGameStringsTest()
+        {
+            Announcer announcer = new Announcer
+            {
+                Id = "AbathurA",
+            };
+
+            using GameStringReader gameStringReader = new GameStringReader(LoadEnusLocalizedStringData());
+            gameStringReader.UpdateGameStrings(announcer);
+
+            Assert.AreEqual("Abathur Announcer", announcer.Name);
+            Assert.AreEqual("asdf", announcer.Description?.RawDescription);
+        }
+
         private byte[] LoadJsonTestData()
         {
             using MemoryStream memoryStream = new MemoryStream();
@@ -337,6 +352,40 @@ namespace Heroes.Icons.Tests.DataReader
             writer.WriteString("description", "Ann");
             writer.WriteString("sortName", "adj");
             writer.WriteEndObject();
+
+            writer.WriteEndObject();
+
+            writer.Flush();
+
+            return memoryStream.ToArray();
+        }
+
+        private byte[] LoadEnusLocalizedStringData()
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+
+            writer.WriteStartObject();
+
+            writer.WriteStartObject("meta");
+            writer.WriteString("locale", "enus");
+            writer.WriteEndObject(); // meta
+
+            writer.WriteStartObject("gamestrings");
+            writer.WriteStartObject("announcer");
+
+            writer.WriteStartObject("name");
+            writer.WriteString("AbathurA", "Abathur Announcer");
+            writer.WriteString("Adjutant", "Adjutant Announcer");
+            writer.WriteEndObject();
+            writer.WriteStartObject("description");
+            writer.WriteString("AbathurA", "asdf");
+            writer.WriteString("Adjutant", "qwer");
+            writer.WriteEndObject();
+
+            writer.WriteEndObject(); // end announcer
+
+            writer.WriteEndObject(); // end gamestrings
 
             writer.WriteEndObject();
 

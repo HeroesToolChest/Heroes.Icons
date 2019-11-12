@@ -172,11 +172,11 @@ namespace Heroes.Icons.DataReader
         }
 
         /// <summary>
-        /// 
+        /// Finds the value to a given <paramref name="propertyId"/>.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="propertyId"></param>
-        /// <param name="propertyValue"></param>
+        /// <param name="propertyId">Json property name.</param>
+        /// <param name="propertyValue">The value of the property.</param>
         /// <param name="getData"></param>
         /// <param name="value"></param>
         /// <returns></returns>
