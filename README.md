@@ -19,7 +19,7 @@ All data files will eventually be supported (strike-through is completed)
 - Mounts
 - Banners
 - Sprays
-- Announcers
+- ~~Announcers~~
 - Voice Lines
 - Portraits
 - Emoticons
