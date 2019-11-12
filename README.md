@@ -19,12 +19,15 @@ All data files will eventually be supported (strike-through is completed)
 - Mounts
 - Banners
 - Sprays
-- Announcers
+- ~~Announcers~~
 - Voice Lines
 - Portraits
 - Emoticons
 - Emoticon Packs
 - Veterancy data
+
+## Supported Platforms
+- .Net Core 3.0+
 
 ## Usage
 Look through source code for now, examples will be provided later.
