@@ -57,10 +57,10 @@ namespace Heroes.Icons.Tests.DataReader
         [TestCategory("DataReader")]
         public void DataReaderROMGSRTest()
         {
-            using GameStringReader gameStringReader = new GameStringReader(_jsonGameStringFileFRFR);
+            using GameStringReader gameStringReader = new GameStringReader(_jsonGameStringFileKOKR);
             using AnnouncerDataReader announcerDataReader = new AnnouncerDataReader(_dataFile, gameStringReader);
 
-            Assert.AreEqual(Localization.FRFR, announcerDataReader.Localization);
+            Assert.AreEqual(Localization.KOKR, announcerDataReader.Localization);
             Assert.IsTrue(announcerDataReader.TryGetAnnouncerById("AbathurA", out Announcer _));
         }
 

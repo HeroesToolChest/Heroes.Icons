@@ -387,6 +387,15 @@ namespace Heroes.Icons.Tests.DataReader
                 },
             });
 
+            hero.AddTalent(new Talent()
+            {
+                AbilityTalentId = new AbilityTalentId("ZuljinWrongPlaceWrongTime", "ZuljinWrongPlaceWrongTime")
+                {
+                     AbilityType = AbilityType.W,
+                },
+                Tier = TalentTier.Level1,
+            });
+
             using GameStringReader gameStringReader = new GameStringReader(LoadEnusLocalizedStringData());
             gameStringReader.UpdateGameStrings(hero);
 
@@ -409,6 +418,48 @@ namespace Heroes.Icons.Tests.DataReader
             Assert.AreEqual("After a <c val=\"bfd4fd\">0.5</c> second delay, enemies in front of Alarak take <c val=\"bfd4fd\">175~~0.04~~</c> damage and are silenced for <c val=\"bfd4fd\">1.5</c> seconds. ", ability.Tooltip.FullTooltip!.RawDescription);
             Assert.AreEqual("Damage and silence enemies in an area", ability.Tooltip.ShortTooltip!.RawDescription);
             Assert.AreEqual("No life", ability.Tooltip.Life.LifeCostTooltip!.RawDescription);
+
+            Talent talent = hero.GetTalent("ZuljinWrongPlaceWrongTime");
+
+            Assert.AreEqual("Bonus Twin Cleave damage at apex", talent.Tooltip.ShortTooltip!.RawDescription);
+        }
+
+        [TestMethod]
+        public void UpdateAbilityGameStringsTest()
+        {
+            Ability ability = new Ability()
+            {
+                AbilityTalentId = new AbilityTalentId("AlarakDiscordStrike", "AlarakDiscordStrike")
+                {
+                    AbilityType = AbilityType.Q,
+                    IsPassive = false,
+                },
+            };
+
+            using GameStringReader gameStringReader = new GameStringReader(LoadEnusLocalizedStringData());
+            gameStringReader.UpdateGameStrings(ability);
+
+            Assert.AreEqual("Discord Strike", ability.Name);
+            Assert.AreEqual("Cooldown: 8 seconds", ability.Tooltip.Cooldown.CooldownTooltip!.RawDescription);
+            Assert.AreEqual("<s val=\"bfd4fd\" name=\"StandardTooltipDetails\">Mana: 55</s>", ability.Tooltip.Energy.EnergyTooltip!.RawDescription);
+        }
+
+        [TestMethod]
+        public void UpdateTalentGameStringTest()
+        {
+            Talent talent = new Talent()
+            {
+                AbilityTalentId = new AbilityTalentId("ZuljinWrongPlaceWrongTime", "ZuljinWrongPlaceWrongTime")
+                {
+                    AbilityType = AbilityType.W,
+                },
+                Tier = TalentTier.Level1,
+            };
+
+            using GameStringReader gameStringReader = new GameStringReader(LoadEnusLocalizedStringData());
+            gameStringReader.UpdateGameStrings(talent);
+
+            Assert.AreEqual("Bonus Twin Cleave damage at apex", talent.Tooltip.ShortTooltip!.RawDescription);
         }
 
         [DataTestMethod]
@@ -1692,6 +1743,7 @@ namespace Heroes.Icons.Tests.DataReader
 
             writer.WriteStartObject("short");
             writer.WriteString("AlarakDiscordStrike|AlarakDiscordStrike|Q|False", "Damage and silence enemies in an area");
+            writer.WriteString("ZuljinWrongPlaceWrongTime|ZuljinWrongPlaceWrongTime|W|False", "Bonus Twin Cleave damage at apex");
             writer.WriteEndObject();
 
             writer.WriteEndObject(); // end abiltalent

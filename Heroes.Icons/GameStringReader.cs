@@ -86,8 +86,14 @@ namespace Heroes.Icons
         /// Updates the object's localized gamestrings to the currently selected <see cref="Localization"/>.
         /// </summary>
         /// <param name="hero"></param>
+        /// <exception cref="ArgumentNullException" />
         public void UpdateGameStrings(Hero hero)
         {
+            if (hero is null)
+            {
+                throw new ArgumentNullException(nameof(hero));
+            }
+
             JsonElement element = JsonGameStringDocument.RootElement;
 
             UpdateGameStrings(unit: hero);
@@ -119,6 +125,19 @@ namespace Heroes.Icons
                     if (TryGetValueFromJsonElement(keyValue, "type", hero.Id, out value))
                         hero.Type = value.ToString();
                 }
+
+                foreach (Talent talent in hero.Talents)
+                {
+                    if (talent.AbilityTalentId is null)
+                        continue;
+
+                    SetTalentData(gameStringElement, talent);
+                }
+
+                foreach (Hero heroUnit in hero.HeroUnits)
+                {
+                    UpdateGameStrings(heroUnit);
+                }
             }
         }
 
@@ -126,8 +145,14 @@ namespace Heroes.Icons
         /// Updates the object's localized gamestrings to the currently selected <see cref="Localization"/>.
         /// </summary>
         /// <param name="unit"></param>
+        /// <exception cref="ArgumentNullException" />
         public void UpdateGameStrings(Unit unit)
         {
+            if (unit is null)
+            {
+                throw new ArgumentNullException(nameof(unit));
+            }
+
             JsonElement element = JsonGameStringDocument.RootElement;
 
             if (element.TryGetProperty("gamestrings", out JsonElement gameStringElement))
@@ -153,21 +178,7 @@ namespace Heroes.Icons
                     if (ability.AbilityTalentId is null)
                         continue;
 
-                    if (gameStringElement.TryGetProperty("abiltalent", out keyValue))
-                    {
-                        if (TryGetValueFromJsonElement(keyValue, "cooldown", ability.AbilityTalentId.Id, out JsonElement value))
-                            ability.Tooltip.Cooldown.CooldownTooltip = new TooltipDescription(value.ToString(), Localization);
-                        if (TryGetValueFromJsonElement(keyValue, "energy", ability.AbilityTalentId.Id, out value))
-                            ability.Tooltip.Energy.EnergyTooltip = new TooltipDescription(value.ToString(), Localization);
-                        if (TryGetValueFromJsonElement(keyValue, "full", ability.AbilityTalentId.Id, out value))
-                            ability.Tooltip.FullTooltip = new TooltipDescription(value.ToString(), Localization);
-                        if (TryGetValueFromJsonElement(keyValue, "life", ability.AbilityTalentId.Id, out value))
-                            ability.Tooltip.Life.LifeCostTooltip = new TooltipDescription(value.ToString(), Localization);
-                        if (TryGetValueFromJsonElement(keyValue, "name", ability.AbilityTalentId.Id, out value))
-                            ability.Name = value.ToString();
-                        if (TryGetValueFromJsonElement(keyValue, "short", ability.AbilityTalentId.Id, out value))
-                            ability.Tooltip.ShortTooltip = new TooltipDescription(value.ToString(), Localization);
-                    }
+                    SetAbilityData(gameStringElement, ability);
                 }
             }
         }
@@ -175,9 +186,55 @@ namespace Heroes.Icons
         /// <summary>
         /// Updates the object's localized gamestrings to the currently selected <see cref="Localization"/>.
         /// </summary>
+        /// <param name="talent"></param>
+        /// <exception cref="ArgumentNullException" />
+        public void UpdateGameStrings(Talent talent)
+        {
+            if (talent is null)
+            {
+                throw new ArgumentNullException(nameof(talent));
+            }
+
+            JsonElement element = JsonGameStringDocument.RootElement;
+
+            if (element.TryGetProperty("gamestrings", out JsonElement gameStringElement))
+            {
+                SetTalentData(gameStringElement, talent);
+            }
+        }
+
+        /// <summary>
+        /// Updates the object's localized gamestrings to the currently selected <see cref="Localization"/>.
+        /// </summary>
+        /// <param name="ability"></param>
+        /// <exception cref="ArgumentNullException" />
+        public void UpdateGameStrings(Ability ability)
+        {
+            if (ability is null)
+            {
+                throw new ArgumentNullException(nameof(ability));
+            }
+
+            JsonElement element = JsonGameStringDocument.RootElement;
+
+            if (element.TryGetProperty("gamestrings", out JsonElement gameStringElement))
+            {
+                SetAbilityData(gameStringElement, ability);
+            }
+        }
+
+        /// <summary>
+        /// Updates the object's localized gamestrings to the currently selected <see cref="Localization"/>.
+        /// </summary>
         /// <param name="announcer"></param>
+        /// <exception cref="ArgumentNullException" />
         public void UpdateGameStrings(Announcer announcer)
         {
+            if (announcer is null)
+            {
+                throw new ArgumentNullException(nameof(announcer));
+            }
+
             JsonElement element = JsonGameStringDocument.RootElement;
 
             if (element.TryGetProperty("gamestrings", out JsonElement gameStringElement))
@@ -199,6 +256,44 @@ namespace Heroes.Icons
             value = default;
 
             return element.TryGetProperty(key, out JsonElement keyInnerValue) && keyInnerValue.TryGetProperty(id, out value);
+        }
+
+        private void SetTalentData(JsonElement gameStringElement, Talent talent)
+        {
+            if (gameStringElement.TryGetProperty("abiltalent", out JsonElement keyValue))
+            {
+                if (TryGetValueFromJsonElement(keyValue, "cooldown", talent.AbilityTalentId.Id, out JsonElement value))
+                    talent.Tooltip.Cooldown.CooldownTooltip = new TooltipDescription(value.ToString(), Localization);
+                if (TryGetValueFromJsonElement(keyValue, "energy", talent.AbilityTalentId.Id, out value))
+                    talent.Tooltip.Energy.EnergyTooltip = new TooltipDescription(value.ToString(), Localization);
+                if (TryGetValueFromJsonElement(keyValue, "full", talent.AbilityTalentId.Id, out value))
+                    talent.Tooltip.FullTooltip = new TooltipDescription(value.ToString(), Localization);
+                if (TryGetValueFromJsonElement(keyValue, "life", talent.AbilityTalentId.Id, out value))
+                    talent.Tooltip.Life.LifeCostTooltip = new TooltipDescription(value.ToString(), Localization);
+                if (TryGetValueFromJsonElement(keyValue, "name", talent.AbilityTalentId.Id, out value))
+                    talent.Name = value.ToString();
+                if (TryGetValueFromJsonElement(keyValue, "short", talent.AbilityTalentId.Id, out value))
+                    talent.Tooltip.ShortTooltip = new TooltipDescription(value.ToString(), Localization);
+            }
+        }
+
+        private void SetAbilityData(JsonElement gameStringElement, Ability ability)
+        {
+            if (gameStringElement.TryGetProperty("abiltalent", out JsonElement keyValue))
+            {
+                if (TryGetValueFromJsonElement(keyValue, "cooldown", ability.AbilityTalentId.Id, out JsonElement value))
+                    ability.Tooltip.Cooldown.CooldownTooltip = new TooltipDescription(value.ToString(), Localization);
+                if (TryGetValueFromJsonElement(keyValue, "energy", ability.AbilityTalentId.Id, out value))
+                    ability.Tooltip.Energy.EnergyTooltip = new TooltipDescription(value.ToString(), Localization);
+                if (TryGetValueFromJsonElement(keyValue, "full", ability.AbilityTalentId.Id, out value))
+                    ability.Tooltip.FullTooltip = new TooltipDescription(value.ToString(), Localization);
+                if (TryGetValueFromJsonElement(keyValue, "life", ability.AbilityTalentId.Id, out value))
+                    ability.Tooltip.Life.LifeCostTooltip = new TooltipDescription(value.ToString(), Localization);
+                if (TryGetValueFromJsonElement(keyValue, "name", ability.AbilityTalentId.Id, out value))
+                    ability.Name = value.ToString();
+                if (TryGetValueFromJsonElement(keyValue, "short", ability.AbilityTalentId.Id, out value))
+                    ability.Tooltip.ShortTooltip = new TooltipDescription(value.ToString(), Localization);
+            }
         }
     }
 }
