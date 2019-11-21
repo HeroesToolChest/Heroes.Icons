@@ -262,6 +262,8 @@ namespace Heroes.Icons.Tests.DataReader
             using GameStringReader gameStringReader = new GameStringReader(LoadEnusLocalizedStringData());
             gameStringReader.UpdateGameStrings(unit);
 
+            Assert.ThrowsException<ArgumentNullException>(() => gameStringReader.UpdateGameStrings(unit: null!));
+
             Assert.AreEqual("A long description", unit.Description!.RawDescription);
             Assert.AreEqual("Shield", unit.Shield.ShieldType);
         }

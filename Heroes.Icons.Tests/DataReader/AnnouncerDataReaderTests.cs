@@ -317,8 +317,11 @@ namespace Heroes.Icons.Tests.DataReader
             using GameStringReader gameStringReader = new GameStringReader(LoadEnusLocalizedStringData());
             gameStringReader.UpdateGameStrings(announcer);
 
+            Assert.ThrowsException<ArgumentNullException>(() => gameStringReader.UpdateGameStrings(announcer: null!));
+
             Assert.AreEqual("Abathur Announcer", announcer.Name);
             Assert.AreEqual("asdf", announcer.Description?.RawDescription);
+            Assert.AreEqual("asdfsn", announcer.SortName);
         }
 
         private byte[] LoadJsonTestData()
@@ -381,6 +384,10 @@ namespace Heroes.Icons.Tests.DataReader
             writer.WriteStartObject("description");
             writer.WriteString("AbathurA", "asdf");
             writer.WriteString("Adjutant", "qwer");
+            writer.WriteEndObject();
+            writer.WriteStartObject("sortName");
+            writer.WriteString("AbathurA", "asdfsn");
+            writer.WriteString("Adjutant", "qwersn");
             writer.WriteEndObject();
 
             writer.WriteEndObject(); // end announcer

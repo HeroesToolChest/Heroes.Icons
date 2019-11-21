@@ -396,8 +396,16 @@ namespace Heroes.Icons.Tests.DataReader
                 Tier = TalentTier.Level1,
             });
 
+            hero.AddHeroUnit(new Hero
+            {
+                CHeroId = "AbathurSymbiote",
+                Id = "AbathurSymbiote",
+            });
+
             using GameStringReader gameStringReader = new GameStringReader(LoadEnusLocalizedStringData());
             gameStringReader.UpdateGameStrings(hero);
+
+            Assert.ThrowsException<ArgumentNullException>(() => gameStringReader.UpdateGameStrings(hero: null!));
 
             Assert.AreEqual("Hard", hero.Difficulty);
             Assert.AreEqual("Melee Assassin", hero.ExpandedRole);
@@ -422,6 +430,10 @@ namespace Heroes.Icons.Tests.DataReader
             Talent talent = hero.GetTalent("ZuljinWrongPlaceWrongTime");
 
             Assert.AreEqual("Bonus Twin Cleave damage at apex", talent.Tooltip.ShortTooltip!.RawDescription);
+
+            Hero heroUnit = hero.HeroUnits.ToList()[0];
+
+            Assert.AreEqual("Symbiote", heroUnit.Name);
         }
 
         [TestMethod]
@@ -438,6 +450,8 @@ namespace Heroes.Icons.Tests.DataReader
 
             using GameStringReader gameStringReader = new GameStringReader(LoadEnusLocalizedStringData());
             gameStringReader.UpdateGameStrings(ability);
+
+            Assert.ThrowsException<ArgumentNullException>(() => gameStringReader.UpdateGameStrings(ability: null!));
 
             Assert.AreEqual("Discord Strike", ability.Name);
             Assert.AreEqual("Cooldown: 8 seconds", ability.Tooltip.Cooldown.CooldownTooltip!.RawDescription);
@@ -458,6 +472,8 @@ namespace Heroes.Icons.Tests.DataReader
 
             using GameStringReader gameStringReader = new GameStringReader(LoadEnusLocalizedStringData());
             gameStringReader.UpdateGameStrings(talent);
+
+            Assert.ThrowsException<ArgumentNullException>(() => gameStringReader.UpdateGameStrings(talent: null!));
 
             Assert.AreEqual("Bonus Twin Cleave damage at apex", talent.Tooltip.ShortTooltip!.RawDescription);
         }
@@ -1772,6 +1788,10 @@ namespace Heroes.Icons.Tests.DataReader
 
             writer.WriteStartObject("type");
             writer.WriteString("Alarak", "Melee");
+            writer.WriteEndObject();
+
+            writer.WriteStartObject("name");
+            writer.WriteString("AbathurSymbiote", "Symbiote");
             writer.WriteEndObject();
 
             writer.WriteEndObject(); // unit
