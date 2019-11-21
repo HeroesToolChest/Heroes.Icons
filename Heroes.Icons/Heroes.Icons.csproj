@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <Nullable>enable</Nullable>
     <CodeAnalysisRuleSet>..\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
-    <Version>5.0.0-alpha.1</Version>
+    <Version>5.0.0-alpha.2</Version>
     <Authors>Kevin Oliva</Authors>
     <Copyright>Copyright © 2016 - 2019 Kevin Oliva</Copyright>
     <Description>A Heroes of the Storm game data access library that reads the json data files from Heroes Data Parser</Description>
