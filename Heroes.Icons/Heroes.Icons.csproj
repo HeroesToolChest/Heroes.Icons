@@ -24,30 +24,6 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Images\AbilityTalents\storm_ui_icon_anduin_blessed_recovery.png" />
-    <None Remove="Images\AbilityTalents\storm_ui_icon_anduin_bold_strategy.png" />
-    <None Remove="Images\AbilityTalents\storm_ui_icon_anduin_chastise.png" />
-    <None Remove="Images\AbilityTalents\storm_ui_icon_anduin_desperate_prayer.png" />
-    <None Remove="Images\AbilityTalents\storm_ui_icon_anduin_divine_star.png" />
-    <None Remove="Images\AbilityTalents\storm_ui_icon_anduin_flash_heal.png" />
-    <None Remove="Images\AbilityTalents\storm_ui_icon_anduin_flash_heal_a.png" />
-    <None Remove="Images\AbilityTalents\storm_ui_icon_anduin_holy_word_salvation.png" />
-    <None Remove="Images\AbilityTalents\storm_ui_icon_anduin_inner_focus.png" />
-    <None Remove="Images\AbilityTalents\storm_ui_icon_anduin_leap_of_faith.png" />
-    <None Remove="Images\AbilityTalents\storm_ui_icon_anduin_lightwell.png" />
-    <None Remove="Images\AbilityTalents\storm_ui_icon_anduin_light_bomb.png" />
-    <None Remove="Images\AbilityTalents\storm_ui_icon_anduin_varians_legacy.png" />
-    <None Remove="Images\HeroSelectPortraits\storm_ui_ingame_heroselect_btn_anduin.png" />
-    <None Remove="Images\LeaderboardPortraits\storm_ui_ingame_hero_leaderboard_anduin.png" />
-    <None Remove="Images\LeaderboardPortraits\storm_ui_ingame_hero_leaderboard_imperius.png" />
-    <None Remove="Images\TargetPortraits\ui_targetportrait_hero_anduin.png" />
-    <None Remove="Images\TargetPortraits\ui_targetportrait_hero_imperius.png" />
-    <None Remove="Xml\HeroBuilds\heroesdata_73016_enus.zip" />
-    <None Remove="Xml\HeroBuilds\heroesdata_73493_enus.zip" />
-    <None Remove="Xml\HeroBuilds\heroesdata_73662_enus.zip" />
-  </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\Heroes.Models\Heroes.Models\Heroes.Models.csproj" />
