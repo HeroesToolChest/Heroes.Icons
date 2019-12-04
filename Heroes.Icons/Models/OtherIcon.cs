@@ -35,5 +35,6 @@
         KillsBlue,
         KillsRed,
         Boost,
+        SelfHealing,
     }
 }

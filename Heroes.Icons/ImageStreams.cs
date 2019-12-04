@@ -271,6 +271,10 @@ namespace Heroes.Icons
                 case OtherIcon.Boost:
                     fileName = "storm_ui_boost_icon_small.png";
                     break;
+                case OtherIcon.SelfHealing:
+                    fileName = "storm_ui_scorescreen_icon_selfhealingshielding.png";
+                    break;
+
                 default:
                     return null;
             }
