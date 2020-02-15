@@ -161,4 +161,9 @@
   <Patch type="Hotfix" link="" version="2.48.3.77205"/>
   <Patch type="Balance" link="https://heroesofthestorm.com/en-us/blog/23227810" version="2.48.4.77406"/>
   <Patch type="Deathwing" link="https://heroesofthestorm.com/en-us/blog/23239990" version="2.49.0.77525"/>
+  <Patch type="Hotfix" link="" version="2.49.0.77548"/>
+  <Patch type="Balance" link="https://heroesofthestorm.com/en-us/blog/23239993" version="2.49.1.77662"/>
+  <Patch type="Hotfix" link="" version="2.49.1.77692"/>
+  <Patch type="Balance" link="https://heroesofthestorm.com/en-us/blog/23237905" version="2.49.2.77981"/>
+  <Patch type="Balance" link="https://heroesofthestorm.com/en-us/blog/23305953" version="2.49.3.78256"/>
 </Builds>
