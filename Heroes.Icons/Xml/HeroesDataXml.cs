@@ -74,7 +74,7 @@ namespace Heroes.Icons.Xml
                         int beginning = int.Parse(buildNumbers[0]);
                         int end = int.Parse(buildNumbers[1]);
 
-                        if (build >= beginning && build <= end)
+                        if (SelectedBuild >= beginning && SelectedBuild <= end)
                         {
                             zipFile = fileName;
                             zipFileStream = HeroesIconsAssembly.GetManifestResourceStream($"{HeroBuildsAssemblyPath}.{zipFile}");
