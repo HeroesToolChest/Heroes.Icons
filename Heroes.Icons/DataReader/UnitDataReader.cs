@@ -201,19 +201,19 @@ namespace Heroes.Icons.DataReader
             if (element.TryGetProperty("descriptors", out value))
             {
                 foreach (JsonElement descriptorArrayElement in value.EnumerateArray())
-                    unit.AddHeroDescriptor(descriptorArrayElement.GetString());
+                    unit.HeroDescriptors.Add(descriptorArrayElement.GetString());
             }
 
             if (element.TryGetProperty("attributes", out value))
             {
                 foreach (JsonElement attributeArrayElement in value.EnumerateArray())
-                    unit.AddAttribute(attributeArrayElement.GetString());
+                    unit.Attributes.Add(attributeArrayElement.GetString());
             }
 
             if (element.TryGetProperty("units", out value))
             {
                 foreach (JsonElement unitArrayElement in value.EnumerateArray())
-                    unit.AddUnitId(unitArrayElement.GetString());
+                    unit.UnitIds.Add(unitArrayElement.GetString());
             }
 
             // portraits

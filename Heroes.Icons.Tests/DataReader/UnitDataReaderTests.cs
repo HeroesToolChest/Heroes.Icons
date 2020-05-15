@@ -105,16 +105,16 @@ namespace Heroes.Icons.Tests.DataReader
             if (abilities)
             {
                 List<Ability> abilitiesList = unit.Abilities.ToList();
-                Assert.AreEqual(AbilityTier.Basic, abilitiesList[0].Tier);
+                Assert.AreEqual(AbilityTiers.Basic, abilitiesList[0].Tier);
                 Assert.AreEqual("AlteracBossWhirlwind", abilitiesList[0].AbilityTalentId?.ReferenceId);
                 Assert.AreEqual("AlteracBossWhirlwind", abilitiesList[0].AbilityTalentId?.ButtonId);
                 Assert.AreEqual("Whirlwind", abilitiesList[0].Name);
                 Assert.AreEqual("storm_ui_icon_sonya_whirlwind.png", abilitiesList[0].IconFileName);
                 Assert.AreEqual("Cooldown: 12 seconds", abilitiesList[0].Tooltip.Cooldown.CooldownTooltip?.RawDescription);
                 Assert.AreEqual("Damage nearby enemies", abilitiesList[0].Tooltip.ShortTooltip?.RawDescription);
-                Assert.AreEqual(AbilityType.Q, abilitiesList[0].AbilityTalentId.AbilityType);
+                Assert.AreEqual(AbilityTypes.Q, abilitiesList[0].AbilityTalentId.AbilityType);
 
-                Assert.AreEqual(AbilityTier.Hidden, abilitiesList[2].Tier);
+                Assert.AreEqual(AbilityTiers.Hidden, abilitiesList[2].Tier);
                 Assert.AreEqual("AlteracBossChargeApproach", abilitiesList[2].AbilityTalentId?.ReferenceId);
                 Assert.AreEqual("AlteracBossCharge", abilitiesList[2].AbilityTalentId?.ButtonId);
                 Assert.AreEqual("Charge", abilitiesList[2].Name);
@@ -124,7 +124,7 @@ namespace Heroes.Icons.Tests.DataReader
             {
                 List<Ability> abilitiesList = unit.SubAbilities().ToList();
 
-                Assert.AreEqual(AbilityTier.Interact, abilitiesList[0].Tier);
+                Assert.AreEqual(AbilityTiers.Interact, abilitiesList[0].Tier);
                 Assert.AreEqual("WitchDoctorGargantuanStomp", abilitiesList[0].AbilityTalentId?.ReferenceId);
                 Assert.AreEqual("WitchDoctorGargantuanStomp", abilitiesList[0].AbilityTalentId?.ButtonId);
                 Assert.AreEqual("Gargantuan Stomp", abilitiesList[0].Name);
@@ -132,22 +132,22 @@ namespace Heroes.Icons.Tests.DataReader
                 Assert.AreEqual("AlteracBossWhirlwind", abilitiesList[0].ParentLink?.ButtonId);
                 Assert.AreEqual(0.125, abilitiesList[0].Tooltip.Cooldown?.ToggleCooldown);
 
-                Assert.AreEqual(AbilityTier.MapMechanic, abilitiesList[1].Tier);
+                Assert.AreEqual(AbilityTiers.MapMechanic, abilitiesList[1].Tier);
                 Assert.AreEqual("VoidPrisonCancel", abilitiesList[1].AbilityTalentId?.ReferenceId);
                 Assert.AreEqual("ZeratulVoidPrisonCancel", abilitiesList[1].AbilityTalentId?.ButtonId);
 
-                Assert.AreEqual(AbilityTier.MapMechanic, abilitiesList[2].Tier);
+                Assert.AreEqual(AbilityTiers.MapMechanic, abilitiesList[2].Tier);
                 Assert.AreEqual("MapMechanicAbilityInstant", abilitiesList[2].AbilityTalentId?.ReferenceId);
                 Assert.AreEqual("MapMechanicAbility", abilitiesList[2].AbilityTalentId?.ButtonId);
 
-                Assert.AreEqual(AbilityTier.Hidden, abilitiesList[3].Tier);
+                Assert.AreEqual(AbilityTiers.Hidden, abilitiesList[3].Tier);
                 Assert.AreEqual("AlteracBossChargeApproach", abilitiesList[3].ParentLink?.ReferenceId);
                 Assert.AreEqual("AlteracBossCharge", abilitiesList[3].ParentLink?.ButtonId);
-                Assert.AreEqual(AbilityType.Hidden, abilitiesList[3].ParentLink?.AbilityType);
+                Assert.AreEqual(AbilityTypes.Hidden, abilitiesList[3].ParentLink?.AbilityType);
                 Assert.AreEqual(true, abilitiesList[3].ParentLink?.IsPassive);
                 Assert.AreEqual("AbathurAssumingDirectControlCancel", abilitiesList[3].AbilityTalentId?.ReferenceId);
                 Assert.AreEqual("AbathurSymbioteCancel", abilitiesList[3].AbilityTalentId?.ButtonId);
-                Assert.AreEqual(AbilityType.Heroic, abilitiesList[3].AbilityTalentId.AbilityType);
+                Assert.AreEqual(AbilityTypes.Heroic, abilitiesList[3].AbilityTalentId.AbilityType);
             }
         }
 

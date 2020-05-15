@@ -12,6 +12,8 @@ namespace Heroes.Icons.DataReader
     /// </summary>
     public abstract class DataReader : IDisposable
     {
+        private bool _disposedValue = false;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DataReader"/> class.
         /// </summary>
@@ -58,10 +60,11 @@ namespace Heroes.Icons.DataReader
         /// </summary>
         /// <param name="jsonDataFilePath">JSON file containing the data.</param>
         /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="gameStringReader"/> cannot be null.</exception>
         public DataReader(string jsonDataFilePath, GameStringReader gameStringReader)
             : this(jsonDataFilePath)
         {
-            GameStringReader = gameStringReader;
+            GameStringReader = gameStringReader ?? throw new ArgumentNullException(nameof(gameStringReader));
             Localization = GameStringReader.Localization;
         }
 
@@ -70,19 +73,27 @@ namespace Heroes.Icons.DataReader
         /// </summary>
         /// <param name="jsonData">JSON data containing the data.</param>
         /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="gameStringReader"/> cannot be null.</exception>
         public DataReader(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader)
             : this(jsonData)
         {
-            GameStringReader = gameStringReader;
+            GameStringReader = gameStringReader ?? throw new ArgumentNullException(nameof(gameStringReader));
             Localization = GameStringReader.Localization;
         }
 
         private DataReader(ReadOnlyMemory<byte> jsonData)
         {
             JsonDataDocument = JsonDocument.Parse(jsonData);
-
             if (JsonDataDocument is null)
                 throw new NullReferenceException(nameof(JsonDataDocument));
+        }
+
+        /// <summary>
+        /// Finalizes an instance of the <see cref="DataReader"/> class.
+        /// </summary>
+        ~DataReader()
+        {
+            Dispose(false);
         }
 
         /// <summary>
@@ -124,7 +135,7 @@ namespace Heroes.Icons.DataReader
         }
 
         /// <summary>
-        /// Get the amount of total items.
+        /// Gets the amount of total items.
         /// </summary>
         public int Count
         {
@@ -149,14 +160,14 @@ namespace Heroes.Icons.DataReader
         /// <inheritdoc/>
         public void Dispose()
         {
-            JsonDataDocument.Dispose();
-            GameStringReader?.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
         /// Gets a collection of all the values of the selected property.
         /// </summary>
-        /// <param name="property"></param>
+        /// <param name="property">A property name that is in the root element.</param>
         /// <returns>Collection of values.</returns>
         protected IEnumerable<string> GetCollectionOfPropety(string property)
         {
@@ -174,17 +185,25 @@ namespace Heroes.Icons.DataReader
         /// <summary>
         /// Finds the value to a given <paramref name="propertyId"/>.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">An <see cref="IExtractable"/> type.</typeparam>
         /// <param name="propertyId">Json property name.</param>
         /// <param name="propertyValue">The value of the property.</param>
-        /// <param name="getData"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <param name="getData">The method to execute the lookup for the value.</param>
+        /// <param name="value">An <see cref="IExtractable"/> object with the given <paramref name="propertyId"/>.</param>
+        /// <returns>True if the value was found, otherwise false.</returns>
+        /// <exception cref="ArgumentException"><paramref name="propertyId"/> cannot be null or empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="propertyValue"/> or <paramref name="getData"/> cannot be null.</exception>
         protected virtual bool PropertyLookup<T>(string propertyId, string propertyValue, Func<string, JsonElement, T> getData, [NotNullWhen(true)] out T? value)
             where T : class, IExtractable, new()
         {
+            if (string.IsNullOrWhiteSpace(propertyId))
+                throw new ArgumentException("Cannot be null or empty.", nameof(propertyId));
+
             if (propertyValue is null)
                 throw new ArgumentNullException(nameof(propertyValue));
+
+            if (getData is null)
+                throw new ArgumentNullException(nameof(getData));
 
             value = null;
 
@@ -199,6 +218,24 @@ namespace Heroes.Icons.DataReader
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Disposes the resources.
+        /// </summary>
+        /// <param name="disposing">True to include releasing managed resource.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposedValue)
+            {
+                if (disposing)
+                {
+                    JsonDataDocument.Dispose();
+                    GameStringReader?.Dispose();
+                }
+
+                _disposedValue = true;
+            }
         }
     }
 }

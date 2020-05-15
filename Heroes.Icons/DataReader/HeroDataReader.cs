@@ -620,13 +620,13 @@ namespace Heroes.Icons.DataReader
             if (heroElement.TryGetProperty("descriptors", out JsonElement descriptors))
             {
                 foreach (JsonElement descriptorArrayElement in descriptors.EnumerateArray())
-                    hero.AddHeroDescriptor(descriptorArrayElement.GetString());
+                    hero.HeroDescriptors.Add(descriptorArrayElement.GetString());
             }
 
             if (heroElement.TryGetProperty("units", out JsonElement units))
             {
                 foreach (JsonElement unitArrayElement in units.EnumerateArray())
-                    hero.AddUnitId(unitArrayElement.GetString());
+                    hero.UnitIds.Add(unitArrayElement.GetString());
             }
 
             // portraits
@@ -674,7 +674,7 @@ namespace Heroes.Icons.DataReader
             if (heroElement.TryGetProperty("roles", out JsonElement roles))
             {
                 foreach (JsonElement roleArrayElement in roles.EnumerateArray())
-                    hero.AddRole(roleArrayElement.GetString());
+                    hero.Roles.Add(roleArrayElement.GetString());
             }
 
             // expandedRole
@@ -716,19 +716,19 @@ namespace Heroes.Icons.DataReader
             if (includeTalents && heroElement.TryGetProperty("talents", out JsonElement talents))
             {
                 if (talents.TryGetProperty("level1", out JsonElement tierElement))
-                    AddTierTalents(hero, tierElement, TalentTier.Level1);
+                    AddTierTalents(hero, tierElement, TalentTiers.Level1);
                 if (talents.TryGetProperty("level4", out tierElement))
-                    AddTierTalents(hero, tierElement, TalentTier.Level4);
+                    AddTierTalents(hero, tierElement, TalentTiers.Level4);
                 if (talents.TryGetProperty("level7", out tierElement))
-                    AddTierTalents(hero, tierElement, TalentTier.Level7);
+                    AddTierTalents(hero, tierElement, TalentTiers.Level7);
                 if (talents.TryGetProperty("level10", out tierElement))
-                    AddTierTalents(hero, tierElement, TalentTier.Level10);
+                    AddTierTalents(hero, tierElement, TalentTiers.Level10);
                 if (talents.TryGetProperty("level13", out tierElement))
-                    AddTierTalents(hero, tierElement, TalentTier.Level13);
+                    AddTierTalents(hero, tierElement, TalentTiers.Level13);
                 if (talents.TryGetProperty("level16", out tierElement))
-                    AddTierTalents(hero, tierElement, TalentTier.Level16);
+                    AddTierTalents(hero, tierElement, TalentTiers.Level16);
                 if (talents.TryGetProperty("level20", out tierElement))
-                    AddTierTalents(hero, tierElement, TalentTier.Level20);
+                    AddTierTalents(hero, tierElement, TalentTiers.Level20);
             }
 
             if (includeHeroUnits && heroElement.TryGetProperty("heroUnits", out JsonElement heroUnits))
@@ -737,7 +737,7 @@ namespace Heroes.Icons.DataReader
                 {
                     foreach (JsonProperty heroUnitProperty in heroUnitArrayElement.EnumerateObject())
                     {
-                        hero.AddHeroUnit(GetHeroData(heroUnitProperty.Name, heroUnitProperty.Value, true, true, true, true));
+                        hero.HeroUnits.Add(GetHeroData(heroUnitProperty.Name, heroUnitProperty.Value, true, true, true, true));
                     }
                 }
             }
@@ -747,13 +747,13 @@ namespace Heroes.Icons.DataReader
             return hero;
         }
 
-        private void AddTierTalents(Hero hero, JsonElement tierElement, TalentTier talentTier)
+        private void AddTierTalents(Hero hero, JsonElement tierElement, TalentTiers talentTiers)
         {
             foreach (JsonElement element in tierElement.EnumerateArray())
             {
                 Talent talent = new Talent
                 {
-                    Tier = talentTier,
+                    Tier = talentTiers,
                 };
 
                 SetAbilityTalentBase(talent, element);
@@ -764,13 +764,13 @@ namespace Heroes.Icons.DataReader
                 if (element.TryGetProperty("abilityTalentLinkIds", out JsonElement abilityTalentLinkIds))
                 {
                     foreach (JsonElement abilityTalentLinkIdElement in abilityTalentLinkIds.EnumerateArray())
-                        talent.AddAbilityTalentLinkId(abilityTalentLinkIdElement.GetString());
+                        talent.AbilityTalentLinkIds.Add(abilityTalentLinkIdElement.GetString());
                 }
 
                 if (element.TryGetProperty("prerequisiteTalentIds", out JsonElement prerequisiteTalentIds))
                 {
                     foreach (JsonElement prerequisiteTalentIdElement in prerequisiteTalentIds.EnumerateArray())
-                        talent.AddPrerequisiteTalentId(prerequisiteTalentIdElement.GetString());
+                        talent.PrerequisiteTalentIds.Add(prerequisiteTalentIdElement.GetString());
                 }
 
                 hero.AddTalent(talent);

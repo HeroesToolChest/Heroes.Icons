@@ -23,7 +23,7 @@ namespace Heroes.Icons.DataReader
         IEnumerable<string> GetHyperlinkIds { get; }
 
         /// <summary>
-        /// Get the amount of total items.
+        /// Gets the amount of total items.
         /// </summary>
         int Count { get; }
     }

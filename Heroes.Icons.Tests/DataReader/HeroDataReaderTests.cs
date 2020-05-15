@@ -145,10 +145,10 @@ namespace Heroes.Icons.Tests.DataReader
             {
                 Ability ability = hero.GetAbility(new AbilityTalentId("AlarakDeadlyChargeActivate", "AlarakDeadlyCharge")
                 {
-                    AbilityType = AbilityType.Heroic,
+                    AbilityType = AbilityTypes.Heroic,
                 });
 
-                Assert.AreEqual(AbilityTier.Heroic, ability.Tier);
+                Assert.AreEqual(AbilityTiers.Heroic, ability.Tier);
                 Assert.AreEqual("AlarakDeadlyChargeActivate", ability.AbilityTalentId?.ReferenceId);
                 Assert.AreEqual("AlarakDeadlyCharge", ability.AbilityTalentId?.ButtonId);
                 Assert.AreEqual("Deadly Charge", ability.Name);
@@ -158,54 +158,54 @@ namespace Heroes.Icons.Tests.DataReader
                 Assert.AreEqual("Cooldown: 45 seconds", ability.Tooltip.Cooldown.CooldownTooltip?.RawDescription);
                 Assert.AreEqual("Channel to charge a long distance", ability.Tooltip.ShortTooltip?.RawDescription);
                 Assert.AreEqual("After channeling, Alarak charges forward dealing <c val=\"bfd4fd\">200~~0.04~~</c> damage to all enemies in his path. Distance is increased based on the amount of time channeled, up to <c val=\"bfd4fd\">1.5</c> seconds.<n/><n/>Issuing a Move order while this is channeling will cancel it at no cost. Taking damage will interrupt the channeling.", ability.Tooltip.FullTooltip?.RawDescription);
-                Assert.AreEqual(AbilityType.Heroic, ability!.AbilityTalentId!.AbilityType);
+                Assert.AreEqual(AbilityTypes.Heroic, ability!.AbilityTalentId!.AbilityType);
 
                 ability = hero.GetAbility(new AbilityTalentId("AlarakSadism", "AlarakSadism")
                 {
-                    AbilityType = AbilityType.Trait,
+                    AbilityType = AbilityTypes.Trait,
                     IsPassive = true,
                 });
 
-                Assert.AreEqual(AbilityTier.Trait, ability.Tier);
+                Assert.AreEqual(AbilityTiers.Trait, ability.Tier);
                 Assert.AreEqual("Sadism", ability.Name);
                 Assert.AreEqual("storm_ui_icon_alarak_sadism.png", ability.IconFileName);
-                Assert.AreEqual(AbilityType.Trait, ability!.AbilityTalentId!.AbilityType);
+                Assert.AreEqual(AbilityTypes.Trait, ability!.AbilityTalentId!.AbilityType);
                 Assert.IsTrue(ability!.AbilityTalentId!.IsPassive);
                 Assert.IsFalse(ability.IsActive);
 
                 ability = hero.GetAbility(new AbilityTalentId("Mount", "SummonMount")
                 {
-                    AbilityType = AbilityType.Z,
+                    AbilityType = AbilityTypes.Z,
                 });
 
-                Assert.AreEqual(AbilityTier.Mount, ability.Tier);
-                Assert.AreEqual(AbilityType.Z, ability!.AbilityTalentId!.AbilityType);
+                Assert.AreEqual(AbilityTiers.Mount, ability.Tier);
+                Assert.AreEqual(AbilityTypes.Z, ability!.AbilityTalentId!.AbilityType);
 
                 ability = hero.GetAbility(new AbilityTalentId("LootSpray", "LootSpray")
                 {
-                    AbilityType = AbilityType.Spray,
+                    AbilityType = AbilityTypes.Spray,
                 });
 
-                Assert.AreEqual(AbilityTier.Spray, ability.Tier);
-                Assert.AreEqual(AbilityType.Spray, ability!.AbilityTalentId!.AbilityType);
+                Assert.AreEqual(AbilityTiers.Spray, ability.Tier);
+                Assert.AreEqual(AbilityTypes.Spray, ability!.AbilityTalentId!.AbilityType);
 
                 ability = hero.GetAbility(new AbilityTalentId("LootYellVoiceLine", "LootYellVoiceLine")
                 {
-                    AbilityType = AbilityType.Voice,
+                    AbilityType = AbilityTypes.Voice,
                 });
 
-                Assert.AreEqual(AbilityTier.Voice, ability.Tier);
-                Assert.AreEqual(AbilityType.Voice, ability!.AbilityTalentId!.AbilityType);
+                Assert.AreEqual(AbilityTiers.Voice, ability.Tier);
+                Assert.AreEqual(AbilityTypes.Voice, ability!.AbilityTalentId!.AbilityType);
                 Assert.IsTrue(ability.IsActive);
                 Assert.IsTrue(ability.IsQuest);
 
                 ability = hero.GetAbility(new AbilityTalentId("GallTalentEyeOfKilrogg", "GallEyeofKilroggHotbar")
                 {
-                    AbilityType = AbilityType.Active,
+                    AbilityType = AbilityTypes.Active,
                 });
 
-                Assert.AreEqual(AbilityTier.Activable, ability.Tier);
-                Assert.AreEqual(AbilityType.Active, ability!.AbilityTalentId!.AbilityType);
+                Assert.AreEqual(AbilityTiers.Activable, ability.Tier);
+                Assert.AreEqual(AbilityTypes.Active, ability!.AbilityTalentId!.AbilityType);
                 Assert.AreEqual(2, ability.Tooltip.Charges.CountMax);
                 Assert.AreEqual(1, ability.Tooltip.Charges.CountUse);
                 Assert.AreEqual(2, ability.Tooltip.Charges.CountStart);
@@ -216,11 +216,11 @@ namespace Heroes.Icons.Tests.DataReader
 
                 ability = hero.GetAbility(new AbilityTalentId("tauntId", "tauntId")
                 {
-                    AbilityType = AbilityType.Taunt,
+                    AbilityType = AbilityTypes.Taunt,
                 });
 
-                Assert.AreEqual(AbilityTier.Taunt, ability.Tier);
-                Assert.AreEqual(AbilityType.Taunt, ability!.AbilityTalentId!.AbilityType);
+                Assert.AreEqual(AbilityTiers.Taunt, ability.Tier);
+                Assert.AreEqual(AbilityTypes.Taunt, ability!.AbilityTalentId!.AbilityType);
                 Assert.IsNull(ability.Tooltip.Charges.CountMax);
                 Assert.IsNull(ability.Tooltip.Charges.CountUse);
                 Assert.IsNull(ability.Tooltip.Charges.CountStart);
@@ -230,19 +230,19 @@ namespace Heroes.Icons.Tests.DataReader
 
                 ability = hero.GetAbility(new AbilityTalentId("danceId", "danceId")
                 {
-                    AbilityType = AbilityType.Dance,
+                    AbilityType = AbilityTypes.Dance,
                 });
 
-                Assert.AreEqual(AbilityTier.Dance, ability.Tier);
-                Assert.AreEqual(AbilityType.Dance, ability!.AbilityTalentId!.AbilityType);
+                Assert.AreEqual(AbilityTiers.Dance, ability.Tier);
+                Assert.AreEqual(AbilityTypes.Dance, ability!.AbilityTalentId!.AbilityType);
 
                 ability = hero.GetAbility(new AbilityTalentId("unknownId", "unknownId")
                 {
-                    AbilityType = AbilityType.Unknown,
+                    AbilityType = AbilityTypes.Unknown,
                 });
 
-                Assert.AreEqual(AbilityTier.Unknown, ability.Tier);
-                Assert.AreEqual(AbilityType.Unknown, ability!.AbilityTalentId!.AbilityType);
+                Assert.AreEqual(AbilityTiers.Unknown, ability.Tier);
+                Assert.AreEqual(AbilityTypes.Unknown, ability!.AbilityTalentId!.AbilityType);
                 Assert.IsTrue(ability.IsActive);
                 Assert.IsFalse(ability.IsQuest);
             }
@@ -254,7 +254,7 @@ namespace Heroes.Icons.Tests.DataReader
 
                 Ability ability = hero.GetAbility(new AbilityTalentId("Dismount", "UnsummonMount")
                 {
-                    AbilityType = AbilityType.Z,
+                    AbilityType = AbilityTypes.Z,
                 });
 
                 Assert.AreEqual("Unsummon Mount", ability.Name);
@@ -307,43 +307,43 @@ namespace Heroes.Icons.Tests.DataReader
                 Assert.AreEqual("storm_ui_icon_ragnaros_empowersulfuras.png", talent.IconFileName);
                 Assert.AreEqual("<c val=\"e4b800\">Quest:</c> Kill Minions with Empower Sulfuras to increase its damage", talent.Tooltip.ShortTooltip!.ColoredText);
                 Assert.AreEqual("This is a full tooltip", talent.Tooltip.FullTooltip!.ColoredText);
-                Assert.AreEqual(AbilityType.Q, talent.AbilityTalentId.AbilityType);
+                Assert.AreEqual(AbilityTypes.Q, talent.AbilityTalentId.AbilityType);
                 Assert.IsTrue(talent.IsQuest);
                 Assert.AreEqual(1, talent.Column);
-                Assert.AreEqual(2, talent.AbilityTalentLinkIdsCount);
+                Assert.AreEqual(2, talent.AbilityTalentLinkIds.Count);
                 Assert.AreEqual("RagnarosEmpowerSulfurasActive", talent.AbilityTalentLinkIds.ToList()[0]);
                 Assert.AreEqual("RagnarosEmpowerSulfuras", talent.AbilityTalentLinkIds.ToList()[1]);
 
                 talent = hero.GetTalent("RagnarosLivingMeteorShiftingMeteor");
-                Assert.AreEqual(AbilityType.W, talent.AbilityTalentId.AbilityType);
+                Assert.AreEqual(AbilityTypes.W, talent.AbilityTalentId.AbilityType);
                 Assert.AreEqual(2, talent.Column);
 
                 talent = hero.GetTalent("RagnarosCatchingFire");
-                Assert.AreEqual(AbilityType.Active, talent.AbilityTalentId.AbilityType);
+                Assert.AreEqual(AbilityTypes.Active, talent.AbilityTalentId.AbilityType);
                 Assert.AreEqual(3, talent.Column);
                 Assert.IsTrue(talent.IsActive);
 
                 talent = hero.GetTalent("RagnarosEmpowerSulfurasHandOfRagnaros");
-                Assert.AreEqual(AbilityType.Q, talent.AbilityTalentId.AbilityType);
+                Assert.AreEqual(AbilityTypes.Q, talent.AbilityTalentId.AbilityType);
                 Assert.AreEqual(1, talent.Column);
                 Assert.IsFalse(talent.IsActive);
 
                 talent = hero.GetTalent("RagnarosSulfurasSmash");
-                Assert.AreEqual(AbilityType.Heroic, talent.AbilityTalentId.AbilityType);
+                Assert.AreEqual(AbilityTypes.Heroic, talent.AbilityTalentId.AbilityType);
                 Assert.AreEqual(1, talent.Column);
 
                 talent = hero.GetTalent("RagnarosEmpowerSulfurasCauterizeWounds");
-                Assert.AreEqual(AbilityType.Q, talent.AbilityTalentId.AbilityType);
+                Assert.AreEqual(AbilityTypes.Q, talent.AbilityTalentId.AbilityType);
                 Assert.AreEqual(1, talent.Column);
 
                 talent = hero.GetTalent("RagnarosLivingMeteorMeteorBomb");
-                Assert.AreEqual(AbilityType.W, talent.AbilityTalentId.AbilityType);
+                Assert.AreEqual(AbilityTypes.W, talent.AbilityTalentId.AbilityType);
                 Assert.AreEqual(2, talent.Column);
 
                 talent = hero.GetTalent("RagnarosSulfurasSmashFlamesOfSulfuron");
-                Assert.AreEqual(AbilityType.Heroic, talent.AbilityTalentId.AbilityType);
+                Assert.AreEqual(AbilityTypes.Heroic, talent.AbilityTalentId.AbilityType);
                 Assert.AreEqual(1, talent.Column);
-                Assert.AreEqual(1, talent.PrerequisiteTalentIdCount);
+                Assert.AreEqual(1, talent.PrerequisiteTalentIds.Count);
                 Assert.AreEqual("RagnarosSulfurasSmash", talent.PrerequisiteTalentIds.ToList()[0]);
             }
             else
@@ -364,7 +364,7 @@ namespace Heroes.Icons.Tests.DataReader
             }
             else
             {
-                Assert.AreEqual(0, hero.HeroUnitCount);
+                Assert.AreEqual(0, hero.HeroUnits.Count);
             }
         }
 
@@ -382,7 +382,7 @@ namespace Heroes.Icons.Tests.DataReader
             {
                 AbilityTalentId = new AbilityTalentId("AlarakDiscordStrike", "AlarakDiscordStrike")
                 {
-                    AbilityType = AbilityType.Q,
+                    AbilityType = AbilityTypes.Q,
                     IsPassive = false,
                 },
             });
@@ -391,12 +391,12 @@ namespace Heroes.Icons.Tests.DataReader
             {
                 AbilityTalentId = new AbilityTalentId("ZuljinWrongPlaceWrongTime", "ZuljinWrongPlaceWrongTime")
                 {
-                     AbilityType = AbilityType.W,
+                     AbilityType = AbilityTypes.W,
                 },
-                Tier = TalentTier.Level1,
+                Tier = TalentTiers.Level1,
             });
 
-            hero.AddHeroUnit(new Hero
+            hero.HeroUnits.Add(new Hero
             {
                 CHeroId = "AbathurSymbiote",
                 Id = "AbathurSymbiote",
@@ -417,7 +417,7 @@ namespace Heroes.Icons.Tests.DataReader
 
             Ability ability = hero.GetAbility(new AbilityTalentId("AlarakDiscordStrike", "AlarakDiscordStrike")
             {
-                AbilityType = AbilityType.Q,
+                AbilityType = AbilityTypes.Q,
             });
 
             Assert.AreEqual("Discord Strike", ability.Name);
@@ -443,7 +443,7 @@ namespace Heroes.Icons.Tests.DataReader
             {
                 AbilityTalentId = new AbilityTalentId("AlarakDiscordStrike", "AlarakDiscordStrike")
                 {
-                    AbilityType = AbilityType.Q,
+                    AbilityType = AbilityTypes.Q,
                     IsPassive = false,
                 },
             };
@@ -465,9 +465,9 @@ namespace Heroes.Icons.Tests.DataReader
             {
                 AbilityTalentId = new AbilityTalentId("ZuljinWrongPlaceWrongTime", "ZuljinWrongPlaceWrongTime")
                 {
-                    AbilityType = AbilityType.W,
+                    AbilityType = AbilityTypes.W,
                 },
-                Tier = TalentTier.Level1,
+                Tier = TalentTiers.Level1,
             };
 
             using GameStringReader gameStringReader = new GameStringReader(LoadEnusLocalizedStringData());

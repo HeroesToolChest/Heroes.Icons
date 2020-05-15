@@ -112,7 +112,7 @@ namespace Heroes.Icons
                     {
                         foreach (string roleValue in value.ToString().Split(',', StringSplitOptions.RemoveEmptyEntries))
                         {
-                            hero.AddRole(roleValue);
+                            hero.Roles.Add(roleValue);
                         }
                     }
 

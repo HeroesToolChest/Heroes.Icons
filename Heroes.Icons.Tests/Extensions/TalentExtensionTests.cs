@@ -17,9 +17,9 @@ namespace Heroes.Icons.Extensions.Tests
             {
                 AbilityTalentId = new AbilityTalentId("ZuljinWrongPlaceWrongTime", "ZuljinWrongPlaceWrongTime")
                 {
-                    AbilityType = AbilityType.W,
+                    AbilityType = AbilityTypes.W,
                 },
-                Tier = TalentTier.Level1,
+                Tier = TalentTiers.Level1,
             };
 
             talent.UpdateGameStrings(gameStringReader);

@@ -17,7 +17,7 @@ namespace Heroes.Icons.Extensions.Tests
             {
                 AbilityTalentId = new AbilityTalentId("AlarakDiscordStrike", "AlarakDiscordStrike")
                 {
-                    AbilityType = AbilityType.Q,
+                    AbilityType = AbilityTypes.Q,
                 },
             };
 

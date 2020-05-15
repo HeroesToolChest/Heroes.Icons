@@ -1,6 +1,7 @@
 ﻿using Heroes.Models;
 using Heroes.Models.AbilityTalents;
 using System;
+using System.Linq;
 using System.Text.Json;
 
 namespace Heroes.Icons.DataReader
@@ -137,7 +138,7 @@ namespace Heroes.Icons.DataReader
                         SplashArmor = armorProperty.Value.GetProperty("splash").GetInt32(),
                     };
 
-                    unit.AddUnitArmor(unitArmor);
+                    unit.Armor.Add(unitArmor);
                 }
             }
         }
@@ -173,11 +174,11 @@ namespace Heroes.Icons.DataReader
                                 Value = attributeFactorProperty.Value.GetDouble(),
                             };
 
-                            unitWeapon.AddAttributeFactor(weaponAttributeFactor);
+                            unitWeapon.AttributeFactors.Add(weaponAttributeFactor);
                         }
                     }
 
-                    unit.AddUnitWeapon(unitWeapon);
+                    unit.Weapons.Add(unitWeapon);
                 }
             }
         }
@@ -191,35 +192,35 @@ namespace Heroes.Icons.DataReader
         protected virtual void AddAbilities(Unit unit, JsonElement abilitiesElement, string? parentLink = null)
         {
             if (abilitiesElement.TryGetProperty("basic", out JsonElement tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Basic, parentLink);
+                AddTierAbilities(unit, tierElement, AbilityTiers.Basic, parentLink);
             if (abilitiesElement.TryGetProperty("heroic", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Heroic, parentLink);
+                AddTierAbilities(unit, tierElement, AbilityTiers.Heroic, parentLink);
             if (abilitiesElement.TryGetProperty("trait", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Trait, parentLink);
+                AddTierAbilities(unit, tierElement, AbilityTiers.Trait, parentLink);
             if (abilitiesElement.TryGetProperty("mount", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Mount, parentLink);
+                AddTierAbilities(unit, tierElement, AbilityTiers.Mount, parentLink);
             if (abilitiesElement.TryGetProperty("activable", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Activable, parentLink);
+                AddTierAbilities(unit, tierElement, AbilityTiers.Activable, parentLink);
             if (abilitiesElement.TryGetProperty("hearth", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Hearth, parentLink);
+                AddTierAbilities(unit, tierElement, AbilityTiers.Hearth, parentLink);
             if (abilitiesElement.TryGetProperty("taunt", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Taunt, parentLink);
+                AddTierAbilities(unit, tierElement, AbilityTiers.Taunt, parentLink);
             if (abilitiesElement.TryGetProperty("dance", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Dance, parentLink);
+                AddTierAbilities(unit, tierElement, AbilityTiers.Dance, parentLink);
             if (abilitiesElement.TryGetProperty("spray", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Spray, parentLink);
+                AddTierAbilities(unit, tierElement, AbilityTiers.Spray, parentLink);
             if (abilitiesElement.TryGetProperty("voice", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Voice, parentLink);
+                AddTierAbilities(unit, tierElement, AbilityTiers.Voice, parentLink);
             if (abilitiesElement.TryGetProperty("mapMechanic", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.MapMechanic, parentLink);
+                AddTierAbilities(unit, tierElement, AbilityTiers.MapMechanic, parentLink);
             if (abilitiesElement.TryGetProperty("interact", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Interact, parentLink);
+                AddTierAbilities(unit, tierElement, AbilityTiers.Interact, parentLink);
             if (abilitiesElement.TryGetProperty("action", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Action, parentLink);
+                AddTierAbilities(unit, tierElement, AbilityTiers.Action, parentLink);
             if (abilitiesElement.TryGetProperty("hidden", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Hidden, parentLink);
+                AddTierAbilities(unit, tierElement, AbilityTiers.Hidden, parentLink);
             if (abilitiesElement.TryGetProperty("unknown", out tierElement))
-                AddTierAbilities(unit, tierElement, AbilityTier.Unknown, parentLink);
+                AddTierAbilities(unit, tierElement, AbilityTiers.Unknown, parentLink);
         }
 
         /// <summary>
@@ -227,15 +228,15 @@ namespace Heroes.Icons.DataReader
         /// </summary>
         /// <param name="unit"></param>
         /// <param name="tierElement"></param>
-        /// <param name="abilityTier">The tier of the ability.</param>
+        /// <param name="abilityTiers">The tier of the ability.</param>
         /// <param name="parentLink">Indicates if the ability is a sub-ability.</param>
-        protected virtual void AddTierAbilities(Unit unit, JsonElement tierElement, AbilityTier abilityTier, string? parentLink)
+        protected virtual void AddTierAbilities(Unit unit, JsonElement tierElement, AbilityTiers abilityTiers, string? parentLink)
         {
             foreach (JsonElement element in tierElement.EnumerateArray())
             {
                 Ability ability = new Ability
                 {
-                    Tier = abilityTier,
+                    Tier = abilityTiers,
                 };
 
                 if (parentLink != null)
@@ -246,8 +247,8 @@ namespace Heroes.Icons.DataReader
                     {
                         ability.ParentLink = new AbilityTalentId(ids[0], ids[1]);
 
-                        if (ids.Length >= 3 && Enum.TryParse(ids[2], true, out AbilityType abilityType))
-                            ability.ParentLink.AbilityType = abilityType;
+                        if (ids.Length >= 3 && Enum.TryParse(ids[2], true, out AbilityTypes abilityTypes))
+                            ability.ParentLink.AbilityType = abilityTypes;
 
                         if (ids.Length == 4 && bool.TryParse(ids[3], out bool isPassive))
                             ability.ParentLink.IsPassive = isPassive;
@@ -306,10 +307,10 @@ namespace Heroes.Icons.DataReader
             if (abilityTalentElement.TryGetProperty("fullTooltip", out value))
                 abilityTalentBase.Tooltip.FullTooltip = new TooltipDescription(value.GetString(), Localization);
 
-            if (Enum.TryParse(abilityTalentElement.GetProperty("abilityType").GetString(), out AbilityType abilityType))
-                abilityTalentBase.AbilityTalentId.AbilityType = abilityType;
+            if (Enum.TryParse(abilityTalentElement.GetProperty("abilityType").GetString(), out AbilityTypes abilityTypes))
+                abilityTalentBase.AbilityTalentId.AbilityType = abilityTypes;
             else
-                abilityTalentBase.AbilityTalentId.AbilityType = AbilityType.Unknown;
+                abilityTalentBase.AbilityTalentId.AbilityType = AbilityTypes.Unknown;
 
             if (abilityTalentElement.TryGetProperty("isActive", out value))
                 abilityTalentBase.IsActive = value.GetBoolean();

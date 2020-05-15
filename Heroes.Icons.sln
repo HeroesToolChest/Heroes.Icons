@@ -3,11 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heroes.Models", "Heroes.Models\Heroes.Models\Heroes.Models.csproj", "{09E9F9C5-5DED-4999-B673-7E8C640C1F45}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heroes.Icons", "Heroes.Icons\Heroes.Icons.csproj", "{28467CBC-748B-4E08-8436-64ADD6446C24}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heroes.Icons.Tests", "Heroes.Icons.Tests\Heroes.Icons.Tests.csproj", "{EBF868FF-A02A-4206-BFD0-63676AAE17FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D5E9C56D-D10B-4A09-A2ED-5F29E715D91B}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +18,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{09E9F9C5-5DED-4999-B673-7E8C640C1F45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{09E9F9C5-5DED-4999-B673-7E8C640C1F45}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{09E9F9C5-5DED-4999-B673-7E8C640C1F45}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{09E9F9C5-5DED-4999-B673-7E8C640C1F45}.Release|Any CPU.Build.0 = Release|Any CPU
 		{28467CBC-748B-4E08-8436-64ADD6446C24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{28467CBC-748B-4E08-8436-64ADD6446C24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28467CBC-748B-4E08-8436-64ADD6446C24}.Release|Any CPU.ActiveCfg = Release|Any CPU
