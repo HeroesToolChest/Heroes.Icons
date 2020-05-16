@@ -10,7 +10,7 @@ namespace Heroes.Icons.DataReader
     /// <summary>
     /// Provides access to obtain hero data as well as updating localized strings.
     /// </summary>
-    public class HeroDataReader : UnitBaseData, IDataReader
+    public class HeroDataReader : UnitBaseData, IDataDocument
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HeroDataReader"/> class.

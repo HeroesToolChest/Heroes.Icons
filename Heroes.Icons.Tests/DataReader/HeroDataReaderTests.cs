@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace Heroes.Icons.Tests.DataReader
 {
     [TestClass]
-    public class HeroDataReaderTests : IDataReader
+    public class HeroDataReaderTests : IDataDocument
     {
         private readonly string _dataFile = Path.Combine("JsonData", "herodata_76003_kokr.json");
         private readonly string _jsonGameStringFileKOKR = Path.Combine("JsonGameStrings", "gamestrings_76893_kokr.json");
@@ -1221,7 +1221,7 @@ namespace Heroes.Icons.Tests.DataReader
 
         [TestMethod]
         [TestCategory("DataReader")]
-        public void DataReaderFileTest()
+        public void DataDocumentFileTest()
         {
             using HeroDataReader heroDataReader = new HeroDataReader(_dataFile);
 
@@ -1231,7 +1231,7 @@ namespace Heroes.Icons.Tests.DataReader
 
         [TestMethod]
         [TestCategory("DataReader")]
-        public void DataReaderFileLocaleTest()
+        public void DataDocumentFileLocaleTest()
         {
             using HeroDataReader heroDataReader = new HeroDataReader(_dataFile, Localization.FRFR);
 
@@ -1241,7 +1241,7 @@ namespace Heroes.Icons.Tests.DataReader
 
         [TestMethod]
         [TestCategory("DataReader")]
-        public void DataReaderRomLocaleTest()
+        public void DataDocumentROMLocaleTest()
         {
             using MemoryStream memoryStream = new MemoryStream();
             using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
@@ -1264,7 +1264,7 @@ namespace Heroes.Icons.Tests.DataReader
 
         [TestMethod]
         [TestCategory("DataReader")]
-        public void DataReaderFileGSRTest()
+        public void DataDocumentFileGSRTest()
         {
             using GameStringReader gameStringReader = new GameStringReader(_jsonGameStringFileFRFR);
             using HeroDataReader heroDataReader = new HeroDataReader(_dataFile, gameStringReader);
@@ -1275,7 +1275,7 @@ namespace Heroes.Icons.Tests.DataReader
 
         [TestMethod]
         [TestCategory("DataReader")]
-        public void DataReaderROMGSRTest()
+        public void DataDocumentROMGSRTest()
         {
             using MemoryStream memoryStream = new MemoryStream();
             using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);

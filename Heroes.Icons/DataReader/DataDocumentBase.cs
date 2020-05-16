@@ -10,15 +10,15 @@ namespace Heroes.Icons.DataReader
     /// <summary>
     /// Base class for the data reader classes.
     /// </summary>
-    public abstract class DataReader : IDisposable
+    public abstract class DataDocumentBase : IDisposable
     {
         private bool _disposedValue = false;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataReader"/> class.
+        /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
         /// </summary>
-        /// <param name="jsonDataFilePath">JSON file containing the data.</param>
-        public DataReader(string jsonDataFilePath)
+        /// <param name="jsonDataFilePath">The JSON file containing the data.</param>
+        protected DataDocumentBase(string jsonDataFilePath)
         {
             JsonDataDocument = JsonDocument.Parse(File.ReadAllBytes(jsonDataFilePath));
 
@@ -33,35 +33,37 @@ namespace Heroes.Icons.DataReader
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataReader"/> class.
+        /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
         /// </summary>
-        /// <param name="jsonDataFilePath">JSON file containing the data.</param>
+        /// <param name="jsonDataFilePath">The JSON file containing the data.</param>
         /// <param name="localization">The localization of the file.</param>
-        public DataReader(string jsonDataFilePath, Localization localization)
+        protected DataDocumentBase(string jsonDataFilePath, Localization localization)
         {
+            FileStream stream = new FileStream("", FileMode.Open, FileAccess.Read);
+            JsonDocument.Parse(stream);
             JsonDataDocument = JsonDocument.Parse(File.ReadAllBytes(jsonDataFilePath));
 
             Localization = localization;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataReader"/> class.
+        /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
         /// </summary>
-        /// <param name="jsonData">JSON data containing the data.</param>
+        /// <param name="jsonData">The JSON data containing the data.</param>
         /// <param name="localization">The localization of the file.</param>
-        public DataReader(ReadOnlyMemory<byte> jsonData, Localization localization)
+        protected DataDocumentBase(ReadOnlyMemory<byte> jsonData, Localization localization)
         {
             JsonDataDocument = JsonDocument.Parse(jsonData);
             Localization = localization;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataReader"/> class.
+        /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
         /// </summary>
-        /// <param name="jsonDataFilePath">JSON file containing the data.</param>
+        /// <param name="jsonDataFilePath">The JSON file containing the data.</param>
         /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
         /// <exception cref="ArgumentNullException"><paramref name="gameStringReader"/> cannot be null.</exception>
-        public DataReader(string jsonDataFilePath, GameStringReader gameStringReader)
+        protected DataDocumentBase(string jsonDataFilePath, GameStringReader gameStringReader)
             : this(jsonDataFilePath)
         {
             GameStringReader = gameStringReader ?? throw new ArgumentNullException(nameof(gameStringReader));
@@ -69,19 +71,19 @@ namespace Heroes.Icons.DataReader
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataReader"/> class.
+        /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
         /// </summary>
-        /// <param name="jsonData">JSON data containing the data.</param>
+        /// <param name="jsonData">The JSON data containing the data.</param>
         /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
         /// <exception cref="ArgumentNullException"><paramref name="gameStringReader"/> cannot be null.</exception>
-        public DataReader(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader)
+        protected DataDocumentBase(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader)
             : this(jsonData)
         {
             GameStringReader = gameStringReader ?? throw new ArgumentNullException(nameof(gameStringReader));
             Localization = GameStringReader.Localization;
         }
 
-        private DataReader(ReadOnlyMemory<byte> jsonData)
+        private DataDocumentBase(ReadOnlyMemory<byte> jsonData)
         {
             JsonDataDocument = JsonDocument.Parse(jsonData);
             if (JsonDataDocument is null)
@@ -89,9 +91,9 @@ namespace Heroes.Icons.DataReader
         }
 
         /// <summary>
-        /// Finalizes an instance of the <see cref="DataReader"/> class.
+        /// Finalizes an instance of the <see cref="DataDocumentBase"/> class.
         /// </summary>
-        ~DataReader()
+        ~DataDocumentBase()
         {
             Dispose(false);
         }
@@ -107,17 +109,17 @@ namespace Heroes.Icons.DataReader
         public JsonDocument JsonDataDocument { get; }
 
         /// <summary>
-        /// Gets a collection of all names.
+        /// Gets a collection of all name property values.
         /// </summary>
         public IEnumerable<string> GetNames => GetCollectionOfPropety("name");
 
         /// <summary>
-        /// Gets a collection of all hyperlink ids.
+        /// Gets a collection of all hyperlinkId property values.
         /// </summary>
         public IEnumerable<string> GetHyperlinkIds => GetCollectionOfPropety("hyperlinkId");
 
         /// <summary>
-        /// Gets a collection of all ids.
+        /// Gets a collection of all ids (the root element property values).
         /// </summary>
         public IEnumerable<string> GetIds
         {
@@ -168,7 +170,7 @@ namespace Heroes.Icons.DataReader
         /// Gets a collection of all the values of the selected property.
         /// </summary>
         /// <param name="property">A property name that is in the root element.</param>
-        /// <returns>Collection of values.</returns>
+        /// <returns>a collection of the <paramref name="property"/> values.</returns>
         protected IEnumerable<string> GetCollectionOfPropety(string property)
         {
             List<string> items = new List<string>();
@@ -190,14 +192,13 @@ namespace Heroes.Icons.DataReader
         /// <param name="propertyValue">The value of the property.</param>
         /// <param name="getData">The method to execute the lookup for the value.</param>
         /// <param name="value">An <see cref="IExtractable"/> object with the given <paramref name="propertyId"/>.</param>
-        /// <returns>True if the value was found, otherwise false.</returns>
-        /// <exception cref="ArgumentException"><paramref name="propertyId"/> cannot be null or empty.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="propertyValue"/> or <paramref name="getData"/> cannot be null.</exception>
+        /// <returns>true if the value was found; otherwise false.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="propertyId"/>, <paramref name="propertyValue"/>, or <paramref name="getData"/> is null.</exception>
         protected virtual bool PropertyLookup<T>(string propertyId, string propertyValue, Func<string, JsonElement, T> getData, [NotNullWhen(true)] out T? value)
             where T : class, IExtractable, new()
         {
-            if (string.IsNullOrWhiteSpace(propertyId))
-                throw new ArgumentException("Cannot be null or empty.", nameof(propertyId));
+            if (propertyId is null)
+                throw new ArgumentNullException(nameof(propertyId));
 
             if (propertyValue is null)
                 throw new ArgumentNullException(nameof(propertyValue));

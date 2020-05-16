@@ -9,82 +9,69 @@ using System.Text.Json;
 namespace Heroes.Icons.Tests.DataReader
 {
     [TestClass]
-    public class AnnouncerDataReaderTests : IDataReader
+    public class AnnouncerDataReaderTests : DataDocumentBase, IDataDocument
     {
         private readonly string _dataFile = Path.Combine("JsonData", "announcerdata_76893_kokr.json");
         private readonly string _jsonGameStringFileKOKR = Path.Combine("JsonGameStrings", "gamestrings_76893_kokr.json");
         private readonly string _jsonGameStringFileFRFR = Path.Combine("JsonGameStrings", "gamestrings_76893_frfr.json");
 
-        private readonly AnnouncerDataReader _announcerDataReader;
+        private readonly AnnouncerDataDocument _announcerDataDocument;
 
         public AnnouncerDataReaderTests()
         {
-            _announcerDataReader = new AnnouncerDataReader(LoadJsonTestData(), Localization.ENUS);
+            _announcerDataDocument = AnnouncerDataDocument.Parse(LoadJsonTestData(), Localization.ENUS);
         }
 
         [TestMethod]
-        [TestCategory("DataReader")]
-        public void DataReaderFileGSRTest()
+        [TestCategory("DataDocument")]
+        public void DataDocumentFileGSRTest()
         {
             using GameStringReader gameStringReader = new GameStringReader(_jsonGameStringFileFRFR);
-            using AnnouncerDataReader reader = new AnnouncerDataReader(_dataFile, gameStringReader);
+            using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(_dataFile, gameStringReader);
 
-            Assert.AreEqual(Localization.FRFR, reader.Localization);
-            Assert.IsTrue(reader.TryGetAnnouncerById("AbathurA", out Announcer _));
+            Assert.AreEqual(Localization.FRFR, document.Localization);
+            Assert.IsTrue(document.TryGetAnnouncerById("AbathurA", out Announcer _));
         }
 
         [TestMethod]
-        [TestCategory("DataReader")]
-        public void DataReaderFileLocaleTest()
+        [TestCategory("DataDocument")]
+        public void DataDocumentFileLocaleTest()
         {
-            using AnnouncerDataReader announcerDataReader = new AnnouncerDataReader(_dataFile, Localization.FRFR);
+            using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(_dataFile, Localization.FRFR);
 
-            Assert.AreEqual(Localization.FRFR, announcerDataReader.Localization);
-            Assert.IsTrue(announcerDataReader.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
+            Assert.AreEqual(Localization.FRFR, document.Localization);
+            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
         }
 
         [TestMethod]
-        [TestCategory("DataReader")]
-        public void DataReaderFileTest()
+        [TestCategory("DataDocument")]
+        public void DataDocumentFileTest()
         {
-            using AnnouncerDataReader announcerDataReader = new AnnouncerDataReader(_dataFile);
+            using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(_dataFile);
 
-            Assert.AreEqual(Localization.KOKR, announcerDataReader.Localization);
-            Assert.IsTrue(announcerDataReader.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
+            Assert.AreEqual(Localization.KOKR, document.Localization);
+            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
         }
 
         [TestMethod]
-        [TestCategory("DataReader")]
-        public void DataReaderROMGSRTest()
+        [TestCategory("DataDocument")]
+        public void DataDocumentROMGSRTest()
         {
             using GameStringReader gameStringReader = new GameStringReader(_jsonGameStringFileKOKR);
-            using AnnouncerDataReader announcerDataReader = new AnnouncerDataReader(_dataFile, gameStringReader);
+            using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(GetBytesForROM("AbathurA"), gameStringReader);
 
-            Assert.AreEqual(Localization.KOKR, announcerDataReader.Localization);
-            Assert.IsTrue(announcerDataReader.TryGetAnnouncerById("AbathurA", out Announcer _));
+            Assert.AreEqual(Localization.KOKR, document.Localization);
+            Assert.IsTrue(document.TryGetAnnouncerById("AbathurA", out Announcer _));
         }
 
         [TestMethod]
-        [TestCategory("DataReader")]
-        public void DataReaderRomLocaleTest()
+        [TestCategory("DataDocument")]
+        public void DataDocumentROMLocaleTest()
         {
-            using MemoryStream memoryStream = new MemoryStream();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
-            writer.WriteStartObject();
+            using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(GetBytesForROM("AbathurA"), Localization.FRFR);
 
-            writer.WriteStartObject("AbathurA");
-            writer.WriteEndObject();
-
-            writer.WriteEndObject();
-
-            writer.Flush();
-
-            byte[] bytes = memoryStream.ToArray();
-
-            using AnnouncerDataReader announcerDataReader = new AnnouncerDataReader(bytes, Localization.FRFR);
-
-            Assert.AreEqual(Localization.FRFR, announcerDataReader.Localization);
-            Assert.IsTrue(announcerDataReader.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
+            Assert.AreEqual(Localization.FRFR, document.Localization);
+            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
         }
 
         [DataTestMethod]
@@ -97,7 +84,7 @@ namespace Heroes.Icons.Tests.DataReader
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _announcerDataReader.GetAnnouncerById(id!);
+                    _ = _announcerDataDocument.GetAnnouncerById(id!);
                 });
 
                 return;
@@ -106,13 +93,13 @@ namespace Heroes.Icons.Tests.DataReader
             {
                 Assert.ThrowsException<KeyNotFoundException>(() =>
                 {
-                    _ = _announcerDataReader.GetAnnouncerById(id);
+                    _ = _announcerDataDocument.GetAnnouncerById(id);
                 });
 
                 return;
             }
 
-            BasicAdjutantAsserts(_announcerDataReader.GetAnnouncerById(id));
+            BasicAdjutantAsserts(_announcerDataDocument.GetAnnouncerById(id));
         }
 
         [DataTestMethod]
@@ -125,20 +112,20 @@ namespace Heroes.Icons.Tests.DataReader
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _announcerDataReader.TryGetAnnouncerById(id!, out _);
+                    _ = _announcerDataDocument.TryGetAnnouncerById(id!, out _);
                 });
 
                 return;
             }
             else if (id == "asdf")
             {
-                Assert.IsFalse(_announcerDataReader.TryGetAnnouncerById(id, out _));
+                Assert.IsFalse(_announcerDataDocument.TryGetAnnouncerById(id, out _));
 
                 return;
             }
 
-            Assert.IsTrue(_announcerDataReader.TryGetAnnouncerById(id, out Announcer? _));
-            if (_announcerDataReader.TryGetAnnouncerById(id, out Announcer? announcer))
+            Assert.IsTrue(_announcerDataDocument.TryGetAnnouncerById(id, out Announcer? _));
+            if (_announcerDataDocument.TryGetAnnouncerById(id, out Announcer? announcer))
             {
                 BasicAdjutantAsserts(announcer);
             }
@@ -154,7 +141,7 @@ namespace Heroes.Icons.Tests.DataReader
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _announcerDataReader.GetAnnouncerByHyperlinkId(id!);
+                    _ = _announcerDataDocument.GetAnnouncerByHyperlinkId(id!);
                 });
 
                 return;
@@ -163,13 +150,13 @@ namespace Heroes.Icons.Tests.DataReader
             {
                 Assert.ThrowsException<KeyNotFoundException>(() =>
                 {
-                    _ = _announcerDataReader.GetAnnouncerByHyperlinkId(id);
+                    _ = _announcerDataDocument.GetAnnouncerByHyperlinkId(id);
                 });
 
                 return;
             }
 
-            BasicAdjutantAsserts(_announcerDataReader.GetAnnouncerByHyperlinkId(id));
+            BasicAdjutantAsserts(_announcerDataDocument.GetAnnouncerByHyperlinkId(id));
         }
 
         [DataTestMethod]
@@ -182,19 +169,19 @@ namespace Heroes.Icons.Tests.DataReader
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _announcerDataReader.TryGetAnnouncerByHyperlinkId(id!, out _);
+                    _ = _announcerDataDocument.TryGetAnnouncerByHyperlinkId(id!, out _);
                 });
 
                 return;
             }
             else if (id == "asdf")
             {
-                Assert.IsFalse(_announcerDataReader.TryGetAnnouncerByHyperlinkId(id, out _));
+                Assert.IsFalse(_announcerDataDocument.TryGetAnnouncerByHyperlinkId(id, out _));
 
                 return;
             }
 
-            Assert.IsTrue(_announcerDataReader.TryGetAnnouncerByHyperlinkId(id, out Announcer? announcer));
+            Assert.IsTrue(_announcerDataDocument.TryGetAnnouncerByHyperlinkId(id, out Announcer? announcer));
             BasicAdjutantAsserts(announcer!);
         }
 
@@ -208,7 +195,7 @@ namespace Heroes.Icons.Tests.DataReader
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _announcerDataReader.GetAnnouncerByAttributeId(id!);
+                    _ = _announcerDataDocument.GetAnnouncerByAttributeId(id!);
                 });
 
                 return;
@@ -217,13 +204,13 @@ namespace Heroes.Icons.Tests.DataReader
             {
                 Assert.ThrowsException<KeyNotFoundException>(() =>
                 {
-                    _ = _announcerDataReader.GetAnnouncerByAttributeId(id);
+                    _ = _announcerDataDocument.GetAnnouncerByAttributeId(id);
                 });
 
                 return;
             }
 
-            BasicAdjutantAsserts(_announcerDataReader.GetAnnouncerByAttributeId(id));
+            BasicAdjutantAsserts(_announcerDataDocument.GetAnnouncerByAttributeId(id));
         }
 
         [DataTestMethod]
@@ -236,19 +223,19 @@ namespace Heroes.Icons.Tests.DataReader
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _announcerDataReader.TryGetAnnouncerByAttributeId(id!, out _);
+                    _ = _announcerDataDocument.TryGetAnnouncerByAttributeId(id!, out _);
                 });
 
                 return;
             }
             else if (id == "asdf")
             {
-                Assert.IsFalse(_announcerDataReader.TryGetAnnouncerByAttributeId(id, out _));
+                Assert.IsFalse(_announcerDataDocument.TryGetAnnouncerByAttributeId(id, out _));
 
                 return;
             }
 
-            Assert.IsTrue(_announcerDataReader.TryGetAnnouncerByAttributeId(id, out Announcer? announcer));
+            Assert.IsTrue(_announcerDataDocument.TryGetAnnouncerByAttributeId(id, out Announcer? announcer));
             BasicAdjutantAsserts(announcer!);
         }
 
@@ -262,7 +249,7 @@ namespace Heroes.Icons.Tests.DataReader
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _announcerDataReader.GetAnnouncerByHeroId(id!);
+                    _ = _announcerDataDocument.GetAnnouncerByHeroId(id!);
                 });
 
                 return;
@@ -271,13 +258,13 @@ namespace Heroes.Icons.Tests.DataReader
             {
                 Assert.ThrowsException<KeyNotFoundException>(() =>
                 {
-                    _ = _announcerDataReader.GetAnnouncerByHeroId(id);
+                    _ = _announcerDataDocument.GetAnnouncerByHeroId(id);
                 });
 
                 return;
             }
 
-            BasicAdjutantAsserts(_announcerDataReader.GetAnnouncerByHeroId(id));
+            BasicAdjutantAsserts(_announcerDataDocument.GetAnnouncerByHeroId(id));
         }
 
         [DataTestMethod]
@@ -290,19 +277,19 @@ namespace Heroes.Icons.Tests.DataReader
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _announcerDataReader.TryGetAnnouncerByHeroId(id!, out _);
+                    _ = _announcerDataDocument.TryGetAnnouncerByHeroId(id!, out _);
                 });
 
                 return;
             }
             else if (id == "asdf")
             {
-                Assert.IsFalse(_announcerDataReader.TryGetAnnouncerByHeroId(id, out _));
+                Assert.IsFalse(_announcerDataDocument.TryGetAnnouncerByHeroId(id, out _));
 
                 return;
             }
 
-            Assert.IsTrue(_announcerDataReader.TryGetAnnouncerByHeroId(id, out Announcer? announcer));
+            Assert.IsTrue(_announcerDataDocument.TryGetAnnouncerByHeroId(id, out Announcer? announcer));
             BasicAdjutantAsserts(announcer!);
         }
 

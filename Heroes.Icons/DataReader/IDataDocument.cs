@@ -3,22 +3,22 @@
 namespace Heroes.Icons.DataReader
 {
     /// <summary>
-    /// Provides the basic properties for a data reader.
+    /// Provides the basic properties for a data document.
     /// </summary>
-    public interface IDataReader
+    public interface IDataDocument
     {
         /// <summary>
-        /// Gets a collection of all the ids.
+        /// Gets a collection of all ids (the root element property values).
         /// </summary>
         IEnumerable<string> GetIds { get; }
 
         /// <summary>
-        /// Gets a collection of all the names.
+        /// Gets a collection of all name property values.
         /// </summary>
         IEnumerable<string> GetNames { get; }
 
         /// <summary>
-        /// Gets a collection of all hyperlink ids.
+        /// Gets a collection of all hyperlinkId property values.
         /// </summary>
         IEnumerable<string> GetHyperlinkIds { get; }
 

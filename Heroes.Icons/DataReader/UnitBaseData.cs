@@ -9,7 +9,7 @@ namespace Heroes.Icons.DataReader
     /// <summary>
     /// Base class reader for unit and hero related data.
     /// </summary>
-    public abstract class UnitBaseData : DataReader
+    public abstract class UnitBaseData : DataDocumentBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UnitBaseData"/> class.
