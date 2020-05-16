@@ -39,8 +39,6 @@ namespace Heroes.Icons.DataReader
         /// <param name="localization">The localization of the file.</param>
         protected DataDocumentBase(string jsonDataFilePath, Localization localization)
         {
-            FileStream stream = new FileStream("", FileMode.Open, FileAccess.Read);
-            JsonDocument.Parse(stream);
             JsonDataDocument = JsonDocument.Parse(File.ReadAllBytes(jsonDataFilePath));
 
             Localization = localization;
