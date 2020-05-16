@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Heroes.Icons.Tests.DataReader
 {
@@ -612,6 +613,16 @@ namespace Heroes.Icons.Tests.DataReader
             Assert.AreEqual("unit2", unit.UnitIds.ToList()[1]);
             Assert.AreEqual("storm_ui_ingame_targetinfopanel_unit_abathur_monstrosity.png", unit.UnitPortrait.TargetInfoPanelFileName);
             Assert.AreEqual("storm_ui_minimapicon_monstrosity.png", unit.UnitPortrait.MiniMapIconFileName);
+        }
+
+        public void DataDocumentStreamTest()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DataDocumentStreamAsyncTest()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Heroes.Icons.Tests.DataReader
 {
@@ -69,6 +70,28 @@ namespace Heroes.Icons.Tests.DataReader
         public void DataDocumentROMLocaleTest()
         {
             using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(GetBytesForROM("AbathurA"), Localization.FRFR);
+
+            Assert.AreEqual(Localization.FRFR, document.Localization);
+            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
+        }
+
+        [TestMethod]
+        [TestCategory("DataDocument")]
+        public void DataDocumentStreamTest()
+        {
+            using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+            using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(stream, Localization.FRFR);
+
+            Assert.AreEqual(Localization.FRFR, document.Localization);
+            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
+        }
+
+        [TestMethod]
+        [TestCategory("DataDocument")]
+        public async Task DataDocumentStreamAsyncTest()
+        {
+            using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+            using AnnouncerDataDocument document = await AnnouncerDataDocument.ParseAsync(stream, Localization.FRFR);
 
             Assert.AreEqual(Localization.FRFR, document.Localization);
             Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));

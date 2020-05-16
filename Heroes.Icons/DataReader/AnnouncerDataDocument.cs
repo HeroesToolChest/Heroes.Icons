@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Heroes.Icons.DataReader
 {
@@ -25,7 +26,7 @@ namespace Heroes.Icons.DataReader
         /// Initializes a new instance of the <see cref="AnnouncerDataDocument"/> class.
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON file containing announcer data.</param>
-        /// <param name="localization">The localization of the file.</param>
+        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         protected AnnouncerDataDocument(string jsonDataFilePath, Localization localization)
             : base(jsonDataFilePath, localization)
         {
@@ -35,7 +36,7 @@ namespace Heroes.Icons.DataReader
         /// Initializes a new instance of the <see cref="AnnouncerDataDocument"/> class.
         /// </summary>
         /// <param name="jsonData">The JSON data containing the announcer data.</param>
-        /// <param name="localization">The localization of the file.</param>
+        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         protected AnnouncerDataDocument(ReadOnlyMemory<byte> jsonData, Localization localization)
             : base(jsonData, localization)
         {
@@ -62,6 +63,17 @@ namespace Heroes.Icons.DataReader
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="AnnouncerDataDocument"/> class.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data containing the data.</param>
+        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
+        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as async.</param>
+        protected AnnouncerDataDocument(Stream utf8Json, Localization localization, bool isAsync = false)
+            : base(utf8Json, localization, isAsync)
+        {
+        }
+
+        /// <summary>
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="Announcer"/> data reading.
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON file containing announcer data.</param>
@@ -75,7 +87,7 @@ namespace Heroes.Icons.DataReader
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="Announcer"/> data reading.
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON file containing announcer data.</param>
-        /// <param name="localization">The localization of the file.</param>
+        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         /// <returns>an <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
         public static AnnouncerDataDocument Parse(string jsonDataFilePath, Localization localization)
         {
@@ -86,7 +98,7 @@ namespace Heroes.Icons.DataReader
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="Announcer"/> data reading.
         /// </summary>
         /// <param name="jsonData">The JSON data containing the announcer data.</param>
-        /// <param name="localization">The localization of the file.</param>
+        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         /// <returns>an <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
         public static AnnouncerDataDocument Parse(ReadOnlyMemory<byte> jsonData, Localization localization)
         {
@@ -113,6 +125,28 @@ namespace Heroes.Icons.DataReader
         public static AnnouncerDataDocument Parse(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader)
         {
             return new AnnouncerDataDocument(jsonData, gameStringReader);
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for <see cref="Announcer"/> data reading.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data containing the data.</param>
+        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
+        /// <returns>an <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
+        public static AnnouncerDataDocument Parse(Stream utf8Json, Localization localization)
+        {
+            return new AnnouncerDataDocument(utf8Json, localization);
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for <see cref="Announcer"/> data reading.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data containing the data.</param>
+        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
+        /// <returns>an <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
+        public static Task<AnnouncerDataDocument> ParseAsync(Stream utf8Json, Localization localization)
+        {
+            return new AnnouncerDataDocument(utf8Json, localization, true).InitializeParseAsync<AnnouncerDataDocument>();
         }
 
         /// <summary>

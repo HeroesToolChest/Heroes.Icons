@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Heroes.Icons.Tests.DataReader
 {
@@ -1802,6 +1803,16 @@ namespace Heroes.Icons.Tests.DataReader
             writer.Flush();
 
             return memoryStream.ToArray();
+        }
+
+        public void DataDocumentStreamTest()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DataDocumentStreamAsyncTest()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Heroes.Icons.DataReader
 {
@@ -13,6 +14,7 @@ namespace Heroes.Icons.DataReader
     public abstract class DataDocumentBase : IDisposable
     {
         private bool _disposedValue = false;
+        private Stream? _streamForAsync = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
@@ -36,7 +38,7 @@ namespace Heroes.Icons.DataReader
         /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON file containing the data.</param>
-        /// <param name="localization">The localization of the file.</param>
+        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         protected DataDocumentBase(string jsonDataFilePath, Localization localization)
         {
             JsonDataDocument = JsonDocument.Parse(File.ReadAllBytes(jsonDataFilePath));
@@ -48,7 +50,7 @@ namespace Heroes.Icons.DataReader
         /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
         /// </summary>
         /// <param name="jsonData">The JSON data containing the data.</param>
-        /// <param name="localization">The localization of the file.</param>
+        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         protected DataDocumentBase(ReadOnlyMemory<byte> jsonData, Localization localization)
         {
             JsonDataDocument = JsonDocument.Parse(jsonData);
@@ -81,6 +83,24 @@ namespace Heroes.Icons.DataReader
             Localization = GameStringReader.Localization;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data containing the data.</param>
+        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
+        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as async.</param>
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+        protected DataDocumentBase(Stream utf8Json, Localization localization, bool isAsync = false)
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+        {
+            if (isAsync)
+                _streamForAsync = utf8Json;
+            else
+                JsonDataDocument = JsonDocument.Parse(utf8Json);
+
+            Localization = localization;
+        }
+
         private DataDocumentBase(ReadOnlyMemory<byte> jsonData)
         {
             JsonDataDocument = JsonDocument.Parse(jsonData);
@@ -99,12 +119,12 @@ namespace Heroes.Icons.DataReader
         /// <summary>
         /// Gets the current selected localization.
         /// </summary>
-        public Localization Localization { get; } = Localization.ENUS;
+        public Localization Localization { get; private set; } = Localization.ENUS;
 
         /// <summary>
         /// Gets the <see cref="JsonDataDocument"/> to allow for manually parsing.
         /// </summary>
-        public JsonDocument JsonDataDocument { get; }
+        public JsonDocument JsonDataDocument { get; private set; }
 
         /// <summary>
         /// Gets a collection of all name property values.
@@ -162,6 +182,19 @@ namespace Heroes.Icons.DataReader
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Parses the Json stream as async.
+        /// </summary>
+        /// <typeparam name="T">A class that derives <see cref="DataDocumentBase"/>.</typeparam>
+        /// <returns>a class that derives <see cref="DataDocumentBase"/>.</returns>
+        protected async Task<T> InitializeParseAsync<T>()
+            where T : DataDocumentBase
+        {
+            JsonDataDocument = await JsonDocument.ParseAsync(_streamForAsync).ConfigureAwait(false);
+
+            return (T)this;
         }
 
         /// <summary>
@@ -231,6 +264,7 @@ namespace Heroes.Icons.DataReader
                 {
                     JsonDataDocument.Dispose();
                     GameStringReader?.Dispose();
+                    _streamForAsync?.Dispose();
                 }
 
                 _disposedValue = true;
