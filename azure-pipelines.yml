@@ -42,13 +42,13 @@ jobs:
       displayName: 'Use .NET Core sdk'
       inputs:
         packageType: sdk
-        version: 3.0.x
+        version: 3.1.x
         installationPath: $(Agent.ToolsDirectory)\dotnet
 
     - task: NuGetToolInstaller@0
-      displayName: nuget installer 5.3.1
+      displayName: nuget installer 5.5.1
       inputs:
-        versionSpec: '5.3.1'
+        versionSpec: '5.5.1'
 
     - powershell: |
         $csproj = get-content Heroes.Icons\Heroes.Icons.csproj
