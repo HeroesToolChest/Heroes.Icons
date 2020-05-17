@@ -343,7 +343,7 @@ namespace Heroes.Icons.Tests.DataReader
             Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurEvolvedMonstrosity", out JsonElement _));
         }
 
-        private byte[] LoadJsonTestData()
+        private static byte[] LoadJsonTestData()
         {
             using MemoryStream memoryStream = new MemoryStream();
             using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);

@@ -370,7 +370,7 @@ namespace Heroes.Icons.DataReader
             if (heroId is null)
                 throw new ArgumentNullException(nameof(heroId));
 
-            if (TryGetNameFromHeroId(heroId, out string value))
+            if (TryGetNameFromHeroId(heroId, out string? value))
                 return value;
             else
                 throw new KeyNotFoundException();
@@ -412,7 +412,7 @@ namespace Heroes.Icons.DataReader
             if (unitId is null)
                 throw new ArgumentNullException(nameof(unitId));
 
-            if (TryGetNameFromUnitId(unitId, out string value))
+            if (TryGetNameFromUnitId(unitId, out string? value))
                 return value;
             else
                 throw new KeyNotFoundException();
@@ -458,7 +458,7 @@ namespace Heroes.Icons.DataReader
             if (hyperlinkId is null)
                 throw new ArgumentNullException(nameof(hyperlinkId));
 
-            if (TryGetNameFromHyperlinkId(hyperlinkId, out string value))
+            if (TryGetNameFromHyperlinkId(hyperlinkId, out string? value))
                 return value;
             else
                 throw new KeyNotFoundException();
@@ -504,7 +504,7 @@ namespace Heroes.Icons.DataReader
             if (attributeId is null)
                 throw new ArgumentNullException(nameof(attributeId));
 
-            if (TryGetNameFromAttributeId(attributeId, out string value))
+            if (TryGetNameFromAttributeId(attributeId, out string? value))
                 return value;
             else
                 throw new KeyNotFoundException();
@@ -550,7 +550,7 @@ namespace Heroes.Icons.DataReader
             if (name is null)
                 throw new ArgumentNullException(nameof(name));
 
-            if (TryGetHeroIdFromName(name, out string value))
+            if (TryGetHeroIdFromName(name, out string? value))
                 return value;
             else
                 throw new KeyNotFoundException();
@@ -595,7 +595,7 @@ namespace Heroes.Icons.DataReader
             if (unitId is null)
                 throw new ArgumentNullException(nameof(unitId));
 
-            if (TryGetHeroIdFromUnitId(unitId, out string value))
+            if (TryGetHeroIdFromUnitId(unitId, out string? value))
                 return value;
             else
                 throw new KeyNotFoundException();
@@ -640,7 +640,7 @@ namespace Heroes.Icons.DataReader
             if (hyperlinkId is null)
                 throw new ArgumentNullException(nameof(hyperlinkId));
 
-            if (TryGetHeroIdFromHyperlinkId(hyperlinkId, out string value))
+            if (TryGetHeroIdFromHyperlinkId(hyperlinkId, out string? value))
                 return value;
             else
                 throw new KeyNotFoundException();
@@ -685,7 +685,7 @@ namespace Heroes.Icons.DataReader
             if (attributeId is null)
                 throw new ArgumentNullException(nameof(attributeId));
 
-            if (TryGetHeroIdFromAttributeId(attributeId, out string value))
+            if (TryGetHeroIdFromAttributeId(attributeId, out string? value))
                 return value;
             else
                 throw new KeyNotFoundException();

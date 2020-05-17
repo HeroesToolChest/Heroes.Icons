@@ -5,7 +5,7 @@ namespace Heroes.Icons.Tests.DataReader
 {
     public abstract class DataDocumentBase
     {
-        protected byte[] GetBytesForROM(string objectId)
+        protected static byte[] GetBytesForROM(string objectId)
         {
             using MemoryStream memoryStream = new MemoryStream();
             using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
