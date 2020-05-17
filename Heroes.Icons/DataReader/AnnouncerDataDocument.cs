@@ -47,9 +47,9 @@ namespace Heroes.Icons.DataReader
         /// Initializes a new instance of the <see cref="AnnouncerDataDocument"/> class.
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON file containing announcer data.</param>
-        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
-        protected AnnouncerDataDocument(string jsonDataFilePath, GameStringReader gameStringReader)
-            : base(jsonDataFilePath, gameStringReader)
+        /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
+        protected AnnouncerDataDocument(string jsonDataFilePath, GameStringDocument gameStringDocument)
+            : base(jsonDataFilePath, gameStringDocument)
         {
         }
 
@@ -57,9 +57,9 @@ namespace Heroes.Icons.DataReader
         /// Initializes a new instance of the <see cref="AnnouncerDataDocument"/> class.
         /// </summary>
         /// <param name="jsonData">The JSON data containing the announcer data.</param>
-        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
-        protected AnnouncerDataDocument(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader)
-            : base(jsonData, gameStringReader)
+        /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
+        protected AnnouncerDataDocument(ReadOnlyMemory<byte> jsonData, GameStringDocument gameStringDocument)
+            : base(jsonData, gameStringDocument)
         {
         }
 
@@ -110,22 +110,22 @@ namespace Heroes.Icons.DataReader
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="Announcer"/> data reading.
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON file containing announcer data.</param>
-        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
+        /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
         /// <returns>an <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
-        public static AnnouncerDataDocument Parse(string jsonDataFilePath, GameStringReader gameStringReader)
+        public static AnnouncerDataDocument Parse(string jsonDataFilePath, GameStringDocument gameStringDocument)
         {
-            return new AnnouncerDataDocument(jsonDataFilePath, gameStringReader);
+            return new AnnouncerDataDocument(jsonDataFilePath, gameStringDocument);
         }
 
         /// <summary>
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="Announcer"/> data reading.
         /// </summary>
         /// <param name="jsonData">The JSON data containing the announcer data.</param>
-        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
+        /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
         /// <returns>an <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
-        public static AnnouncerDataDocument Parse(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader)
+        public static AnnouncerDataDocument Parse(ReadOnlyMemory<byte> jsonData, GameStringDocument gameStringDocument)
         {
-            return new AnnouncerDataDocument(jsonData, gameStringReader);
+            return new AnnouncerDataDocument(jsonData, gameStringDocument);
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Heroes.Icons.DataReader
             if (announcerElement.TryGetProperty("image", out JsonElement image))
                 announcer.ImageFileName = image.GetString();
 
-            GameStringReader?.UpdateGameStrings(announcer);
+            GameStringDocument?.UpdateGameStrings(announcer);
 
             return announcer;
         }

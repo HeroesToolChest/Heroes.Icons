@@ -11,7 +11,7 @@ namespace Heroes.Icons.Extensions.Tests
         [TestMethod]
         public void UpdateGameStringsTest()
         {
-            using GameStringReader gameStringReader = new GameStringReader(LoadEnusLocalizedStringData());
+            using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
             Ability ability = new Ability()
             {
@@ -21,7 +21,7 @@ namespace Heroes.Icons.Extensions.Tests
                 },
             };
 
-            ability.UpdateGameStrings(gameStringReader);
+            ability.UpdateGameStrings(gameStringDocument);
 
             Assert.AreEqual("Discord Strike", ability.Name);
             Assert.AreEqual("Cooldown: 8 seconds", ability.Tooltip.Cooldown.CooldownTooltip!.RawDescription);

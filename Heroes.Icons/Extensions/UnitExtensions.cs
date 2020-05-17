@@ -11,10 +11,10 @@ namespace Heroes.Icons.Extensions
         /// Updates the localized gamestrings to the selected <see cref="Localization"/>.
         /// </summary>
         /// <param name="unit"></param>
-        /// <param name="gameStringReader"></param>
-        public static void UpdateGameStrings(this Unit unit, GameStringReader gameStringReader)
+        /// <param name="gameStringDocument"></param>
+        public static void UpdateGameStrings(this Unit unit, GameStringDocument gameStringDocument)
         {
-            gameStringReader.UpdateGameStrings(unit);
+            gameStringDocument.UpdateGameStrings(unit);
         }
     }
 }

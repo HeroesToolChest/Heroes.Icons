@@ -27,8 +27,8 @@ namespace Heroes.Icons.Tests.DataReader
         [TestCategory("DataDocument")]
         public void DataDocumentFileGSRTest()
         {
-            using GameStringReader gameStringReader = new GameStringReader(_jsonGameStringFileFRFR);
-            using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(_dataFile, gameStringReader);
+            using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileFRFR);
+            using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(_dataFile, gameStringDocument);
 
             Assert.AreEqual(Localization.FRFR, document.Localization);
             Assert.IsTrue(document.TryGetAnnouncerById("AbathurA", out Announcer _));
@@ -58,8 +58,8 @@ namespace Heroes.Icons.Tests.DataReader
         [TestCategory("DataDocument")]
         public void DataDocumentROMGSRTest()
         {
-            using GameStringReader gameStringReader = new GameStringReader(_jsonGameStringFileKOKR);
-            using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(GetBytesForROM("AbathurA"), gameStringReader);
+            using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
+            using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(GetBytesForROM("AbathurA"), gameStringDocument);
 
             Assert.AreEqual(Localization.KOKR, document.Localization);
             Assert.IsTrue(document.TryGetAnnouncerById("AbathurA", out Announcer _));
@@ -324,10 +324,10 @@ namespace Heroes.Icons.Tests.DataReader
                 Id = "AbathurA",
             };
 
-            using GameStringReader gameStringReader = new GameStringReader(LoadEnusLocalizedStringData());
-            gameStringReader.UpdateGameStrings(announcer);
+            using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
+            gameStringDocument.UpdateGameStrings(announcer);
 
-            Assert.ThrowsException<ArgumentNullException>(() => gameStringReader.UpdateGameStrings(announcer: null!));
+            Assert.ThrowsException<ArgumentNullException>(() => gameStringDocument.UpdateGameStrings(announcer: null!));
 
             Assert.AreEqual("Abathur Announcer", announcer.Name);
             Assert.AreEqual("asdf", announcer.Description?.RawDescription);

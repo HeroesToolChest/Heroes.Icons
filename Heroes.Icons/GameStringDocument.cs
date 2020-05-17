@@ -3,19 +3,25 @@ using Heroes.Models.AbilityTalents;
 using System;
 using System.IO;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Heroes.Icons
 {
     /// <summary>
     /// Provides the methods to update gamestrings for game data objects.
     /// </summary>
-    public class GameStringReader : IDisposable
+    public class GameStringDocument : IDisposable
     {
+        private readonly Stream? _streamForAsync = null;
+
+        private bool _disposedValue = false;
+
         /// <summary>
-        /// Initializes a new reader for the gamestrings file.
+        /// Initializes a new instance of the <see cref="GameStringDocument"/> class.
+        /// <see cref="Localization"/> will be inferred from <paramref name="jsonGameStringFilePath"/>.
         /// </summary>
-        /// <param name="jsonGameStringFilePath">JSON file containing gamestrings.</param>
-        public GameStringReader(string jsonGameStringFilePath)
+        /// <param name="jsonGameStringFilePath">The JSON file to parse.</param>
+        protected GameStringDocument(string jsonGameStringFilePath)
         {
             JsonGameStringDocument = JsonDocument.Parse(File.ReadAllBytes(jsonGameStringFilePath));
 
@@ -30,21 +36,22 @@ namespace Heroes.Icons
         }
 
         /// <summary>
-        /// Initializes a new reader for the gamestrings file.
+        /// Initializes a new instance of the <see cref="GameStringDocument"/> class.
         /// </summary>
-        /// <param name="jsonGameStringFilePath">JSON file containing gamestrings.</param>
-        /// <param name="localization">Localization of data.</param>
-        public GameStringReader(string jsonGameStringFilePath, Localization localization)
+        /// <param name="jsonGameStringFilePath">The JSON file to parse.</param>
+        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
+        protected GameStringDocument(string jsonGameStringFilePath, Localization localization)
         {
             JsonGameStringDocument = JsonDocument.Parse(File.ReadAllBytes(jsonGameStringFilePath));
             Localization = localization;
         }
 
         /// <summary>
-        /// Initializes a new reader for the gamestrings file.
+        /// Initializes a new instance of the <see cref="GameStringDocument"/> class.
+        /// <see cref="Localization"/> will be inferred from the meta property in the json data.
         /// </summary>
-        /// <param name="jsonGameStrings">JSON data containing gamestrings.</param>
-        public GameStringReader(ReadOnlyMemory<byte> jsonGameStrings)
+        /// <param name="jsonGameStrings">The JSON data to parse.</param>
+        protected GameStringDocument(ReadOnlyMemory<byte> jsonGameStrings)
         {
             JsonGameStringDocument = JsonDocument.Parse(jsonGameStrings);
 
@@ -56,14 +63,40 @@ namespace Heroes.Icons
         }
 
         /// <summary>
-        /// Initializes a new reader for the gamestrings file.
+        /// Initializes a new instance of the <see cref="GameStringDocument"/> class.
         /// </summary>
-        /// <param name="jsonGameStrings">JSON data containing gamestrings.</param>
-        /// <param name="localization">Localization of data.</param>
-        public GameStringReader(ReadOnlyMemory<byte> jsonGameStrings, Localization localization)
+        /// <param name="jsonGameStrings">The JSON data to parse.</param>
+        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
+        protected GameStringDocument(ReadOnlyMemory<byte> jsonGameStrings, Localization localization)
         {
             JsonGameStringDocument = JsonDocument.Parse(jsonGameStrings);
             Localization = localization;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GameStringDocument"/> class.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
+        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as async.</param>
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+        protected GameStringDocument(Stream utf8Json, Localization localization, bool isAsync = false)
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+        {
+            if (isAsync)
+                _streamForAsync = utf8Json;
+            else
+                JsonGameStringDocument = JsonDocument.Parse(utf8Json);
+
+            Localization = localization;
+        }
+
+        /// <summary>
+        /// Finalizes an instance of the <see cref="GameStringDocument"/> class.
+        /// </summary>
+        ~GameStringDocument()
+        {
+            Dispose(false);
         }
 
         /// <summary>
@@ -74,25 +107,90 @@ namespace Heroes.Icons
         /// <summary>
         /// Gets the <see cref="JsonDocument"/> to allow for manually parsing.
         /// </summary>
-        public JsonDocument JsonGameStringDocument { get; }
+        public JsonDocument JsonGameStringDocument { get; private set; }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for gamestring data reading.
+        /// <see cref="Localization"/> will be inferred from <paramref name="jsonGameStringFilePath"/>.
+        /// </summary>
+        /// <param name="jsonGameStringFilePath">The JSON file to parse.</param>
+        /// <returns>a <see cref="GameStringDocument"/> representation of the JSON value.</returns>
+        public static GameStringDocument Parse(string jsonGameStringFilePath)
+        {
+            return new GameStringDocument(jsonGameStringFilePath);
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for gamestring data reading.
+        /// </summary>
+        /// <param name="jsonGameStringFilePath">The JSON file to parse.</param>
+        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
+        /// <returns>a <see cref="GameStringDocument"/> representation of the JSON value.</returns>
+        public static GameStringDocument Parse(string jsonGameStringFilePath, Localization localization)
+        {
+            return new GameStringDocument(jsonGameStringFilePath, localization);
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for gamestring data reading.
+        /// <see cref="Localization"/> will be inferred from the meta property in the json data.
+        /// </summary>
+        /// <param name="jsonGameStrings">The JSON data to parse.</param>
+        /// <returns>a <see cref="GameStringDocument"/> representation of the JSON value.</returns>
+        public static GameStringDocument Parse(ReadOnlyMemory<byte> jsonGameStrings)
+        {
+            return new GameStringDocument(jsonGameStrings);
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for gamestring data reading.
+        /// </summary>
+        /// <param name="jsonGameStrings">The JSON data to parse.</param>
+        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
+        /// <returns>a <see cref="GameStringDocument"/> representation of the JSON value.</returns>
+        public static GameStringDocument Parse(ReadOnlyMemory<byte> jsonGameStrings, Localization localization)
+        {
+            return new GameStringDocument(jsonGameStrings, localization);
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for gamestring data reading.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
+        /// <returns>a <see cref="GameStringDocument"/> representation of the JSON value.</returns>
+        public static GameStringDocument Parse(Stream utf8Json, Localization localization)
+        {
+            return new GameStringDocument(utf8Json, localization);
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for gamestring data reading.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
+        /// <returns>a <see cref="GameStringDocument"/> representation of the JSON value.</returns>
+        public static Task<GameStringDocument> ParseAsync(Stream utf8Json, Localization localization)
+        {
+            return new GameStringDocument(utf8Json, localization, true).InitializeParseAsync<GameStringDocument>();
+        }
 
         /// <inheritdoc/>
         public void Dispose()
         {
-            JsonGameStringDocument.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
-        /// Updates the object's localized gamestrings to the currently selected <see cref="Localization"/>.
+        /// Updates the <paramref name="hero"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
         /// </summary>
-        /// <param name="hero"></param>
-        /// <exception cref="ArgumentNullException" />
+        /// <param name="hero">The data to be updated.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="hero"/> is null.</exception>
         public void UpdateGameStrings(Hero hero)
         {
             if (hero is null)
-            {
                 throw new ArgumentNullException(nameof(hero));
-            }
 
             JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -139,16 +237,14 @@ namespace Heroes.Icons
         }
 
         /// <summary>
-        /// Updates the object's localized gamestrings to the currently selected <see cref="Localization"/>.
+        /// Updates the <paramref name="unit"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
         /// </summary>
-        /// <param name="unit"></param>
-        /// <exception cref="ArgumentNullException" />
+        /// <param name="unit">The data to be updated.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="unit"/> is null.</exception>
         public void UpdateGameStrings(Unit unit)
         {
             if (unit is null)
-            {
                 throw new ArgumentNullException(nameof(unit));
-            }
 
             JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -178,16 +274,14 @@ namespace Heroes.Icons
         }
 
         /// <summary>
-        /// Updates the object's localized gamestrings to the currently selected <see cref="Localization"/>.
+        /// Updates the <paramref name="talent"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
         /// </summary>
-        /// <param name="talent"></param>
-        /// <exception cref="ArgumentNullException" />
+        /// <param name="talent">The data to be updated.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="talent"/> is null.</exception>
         public void UpdateGameStrings(Talent talent)
         {
             if (talent is null)
-            {
                 throw new ArgumentNullException(nameof(talent));
-            }
 
             JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -198,16 +292,14 @@ namespace Heroes.Icons
         }
 
         /// <summary>
-        /// Updates the object's localized gamestrings to the currently selected <see cref="Localization"/>.
+        /// Updates the <paramref name="ability"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
         /// </summary>
-        /// <param name="ability"></param>
-        /// <exception cref="ArgumentNullException" />
+        /// <param name="ability">The data to be updated.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="ability"/> is null.</exception>
         public void UpdateGameStrings(Ability ability)
         {
             if (ability is null)
-            {
                 throw new ArgumentNullException(nameof(ability));
-            }
 
             JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -218,16 +310,14 @@ namespace Heroes.Icons
         }
 
         /// <summary>
-        /// Updates the object's localized gamestrings to the currently selected <see cref="Localization"/>.
+        /// Updates the <paramref name="announcer"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
         /// </summary>
-        /// <param name="announcer"></param>
-        /// <exception cref="ArgumentNullException" />
+        /// <param name="announcer">The data to be updated.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="announcer"/> is null.</exception>
         public void UpdateGameStrings(Announcer announcer)
         {
             if (announcer is null)
-            {
                 throw new ArgumentNullException(nameof(announcer));
-            }
 
             JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -242,6 +332,37 @@ namespace Heroes.Icons
                     if (TryGetValueFromJsonElement(keyValue, "description", announcer.Id, out value))
                         announcer.Description = new TooltipDescription(value.ToString());
                 }
+            }
+        }
+
+        /// <summary>
+        /// Parses the Json stream as async.
+        /// </summary>
+        /// <typeparam name="T">A class that derives <see cref="GameStringDocument"/>.</typeparam>
+        /// <returns>a class that derives <see cref="GameStringDocument"/>.</returns>
+        protected async Task<T> InitializeParseAsync<T>()
+            where T : GameStringDocument
+        {
+            JsonGameStringDocument = await JsonDocument.ParseAsync(_streamForAsync).ConfigureAwait(false);
+
+            return (T)this;
+        }
+
+        /// <summary>
+        /// Disposes the resources.
+        /// </summary>
+        /// <param name="disposing">True to include releasing managed resource.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposedValue)
+            {
+                if (disposing)
+                {
+                    JsonGameStringDocument.Dispose();
+                    _streamForAsync?.Dispose();
+                }
+
+                _disposedValue = true;
             }
         }
 

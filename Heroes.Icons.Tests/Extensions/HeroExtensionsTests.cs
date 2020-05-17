@@ -11,7 +11,7 @@ namespace Heroes.Icons.Extensions.Tests
         [TestMethod]
         public void UpdateGameStringsTest()
         {
-            using GameStringReader gameStringReader = new GameStringReader(LoadEnusLocalizedStringData());
+            using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
             Hero hero = new Hero
             {
@@ -20,7 +20,7 @@ namespace Heroes.Icons.Extensions.Tests
                 Id = "Alarak",
             };
 
-            hero.UpdateGameStrings(gameStringReader);
+            hero.UpdateGameStrings(gameStringDocument);
 
             Assert.AreEqual("Highlord of the Tal'darim", hero.Title);
         }

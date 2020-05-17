@@ -21,7 +21,7 @@ namespace Heroes.Icons.DataReader
         /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
         /// <see cref="Localization"/> will be inferred from <paramref name="jsonDataFilePath"/>.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file containing the data.</param>
+        /// <param name="jsonDataFilePath">The JSON file to parse.</param>
         protected DataDocumentBase(string jsonDataFilePath)
         {
             JsonDataDocument = JsonDocument.Parse(File.ReadAllBytes(jsonDataFilePath));
@@ -39,7 +39,7 @@ namespace Heroes.Icons.DataReader
         /// <summary>
         /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file containing the data.</param>
+        /// <param name="jsonDataFilePath">The JSON file to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         protected DataDocumentBase(string jsonDataFilePath, Localization localization)
         {
@@ -51,7 +51,7 @@ namespace Heroes.Icons.DataReader
         /// <summary>
         /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
         /// </summary>
-        /// <param name="jsonData">The JSON data containing the data.</param>
+        /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         protected DataDocumentBase(ReadOnlyMemory<byte> jsonData, Localization localization)
         {
@@ -62,33 +62,33 @@ namespace Heroes.Icons.DataReader
         /// <summary>
         /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file containing the data.</param>
-        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="gameStringReader"/> cannot be null.</exception>
-        protected DataDocumentBase(string jsonDataFilePath, GameStringReader gameStringReader)
+        /// <param name="jsonDataFilePath">The JSON file to parse.</param>
+        /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="gameStringDocument"/> cannot be null.</exception>
+        protected DataDocumentBase(string jsonDataFilePath, GameStringDocument gameStringDocument)
             : this(jsonDataFilePath)
         {
-            GameStringReader = gameStringReader ?? throw new ArgumentNullException(nameof(gameStringReader));
-            Localization = GameStringReader.Localization;
+            GameStringDocument = gameStringDocument ?? throw new ArgumentNullException(nameof(gameStringDocument));
+            Localization = GameStringDocument.Localization;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
         /// </summary>
-        /// <param name="jsonData">The JSON data containing the data.</param>
-        /// <param name="gameStringReader">Instance of a <see cref="GameStringReader"/>.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="gameStringReader"/> cannot be null.</exception>
-        protected DataDocumentBase(ReadOnlyMemory<byte> jsonData, GameStringReader gameStringReader)
+        /// <param name="jsonData">The JSON data to parse.</param>
+        /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="gameStringDocument"/> cannot be null.</exception>
+        protected DataDocumentBase(ReadOnlyMemory<byte> jsonData, GameStringDocument gameStringDocument)
             : this(jsonData)
         {
-            GameStringReader = gameStringReader ?? throw new ArgumentNullException(nameof(gameStringReader));
-            Localization = GameStringReader.Localization;
+            GameStringDocument = gameStringDocument ?? throw new ArgumentNullException(nameof(gameStringDocument));
+            Localization = GameStringDocument.Localization;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
         /// </summary>
-        /// <param name="utf8Json">The JSON data containing the data.</param>
+        /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as async.</param>
 #pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
@@ -175,9 +175,9 @@ namespace Heroes.Icons.DataReader
         }
 
         /// <summary>
-        /// Gets the current <see cref="GameStringReader"/> associated with this reader.
+        /// Gets the current <see cref="GameStringDocument"/> associated with this reader.
         /// </summary>
-        protected GameStringReader? GameStringReader { get; } = null;
+        protected GameStringDocument? GameStringDocument { get; } = null;
 
         /// <inheritdoc/>
         public void Dispose()
@@ -265,7 +265,7 @@ namespace Heroes.Icons.DataReader
                 if (disposing)
                 {
                     JsonDataDocument.Dispose();
-                    GameStringReader?.Dispose();
+                    GameStringDocument?.Dispose();
                     _streamForAsync?.Dispose();
                 }
 

@@ -11,7 +11,7 @@ namespace Heroes.Icons.Extensions.Tests
         [TestMethod]
         public void UpdateGameStringsTest()
         {
-            using GameStringReader gameStringReader = new GameStringReader(LoadEnusLocalizedStringData());
+            using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
             Talent talent = new Talent()
             {
@@ -22,7 +22,7 @@ namespace Heroes.Icons.Extensions.Tests
                 Tier = TalentTiers.Level1,
             };
 
-            talent.UpdateGameStrings(gameStringReader);
+            talent.UpdateGameStrings(gameStringDocument);
 
             Assert.AreEqual("Bonus Twin Cleave damage at apex", talent.Tooltip.ShortTooltip!.RawDescription);
         }

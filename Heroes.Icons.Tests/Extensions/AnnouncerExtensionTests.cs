@@ -11,14 +11,14 @@ namespace Heroes.Icons.Extensions.Tests
         [TestMethod]
         public void UpdateGameStringsTest()
         {
-            using GameStringReader gameStringReader = new GameStringReader(LoadEnusLocalizedStringData());
+            using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
             Announcer announcer = new Announcer
             {
                 Id = "AbathurA",
             };
 
-            announcer.UpdateGameStrings(gameStringReader);
+            announcer.UpdateGameStrings(gameStringDocument);
 
             Assert.AreEqual("asdf", announcer.Description!.RawDescription);
         }

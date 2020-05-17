@@ -260,10 +260,10 @@ namespace Heroes.Icons.Tests.DataReader
                 Id = "AbathurEvolvedMonstrosity",
             };
 
-            using GameStringReader gameStringReader = new GameStringReader(LoadEnusLocalizedStringData());
-            gameStringReader.UpdateGameStrings(unit);
+            using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
+            gameStringDocument.UpdateGameStrings(unit);
 
-            Assert.ThrowsException<ArgumentNullException>(() => gameStringReader.UpdateGameStrings(unit: null!));
+            Assert.ThrowsException<ArgumentNullException>(() => gameStringDocument.UpdateGameStrings(unit: null!));
 
             Assert.AreEqual("A long description", unit.Description!.RawDescription);
             Assert.AreEqual("Shield", unit.Shield.ShieldType);
@@ -303,8 +303,8 @@ namespace Heroes.Icons.Tests.DataReader
         [TestCategory("DataDocument")]
         public void DataDocumentFileGSRTest()
         {
-            using GameStringReader gameStringReader = new GameStringReader(_jsonGameStringFileFRFR);
-            using UnitDataDocument unitDataReader = UnitDataDocument.Parse(_dataFile, gameStringReader);
+            using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileFRFR);
+            using UnitDataDocument unitDataReader = UnitDataDocument.Parse(_dataFile, gameStringDocument);
 
             Assert.AreEqual(Localization.FRFR, unitDataReader.Localization);
             Assert.IsTrue(unitDataReader.TryGetUnitById("AbathurEvolvedMonstrosity", out Unit _, false, false));
@@ -314,8 +314,8 @@ namespace Heroes.Icons.Tests.DataReader
         [TestCategory("DataDocument")]
         public void DataDocumentROMGSRTest()
         {
-            using GameStringReader gameStringReader = new GameStringReader(_jsonGameStringFileKOKR);
-            using UnitDataDocument unitDataReader = UnitDataDocument.Parse(GetBytesForROM("AbathurEvolvedMonstrosity"), gameStringReader);
+            using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
+            using UnitDataDocument unitDataReader = UnitDataDocument.Parse(GetBytesForROM("AbathurEvolvedMonstrosity"), gameStringDocument);
 
             Assert.AreEqual(Localization.KOKR, unitDataReader.Localization);
             Assert.IsTrue(unitDataReader.TryGetUnitById("AbathurEvolvedMonstrosity", out Unit _, false, false));

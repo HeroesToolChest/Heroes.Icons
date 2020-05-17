@@ -11,7 +11,7 @@ namespace Heroes.Icons.Extensions.Tests
         [TestMethod]
         public void UpdateGameStringsTest()
         {
-            using GameStringReader gameStringReader = new GameStringReader(LoadEnusLocalizedStringData());
+            using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
             Unit unit = new Unit
             {
@@ -19,7 +19,7 @@ namespace Heroes.Icons.Extensions.Tests
                 Id = "AbathurEvolvedMonstrosity",
             };
 
-            unit.UpdateGameStrings(gameStringReader);
+            unit.UpdateGameStrings(gameStringDocument);
 
             Assert.AreEqual("A long description", unit.Description!.RawDescription);
         }

@@ -403,10 +403,10 @@ namespace Heroes.Icons.Tests.DataReader
                 Id = "AbathurSymbiote",
             });
 
-            using GameStringReader gameStringReader = new GameStringReader(LoadEnusLocalizedStringData());
-            gameStringReader.UpdateGameStrings(hero);
+            using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
+            gameStringDocument.UpdateGameStrings(hero);
 
-            Assert.ThrowsException<ArgumentNullException>(() => gameStringReader.UpdateGameStrings(hero: null!));
+            Assert.ThrowsException<ArgumentNullException>(() => gameStringDocument.UpdateGameStrings(hero: null!));
 
             Assert.AreEqual("Hard", hero.Difficulty);
             Assert.AreEqual("Melee Assassin", hero.ExpandedRole);
@@ -449,10 +449,10 @@ namespace Heroes.Icons.Tests.DataReader
                 },
             };
 
-            using GameStringReader gameStringReader = new GameStringReader(LoadEnusLocalizedStringData());
-            gameStringReader.UpdateGameStrings(ability);
+            using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
+            gameStringDocument.UpdateGameStrings(ability);
 
-            Assert.ThrowsException<ArgumentNullException>(() => gameStringReader.UpdateGameStrings(ability: null!));
+            Assert.ThrowsException<ArgumentNullException>(() => gameStringDocument.UpdateGameStrings(ability: null!));
 
             Assert.AreEqual("Discord Strike", ability.Name);
             Assert.AreEqual("Cooldown: 8 seconds", ability.Tooltip.Cooldown.CooldownTooltip!.RawDescription);
@@ -471,10 +471,10 @@ namespace Heroes.Icons.Tests.DataReader
                 Tier = TalentTiers.Level1,
             };
 
-            using GameStringReader gameStringReader = new GameStringReader(LoadEnusLocalizedStringData());
-            gameStringReader.UpdateGameStrings(talent);
+            using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
+            gameStringDocument.UpdateGameStrings(talent);
 
-            Assert.ThrowsException<ArgumentNullException>(() => gameStringReader.UpdateGameStrings(talent: null!));
+            Assert.ThrowsException<ArgumentNullException>(() => gameStringDocument.UpdateGameStrings(talent: null!));
 
             Assert.AreEqual("Bonus Twin Cleave damage at apex", talent.Tooltip.ShortTooltip!.RawDescription);
         }
@@ -1536,26 +1536,26 @@ namespace Heroes.Icons.Tests.DataReader
         [TestCategory("DataDocument")]
         public void DataDocumentFileGSRTest()
         {
-            using GameStringReader gameStringReader = new GameStringReader(_jsonGameStringFileFRFR);
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(_dataFile, gameStringReader);
+            using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileFRFR);
+            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(_dataFile, gameStringDocument);
 
             Assert.AreEqual(Localization.FRFR, heroDataReader.Localization);
             Assert.IsTrue(heroDataReader.TryGetHeroById("Abathur", out Hero _, false, false, false, false));
         }
 
         [TestMethod]
-        [TestCategory("DataReader")]
+        [TestCategory("DataDocument")]
         public void DataDocumentROMGSRTest()
         {
-            using GameStringReader gameStringReader = new GameStringReader(_jsonGameStringFileKOKR);
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(GetBytesForROM("Abathur"), gameStringReader);
+            using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
+            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(GetBytesForROM("Abathur"), gameStringDocument);
 
             Assert.AreEqual(Localization.KOKR, heroDataReader.Localization);
             Assert.IsTrue(heroDataReader.TryGetHeroById("Abathur", out Hero _, false, false, false, false));
         }
 
         [TestMethod]
-        [TestCategory("DataReader")]
+        [TestCategory("DataDocument")]
         public void DataDocumentStreamTest()
         {
             using FileStream stream = new FileStream(_dataFile, FileMode.Open);
@@ -1566,7 +1566,7 @@ namespace Heroes.Icons.Tests.DataReader
         }
 
         [TestMethod]
-        [TestCategory("DataReader")]
+        [TestCategory("DataDocument")]
         public async Task DataDocumentStreamAsyncTest()
         {
             using FileStream stream = new FileStream(_dataFile, FileMode.Open);
