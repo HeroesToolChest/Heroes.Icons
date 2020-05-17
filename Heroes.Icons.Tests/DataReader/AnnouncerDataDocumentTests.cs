@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Heroes.Icons.Tests.DataReader
 {
     [TestClass]
-    public class AnnouncerDataReaderTests : DataDocumentBase, IDataDocument
+    public class AnnouncerDataDocumentTests : DataDocumentBase, IDataDocument
     {
         private readonly string _dataFile = Path.Combine("JsonData", "announcerdata_76893_kokr.json");
         private readonly string _jsonGameStringFileKOKR = Path.Combine("JsonGameStrings", "gamestrings_76893_kokr.json");
@@ -18,7 +18,7 @@ namespace Heroes.Icons.Tests.DataReader
 
         private readonly AnnouncerDataDocument _announcerDataDocument;
 
-        public AnnouncerDataReaderTests()
+        public AnnouncerDataDocumentTests()
         {
             _announcerDataDocument = AnnouncerDataDocument.Parse(LoadJsonTestData(), Localization.ENUS);
         }

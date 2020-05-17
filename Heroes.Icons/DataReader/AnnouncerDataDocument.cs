@@ -15,6 +15,7 @@ namespace Heroes.Icons.DataReader
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AnnouncerDataDocument"/> class.
+        /// <see cref="Localization"/> will be inferred from <paramref name="jsonDataFilePath"/>.
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON file containing announcer data.</param>
         protected AnnouncerDataDocument(string jsonDataFilePath)
@@ -155,7 +156,7 @@ namespace Heroes.Icons.DataReader
         /// <param name="id">An announcer id property value.</param>
         /// <returns>an <see cref="Announcer"/> object.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> is null.</exception>
-        /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value is not found.</exception>
+        /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
         public Announcer GetAnnouncerById(string id)
         {
             if (id is null)

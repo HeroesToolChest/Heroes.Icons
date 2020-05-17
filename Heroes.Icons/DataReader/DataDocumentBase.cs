@@ -13,11 +13,13 @@ namespace Heroes.Icons.DataReader
     /// </summary>
     public abstract class DataDocumentBase : IDisposable
     {
+        private readonly Stream? _streamForAsync = null;
+
         private bool _disposedValue = false;
-        private Stream? _streamForAsync = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
+        /// <see cref="Localization"/> will be inferred from <paramref name="jsonDataFilePath"/>.
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON file containing the data.</param>
         protected DataDocumentBase(string jsonDataFilePath)
@@ -145,9 +147,9 @@ namespace Heroes.Icons.DataReader
             {
                 List<string> items = new List<string>();
 
-                foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+                foreach (JsonProperty property in JsonDataDocument.RootElement.EnumerateObject())
                 {
-                    items.Add(heroProperty.Name);
+                    items.Add(property.Name);
                 }
 
                 return items;
@@ -163,7 +165,7 @@ namespace Heroes.Icons.DataReader
             {
                 int count = 0;
 
-                foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+                foreach (JsonProperty property in JsonDataDocument.RootElement.EnumerateObject())
                 {
                     count++;
                 }
@@ -206,9 +208,9 @@ namespace Heroes.Icons.DataReader
         {
             List<string> items = new List<string>();
 
-            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+            foreach (JsonProperty jsonProperty in JsonDataDocument.RootElement.EnumerateObject())
             {
-                if (heroProperty.Value.TryGetProperty(property, out JsonElement element))
+                if (jsonProperty.Value.TryGetProperty(property, out JsonElement element))
                     items.Add(element.GetString());
             }
 
