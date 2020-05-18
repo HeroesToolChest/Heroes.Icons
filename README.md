@@ -21,23 +21,34 @@ All data files will eventually be supported (strike-through is completed)
 - Sprays
 - ~~Announcers~~
 - Voice Lines
-- Portraits
+- Portrait Packs
+- Reward Portraits
 - Emoticons
 - Emoticon Packs
 - Veterancy data
 
 ## Supported Platforms
-- .Net Core 3.0+
+- .Net Core 3.1+ (aiming to be .Net 5)
 
 ## Usage
-Look through source code for now, examples will be provided later.
+There is a `<data-file-name>DataDocument` class for each json data file. Each provide static multiple `Parse` methods to parse the json files.
+
+Example file parsing usage for the `HeroDataDocument` class
+```
+// read as a json file
+// the localization will automatically be set as kokr since the files ends with _kokr
+using HeroDataDocument heroDataDocument = HeroDataDocument.Parse("herodata_76003_kokr.json");
+Hero heroData = heroDataDocument.GetHeroById("Alarak", true, true, true, true);
+
+// or if the file doesn't the locale, it can be set as a parameter
+using HeroDataDocument heroDataDocument = HeroDataDocument.Parse("herodata_76003.json", Localization.KOKR);
+Hero heroData = heroDataDocument.GetHeroById("Alarak", true, true, true, true);
+```
 
 ## Developing
 To build and compile the code, it is recommended to use the latest version of [Visual Studio 2019 or Visual Studio Code](https://visualstudio.microsoft.com/downloads/).
 
-Another option is to use the dotnet CLI tools from the [.NET Core 3.0 SDK](https://dotnet.microsoft.com/download).
-
-`Heroes.Models.csproj` project is a submodule. Any code changes should be commited to that repository.
+Another option is to use the dotnet CLI tools from the [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download).
 
 ## License
 [MIT license](/LICENSE)
