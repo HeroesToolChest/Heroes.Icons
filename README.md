@@ -21,13 +21,14 @@ All data files will eventually be supported (strike-through is completed)
 - Sprays
 - ~~Announcers~~
 - Voice Lines
-- Portraits
+- Portrait Packs
+- Reward Portraits
 - Emoticons
 - Emoticon Packs
 - Veterancy data
 
 ## Supported Platforms
-- .Net Core 3.0+
+- .Net Core 3.1+ (aiming to be .Net 5)
 
 ## Usage
 Look through source code for now, examples will be provided later.
@@ -35,9 +36,7 @@ Look through source code for now, examples will be provided later.
 ## Developing
 To build and compile the code, it is recommended to use the latest version of [Visual Studio 2019 or Visual Studio Code](https://visualstudio.microsoft.com/downloads/).
 
-Another option is to use the dotnet CLI tools from the [.NET Core 3.0 SDK](https://dotnet.microsoft.com/download).
-
-`Heroes.Models.csproj` project is a submodule. Any code changes should be commited to that repository.
+Another option is to use the dotnet CLI tools from the [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download).
 
 ## License
 [MIT license](/LICENSE)
