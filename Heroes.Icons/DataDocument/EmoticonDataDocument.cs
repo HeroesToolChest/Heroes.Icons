@@ -1,6 +1,6 @@
 ﻿namespace Heroes.Icons.DataReader
 {
-    class SprayDataReader
+    class EmoticonDataDocument
     {
     }
 }

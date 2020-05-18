@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using System.Text.Json;
 
-namespace Heroes.Icons.DataReader
+namespace Heroes.Icons.DataDocument
 {
     /// <summary>
     /// Base class reader for unit and hero related data.

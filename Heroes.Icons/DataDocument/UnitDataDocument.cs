@@ -6,7 +6,7 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Heroes.Icons.DataReader
+namespace Heroes.Icons.DataDocument
 {
     /// <summary>
     /// Provides access to obtain unit data as well as updating localized strings.

@@ -6,7 +6,7 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Heroes.Icons.DataReader
+namespace Heroes.Icons.DataDocument
 {
     /// <summary>
     /// Base class for the data reader classes.

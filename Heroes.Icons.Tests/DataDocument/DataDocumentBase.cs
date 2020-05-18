@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Text.Json;
 
-namespace Heroes.Icons.Tests.DataReader
+namespace Heroes.Icons.Tests.DataDocument
 {
     public abstract class DataDocumentBase
     {

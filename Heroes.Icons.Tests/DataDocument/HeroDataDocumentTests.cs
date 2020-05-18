@@ -1,4 +1,4 @@
-﻿using Heroes.Icons.DataReader;
+﻿using Heroes.Icons.DataDocument;
 using Heroes.Models;
 using Heroes.Models.AbilityTalents;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Heroes.Icons.Tests.DataReader
+namespace Heroes.Icons.Tests.DataDocument
 {
     [TestClass]
     public class HeroDataDocumentTests : DataDocumentBase, IDataDocument

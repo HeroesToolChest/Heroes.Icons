@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Heroes.Icons.Tests.DataReader
+namespace Heroes.Icons.Tests.DataDocument
 {
     public interface IDataDocument
     {
