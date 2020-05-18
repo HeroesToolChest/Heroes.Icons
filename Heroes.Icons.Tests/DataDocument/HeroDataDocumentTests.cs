@@ -18,11 +18,11 @@ namespace Heroes.Icons.Tests.DataDocument
         private readonly string _jsonGameStringFileKOKR = Path.Combine("JsonGameStrings", "gamestrings_76893_kokr.json");
         private readonly string _jsonGameStringFileFRFR = Path.Combine("JsonGameStrings", "gamestrings_76893_frfr.json");
 
-        private readonly HeroDataDocument _heroDataReader;
+        private readonly HeroDataDocument _heroDataDocument;
 
         public HeroDataDocumentTests()
         {
-            _heroDataReader = HeroDataDocument.Parse(LoadJsonTestData(), Localization.ENUS);
+            _heroDataDocument = HeroDataDocument.Parse(LoadJsonTestData(), Localization.ENUS);
         }
 
         [DataTestMethod]
@@ -38,7 +38,7 @@ namespace Heroes.Icons.Tests.DataDocument
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _heroDataReader.GetHeroById(id!, abilities, subAbilities, talents, heroUnits);
+                    _ = _heroDataDocument.GetHeroById(id!, abilities, subAbilities, talents, heroUnits);
                 });
 
                 return;
@@ -47,13 +47,13 @@ namespace Heroes.Icons.Tests.DataDocument
             {
                 Assert.ThrowsException<KeyNotFoundException>(() =>
                 {
-                    _ = _heroDataReader.GetHeroById(id, abilities, subAbilities, talents, heroUnits);
+                    _ = _heroDataDocument.GetHeroById(id, abilities, subAbilities, talents, heroUnits);
                 });
 
                 return;
             }
 
-            Hero hero = _heroDataReader.GetHeroById(id, abilities, subAbilities, talents, heroUnits);
+            Hero hero = _heroDataDocument.GetHeroById(id, abilities, subAbilities, talents, heroUnits);
 
             Assert.AreEqual("Alarak", hero.CHeroId);
             Assert.AreEqual("Alarak", hero.Name);
@@ -275,19 +275,19 @@ namespace Heroes.Icons.Tests.DataDocument
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _heroDataReader.TryGetHeroById(id!, out _, abilities, subAbilities, talents, heroUnits);
+                    _ = _heroDataDocument.TryGetHeroById(id!, out _, abilities, subAbilities, talents, heroUnits);
                 });
 
                 return;
             }
             else if (id == "asdf")
             {
-                Assert.IsFalse(_heroDataReader.TryGetHeroById(id, out _, abilities, subAbilities, talents, heroUnits));
+                Assert.IsFalse(_heroDataDocument.TryGetHeroById(id, out _, abilities, subAbilities, talents, heroUnits));
 
                 return;
             }
 
-            Assert.IsTrue(_heroDataReader.TryGetHeroById(id, out Hero? hero, abilities, subAbilities, talents, heroUnits));
+            Assert.IsTrue(_heroDataDocument.TryGetHeroById(id, out Hero? hero, abilities, subAbilities, talents, heroUnits));
             Assert.AreEqual("Ragnaros", hero!.CHeroId);
             Assert.AreEqual("Ragnaros", hero.Name);
             Assert.AreEqual("HeroRagnaros", hero.CUnitId);
@@ -489,19 +489,19 @@ namespace Heroes.Icons.Tests.DataDocument
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _heroDataReader.TryGetHeroByName(name!, out _, abilities, subAbilities, talents, heroUnits);
+                    _ = _heroDataDocument.TryGetHeroByName(name!, out _, abilities, subAbilities, talents, heroUnits);
                 });
 
                 return;
             }
             else if (name == "asdf")
             {
-                Assert.IsFalse(_heroDataReader.TryGetHeroByName(name!, out _, abilities, subAbilities, talents, heroUnits));
+                Assert.IsFalse(_heroDataDocument.TryGetHeroByName(name!, out _, abilities, subAbilities, talents, heroUnits));
 
                 return;
             }
 
-            Assert.IsTrue(_heroDataReader.TryGetHeroByName(name, out Hero? hero, abilities, subAbilities, talents, heroUnits));
+            Assert.IsTrue(_heroDataDocument.TryGetHeroByName(name, out Hero? hero, abilities, subAbilities, talents, heroUnits));
             BasicRagnarosAsserts(hero!);
         }
 
@@ -515,7 +515,7 @@ namespace Heroes.Icons.Tests.DataDocument
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _heroDataReader.GetHeroByName(name!, abilities, subAbilities, talents, heroUnits);
+                    _ = _heroDataDocument.GetHeroByName(name!, abilities, subAbilities, talents, heroUnits);
                 });
 
                 return;
@@ -524,13 +524,13 @@ namespace Heroes.Icons.Tests.DataDocument
             {
                 Assert.ThrowsException<KeyNotFoundException>(() =>
                 {
-                    _ = _heroDataReader.GetHeroByName(name, abilities, subAbilities, talents, heroUnits);
+                    _ = _heroDataDocument.GetHeroByName(name, abilities, subAbilities, talents, heroUnits);
                 });
 
                 return;
             }
 
-            BasicRagnarosAsserts(_heroDataReader.GetHeroByName(name, abilities, subAbilities, talents, heroUnits));
+            BasicRagnarosAsserts(_heroDataDocument.GetHeroByName(name, abilities, subAbilities, talents, heroUnits));
         }
 
         [DataTestMethod]
@@ -543,19 +543,19 @@ namespace Heroes.Icons.Tests.DataDocument
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _heroDataReader.TryGetHeroByUnitId(unitId!, out _, abilities, subAbilities, talents, heroUnits);
+                    _ = _heroDataDocument.TryGetHeroByUnitId(unitId!, out _, abilities, subAbilities, talents, heroUnits);
                 });
 
                 return;
             }
             else if (unitId == "asdf")
             {
-                Assert.IsFalse(_heroDataReader.TryGetHeroByUnitId(unitId!, out _, abilities, subAbilities, talents, heroUnits));
+                Assert.IsFalse(_heroDataDocument.TryGetHeroByUnitId(unitId!, out _, abilities, subAbilities, talents, heroUnits));
 
                 return;
             }
 
-            Assert.IsTrue(_heroDataReader.TryGetHeroByUnitId(unitId, out Hero? hero, abilities, subAbilities, talents, heroUnits));
+            Assert.IsTrue(_heroDataDocument.TryGetHeroByUnitId(unitId, out Hero? hero, abilities, subAbilities, talents, heroUnits));
             BasicRagnarosAsserts(hero!);
         }
 
@@ -569,7 +569,7 @@ namespace Heroes.Icons.Tests.DataDocument
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _heroDataReader.GetHeroByUnitId(unitId!, abilities, subAbilities, talents, heroUnits);
+                    _ = _heroDataDocument.GetHeroByUnitId(unitId!, abilities, subAbilities, talents, heroUnits);
                 });
 
                 return;
@@ -578,13 +578,13 @@ namespace Heroes.Icons.Tests.DataDocument
             {
                 Assert.ThrowsException<KeyNotFoundException>(() =>
                 {
-                    _ = _heroDataReader.GetHeroByUnitId(unitId, abilities, subAbilities, talents, heroUnits);
+                    _ = _heroDataDocument.GetHeroByUnitId(unitId, abilities, subAbilities, talents, heroUnits);
                 });
 
                 return;
             }
 
-            BasicRagnarosAsserts(_heroDataReader.GetHeroByUnitId(unitId, abilities, subAbilities, talents, heroUnits));
+            BasicRagnarosAsserts(_heroDataDocument.GetHeroByUnitId(unitId, abilities, subAbilities, talents, heroUnits));
         }
 
         [DataTestMethod]
@@ -597,19 +597,19 @@ namespace Heroes.Icons.Tests.DataDocument
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _heroDataReader.TryGetHeroByHyperlinkId(hyperlinkId!, out _, abilities, subAbilities, talents, heroUnits);
+                    _ = _heroDataDocument.TryGetHeroByHyperlinkId(hyperlinkId!, out _, abilities, subAbilities, talents, heroUnits);
                 });
 
                 return;
             }
             else if (hyperlinkId == "asdf")
             {
-                Assert.IsFalse(_heroDataReader.TryGetHeroByHyperlinkId(hyperlinkId!, out _, abilities, subAbilities, talents, heroUnits));
+                Assert.IsFalse(_heroDataDocument.TryGetHeroByHyperlinkId(hyperlinkId!, out _, abilities, subAbilities, talents, heroUnits));
 
                 return;
             }
 
-            Assert.IsTrue(_heroDataReader.TryGetHeroByHyperlinkId(hyperlinkId, out Hero? hero, abilities, subAbilities, talents, heroUnits));
+            Assert.IsTrue(_heroDataDocument.TryGetHeroByHyperlinkId(hyperlinkId, out Hero? hero, abilities, subAbilities, talents, heroUnits));
             BasicRagnarosAsserts(hero!);
         }
 
@@ -623,7 +623,7 @@ namespace Heroes.Icons.Tests.DataDocument
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _heroDataReader.GetHeroByHyperlinkId(hyperlinkId!, abilities, subAbilities, talents, heroUnits);
+                    _ = _heroDataDocument.GetHeroByHyperlinkId(hyperlinkId!, abilities, subAbilities, talents, heroUnits);
                 });
 
                 return;
@@ -632,13 +632,13 @@ namespace Heroes.Icons.Tests.DataDocument
             {
                 Assert.ThrowsException<KeyNotFoundException>(() =>
                 {
-                    _ = _heroDataReader.GetHeroByHyperlinkId(hyperlinkId, abilities, subAbilities, talents, heroUnits);
+                    _ = _heroDataDocument.GetHeroByHyperlinkId(hyperlinkId, abilities, subAbilities, talents, heroUnits);
                 });
 
                 return;
             }
 
-            BasicRagnarosAsserts(_heroDataReader.GetHeroByHyperlinkId(hyperlinkId, abilities, subAbilities, talents, heroUnits));
+            BasicRagnarosAsserts(_heroDataDocument.GetHeroByHyperlinkId(hyperlinkId, abilities, subAbilities, talents, heroUnits));
         }
 
         [DataTestMethod]
@@ -651,19 +651,19 @@ namespace Heroes.Icons.Tests.DataDocument
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _heroDataReader.TryGetHeroByAttributeId(attributeId!, out _, abilities, subAbilities, talents, heroUnits);
+                    _ = _heroDataDocument.TryGetHeroByAttributeId(attributeId!, out _, abilities, subAbilities, talents, heroUnits);
                 });
 
                 return;
             }
             else if (attributeId == "asdf")
             {
-                Assert.IsFalse(_heroDataReader.TryGetHeroByAttributeId(attributeId!, out _, abilities, subAbilities, talents, heroUnits));
+                Assert.IsFalse(_heroDataDocument.TryGetHeroByAttributeId(attributeId!, out _, abilities, subAbilities, talents, heroUnits));
 
                 return;
             }
 
-            Assert.IsTrue(_heroDataReader.TryGetHeroByAttributeId(attributeId, out Hero? hero, abilities, subAbilities, talents, heroUnits));
+            Assert.IsTrue(_heroDataDocument.TryGetHeroByAttributeId(attributeId, out Hero? hero, abilities, subAbilities, talents, heroUnits));
             BasicRagnarosAsserts(hero!);
         }
 
@@ -677,7 +677,7 @@ namespace Heroes.Icons.Tests.DataDocument
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _heroDataReader.GetHeroByAttributeId(attributeId!, abilities, subAbilities, talents, heroUnits);
+                    _ = _heroDataDocument.GetHeroByAttributeId(attributeId!, abilities, subAbilities, talents, heroUnits);
                 });
 
                 return;
@@ -686,13 +686,13 @@ namespace Heroes.Icons.Tests.DataDocument
             {
                 Assert.ThrowsException<KeyNotFoundException>(() =>
                 {
-                    _ = _heroDataReader.GetHeroByAttributeId(attributeId, abilities, subAbilities, talents, heroUnits);
+                    _ = _heroDataDocument.GetHeroByAttributeId(attributeId, abilities, subAbilities, talents, heroUnits);
                 });
 
                 return;
             }
 
-            BasicRagnarosAsserts(_heroDataReader.GetHeroByAttributeId(attributeId, abilities, subAbilities, talents, heroUnits));
+            BasicRagnarosAsserts(_heroDataDocument.GetHeroByAttributeId(attributeId, abilities, subAbilities, talents, heroUnits));
         }
 
         [TestMethod]
@@ -719,10 +719,10 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.GetNameFromHeroId(null!));
-            Assert.AreEqual("MurkyName", heroDataReader.GetNameFromHeroId("Murky"));
-            Assert.ThrowsException<KeyNotFoundException>(() => heroDataReader.GetNameFromHeroId("hero5"));
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.GetNameFromHeroId(null!));
+            Assert.AreEqual("MurkyName", heroDataDocument.GetNameFromHeroId("Murky"));
+            Assert.ThrowsException<KeyNotFoundException>(() => heroDataDocument.GetNameFromHeroId("hero5"));
         }
 
         [TestMethod]
@@ -749,12 +749,12 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.TryGetNameFromHeroId(null!, out string? _));
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.TryGetNameFromHeroId(null!, out string? _));
 
-            Assert.AreEqual(true, heroDataReader.TryGetNameFromHeroId("Murky", out string? trueValue));
+            Assert.AreEqual(true, heroDataDocument.TryGetNameFromHeroId("Murky", out string? trueValue));
             Assert.AreEqual("MurkyName", trueValue);
-            Assert.AreEqual(false, heroDataReader.TryGetNameFromHeroId("Hero5", out string? falseValue));
+            Assert.AreEqual(false, heroDataDocument.TryGetNameFromHeroId("Hero5", out string? falseValue));
             Assert.IsNull(falseValue);
         }
 
@@ -785,10 +785,10 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.GetNameFromUnitId(null!));
-            Assert.AreEqual("MurkyName", heroDataReader.GetNameFromUnitId("hero3"));
-            Assert.ThrowsException<KeyNotFoundException>(() => heroDataReader.GetNameFromUnitId("hero5"));
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.GetNameFromUnitId(null!));
+            Assert.AreEqual("MurkyName", heroDataDocument.GetNameFromUnitId("hero3"));
+            Assert.ThrowsException<KeyNotFoundException>(() => heroDataDocument.GetNameFromUnitId("hero5"));
         }
 
         [TestMethod]
@@ -818,12 +818,12 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.TryGetNameFromUnitId(null!, out string? _));
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.TryGetNameFromUnitId(null!, out string? _));
 
-            Assert.AreEqual(true, heroDataReader.TryGetNameFromUnitId("hero3", out string? trueValue));
+            Assert.AreEqual(true, heroDataDocument.TryGetNameFromUnitId("hero3", out string? trueValue));
             Assert.AreEqual("MurkyName", trueValue);
-            Assert.AreEqual(false, heroDataReader.TryGetNameFromUnitId("Hero5", out string? falseValue));
+            Assert.AreEqual(false, heroDataDocument.TryGetNameFromUnitId("Hero5", out string? falseValue));
             Assert.IsNull(falseValue);
         }
 
@@ -854,10 +854,10 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.GetNameFromHyperlinkId(null!));
-            Assert.AreEqual("MurkyName", heroDataReader.GetNameFromHyperlinkId("hero3"));
-            Assert.ThrowsException<KeyNotFoundException>(() => heroDataReader.GetNameFromUnitId("hero5"));
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.GetNameFromHyperlinkId(null!));
+            Assert.AreEqual("MurkyName", heroDataDocument.GetNameFromHyperlinkId("hero3"));
+            Assert.ThrowsException<KeyNotFoundException>(() => heroDataDocument.GetNameFromUnitId("hero5"));
         }
 
         [TestMethod]
@@ -887,12 +887,12 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.TryGetNameFromHyperlinkId(null!, out string? _));
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.TryGetNameFromHyperlinkId(null!, out string? _));
 
-            Assert.AreEqual(true, heroDataReader.TryGetNameFromHyperlinkId("hero3", out string? trueValue));
+            Assert.AreEqual(true, heroDataDocument.TryGetNameFromHyperlinkId("hero3", out string? trueValue));
             Assert.AreEqual("MurkyName", trueValue);
-            Assert.AreEqual(false, heroDataReader.TryGetNameFromHyperlinkId("Hero5", out string? falseValue));
+            Assert.AreEqual(false, heroDataDocument.TryGetNameFromHyperlinkId("Hero5", out string? falseValue));
             Assert.IsNull(falseValue);
         }
 
@@ -923,10 +923,10 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.GetNameFromAttributeId(null!));
-            Assert.AreEqual("MurkyName", heroDataReader.GetNameFromAttributeId("hero3"));
-            Assert.ThrowsException<KeyNotFoundException>(() => heroDataReader.GetNameFromUnitId("hero5"));
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.GetNameFromAttributeId(null!));
+            Assert.AreEqual("MurkyName", heroDataDocument.GetNameFromAttributeId("hero3"));
+            Assert.ThrowsException<KeyNotFoundException>(() => heroDataDocument.GetNameFromUnitId("hero5"));
         }
 
         [TestMethod]
@@ -956,12 +956,12 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.TryGetNameFromAttributeId(null!, out string? _));
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.TryGetNameFromAttributeId(null!, out string? _));
 
-            Assert.AreEqual(true, heroDataReader.TryGetNameFromAttributeId("hero3", out string? trueValue));
+            Assert.AreEqual(true, heroDataDocument.TryGetNameFromAttributeId("hero3", out string? trueValue));
             Assert.AreEqual("MurkyName", trueValue);
-            Assert.AreEqual(false, heroDataReader.TryGetNameFromAttributeId("Hero5", out string? falseValue));
+            Assert.AreEqual(false, heroDataDocument.TryGetNameFromAttributeId("Hero5", out string? falseValue));
             Assert.IsNull(falseValue);
         }
 
@@ -989,10 +989,10 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.GetHeroIdFromName(null!));
-            Assert.AreEqual("Alarak", heroDataReader.GetHeroIdFromName("AlarakName"));
-            Assert.ThrowsException<KeyNotFoundException>(() => heroDataReader.GetNameFromUnitId("hero5"));
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.GetHeroIdFromName(null!));
+            Assert.AreEqual("Alarak", heroDataDocument.GetHeroIdFromName("AlarakName"));
+            Assert.ThrowsException<KeyNotFoundException>(() => heroDataDocument.GetNameFromUnitId("hero5"));
         }
 
         [TestMethod]
@@ -1019,12 +1019,12 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.TryGetHeroIdFromName(null!, out string? _));
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.TryGetHeroIdFromName(null!, out string? _));
 
-            Assert.AreEqual(true, heroDataReader.TryGetHeroIdFromName("AlarakName", out string? trueValue));
+            Assert.AreEqual(true, heroDataDocument.TryGetHeroIdFromName("AlarakName", out string? trueValue));
             Assert.AreEqual("Alarak", trueValue);
-            Assert.AreEqual(false, heroDataReader.TryGetHeroIdFromName("Hero5", out string? falseValue));
+            Assert.AreEqual(false, heroDataDocument.TryGetHeroIdFromName("Hero5", out string? falseValue));
             Assert.IsNull(falseValue);
         }
 
@@ -1055,10 +1055,10 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.GetHeroIdFromUnitId(null!));
-            Assert.AreEqual("Murky", heroDataReader.GetHeroIdFromUnitId("hero3"));
-            Assert.ThrowsException<KeyNotFoundException>(() => heroDataReader.GetNameFromUnitId("hero5"));
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.GetHeroIdFromUnitId(null!));
+            Assert.AreEqual("Murky", heroDataDocument.GetHeroIdFromUnitId("hero3"));
+            Assert.ThrowsException<KeyNotFoundException>(() => heroDataDocument.GetNameFromUnitId("hero5"));
         }
 
         [TestMethod]
@@ -1088,12 +1088,12 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.TryGetHeroIdFromUnitId(null!, out string? _));
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.TryGetHeroIdFromUnitId(null!, out string? _));
 
-            Assert.AreEqual(true, heroDataReader.TryGetHeroIdFromUnitId("hero3", out string? trueValue));
+            Assert.AreEqual(true, heroDataDocument.TryGetHeroIdFromUnitId("hero3", out string? trueValue));
             Assert.AreEqual("Murky", trueValue);
-            Assert.AreEqual(false, heroDataReader.TryGetHeroIdFromUnitId("Hero5", out string? falseValue));
+            Assert.AreEqual(false, heroDataDocument.TryGetHeroIdFromUnitId("Hero5", out string? falseValue));
             Assert.IsNull(falseValue);
         }
 
@@ -1124,10 +1124,10 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.GetHeroIdFromHyperlinkId(null!));
-            Assert.AreEqual("Murky", heroDataReader.GetHeroIdFromHyperlinkId("hero3"));
-            Assert.ThrowsException<KeyNotFoundException>(() => heroDataReader.GetNameFromUnitId("hero5"));
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.GetHeroIdFromHyperlinkId(null!));
+            Assert.AreEqual("Murky", heroDataDocument.GetHeroIdFromHyperlinkId("hero3"));
+            Assert.ThrowsException<KeyNotFoundException>(() => heroDataDocument.GetNameFromUnitId("hero5"));
         }
 
         [TestMethod]
@@ -1157,12 +1157,12 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.TryGetHeroIdFromHyperlinkId(null!, out string? _));
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.TryGetHeroIdFromHyperlinkId(null!, out string? _));
 
-            Assert.AreEqual(true, heroDataReader.TryGetHeroIdFromHyperlinkId("hero3", out string? trueValue));
+            Assert.AreEqual(true, heroDataDocument.TryGetHeroIdFromHyperlinkId("hero3", out string? trueValue));
             Assert.AreEqual("Murky", trueValue);
-            Assert.AreEqual(false, heroDataReader.TryGetHeroIdFromHyperlinkId("Hero5", out string? falseValue));
+            Assert.AreEqual(false, heroDataDocument.TryGetHeroIdFromHyperlinkId("Hero5", out string? falseValue));
             Assert.IsNull(falseValue);
         }
 
@@ -1193,10 +1193,10 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.GetHeroIdFromAttributeId(null!));
-            Assert.AreEqual("Murky", heroDataReader.GetHeroIdFromAttributeId("hero3"));
-            Assert.ThrowsException<KeyNotFoundException>(() => heroDataReader.GetNameFromUnitId("hero5"));
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.GetHeroIdFromAttributeId(null!));
+            Assert.AreEqual("Murky", heroDataDocument.GetHeroIdFromAttributeId("hero3"));
+            Assert.ThrowsException<KeyNotFoundException>(() => heroDataDocument.GetNameFromUnitId("hero5"));
         }
 
         [TestMethod]
@@ -1226,12 +1226,12 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.TryGetHeroIdFromAttributeId(null!, out string? _));
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.TryGetHeroIdFromAttributeId(null!, out string? _));
 
-            Assert.AreEqual(true, heroDataReader.TryGetHeroIdFromAttributeId("hero3", out string? trueValue));
+            Assert.AreEqual(true, heroDataDocument.TryGetHeroIdFromAttributeId("hero3", out string? trueValue));
             Assert.AreEqual("Murky", trueValue);
-            Assert.AreEqual(false, heroDataReader.TryGetHeroIdFromAttributeId("Hero5", out string? falseValue));
+            Assert.AreEqual(false, heroDataDocument.TryGetHeroIdFromAttributeId("Hero5", out string? falseValue));
             Assert.IsNull(falseValue);
         }
 
@@ -1256,10 +1256,10 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.IsHeroExistsByHeroId(null!));
-            Assert.IsTrue(heroDataReader.IsHeroExistsByHeroId("Alarak"));
-            Assert.IsFalse(heroDataReader.IsHeroExistsByHeroId("Peon"));
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.IsHeroExistsByHeroId(null!));
+            Assert.IsTrue(heroDataDocument.IsHeroExistsByHeroId("Alarak"));
+            Assert.IsFalse(heroDataDocument.IsHeroExistsByHeroId("Peon"));
         }
 
         [TestMethod]
@@ -1289,10 +1289,10 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.IsHeroExistsByName(null!));
-            Assert.IsTrue(heroDataReader.IsHeroExistsByName("AlarakName"));
-            Assert.IsFalse(heroDataReader.IsHeroExistsByName("Peon"));
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.IsHeroExistsByName(null!));
+            Assert.IsTrue(heroDataDocument.IsHeroExistsByName("AlarakName"));
+            Assert.IsFalse(heroDataDocument.IsHeroExistsByName("Peon"));
         }
 
         [TestMethod]
@@ -1322,10 +1322,10 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.IsHeroExistsByUnitId(null!));
-            Assert.IsTrue(heroDataReader.IsHeroExistsByUnitId("hero2"));
-            Assert.IsFalse(heroDataReader.IsHeroExistsByUnitId("Peon"));
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.IsHeroExistsByUnitId(null!));
+            Assert.IsTrue(heroDataDocument.IsHeroExistsByUnitId("hero2"));
+            Assert.IsFalse(heroDataDocument.IsHeroExistsByUnitId("Peon"));
         }
 
         [TestMethod]
@@ -1355,10 +1355,10 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.IsHeroExistsByHyperlinkId(null!));
-            Assert.IsTrue(heroDataReader.IsHeroExistsByHyperlinkId("hero2"));
-            Assert.IsFalse(heroDataReader.IsHeroExistsByHyperlinkId("Peon"));
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.IsHeroExistsByHyperlinkId(null!));
+            Assert.IsTrue(heroDataDocument.IsHeroExistsByHyperlinkId("hero2"));
+            Assert.IsFalse(heroDataDocument.IsHeroExistsByHyperlinkId("Peon"));
         }
 
         [TestMethod]
@@ -1388,17 +1388,17 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataReader.IsHeroExistsByAttributeId(null!));
-            Assert.IsTrue(heroDataReader.IsHeroExistsByAttributeId("hero2"));
-            Assert.IsFalse(heroDataReader.IsHeroExistsByAttributeId("Peon"));
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.IsHeroExistsByAttributeId(null!));
+            Assert.IsTrue(heroDataDocument.IsHeroExistsByAttributeId("hero2"));
+            Assert.IsFalse(heroDataDocument.IsHeroExistsByAttributeId("Peon"));
         }
 
         [TestMethod]
         [TestCategory("Helper")]
         public void GetIdsTest()
         {
-            List<string> items = _heroDataReader.GetIds.ToList();
+            List<string> items = _heroDataDocument.GetIds.ToList();
 
             Assert.AreEqual(2, items.Count);
             Assert.IsTrue(items.Contains("Alarak"));
@@ -1429,9 +1429,9 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
 
-            List<string> items = heroDataReader.GetNames.ToList();
+            List<string> items = heroDataDocument.GetNames.ToList();
 
             Assert.AreEqual(3, items.Count);
             Assert.IsTrue(items.Contains("AbathurName"));
@@ -1443,7 +1443,7 @@ namespace Heroes.Icons.Tests.DataDocument
         [TestCategory("Helper")]
         public void GetHeroUnitIds()
         {
-            List<string> items = _heroDataReader.GetUnitIds.ToList();
+            List<string> items = _heroDataDocument.GetUnitIds.ToList();
 
             Assert.AreEqual(2, items.Count);
             Assert.IsTrue(items.Contains("HeroAlarak"));
@@ -1474,9 +1474,9 @@ namespace Heroes.Icons.Tests.DataDocument
 
             byte[] bytes = memoryStream.ToArray();
 
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(bytes, Localization.ENUS);
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
 
-            List<string> items = heroDataReader.GetHyperlinkIds.ToList();
+            List<string> items = heroDataDocument.GetHyperlinkIds.ToList();
 
             Assert.AreEqual(3, items.Count);
             Assert.IsTrue(items.Contains("AbathurName"));
@@ -1488,7 +1488,7 @@ namespace Heroes.Icons.Tests.DataDocument
         [TestCategory("Helper")]
         public void GetHeroAttributeIdsTest()
         {
-            List<string> items = _heroDataReader.GetAttributeIds.ToList();
+            List<string> items = _heroDataDocument.GetAttributeIds.ToList();
 
             Assert.AreEqual(2, items.Count);
             Assert.IsTrue(items.Contains("Alar"));
@@ -1499,37 +1499,37 @@ namespace Heroes.Icons.Tests.DataDocument
         [TestCategory("Helper")]
         public void GCountTest()
         {
-            Assert.AreEqual(2, _heroDataReader.Count);
+            Assert.AreEqual(2, _heroDataDocument.Count);
         }
 
         [TestMethod]
         [TestCategory("DataDocument")]
         public void DataDocumentFileTest()
         {
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(_dataFile);
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(_dataFile);
 
-            Assert.AreEqual(Localization.KOKR, heroDataReader.Localization);
-            Assert.IsTrue(heroDataReader.JsonDataDocument.RootElement.TryGetProperty("Abathur", out JsonElement _));
+            Assert.AreEqual(Localization.KOKR, heroDataDocument.Localization);
+            Assert.IsTrue(heroDataDocument.JsonDataDocument.RootElement.TryGetProperty("Abathur", out JsonElement _));
         }
 
         [TestMethod]
         [TestCategory("DataDocument")]
         public void DataDocumentFileLocaleTest()
         {
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(_dataFile, Localization.FRFR);
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(_dataFile, Localization.FRFR);
 
-            Assert.AreEqual(Localization.FRFR, heroDataReader.Localization);
-            Assert.IsTrue(heroDataReader.JsonDataDocument.RootElement.TryGetProperty("Abathur", out JsonElement _));
+            Assert.AreEqual(Localization.FRFR, heroDataDocument.Localization);
+            Assert.IsTrue(heroDataDocument.JsonDataDocument.RootElement.TryGetProperty("Abathur", out JsonElement _));
         }
 
         [TestMethod]
         [TestCategory("DataDocument")]
         public void DataDocumentROMLocaleTest()
         {
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(GetBytesForROM("Abathur"), Localization.FRFR);
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(GetBytesForROM("Abathur"), Localization.FRFR);
 
-            Assert.AreEqual(Localization.FRFR, heroDataReader.Localization);
-            Assert.IsTrue(heroDataReader.JsonDataDocument.RootElement.TryGetProperty("Abathur", out JsonElement _));
+            Assert.AreEqual(Localization.FRFR, heroDataDocument.Localization);
+            Assert.IsTrue(heroDataDocument.JsonDataDocument.RootElement.TryGetProperty("Abathur", out JsonElement _));
         }
 
         [TestMethod]
@@ -1537,10 +1537,10 @@ namespace Heroes.Icons.Tests.DataDocument
         public void DataDocumentFileGSRTest()
         {
             using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileFRFR);
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(_dataFile, gameStringDocument);
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(_dataFile, gameStringDocument);
 
-            Assert.AreEqual(Localization.FRFR, heroDataReader.Localization);
-            Assert.IsTrue(heroDataReader.TryGetHeroById("Abathur", out Hero _, false, false, false, false));
+            Assert.AreEqual(Localization.FRFR, heroDataDocument.Localization);
+            Assert.IsTrue(heroDataDocument.TryGetHeroById("Abathur", out Hero _, false, false, false, false));
         }
 
         [TestMethod]
@@ -1548,10 +1548,10 @@ namespace Heroes.Icons.Tests.DataDocument
         public void DataDocumentROMGSRTest()
         {
             using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
-            using HeroDataDocument heroDataReader = HeroDataDocument.Parse(GetBytesForROM("Abathur"), gameStringDocument);
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(GetBytesForROM("Abathur"), gameStringDocument);
 
-            Assert.AreEqual(Localization.KOKR, heroDataReader.Localization);
-            Assert.IsTrue(heroDataReader.TryGetHeroById("Abathur", out Hero _, false, false, false, false));
+            Assert.AreEqual(Localization.KOKR, heroDataDocument.Localization);
+            Assert.IsTrue(heroDataDocument.TryGetHeroById("Abathur", out Hero _, false, false, false, false));
         }
 
         [TestMethod]

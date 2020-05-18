@@ -18,11 +18,11 @@ namespace Heroes.Icons.Tests.DataDocument
         private readonly string _jsonGameStringFileKOKR = Path.Combine("JsonGameStrings", "gamestrings_76893_kokr.json");
         private readonly string _jsonGameStringFileFRFR = Path.Combine("JsonGameStrings", "gamestrings_76893_frfr.json");
 
-        private readonly UnitDataDocument _unitDataReader;
+        private readonly UnitDataDocument _unitDataDocument;
 
         public UnitDataDocumentTests()
         {
-            _unitDataReader = UnitDataDocument.Parse(LoadJsonTestData(), Localization.ENUS);
+            _unitDataDocument = UnitDataDocument.Parse(LoadJsonTestData(), Localization.ENUS);
         }
 
         [DataTestMethod]
@@ -38,7 +38,7 @@ namespace Heroes.Icons.Tests.DataDocument
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _unitDataReader.GetUnitById(id!, abilities, subAbilities);
+                    _ = _unitDataDocument.GetUnitById(id!, abilities, subAbilities);
                 });
 
                 return;
@@ -47,13 +47,13 @@ namespace Heroes.Icons.Tests.DataDocument
             {
                 Assert.ThrowsException<KeyNotFoundException>(() =>
                 {
-                    _ = _unitDataReader.GetUnitById(id, abilities, subAbilities);
+                    _ = _unitDataDocument.GetUnitById(id, abilities, subAbilities);
                 });
 
                 return;
             }
 
-            Unit unit = _unitDataReader.GetUnitById(id, abilities, subAbilities);
+            Unit unit = _unitDataDocument.GetUnitById(id, abilities, subAbilities);
 
             BasicAbathurEvolvedMonstrosityAsserts(unit);
 
@@ -162,19 +162,19 @@ namespace Heroes.Icons.Tests.DataDocument
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _unitDataReader.TryGetUnitById(id!, out Unit? unit, abilities, subAbilities);
+                    _ = _unitDataDocument.TryGetUnitById(id!, out Unit? unit, abilities, subAbilities);
                 });
 
                 return;
             }
             else if (id == "asdf")
             {
-                Assert.IsFalse(_unitDataReader.TryGetUnitById(id, out _, abilities, subAbilities));
+                Assert.IsFalse(_unitDataDocument.TryGetUnitById(id, out _, abilities, subAbilities));
 
                 return;
             }
 
-            Assert.IsTrue(_unitDataReader.TryGetUnitById(id, out Unit? unit, abilities, subAbilities));
+            Assert.IsTrue(_unitDataDocument.TryGetUnitById(id, out Unit? unit, abilities, subAbilities));
             BasicAbathurEvolvedMonstrosityAsserts(unit!);
         }
 
@@ -191,7 +191,7 @@ namespace Heroes.Icons.Tests.DataDocument
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _unitDataReader.GetUnitByHyperlinkId(id!, abilities, subAbilities);
+                    _ = _unitDataDocument.GetUnitByHyperlinkId(id!, abilities, subAbilities);
                 });
 
                 return;
@@ -200,13 +200,13 @@ namespace Heroes.Icons.Tests.DataDocument
             {
                 Assert.ThrowsException<KeyNotFoundException>(() =>
                 {
-                    _ = _unitDataReader.GetUnitByHyperlinkId(id, abilities, subAbilities);
+                    _ = _unitDataDocument.GetUnitByHyperlinkId(id, abilities, subAbilities);
                 });
 
                 return;
             }
 
-            BasicAbathurEvolvedMonstrosityAsserts(_unitDataReader.GetUnitByHyperlinkId(id, abilities, subAbilities));
+            BasicAbathurEvolvedMonstrosityAsserts(_unitDataDocument.GetUnitByHyperlinkId(id, abilities, subAbilities));
         }
 
         [DataTestMethod]
@@ -219,26 +219,26 @@ namespace Heroes.Icons.Tests.DataDocument
             {
                 Assert.ThrowsException<ArgumentNullException>(() =>
                 {
-                    _ = _unitDataReader.TryGetUnitByHyperlinkId(id!, out Unit? unit, abilities, subAbilities);
+                    _ = _unitDataDocument.TryGetUnitByHyperlinkId(id!, out Unit? unit, abilities, subAbilities);
                 });
 
                 return;
             }
             else if (id == "asdf")
             {
-                Assert.IsFalse(_unitDataReader.TryGetUnitByHyperlinkId(id, out _, abilities, subAbilities));
+                Assert.IsFalse(_unitDataDocument.TryGetUnitByHyperlinkId(id, out _, abilities, subAbilities));
 
                 return;
             }
 
-            Assert.IsTrue(_unitDataReader.TryGetUnitByHyperlinkId(id, out Unit? unit, abilities, subAbilities));
+            Assert.IsTrue(_unitDataDocument.TryGetUnitByHyperlinkId(id, out Unit? unit, abilities, subAbilities));
             BasicAbathurEvolvedMonstrosityAsserts(unit!);
         }
 
         [TestMethod]
         public void GetMapUniqueUnitTest()
         {
-            Unit unit = _unitDataReader.GetUnitById("tombofthespiderqueen-JungleGraveGolemLaner", false, false);
+            Unit unit = _unitDataDocument.GetUnitById("tombofthespiderqueen-JungleGraveGolemLaner", false, false);
             Assert.IsTrue(unit.IsMapUnique);
             Assert.AreEqual("tombofthespiderqueen", unit.MapName);
         }
@@ -246,7 +246,7 @@ namespace Heroes.Icons.Tests.DataDocument
         [TestMethod]
         public void GetUnitsTest()
         {
-            List<Unit> units = _unitDataReader.GetUnits(true, true).ToList();
+            List<Unit> units = _unitDataDocument.GetUnits(true, true).ToList();
             Assert.AreEqual("AbathurEvolvedMonstrosity", units[0].CUnitId);
             Assert.AreEqual("tombofthespiderqueen-JungleGraveGolemLaner", units[1].CUnitId);
         }
@@ -273,30 +273,30 @@ namespace Heroes.Icons.Tests.DataDocument
         [TestCategory("DataDocument")]
         public void DataDocumentFileTest()
         {
-            using UnitDataDocument unitDataReader = UnitDataDocument.Parse(_dataFile);
+            using UnitDataDocument unitDataDocument = UnitDataDocument.Parse(_dataFile);
 
-            Assert.AreEqual(Localization.KOKR, unitDataReader.Localization);
-            Assert.IsTrue(unitDataReader.JsonDataDocument.RootElement.TryGetProperty("AbathurEvolvedMonstrosity", out JsonElement _));
+            Assert.AreEqual(Localization.KOKR, unitDataDocument.Localization);
+            Assert.IsTrue(unitDataDocument.JsonDataDocument.RootElement.TryGetProperty("AbathurEvolvedMonstrosity", out JsonElement _));
         }
 
         [TestMethod]
         [TestCategory("DataDocument")]
         public void DataDocumentFileLocaleTest()
         {
-            using UnitDataDocument unitDataReader = UnitDataDocument.Parse(_dataFile, Localization.FRFR);
+            using UnitDataDocument unitDataDocument = UnitDataDocument.Parse(_dataFile, Localization.FRFR);
 
-            Assert.AreEqual(Localization.FRFR, unitDataReader.Localization);
-            Assert.IsTrue(unitDataReader.JsonDataDocument.RootElement.TryGetProperty("AbathurEvolvedMonstrosity", out JsonElement _));
+            Assert.AreEqual(Localization.FRFR, unitDataDocument.Localization);
+            Assert.IsTrue(unitDataDocument.JsonDataDocument.RootElement.TryGetProperty("AbathurEvolvedMonstrosity", out JsonElement _));
         }
 
         [TestMethod]
         [TestCategory("DataDocument")]
         public void DataDocumentROMLocaleTest()
         {
-            using UnitDataDocument unitDataReader = UnitDataDocument.Parse(GetBytesForROM("AbathurEvolvedMonstrosity"), Localization.FRFR);
+            using UnitDataDocument unitDataDocument = UnitDataDocument.Parse(GetBytesForROM("AbathurEvolvedMonstrosity"), Localization.FRFR);
 
-            Assert.AreEqual(Localization.FRFR, unitDataReader.Localization);
-            Assert.IsTrue(unitDataReader.JsonDataDocument.RootElement.TryGetProperty("AbathurEvolvedMonstrosity", out JsonElement _));
+            Assert.AreEqual(Localization.FRFR, unitDataDocument.Localization);
+            Assert.IsTrue(unitDataDocument.JsonDataDocument.RootElement.TryGetProperty("AbathurEvolvedMonstrosity", out JsonElement _));
         }
 
         [TestMethod]
@@ -304,10 +304,10 @@ namespace Heroes.Icons.Tests.DataDocument
         public void DataDocumentFileGSRTest()
         {
             using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileFRFR);
-            using UnitDataDocument unitDataReader = UnitDataDocument.Parse(_dataFile, gameStringDocument);
+            using UnitDataDocument unitDataDocument = UnitDataDocument.Parse(_dataFile, gameStringDocument);
 
-            Assert.AreEqual(Localization.FRFR, unitDataReader.Localization);
-            Assert.IsTrue(unitDataReader.TryGetUnitById("AbathurEvolvedMonstrosity", out Unit _, false, false));
+            Assert.AreEqual(Localization.FRFR, unitDataDocument.Localization);
+            Assert.IsTrue(unitDataDocument.TryGetUnitById("AbathurEvolvedMonstrosity", out Unit _, false, false));
         }
 
         [TestMethod]
@@ -315,10 +315,10 @@ namespace Heroes.Icons.Tests.DataDocument
         public void DataDocumentROMGSRTest()
         {
             using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
-            using UnitDataDocument unitDataReader = UnitDataDocument.Parse(GetBytesForROM("AbathurEvolvedMonstrosity"), gameStringDocument);
+            using UnitDataDocument unitDataDocument = UnitDataDocument.Parse(GetBytesForROM("AbathurEvolvedMonstrosity"), gameStringDocument);
 
-            Assert.AreEqual(Localization.KOKR, unitDataReader.Localization);
-            Assert.IsTrue(unitDataReader.TryGetUnitById("AbathurEvolvedMonstrosity", out Unit _, false, false));
+            Assert.AreEqual(Localization.KOKR, unitDataDocument.Localization);
+            Assert.IsTrue(unitDataDocument.TryGetUnitById("AbathurEvolvedMonstrosity", out Unit _, false, false));
         }
 
         [TestMethod]
