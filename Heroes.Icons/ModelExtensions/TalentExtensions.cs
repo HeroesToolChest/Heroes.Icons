@@ -2,12 +2,12 @@
 using Heroes.Models.AbilityTalents;
 using System;
 
-namespace Heroes.Icons.Extensions
+namespace Heroes.Icons.ModelExtensions
 {
     /// <summary>
     /// Contains extensions for <see cref="Talent"/>.
     /// </summary>
-    public static class TalentExtension
+    public static class TalentExtensions
     {
         /// <summary>
         /// Updates the localized gamestrings to the selected <see cref="Localization"/>.

@@ -1,4 +1,5 @@
-﻿using Heroes.Models;
+﻿using Heroes.Icons.ModelExtensions;
+using Heroes.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Text.Json;
