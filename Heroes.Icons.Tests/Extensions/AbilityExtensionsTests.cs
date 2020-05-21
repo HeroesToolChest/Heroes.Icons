@@ -1,6 +1,7 @@
 ﻿using Heroes.Icons.ModelExtensions;
 using Heroes.Models.AbilityTalents;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 using System.Text.Json;
 
@@ -32,7 +33,21 @@ namespace Heroes.Icons.Extensions.Tests
             Assert.AreEqual("No life", ability.Tooltip.Life.LifeCostTooltip!.RawDescription);
         }
 
-        private byte[] LoadEnusLocalizedStringData()
+        [TestMethod]
+        public void UpdateGameStringsThrowArgumentNullException()
+        {
+            Ability ability = new Ability()
+            {
+                AbilityTalentId = new AbilityTalentId("AlarakDiscordStrike", "AlarakDiscordStrike")
+                {
+                    AbilityType = AbilityTypes.Q,
+                },
+            };
+
+            Assert.ThrowsException<ArgumentNullException>(() => ability.UpdateGameStrings(null!));
+        }
+
+        private static byte[] LoadEnusLocalizedStringData()
         {
             using MemoryStream memoryStream = new MemoryStream();
             using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);

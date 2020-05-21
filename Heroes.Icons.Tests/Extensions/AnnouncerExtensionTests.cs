@@ -1,6 +1,7 @@
 ﻿using Heroes.Icons.ModelExtensions;
 using Heroes.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 using System.Text.Json;
 
@@ -24,7 +25,18 @@ namespace Heroes.Icons.Extensions.Tests
             Assert.AreEqual("asdf", announcer.Description!.RawDescription);
         }
 
-        private byte[] LoadEnusLocalizedStringData()
+        [TestMethod]
+        public void UpdateGameStringsThrowArgumentNullException()
+        {
+            Announcer announcer = new Announcer
+            {
+                Id = "AbathurA",
+            };
+
+            Assert.ThrowsException<ArgumentNullException>(() => announcer.UpdateGameStrings(null!));
+        }
+
+        private static byte[] LoadEnusLocalizedStringData()
         {
             using MemoryStream memoryStream = new MemoryStream();
             using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);

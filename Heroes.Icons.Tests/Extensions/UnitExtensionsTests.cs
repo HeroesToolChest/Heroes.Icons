@@ -1,6 +1,7 @@
 ﻿using Heroes.Icons.ModelExtensions;
 using Heroes.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 using System.Text.Json;
 
@@ -25,7 +26,19 @@ namespace Heroes.Icons.Extensions.Tests
             Assert.AreEqual("A long description", unit.Description!.RawDescription);
         }
 
-        private byte[] LoadEnusLocalizedStringData()
+        [TestMethod]
+        public void UpdateGameStringsThrowArgumentNullException()
+        {
+            Unit unit = new Unit
+            {
+                CUnitId = "AbathurEvolvedMonstrosity",
+                Id = "AbathurEvolvedMonstrosity",
+            };
+
+            Assert.ThrowsException<ArgumentNullException>(() => unit.UpdateGameStrings(null!));
+        }
+
+        private static byte[] LoadEnusLocalizedStringData()
         {
             using MemoryStream memoryStream = new MemoryStream();
             using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);

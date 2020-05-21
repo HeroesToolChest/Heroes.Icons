@@ -857,7 +857,7 @@ namespace Heroes.Icons.Tests.DataDocument
             using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
             Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.GetNameFromHyperlinkId(null!));
             Assert.AreEqual("MurkyName", heroDataDocument.GetNameFromHyperlinkId("hero3"));
-            Assert.ThrowsException<KeyNotFoundException>(() => heroDataDocument.GetNameFromUnitId("hero5"));
+            Assert.ThrowsException<KeyNotFoundException>(() => heroDataDocument.GetNameFromHyperlinkId("hero5"));
         }
 
         [TestMethod]
@@ -926,7 +926,7 @@ namespace Heroes.Icons.Tests.DataDocument
             using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
             Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.GetNameFromAttributeId(null!));
             Assert.AreEqual("MurkyName", heroDataDocument.GetNameFromAttributeId("hero3"));
-            Assert.ThrowsException<KeyNotFoundException>(() => heroDataDocument.GetNameFromUnitId("hero5"));
+            Assert.ThrowsException<KeyNotFoundException>(() => heroDataDocument.GetNameFromAttributeId("hero5"));
         }
 
         [TestMethod]
@@ -992,7 +992,7 @@ namespace Heroes.Icons.Tests.DataDocument
             using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
             Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.GetHeroIdFromName(null!));
             Assert.AreEqual("Alarak", heroDataDocument.GetHeroIdFromName("AlarakName"));
-            Assert.ThrowsException<KeyNotFoundException>(() => heroDataDocument.GetNameFromUnitId("hero5"));
+            Assert.ThrowsException<KeyNotFoundException>(() => heroDataDocument.GetHeroIdFromName("hero5"));
         }
 
         [TestMethod]
@@ -1058,7 +1058,7 @@ namespace Heroes.Icons.Tests.DataDocument
             using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
             Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.GetHeroIdFromUnitId(null!));
             Assert.AreEqual("Murky", heroDataDocument.GetHeroIdFromUnitId("hero3"));
-            Assert.ThrowsException<KeyNotFoundException>(() => heroDataDocument.GetNameFromUnitId("hero5"));
+            Assert.ThrowsException<KeyNotFoundException>(() => heroDataDocument.GetHeroIdFromUnitId("hero5"));
         }
 
         [TestMethod]
@@ -1127,7 +1127,7 @@ namespace Heroes.Icons.Tests.DataDocument
             using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
             Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.GetHeroIdFromHyperlinkId(null!));
             Assert.AreEqual("Murky", heroDataDocument.GetHeroIdFromHyperlinkId("hero3"));
-            Assert.ThrowsException<KeyNotFoundException>(() => heroDataDocument.GetNameFromUnitId("hero5"));
+            Assert.ThrowsException<KeyNotFoundException>(() => heroDataDocument.GetHeroIdFromHyperlinkId("hero5"));
         }
 
         [TestMethod]
@@ -1196,7 +1196,7 @@ namespace Heroes.Icons.Tests.DataDocument
             using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
             Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.GetHeroIdFromAttributeId(null!));
             Assert.AreEqual("Murky", heroDataDocument.GetHeroIdFromAttributeId("hero3"));
-            Assert.ThrowsException<KeyNotFoundException>(() => heroDataDocument.GetNameFromUnitId("hero5"));
+            Assert.ThrowsException<KeyNotFoundException>(() => heroDataDocument.GetHeroIdFromAttributeId("hero5"));
         }
 
         [TestMethod]

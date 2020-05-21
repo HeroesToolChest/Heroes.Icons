@@ -1,6 +1,7 @@
 ﻿using Heroes.Icons.ModelExtensions;
 using Heroes.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 using System.Text.Json;
 
@@ -26,7 +27,20 @@ namespace Heroes.Icons.Extensions.Tests
             Assert.AreEqual("Highlord of the Tal'darim", hero.Title);
         }
 
-        private byte[] LoadEnusLocalizedStringData()
+        [TestMethod]
+        public void UpdateGameStringsThrowArgumentNullException()
+        {
+            Hero hero = new Hero
+            {
+                CUnitId = "HeroAlarak",
+                CHeroId = "Alarak",
+                Id = "Alarak",
+            };
+
+            Assert.ThrowsException<ArgumentNullException>(() => hero.UpdateGameStrings(null!));
+        }
+
+        private static byte[] LoadEnusLocalizedStringData()
         {
             using MemoryStream memoryStream = new MemoryStream();
             using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);

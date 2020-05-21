@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "version": "76893"
+  },
+  "gamestrings": {
+    "abiltalent": {
+      "cooldown": {
+        "AbathurAssumingDirectControlCancel|AbathurSymbioteCancel|Heroic|False": "재사용 대기시간: 1.5초"
+      }
+    },
+    "announcer": {
+      "name": {
+        "AbathurA": "아바투르 아나운서"
+      }
+    }
+  }
+}

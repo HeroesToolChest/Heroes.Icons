@@ -1,6 +1,7 @@
 ﻿using Heroes.Icons.ModelExtensions;
 using Heroes.Models.AbilityTalents;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 using System.Text.Json;
 
@@ -28,7 +29,22 @@ namespace Heroes.Icons.Extensions.Tests
             Assert.AreEqual("Bonus Twin Cleave damage at apex", talent.Tooltip.ShortTooltip!.RawDescription);
         }
 
-        private byte[] LoadEnusLocalizedStringData()
+        [TestMethod]
+        public void UpdateGameStringsThrowArgumentNullException()
+        {
+            Talent talent = new Talent()
+            {
+                AbilityTalentId = new AbilityTalentId("ZuljinWrongPlaceWrongTime", "ZuljinWrongPlaceWrongTime")
+                {
+                    AbilityType = AbilityTypes.W,
+                },
+                Tier = TalentTiers.Level1,
+            };
+
+            Assert.ThrowsException<ArgumentNullException>(() => talent.UpdateGameStrings(null!));
+        }
+
+        private static byte[] LoadEnusLocalizedStringData()
         {
             using MemoryStream memoryStream = new MemoryStream();
             using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
