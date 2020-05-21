@@ -14,7 +14,7 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Initializes a new instance of the <see cref="UnitBaseData"/> class.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file to parse.</param>
+        /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         protected UnitBaseData(string jsonDataFilePath)
             : base(jsonDataFilePath)
         {
@@ -23,7 +23,7 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Initializes a new instance of the <see cref="UnitBaseData"/> class.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file to parse.</param>
+        /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         protected UnitBaseData(string jsonDataFilePath, Localization localization)
             : base(jsonDataFilePath, localization)
@@ -43,7 +43,7 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Initializes a new instance of the <see cref="UnitBaseData"/> class.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file to parse.</param>
+        /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
         protected UnitBaseData(string jsonDataFilePath, GameStringDocument gameStringDocument)
             : base(jsonDataFilePath, gameStringDocument)
@@ -65,9 +65,31 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as async.</param>
+        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
         protected UnitBaseData(Stream utf8Json, Localization localization, bool isAsync = false)
             : base(utf8Json, localization, isAsync)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnitBaseData"/> class.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
+        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
+        protected UnitBaseData(Stream utf8Json, GameStringDocument gameStringDocument, bool isAsync = false)
+            : base(utf8Json, gameStringDocument, isAsync)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnitBaseData"/> class.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
+        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
+        protected UnitBaseData(Stream utf8Json, Stream utf8JsonGameStrings, bool isAsync = false)
+            : base(utf8Json, utf8JsonGameStrings, isAsync)
         {
         }
 
@@ -76,7 +98,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="element">The <see cref="JsonElement"/> to read from.</param>
         /// <param name="unit">The data to be set from <paramref name="element"/>.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="unit"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="unit"/> is <see langword="null"/>.</exception>
         protected virtual void SetUnitLife(JsonElement element, Unit unit)
         {
             if (unit is null)
@@ -100,7 +122,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="element">The <see cref="JsonElement"/> to read from.</param>
         /// <param name="unit">The data to be set from <paramref name="element"/>.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="unit"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="unit"/> is <see langword="null"/>.</exception>
         protected virtual void SetUnitShield(JsonElement element, Unit unit)
         {
             if (unit is null)
@@ -125,7 +147,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="element">The <see cref="JsonElement"/> to read from.</param>
         /// <param name="unit">The data to be set from <paramref name="element"/>.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="unit"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="unit"/> is <see langword="null"/>.</exception>
         protected virtual void SetUnitEnergy(JsonElement element, Unit unit)
         {
             if (unit is null)
@@ -147,7 +169,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="element">The <see cref="JsonElement"/> to read from.</param>
         /// <param name="unit">The data to be set from <paramref name="element"/>.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="unit"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="unit"/> is <see langword="null"/>.</exception>
         protected virtual void SetUnitArmor(JsonElement element, Unit unit)
         {
             if (unit is null)
@@ -175,7 +197,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="element">The <see cref="JsonElement"/> to read from.</param>
         /// <param name="unit">The data to be set from <paramref name="element"/>.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="unit"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="unit"/> is <see langword="null"/>.</exception>
         protected virtual void SetUnitWeapons(JsonElement element, Unit unit)
         {
             if (unit is null)
@@ -261,7 +283,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="tierElement">The <see cref="JsonElement"/> to read from.</param>
         /// <param name="abilityTier">The tier of the ability.</param>
         /// <param name="parentLink">Indicates if the ability is a sub-ability.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="unit"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="unit"/> is <see langword="null"/>.</exception>
         protected virtual void AddTierAbilities(Unit unit, JsonElement tierElement, AbilityTiers abilityTier, string? parentLink)
         {
             if (unit is null)
@@ -301,7 +323,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="abilityTalentBase">The <see cref="AbilityTalentBase"/> data to be set.</param>
         /// <param name="abilityTalentElement">The <see cref="JsonElement"/> to read from.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="abilityTalentBase"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="abilityTalentBase"/> is <see langword="null"/>.</exception>
         protected virtual void SetAbilityTalentBase(AbilityTalentBase abilityTalentBase, JsonElement abilityTalentElement)
         {
             if (abilityTalentBase is null)

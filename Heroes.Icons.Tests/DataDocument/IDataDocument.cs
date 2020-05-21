@@ -16,6 +16,14 @@ namespace Heroes.Icons.Tests.DataDocument
 
         void DataDocumentStreamTest();
 
+        void DataDocumentStreamWithGameStringDocumentTest();
+
+        void DataDocumentStreamWithGameStringStreamTest();
+
         Task DataDocumentStreamAsyncTest();
+
+        Task DataDocumentStreamWithGameStringDocumentAsyncTest();
+
+        Task DataDocumentStreamWithGameStringStreamAsyncTest();
     }
 }

@@ -18,20 +18,17 @@ namespace Heroes.Icons
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GameStringDocument"/> class.
-        /// <see cref="Localization"/> will be inferred from <paramref name="jsonGameStringFilePath"/>.
+        /// The <see cref="Localization"/> will be inferred from the meta property in the json data, otherwise it will be
+        /// inferred from <paramref name="jsonGameStringFilePath"/>.
         /// </summary>
         /// <param name="jsonGameStringFilePath">The JSON file to parse.</param>
         protected GameStringDocument(string jsonGameStringFilePath)
         {
             JsonGameStringDocument = JsonDocument.Parse(File.ReadAllBytes(jsonGameStringFilePath));
 
-            string? file = Path.GetFileNameWithoutExtension(jsonGameStringFilePath);
-
-            int index = file.LastIndexOf('_');
-            if (index > -1)
+            if (!SetLocalizationFromMeta())
             {
-                if (Enum.TryParse(file.Substring(index + 1), true, out Localization localization))
-                    Localization = localization;
+                SetLocalizationFromFileName(jsonGameStringFilePath);
             }
         }
 
@@ -48,18 +45,14 @@ namespace Heroes.Icons
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GameStringDocument"/> class.
-        /// <see cref="Localization"/> will be inferred from the meta property in the json data.
+        /// The <see cref="Localization"/> will be inferred from the meta property in the json data.
         /// </summary>
         /// <param name="jsonGameStrings">The JSON data to parse.</param>
         protected GameStringDocument(ReadOnlyMemory<byte> jsonGameStrings)
         {
             JsonGameStringDocument = JsonDocument.Parse(jsonGameStrings);
 
-            if (JsonGameStringDocument.RootElement.TryGetProperty("meta", out JsonElement metaElement))
-            {
-                if (metaElement.TryGetProperty("locale", out JsonElement locale) && Enum.TryParse(locale.ToString(), true, out Localization localization))
-                    Localization = localization;
-            }
+            SetLocalizationFromMeta();
         }
 
         /// <summary>
@@ -77,16 +70,38 @@ namespace Heroes.Icons
         /// Initializes a new instance of the <see cref="GameStringDocument"/> class.
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
-        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as async.</param>
-#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
-        protected GameStringDocument(Stream utf8Json, Localization localization, bool isAsync = false)
-#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
+        protected GameStringDocument(Stream utf8Json, bool isAsync = false)
         {
             if (isAsync)
+            {
+                JsonGameStringDocument = null!;
                 _streamForAsync = utf8Json;
+            }
             else
+            {
                 JsonGameStringDocument = JsonDocument.Parse(utf8Json);
+                SetLocalizationFromMeta();
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GameStringDocument"/> class.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
+        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
+        protected GameStringDocument(Stream utf8Json, Localization localization, bool isAsync = false)
+        {
+            if (isAsync)
+            {
+                JsonGameStringDocument = null!;
+                _streamForAsync = utf8Json;
+            }
+            else
+            {
+                JsonGameStringDocument = JsonDocument.Parse(utf8Json);
+            }
 
             Localization = localization;
         }
@@ -102,7 +117,7 @@ namespace Heroes.Icons
         /// <summary>
         /// Gets the current selected localization.
         /// </summary>
-        public Localization Localization { get; } = Localization.ENUS;
+        public Localization Localization { get; private set; } = Localization.ENUS;
 
         /// <summary>
         /// Gets the <see cref="JsonDocument"/> to allow for manually parsing.
@@ -111,10 +126,11 @@ namespace Heroes.Icons
 
         /// <summary>
         /// Parses a json file as UTF-8-encoded text to allow for gamestring data reading.
-        /// <see cref="Localization"/> will be inferred from <paramref name="jsonGameStringFilePath"/>.
+        /// The <see cref="Localization"/> will be inferred from the meta property in the json data, otherwise it will be
+        /// inferred from <paramref name="jsonGameStringFilePath"/>.
         /// </summary>
         /// <param name="jsonGameStringFilePath">The JSON file to parse.</param>
-        /// <returns>a <see cref="GameStringDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="GameStringDocument"/> representation of the JSON value.</returns>
         public static GameStringDocument Parse(string jsonGameStringFilePath)
         {
             return new GameStringDocument(jsonGameStringFilePath);
@@ -125,7 +141,7 @@ namespace Heroes.Icons
         /// </summary>
         /// <param name="jsonGameStringFilePath">The JSON file to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>a <see cref="GameStringDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="GameStringDocument"/> representation of the JSON value.</returns>
         public static GameStringDocument Parse(string jsonGameStringFilePath, Localization localization)
         {
             return new GameStringDocument(jsonGameStringFilePath, localization);
@@ -133,10 +149,10 @@ namespace Heroes.Icons
 
         /// <summary>
         /// Parses a json file as UTF-8-encoded text to allow for gamestring data reading.
-        /// <see cref="Localization"/> will be inferred from the meta property in the json data.
+        /// The <see cref="Localization"/> will be inferred from the meta property in the json data.
         /// </summary>
         /// <param name="jsonGameStrings">The JSON data to parse.</param>
-        /// <returns>a <see cref="GameStringDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="GameStringDocument"/> representation of the JSON value.</returns>
         public static GameStringDocument Parse(ReadOnlyMemory<byte> jsonGameStrings)
         {
             return new GameStringDocument(jsonGameStrings);
@@ -147,7 +163,7 @@ namespace Heroes.Icons
         /// </summary>
         /// <param name="jsonGameStrings">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>a <see cref="GameStringDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="GameStringDocument"/> representation of the JSON value.</returns>
         public static GameStringDocument Parse(ReadOnlyMemory<byte> jsonGameStrings, Localization localization)
         {
             return new GameStringDocument(jsonGameStrings, localization);
@@ -155,13 +171,13 @@ namespace Heroes.Icons
 
         /// <summary>
         /// Parses a json file as UTF-8-encoded text to allow for gamestring data reading.
+        /// The <see cref="Localization"/> will be inferred from the meta property in the json data.
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
-        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>a <see cref="GameStringDocument"/> representation of the JSON value.</returns>
-        public static GameStringDocument Parse(Stream utf8Json, Localization localization)
+        /// <returns>A <see cref="GameStringDocument"/> representation of the JSON value.</returns>
+        public static GameStringDocument Parse(Stream utf8Json)
         {
-            return new GameStringDocument(utf8Json, localization);
+            return new GameStringDocument(utf8Json);
         }
 
         /// <summary>
@@ -169,7 +185,33 @@ namespace Heroes.Icons
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>a <see cref="GameStringDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="GameStringDocument"/> representation of the JSON value.</returns>
+        public static GameStringDocument Parse(Stream utf8Json, Localization localization)
+        {
+            return new GameStringDocument(utf8Json, localization);
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for gamestring data reading.
+        /// The <see cref="Localization"/> will be inferred from the meta property in the json data.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <returns>A <see cref="GameStringDocument"/> representation of the JSON value.</returns>
+        public static async Task<GameStringDocument> ParseAsync(Stream utf8Json)
+        {
+            GameStringDocument document = new GameStringDocument(utf8Json, true);
+            await document.InitializeParseAsync<GameStringDocument>().ConfigureAwait(false);
+            document.SetLocalizationFromMeta();
+
+            return document;
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for gamestring data reading.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
+        /// <returns>A <see cref="GameStringDocument"/> representation of the JSON value.</returns>
         public static Task<GameStringDocument> ParseAsync(Stream utf8Json, Localization localization)
         {
             return new GameStringDocument(utf8Json, localization, true).InitializeParseAsync<GameStringDocument>();
@@ -186,7 +228,7 @@ namespace Heroes.Icons
         /// Updates the <paramref name="hero"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
         /// </summary>
         /// <param name="hero">The data to be updated.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="hero"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="hero"/> is <see langword="null"/>.</exception>
         public void UpdateGameStrings(Hero hero)
         {
             if (hero is null)
@@ -240,7 +282,7 @@ namespace Heroes.Icons
         /// Updates the <paramref name="unit"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
         /// </summary>
         /// <param name="unit">The data to be updated.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="unit"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="unit"/> is <see langword="null"/>.</exception>
         public void UpdateGameStrings(Unit unit)
         {
             if (unit is null)
@@ -277,7 +319,7 @@ namespace Heroes.Icons
         /// Updates the <paramref name="talent"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
         /// </summary>
         /// <param name="talent">The data to be updated.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="talent"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="talent"/> is <see langword="null"/>.</exception>
         public void UpdateGameStrings(Talent talent)
         {
             if (talent is null)
@@ -295,7 +337,7 @@ namespace Heroes.Icons
         /// Updates the <paramref name="ability"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
         /// </summary>
         /// <param name="ability">The data to be updated.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="ability"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="ability"/> is <see langword="null"/>.</exception>
         public void UpdateGameStrings(Ability ability)
         {
             if (ability is null)
@@ -313,7 +355,7 @@ namespace Heroes.Icons
         /// Updates the <paramref name="announcer"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
         /// </summary>
         /// <param name="announcer">The data to be updated.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="announcer"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="announcer"/> is <see langword="null"/>.</exception>
         public void UpdateGameStrings(Announcer announcer)
         {
             if (announcer is null)
@@ -336,10 +378,10 @@ namespace Heroes.Icons
         }
 
         /// <summary>
-        /// Parses the Json stream as async.
+        /// Parses the Json stream as <see langword="async"/>.
         /// </summary>
         /// <typeparam name="T">A class that derives <see cref="GameStringDocument"/>.</typeparam>
-        /// <returns>a class that derives <see cref="GameStringDocument"/>.</returns>
+        /// <returns><typeparamref name="T"/>.</returns>
         protected async Task<T> InitializeParseAsync<T>()
             where T : GameStringDocument
         {
@@ -366,7 +408,49 @@ namespace Heroes.Icons
             }
         }
 
-        private bool TryGetValueFromJsonElement(JsonElement element, string key, string id, out JsonElement value)
+        /// <summary>
+        /// Sets the <see cref="Localization"/> from the meta property in the json data.
+        /// </summary>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        protected bool SetLocalizationFromMeta()
+        {
+            if (JsonGameStringDocument.RootElement.TryGetProperty("meta", out JsonElement metaElement))
+            {
+                if (metaElement.TryGetProperty("locale", out JsonElement locale) && Enum.TryParse(locale.ToString(), true, out Localization localization))
+                {
+                    Localization = localization;
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="Localization"/> from <paramref name="jsonGameStringFilePath"/>.
+        /// </summary>
+        /// <param name="jsonGameStringFilePath">The json file path.</param>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        protected bool SetLocalizationFromFileName(string jsonGameStringFilePath)
+        {
+            string? file = Path.GetFileNameWithoutExtension(jsonGameStringFilePath);
+
+            int index = file.LastIndexOf('_');
+            if (index > -1)
+            {
+                if (Enum.TryParse(file.Substring(index + 1), true, out Localization localization))
+                {
+                    Localization = localization;
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static bool TryGetValueFromJsonElement(JsonElement element, string key, string id, out JsonElement value)
         {
             value = default;
 

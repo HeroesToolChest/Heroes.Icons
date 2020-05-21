@@ -15,7 +15,7 @@ namespace Heroes.Icons.DataDocument
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AnnouncerDataDocument"/> class.
-        /// <see cref="Localization"/> will be inferred from <paramref name="jsonDataFilePath"/>.
+        /// The <see cref="Localization"/> will be inferred from <paramref name="jsonDataFilePath"/>.
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON file containing announcer data.</param>
         protected AnnouncerDataDocument(string jsonDataFilePath)
@@ -26,7 +26,7 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Initializes a new instance of the <see cref="AnnouncerDataDocument"/> class.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file containing announcer data.</param>
+        /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         protected AnnouncerDataDocument(string jsonDataFilePath, Localization localization)
             : base(jsonDataFilePath, localization)
@@ -36,7 +36,7 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Initializes a new instance of the <see cref="AnnouncerDataDocument"/> class.
         /// </summary>
-        /// <param name="jsonData">The JSON data containing the announcer data.</param>
+        /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         protected AnnouncerDataDocument(ReadOnlyMemory<byte> jsonData, Localization localization)
             : base(jsonData, localization)
@@ -46,7 +46,7 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Initializes a new instance of the <see cref="AnnouncerDataDocument"/> class.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file containing announcer data.</param>
+        /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
         protected AnnouncerDataDocument(string jsonDataFilePath, GameStringDocument gameStringDocument)
             : base(jsonDataFilePath, gameStringDocument)
@@ -56,7 +56,7 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Initializes a new instance of the <see cref="AnnouncerDataDocument"/> class.
         /// </summary>
-        /// <param name="jsonData">The JSON data containing the announcer data.</param>
+        /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
         protected AnnouncerDataDocument(ReadOnlyMemory<byte> jsonData, GameStringDocument gameStringDocument)
             : base(jsonData, gameStringDocument)
@@ -66,19 +66,42 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Initializes a new instance of the <see cref="AnnouncerDataDocument"/> class.
         /// </summary>
-        /// <param name="utf8Json">The JSON data containing the data.</param>
+        /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as async.</param>
+        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
         protected AnnouncerDataDocument(Stream utf8Json, Localization localization, bool isAsync = false)
             : base(utf8Json, localization, isAsync)
         {
         }
 
         /// <summary>
-        /// Parses a json file as UTF-8-encoded text to allow for <see cref="Announcer"/> data reading.
+        /// Initializes a new instance of the <see cref="AnnouncerDataDocument"/> class.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file containing announcer data.</param>
-        /// <returns>an <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
+        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
+        protected AnnouncerDataDocument(Stream utf8Json, GameStringDocument gameStringDocument, bool isAsync = false)
+            : base(utf8Json, gameStringDocument, isAsync)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AnnouncerDataDocument"/> class.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
+        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
+        protected AnnouncerDataDocument(Stream utf8Json, Stream utf8JsonGameStrings, bool isAsync = false)
+            : base(utf8Json, utf8JsonGameStrings, isAsync)
+        {
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for <see cref="Announcer"/> data reading.
+        /// The <see cref="Localization"/> will be inferred from <paramref name="jsonDataFilePath"/>.
+        /// </summary>
+        /// <param name="jsonDataFilePath">The JSON data to parse.</param>
+        /// <returns>An <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
         public static AnnouncerDataDocument Parse(string jsonDataFilePath)
         {
             return new AnnouncerDataDocument(jsonDataFilePath);
@@ -87,9 +110,9 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="Announcer"/> data reading.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file containing announcer data.</param>
+        /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>an <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>An <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
         public static AnnouncerDataDocument Parse(string jsonDataFilePath, Localization localization)
         {
             return new AnnouncerDataDocument(jsonDataFilePath, localization);
@@ -98,9 +121,9 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="Announcer"/> data reading.
         /// </summary>
-        /// <param name="jsonData">The JSON data containing the announcer data.</param>
+        /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>an <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>An <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
         public static AnnouncerDataDocument Parse(ReadOnlyMemory<byte> jsonData, Localization localization)
         {
             return new AnnouncerDataDocument(jsonData, localization);
@@ -109,9 +132,9 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="Announcer"/> data reading.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file containing announcer data.</param>
+        /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <returns>an <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>An <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
         public static AnnouncerDataDocument Parse(string jsonDataFilePath, GameStringDocument gameStringDocument)
         {
             return new AnnouncerDataDocument(jsonDataFilePath, gameStringDocument);
@@ -120,9 +143,9 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="Announcer"/> data reading.
         /// </summary>
-        /// <param name="jsonData">The JSON data containing the announcer data.</param>
+        /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <returns>an <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>An <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
         public static AnnouncerDataDocument Parse(ReadOnlyMemory<byte> jsonData, GameStringDocument gameStringDocument)
         {
             return new AnnouncerDataDocument(jsonData, gameStringDocument);
@@ -131,9 +154,9 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="Announcer"/> data reading.
         /// </summary>
-        /// <param name="utf8Json">The JSON data containing the data.</param>
+        /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>an <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>An <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
         public static AnnouncerDataDocument Parse(Stream utf8Json, Localization localization)
         {
             return new AnnouncerDataDocument(utf8Json, localization);
@@ -142,20 +165,66 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="Announcer"/> data reading.
         /// </summary>
-        /// <param name="utf8Json">The JSON data containing the data.</param>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
+        /// <returns>An <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
+        public static AnnouncerDataDocument Parse(Stream utf8Json, GameStringDocument gameStringDocument)
+        {
+            return new AnnouncerDataDocument(utf8Json, gameStringDocument);
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for <see cref="Announcer"/> data reading.
+        /// The <see cref="Localization"/> will be inferred from the meta property in the <paramref name="utf8JsonGameStrings"/> data.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
+        /// <returns>An <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
+        public static AnnouncerDataDocument Parse(Stream utf8Json, Stream utf8JsonGameStrings)
+        {
+            return new AnnouncerDataDocument(utf8Json, utf8JsonGameStrings);
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for <see cref="Announcer"/> data reading.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>an <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>An <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
         public static Task<AnnouncerDataDocument> ParseAsync(Stream utf8Json, Localization localization)
         {
-            return new AnnouncerDataDocument(utf8Json, localization, true).InitializeParseAsync<AnnouncerDataDocument>();
+            return new AnnouncerDataDocument(utf8Json, localization, true).InitializeParseDataStreamAsync<AnnouncerDataDocument>();
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for <see cref="Announcer"/> data reading.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
+        /// <returns>An <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
+        public static Task<AnnouncerDataDocument> ParseAsync(Stream utf8Json, GameStringDocument gameStringDocument)
+        {
+            return new AnnouncerDataDocument(utf8Json, gameStringDocument, true).InitializeParseDataStreamAsync<AnnouncerDataDocument>();
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for <see cref="Announcer"/> data reading.
+        /// The <see cref="Localization"/> will be inferred from the meta property in the <paramref name="utf8JsonGameStrings"/> data.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
+        /// <returns>An <see cref="AnnouncerDataDocument"/> representation of the JSON value.</returns>
+        public static Task<AnnouncerDataDocument> ParseAsync(Stream utf8Json, Stream utf8JsonGameStrings)
+        {
+            return new AnnouncerDataDocument(utf8Json, utf8JsonGameStrings, true).InitializeParseDataWithGameStringStreamAsync<AnnouncerDataDocument>();
         }
 
         /// <summary>
         /// Gets an <see cref="Announcer"/> from the announcer <paramref name="id"/> property value.
         /// </summary>
         /// <param name="id">An announcer id property value.</param>
-        /// <returns>an <see cref="Announcer"/> object.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="id"/> is null.</exception>
+        /// <returns>An <see cref="Announcer"/> object.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="id"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
         public Announcer GetAnnouncerById(string id)
         {
@@ -173,8 +242,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="id">An announcer id property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="Announcer"/> associated with the <paramref name="id"/> property value.</param>
-        /// <returns>true if the value was found; otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="id"/> is null.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="id"/> is <see langword="null"/>.</exception>
         public bool TryGetAnnouncerById(string id, [NotNullWhen(true)] out Announcer? value)
         {
             if (id is null)
@@ -196,9 +265,9 @@ namespace Heroes.Icons.DataDocument
         /// Gets an <see cref="Announcer"/> from the announcer <paramref name="hyperlinkId"/> property value.
         /// </summary>
         /// <param name="hyperlinkId">An announcer hyperlinkId property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException"><paramref name="hyperlinkId"/> property value was not found.</exception>
-        /// <returns>an <see cref="Announcer"/> object.</returns>
+        /// <returns>An <see cref="Announcer"/> object.</returns>
         public Announcer GetAnnouncerByHyperlinkId(string hyperlinkId)
         {
             if (hyperlinkId is null)
@@ -217,8 +286,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="hyperlinkId">An announcer hyperlinkId property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="Announcer"/> associated with the <paramref name="hyperlinkId"/> property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is null.</exception>
-        /// <returns>true if the value was found; otherwise false.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
         public bool TryGetAnnouncerByHyperlinkId(string hyperlinkId, [NotNullWhen(true)] out Announcer? value)
             => PropertyLookup("hyperlinkId", hyperlinkId, GetAnnouncerData, out value);
 
@@ -226,9 +295,9 @@ namespace Heroes.Icons.DataDocument
         /// Gets an <see cref="Announcer"/> from the announcer <paramref name="attributeId"/> property value.
         /// </summary>
         /// <param name="attributeId">An announcer attributeId property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException"><paramref name="attributeId"/> property value was not found.</exception>
-        /// <returns>an <see cref="Announcer"/> object.</returns>
+        /// <returns>An <see cref="Announcer"/> object.</returns>
         public Announcer GetAnnouncerByAttributeId(string attributeId)
         {
             if (attributeId is null)
@@ -247,8 +316,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="attributeId">An announcer attributeId property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="Announcer"/> associated with the <paramref name="attributeId"/> property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is null.</exception>
-        /// <returns>true if the value was found; otherwise false.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is <see langword="null"/>.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
         public bool TryGetAnnouncerByAttributeId(string attributeId, [NotNullWhen(true)] out Announcer? value)
             => PropertyLookup("attributeId", attributeId, GetAnnouncerData, out value);
 
@@ -256,9 +325,9 @@ namespace Heroes.Icons.DataDocument
         /// Gets an <see cref="Announcer"/> from the announcer <paramref name="heroId"/> property value.
         /// </summary>
         /// <param name="heroId">An announcer heroId property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="heroId"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="heroId"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException"><paramref name="heroId"/> property value was not found.</exception>
-        /// <returns>an <see cref="Announcer"/> object.</returns>
+        /// <returns>An <see cref="Announcer"/> object.</returns>
         public Announcer GetAnnouncerByHeroId(string heroId)
         {
             if (heroId is null)
@@ -277,8 +346,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="heroId">An announcer heroId property value to find.</param>
         /// <param name="value">When this method returns, contains the <see cref="Announcer"/> associated with the <paramref name="heroId"/> property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="heroId"/> is null.</exception>
-        /// <returns>true if the value was found; otherwise false.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="heroId"/> is <see langword="null"/>.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
         public bool TryGetAnnouncerByHeroId(string heroId, [NotNullWhen(true)] out Announcer? value)
             => PropertyLookup("heroId", heroId, GetAnnouncerData, out value);
 

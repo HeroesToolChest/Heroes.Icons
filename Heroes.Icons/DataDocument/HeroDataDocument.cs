@@ -18,7 +18,7 @@ namespace Heroes.Icons.DataDocument
         /// Initializes a new instance of the <see cref="HeroDataDocument"/> class.
         /// <see cref="Localization"/> will be inferred from the <paramref name="jsonDataFilePath"/>.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file to parse.</param>
+        /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         protected HeroDataDocument(string jsonDataFilePath)
             : base(jsonDataFilePath)
         {
@@ -27,7 +27,7 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Initializes a new instance of the <see cref="HeroDataDocument"/> class.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file to parse.</param>
+        /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         protected HeroDataDocument(string jsonDataFilePath, Localization localization)
             : base(jsonDataFilePath, localization)
@@ -48,7 +48,7 @@ namespace Heroes.Icons.DataDocument
         /// Initializes a new instance of the <see cref="HeroDataDocument"/> class.
         /// The <paramref name="gameStringDocument"/> overrides the <paramref name="jsonDataFilePath"/> <see cref="Localization"/>.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file to parse.</param>
+        /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
         protected HeroDataDocument(string jsonDataFilePath, GameStringDocument gameStringDocument)
             : base(jsonDataFilePath, gameStringDocument)
@@ -70,9 +70,31 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as async.</param>
+        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
         protected HeroDataDocument(Stream utf8Json, Localization localization, bool isAsync = false)
             : base(utf8Json, localization, isAsync)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HeroDataDocument"/> class.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
+        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
+        protected HeroDataDocument(Stream utf8Json, GameStringDocument gameStringDocument, bool isAsync = false)
+            : base(utf8Json, gameStringDocument, isAsync)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HeroDataDocument"/> class.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
+        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
+        protected HeroDataDocument(Stream utf8Json, Stream utf8JsonGameStrings, bool isAsync = false)
+            : base(utf8Json, utf8JsonGameStrings, isAsync)
         {
         }
 
@@ -89,8 +111,8 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="Hero"/> data reading.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file to parse.</param>
-        /// <returns>a <see cref="HeroDataDocument"/> representation of the JSON value.</returns>
+        /// <param name="jsonDataFilePath">The JSON data to parse.</param>
+        /// <returns>A <see cref="HeroDataDocument"/> representation of the JSON value.</returns>
         public static HeroDataDocument Parse(string jsonDataFilePath)
         {
             return new HeroDataDocument(jsonDataFilePath);
@@ -99,9 +121,9 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="Hero"/> data reading.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file to parse.</param>
+        /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>a <see cref="HeroDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="HeroDataDocument"/> representation of the JSON value.</returns>
         public static HeroDataDocument Parse(string jsonDataFilePath, Localization localization)
         {
             return new HeroDataDocument(jsonDataFilePath, localization);
@@ -112,7 +134,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>a <see cref="HeroDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="HeroDataDocument"/> representation of the JSON value.</returns>
         public static HeroDataDocument Parse(ReadOnlyMemory<byte> jsonData, Localization localization)
         {
             return new HeroDataDocument(jsonData, localization);
@@ -121,9 +143,9 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="Hero"/> data reading.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file to parse.</param>
+        /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <returns>a <see cref="HeroDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="HeroDataDocument"/> representation of the JSON value.</returns>
         public static HeroDataDocument Parse(string jsonDataFilePath, GameStringDocument gameStringDocument)
         {
             return new HeroDataDocument(jsonDataFilePath, gameStringDocument);
@@ -134,7 +156,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <returns>a <see cref="HeroDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="HeroDataDocument"/> representation of the JSON value.</returns>
         public static HeroDataDocument Parse(ReadOnlyMemory<byte> jsonData, GameStringDocument gameStringDocument)
         {
             return new HeroDataDocument(jsonData, gameStringDocument);
@@ -145,7 +167,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>a <see cref="HeroDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="HeroDataDocument"/> representation of the JSON value.</returns>
         public static HeroDataDocument Parse(Stream utf8Json, Localization localization)
         {
             return new HeroDataDocument(utf8Json, localization);
@@ -155,11 +177,57 @@ namespace Heroes.Icons.DataDocument
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="Hero"/> data reading.
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
+        /// <returns>An <see cref="HeroDataDocument"/> representation of the JSON value.</returns>
+        public static HeroDataDocument Parse(Stream utf8Json, GameStringDocument gameStringDocument)
+        {
+            return new HeroDataDocument(utf8Json, gameStringDocument);
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for <see cref="Hero"/> data reading.
+        /// The <see cref="Localization"/> will be inferred from the meta property in the <paramref name="utf8JsonGameStrings"/> data.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
+        /// <returns>An <see cref="HeroDataDocument"/> representation of the JSON value.</returns>
+        public static HeroDataDocument Parse(Stream utf8Json, Stream utf8JsonGameStrings)
+        {
+            return new HeroDataDocument(utf8Json, utf8JsonGameStrings);
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for <see cref="Hero"/> data reading.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>a <see cref="HeroDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="HeroDataDocument"/> representation of the JSON value.</returns>
         public static Task<HeroDataDocument> ParseAsync(Stream utf8Json, Localization localization)
         {
-            return new HeroDataDocument(utf8Json, localization, true).InitializeParseAsync<HeroDataDocument>();
+            return new HeroDataDocument(utf8Json, localization, true).InitializeParseDataStreamAsync<HeroDataDocument>();
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for <see cref="Hero"/> data reading.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
+        /// <returns>An <see cref="HeroDataDocument"/> representation of the JSON value.</returns>
+        public static Task<HeroDataDocument> ParseAsync(Stream utf8Json, GameStringDocument gameStringDocument)
+        {
+            return new HeroDataDocument(utf8Json, gameStringDocument, true).InitializeParseDataStreamAsync<HeroDataDocument>();
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for <see cref="Hero"/> data reading.
+        /// The <see cref="Localization"/> will be inferred from the meta property in the <paramref name="utf8JsonGameStrings"/> data.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
+        /// <returns>An <see cref="HeroDataDocument"/> representation of the JSON value.</returns>
+        public static Task<HeroDataDocument> ParseAsync(Stream utf8Json, Stream utf8JsonGameStrings)
+        {
+            return new HeroDataDocument(utf8Json, utf8JsonGameStrings, true).InitializeParseDataWithGameStringStreamAsync<HeroDataDocument>();
         }
 
         /// <summary>
@@ -170,8 +238,8 @@ namespace Heroes.Icons.DataDocument
         /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
         /// <param name="talents">A value indicating whether to include talent parsing.</param>
         /// <param name="heroUnits">A value indicating whether to include hero unit parsing.</param>
-        /// <returns>a <see cref="Hero"/> object.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="id"/> is null.</exception>
+        /// <returns>A <see cref="Hero"/> object.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="id"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
         public Hero GetHeroById(string id, bool abilities, bool subAbilities, bool talents, bool heroUnits)
         {
@@ -193,8 +261,8 @@ namespace Heroes.Icons.DataDocument
         /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
         /// <param name="talents">A value indicating whether to include talent parsing.</param>
         /// <param name="heroUnits">A value indicating whether to include hero unit parsing.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="id"/> is null.</exception>
-        /// <returns>true if the value was found; otherwise false.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="id"/> is <see langword="null"/>.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
         public bool TryGetHeroById(string id, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
         {
             if (id is null)
@@ -220,9 +288,9 @@ namespace Heroes.Icons.DataDocument
         /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
         /// <param name="talents">A value indicating whether to include talent parsing.</param>
         /// <param name="heroUnits">A value indicating whether to include hero unit parsing.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">The <paramref name="name"/> property value was not found.</exception>
-        /// <returns>a <see cref="Hero"/> object.</returns>
+        /// <returns>A <see cref="Hero"/> object.</returns>
         public Hero GetHeroByName(string name, bool abilities, bool subAbilities, bool talents, bool heroUnits)
         {
             if (name is null)
@@ -245,8 +313,8 @@ namespace Heroes.Icons.DataDocument
         /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
         /// <param name="talents">A value indicating whether to include talent parsing.</param>
         /// <param name="heroUnits">A value indicating whether to include hero unit parsing.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
-        /// <returns>true if the value was found; otherwise false.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
         public bool TryGetHeroByName(string name, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
             => PropertyLookup("name", name, out value, abilities, subAbilities, talents, heroUnits);
 
@@ -258,9 +326,9 @@ namespace Heroes.Icons.DataDocument
         /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
         /// <param name="talents">A value indicating whether to include talent parsing.</param>
         /// <param name="heroUnits">A value indicating whether to include hero unit parsing.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="unitId"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="unitId"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">The <paramref name="unitId"/> property value was not found.</exception>
-        /// <returns>a <see cref="Hero"/> object.</returns>
+        /// <returns>A <see cref="Hero"/> object.</returns>
         public Hero GetHeroByUnitId(string unitId, bool abilities, bool subAbilities, bool talents, bool heroUnits)
         {
             if (unitId is null)
@@ -281,8 +349,8 @@ namespace Heroes.Icons.DataDocument
         /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
         /// <param name="talents">A value indicating whether to include talent parsing.</param>
         /// <param name="heroUnits">A value indicating whether to include hero unit parsing.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="unitId"/> is null.</exception>
-        /// <returns>true if the value was found; otherwise false.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="unitId"/> is <see langword="null"/>.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
         public bool TryGetHeroByUnitId(string unitId, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
             => PropertyLookup("unitId", unitId, out value, abilities, subAbilities, talents, heroUnits);
 
@@ -294,9 +362,9 @@ namespace Heroes.Icons.DataDocument
         /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
         /// <param name="talents">A value indicating whether to include talent parsing.</param>
         /// <param name="heroUnits">A value indicating whether to include hero unit parsing.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">The <paramref name="hyperlinkId"/> property value was not found.</exception>
-        /// <returns>a <see cref="Hero"/> object.</returns>
+        /// <returns>A <see cref="Hero"/> object.</returns>
         public Hero GetHeroByHyperlinkId(string hyperlinkId, bool abilities, bool subAbilities, bool talents, bool heroUnits)
         {
             if (hyperlinkId is null)
@@ -317,8 +385,8 @@ namespace Heroes.Icons.DataDocument
         /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
         /// <param name="talents">A value indicating whether to include talent parsing.</param>
         /// <param name="heroUnits">A value indicating whether to include hero unit parsing.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is null.</exception>
-        /// <returns>true if the value was found; otherwise false.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
         public bool TryGetHeroByHyperlinkId(string hyperlinkId, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
             => PropertyLookup("hyperlinkId", hyperlinkId, out value, abilities, subAbilities, talents, heroUnits);
 
@@ -332,7 +400,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="heroUnits">A value indicating whether to include hero unit parsing.</param>
         /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is null.</exception>
         /// <exception cref="KeyNotFoundException">The <paramref name="attributeId"/> property value was not found.</exception>
-        /// <returns>a <see cref="Hero"/> object.</returns>
+        /// <returns>A <see cref="Hero"/> object.</returns>
         public Hero GetHeroByAttributeId(string attributeId, bool abilities, bool subAbilities, bool talents, bool heroUnits)
         {
             if (attributeId is null)
@@ -353,8 +421,8 @@ namespace Heroes.Icons.DataDocument
         /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
         /// <param name="talents">A value indicating whether to include talent parsing.</param>
         /// <param name="heroUnits">A value indicating whether to include hero unit parsing.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is null.</exception>
-        /// <returns>true if the value was found; otherwise false.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is <see langword="null"/>.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
         public bool TryGetHeroByAttributeId(string attributeId, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
             => PropertyLookup("attributeId", attributeId, out value, abilities, subAbilities, talents, heroUnits);
 
@@ -363,7 +431,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="heroId">A hero heroId property value.</param>
         /// <returns>The hero's name.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="heroId"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="heroId"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">No property was found with the requested property value.</exception>
         public string GetNameFromHeroId(string heroId)
         {
@@ -381,8 +449,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="heroId">A hero heroId property value.</param>
         /// <param name="value">When this method returns, contains the name of the hero.</param>
-        /// <returns>true if the value was found; otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="heroId"/> is null.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="heroId"/> is <see langword="null"/>.</exception>
         public bool TryGetNameFromHeroId(string heroId, [NotNullWhen(true)] out string? value)
         {
             if (heroId is null)
@@ -404,8 +472,8 @@ namespace Heroes.Icons.DataDocument
         /// Gets the hero's name from a <paramref name="unitId"/> property value.
         /// </summary>
         /// <param name="unitId">A hero unitId property value.</param>
-        /// <returns>the hero's name.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="unitId"/> is null.</exception>
+        /// <returns>The hero's name.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="unitId"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">No property was found with the requested property value.</exception>
         public string GetNameFromUnitId(string unitId)
         {
@@ -423,8 +491,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="unitId">A hero unitId property value.</param>
         /// <param name="value">When this method returns, contains the name of the hero.</param>
-        /// <returns>true if the value was found; otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="unitId"/> is null.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="unitId"/> is <see langword="null"/>.</exception>
         public bool TryGetNameFromUnitId(string unitId, [NotNullWhen(true)] out string? value)
         {
             if (unitId is null)
@@ -450,8 +518,8 @@ namespace Heroes.Icons.DataDocument
         /// Gets the hero's name from a <paramref name="hyperlinkId"/> property value.
         /// </summary>
         /// <param name="hyperlinkId">A hero hyperlinkId property value.</param>
-        /// <returns>the hero's name.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is null.</exception>
+        /// <returns>The hero's name.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">No property was found with the requested property value.</exception>
         public string GetNameFromHyperlinkId(string hyperlinkId)
         {
@@ -469,8 +537,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="hyperlinkId">A hero hyperlinkId property value.</param>
         /// <param name="value">When this method returns, contains the name of the hero.</param>
-        /// <returns>true if the value was found; otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is null.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
         public bool TryGetNameFromHyperlinkId(string hyperlinkId, [NotNullWhen(true)] out string? value)
         {
             if (hyperlinkId is null)
@@ -496,8 +564,8 @@ namespace Heroes.Icons.DataDocument
         /// Gets the hero's name from a <paramref name="attributeId"/> property value.
         /// </summary>
         /// <param name="attributeId">A hero attributeId property value.</param>
-        /// <returns>the hero's name.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is null.</exception>
+        /// <returns>The hero's name.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">No property was found with the requested property value.</exception>
         public string GetNameFromAttributeId(string attributeId)
         {
@@ -515,8 +583,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="attributeId">A hero attributeId property value.</param>
         /// <param name="value">When this method returns, contains the name of the hero.</param>
-        /// <returns>true if the value was found; otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is null.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is <see langword="null"/>.</exception>
         public bool TryGetNameFromAttributeId(string attributeId, [NotNullWhen(true)] out string? value)
         {
             if (attributeId is null)
@@ -542,8 +610,8 @@ namespace Heroes.Icons.DataDocument
         /// Gets the hero's id from a <paramref name="name"/> property value.
         /// </summary>
         /// <param name="name">A hero name property value.</param>
-        /// <returns>the hero's id.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <returns>The hero's id.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">No property was found with the requested property value.</exception>
         public string GetHeroIdFromName(string name)
         {
@@ -561,8 +629,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="name">A hero name property value.</param>
         /// <param name="value">When this method returns, contains the id of the hero.</param>
-        /// <returns>true if the value was found; otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
         public bool TryGetHeroIdFromName(string name, [NotNullWhen(true)] out string? value)
         {
             if (name is null)
@@ -587,8 +655,8 @@ namespace Heroes.Icons.DataDocument
         /// Gets the hero's id from a <paramref name="unitId"/> property value.
         /// </summary>
         /// <param name="unitId">A hero unitId property value.</param>
-        /// <returns>the hero's id.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="unitId"/> is null.</exception>
+        /// <returns>The hero's id.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="unitId"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">No property was found with the requested property value.</exception>
         public string GetHeroIdFromUnitId(string unitId)
         {
@@ -606,8 +674,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="unitId">A hero unitId property value.</param>
         /// <param name="value">When this method returns, contains the id of the hero.</param>
-        /// <returns>true if the value was found; otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="unitId"/> is null.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="unitId"/> is <see langword="null"/>.</exception>
         public bool TryGetHeroIdFromUnitId(string unitId, [NotNullWhen(true)] out string? value)
         {
             if (unitId is null)
@@ -632,8 +700,8 @@ namespace Heroes.Icons.DataDocument
         /// Gets the hero's id from a <paramref name="hyperlinkId"/> property value.
         /// </summary>
         /// <param name="hyperlinkId">A hero hyperlinkId property value.</param>
-        /// <returns>the hero's id.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is null.</exception>
+        /// <returns>The hero's id.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">No property was found with the requested property value.</exception>
         public string GetHeroIdFromHyperlinkId(string hyperlinkId)
         {
@@ -651,8 +719,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="hyperlinkId">A hero hyperlinkId property value.</param>
         /// <param name="value">When this method returns, contains the id of the hero.</param>
-        /// <returns>true if the value was found; otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is null.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
         public bool TryGetHeroIdFromHyperlinkId(string hyperlinkId, [NotNullWhen(true)] out string? value)
         {
             if (hyperlinkId is null)
@@ -677,8 +745,8 @@ namespace Heroes.Icons.DataDocument
         /// Gets the hero's id from a <paramref name="attributeId"/> property value.
         /// </summary>
         /// <param name="attributeId">A hero attributeId property value.</param>
-        /// <returns>the hero's id.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is null.</exception>
+        /// <returns>The hero's id.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">No property was found with the requested property value.</exception>
         public string GetHeroIdFromAttributeId(string attributeId)
         {
@@ -696,8 +764,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="attributeId">A hero attributeId property value.</param>
         /// <param name="value">When this method returns, contains the id of the hero.</param>
-        /// <returns>true if the value was found; otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is null.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is <see langword="null"/>.</exception>
         public bool TryGetHeroIdFromAttributeId(string attributeId, [NotNullWhen(true)] out string? value)
         {
             if (attributeId is null)
@@ -722,8 +790,8 @@ namespace Heroes.Icons.DataDocument
         /// Returns a value indicating whether a <paramref name="heroId"/> property value is found.
         /// </summary>
         /// <param name="heroId">A hero heroId property value.</param>
-        /// <returns>true if the value was found; otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="heroId"/> is null.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="heroId"/> is <see langword="null"/>.</exception>
         public bool IsHeroExistsByHeroId(string heroId)
         {
             if (heroId is null)
@@ -736,8 +804,8 @@ namespace Heroes.Icons.DataDocument
         /// Returns a value indicating whether a <paramref name="name"/> property value was found.
         /// </summary>
         /// <param name="name">A hero name property value.</param>
-        /// <returns>true if the value was found; otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
         public bool IsHeroExistsByName(string name)
         {
             if (name is null)
@@ -756,8 +824,8 @@ namespace Heroes.Icons.DataDocument
         /// Returns a value indicating whether a <paramref name="unitId"/> property value was found.
         /// </summary>
         /// <param name="unitId">A hero unitId property value.</param>
-        /// <returns>true if the value was found; otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="unitId"/> is null.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="unitId"/> is <see langword="null"/>.</exception>
         public bool IsHeroExistsByUnitId(string unitId)
         {
             if (unitId is null)
@@ -776,8 +844,8 @@ namespace Heroes.Icons.DataDocument
         /// Returns a value indicating whether a <paramref name="hyperlinkId"/> property value was found.
         /// </summary>
         /// <param name="hyperlinkId">A hero hyperlinkId property value.</param>
-        /// <returns>true if the value was found; otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is null.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
         public bool IsHeroExistsByHyperlinkId(string hyperlinkId)
         {
             if (hyperlinkId is null)
@@ -796,8 +864,8 @@ namespace Heroes.Icons.DataDocument
         /// Returns a value indicating whether the <paramref name="attributeId"/> property value was found.
         /// </summary>
         /// <param name="attributeId">A hero attributeId property value.</param>
-        /// <returns>true if the value was found; otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is null.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is <see langword="null"/>.</exception>
         public bool IsHeroExistsByAttributeId(string attributeId)
         {
             if (attributeId is null)

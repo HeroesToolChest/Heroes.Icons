@@ -13,27 +13,21 @@ namespace Heroes.Icons.DataDocument
     /// </summary>
     public abstract class DataDocumentBase : IDisposable
     {
-        private readonly Stream? _streamForAsync = null;
+        private readonly Stream? _streamForDataAsync = null;
+        private readonly Stream? _streamForGameStringAsync = null;
 
         private bool _disposedValue = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
-        /// <see cref="Localization"/> will be inferred from <paramref name="jsonDataFilePath"/>.
+        /// The <see cref="Localization"/> will be inferred from <paramref name="jsonDataFilePath"/>.
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON file to parse.</param>
         protected DataDocumentBase(string jsonDataFilePath)
         {
             JsonDataDocument = JsonDocument.Parse(File.ReadAllBytes(jsonDataFilePath));
 
-            string? file = Path.GetFileNameWithoutExtension(jsonDataFilePath);
-
-            int index = file.LastIndexOf('_');
-            if (index > -1)
-            {
-                if (Enum.TryParse(file.Substring(index + 1), true, out Localization localization))
-                    Localization = localization;
-            }
+            SetLocalizationFromFileName(jsonDataFilePath);
         }
 
         /// <summary>
@@ -64,7 +58,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON file to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="gameStringDocument"/> cannot be null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="gameStringDocument"/> is <see langword="null"/>.</exception>
         protected DataDocumentBase(string jsonDataFilePath, GameStringDocument gameStringDocument)
             : this(jsonDataFilePath)
         {
@@ -77,7 +71,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="gameStringDocument"/> cannot be null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="gameStringDocument"/> is <see langword="null"/>.</exception>
         protected DataDocumentBase(ReadOnlyMemory<byte> jsonData, GameStringDocument gameStringDocument)
             : this(jsonData)
         {
@@ -90,17 +84,65 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as async.</param>
-#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
         protected DataDocumentBase(Stream utf8Json, Localization localization, bool isAsync = false)
-#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         {
             if (isAsync)
-                _streamForAsync = utf8Json;
+            {
+                JsonDataDocument = null!;
+                _streamForDataAsync = utf8Json;
+            }
             else
+            {
                 JsonDataDocument = JsonDocument.Parse(utf8Json);
+            }
 
             Localization = localization;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
+        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="gameStringDocument"/> is <see langword="null"/>.</exception>
+        protected DataDocumentBase(Stream utf8Json, GameStringDocument gameStringDocument, bool isAsync = false)
+        {
+            if (isAsync)
+            {
+                JsonDataDocument = null!;
+                _streamForDataAsync = utf8Json;
+            }
+            else
+            {
+                JsonDataDocument = JsonDocument.Parse(utf8Json);
+            }
+
+            GameStringDocument = gameStringDocument ?? throw new ArgumentNullException(nameof(gameStringDocument));
+            Localization = gameStringDocument.Localization;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
+        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
+        protected DataDocumentBase(Stream utf8Json, Stream utf8JsonGameStrings, bool isAsync = false)
+        {
+            if (isAsync)
+            {
+                JsonDataDocument = null!;
+                _streamForDataAsync = utf8Json;
+                _streamForGameStringAsync = utf8JsonGameStrings;
+            }
+            else
+            {
+                JsonDataDocument = JsonDocument.Parse(utf8Json);
+                GameStringDocument = GameStringDocument.Parse(utf8JsonGameStrings);
+                Localization = GameStringDocument.Localization;
+            }
         }
 
         private DataDocumentBase(ReadOnlyMemory<byte> jsonData)
@@ -177,7 +219,7 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Gets the current <see cref="GameStringDocument"/> associated with this reader.
         /// </summary>
-        protected GameStringDocument? GameStringDocument { get; } = null;
+        protected GameStringDocument? GameStringDocument { get; private set; } = null;
 
         /// <inheritdoc/>
         public void Dispose()
@@ -187,14 +229,68 @@ namespace Heroes.Icons.DataDocument
         }
 
         /// <summary>
-        /// Parses the Json stream as async.
+        /// Sets the <see cref="Localization"/> from <paramref name="jsonDataFilePath"/>.
+        /// </summary>
+        /// <param name="jsonDataFilePath">The json file path.</param>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        protected bool SetLocalizationFromFileName(string jsonDataFilePath)
+        {
+            string? file = Path.GetFileNameWithoutExtension(jsonDataFilePath);
+
+            int index = file.LastIndexOf('_');
+            if (index > -1)
+            {
+                if (Enum.TryParse(file.Substring(index + 1), true, out Localization localization))
+                {
+                    Localization = localization;
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Parses the JSON data stream as async.
         /// </summary>
         /// <typeparam name="T">A class that derives <see cref="DataDocumentBase"/>.</typeparam>
         /// <returns>a class that derives <see cref="DataDocumentBase"/>.</returns>
-        protected async Task<T> InitializeParseAsync<T>()
+        /// <exception cref="InvalidOperationException"><see cref="_streamForDataAsync"/> is <see langword="null"/>.</exception>
+        protected async Task<T> InitializeParseDataStreamAsync<T>()
             where T : DataDocumentBase
         {
-            JsonDataDocument = await JsonDocument.ParseAsync(_streamForAsync).ConfigureAwait(false);
+            if (_streamForDataAsync is null)
+                throw new InvalidOperationException($"{nameof(_streamForDataAsync)} is null.");
+
+            JsonDataDocument = await JsonDocument.ParseAsync(_streamForDataAsync).ConfigureAwait(false);
+
+            return (T)this;
+        }
+
+        /// <summary>
+        /// Parses the JSON data and gamestring stream as async.
+        /// </summary>
+        /// <typeparam name="T">A class that derives <see cref="DataDocumentBase"/>.</typeparam>
+        /// <returns>a class that derives <see cref="DataDocumentBase"/>.</returns>
+        /// <exception cref="InvalidOperationException"><see cref="_streamForDataAsync"/> is <see langword="null"/>.</exception>
+        /// <exception cref="InvalidOperationException"><see cref="_streamForGameStringAsync"/> is <see langword="null"/>.</exception>
+        protected async Task<T> InitializeParseDataWithGameStringStreamAsync<T>()
+            where T : DataDocumentBase
+        {
+            if (_streamForDataAsync is null)
+                throw new InvalidOperationException($"{nameof(_streamForDataAsync)} is null.");
+
+            if (_streamForGameStringAsync is null)
+                throw new InvalidOperationException($"{nameof(_streamForGameStringAsync)} is null.");
+
+            Task<JsonDocument> dataDocumentTask = JsonDocument.ParseAsync(_streamForDataAsync);
+            Task<GameStringDocument> gameStringDocumentTask = GameStringDocument.ParseAsync(_streamForGameStringAsync);
+
+            JsonDataDocument = await dataDocumentTask.ConfigureAwait(false);
+            GameStringDocument = await gameStringDocumentTask.ConfigureAwait(false);
+
+            Localization = GameStringDocument.Localization;
 
             return (T)this;
         }
@@ -225,8 +321,8 @@ namespace Heroes.Icons.DataDocument
         /// <param name="propertyValue">The value of the property.</param>
         /// <param name="getData">The method to execute the lookup for the value.</param>
         /// <param name="value">An <see cref="IExtractable"/> object with the given <paramref name="propertyId"/>.</param>
-        /// <returns>true if the value was found; otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="propertyId"/>, <paramref name="propertyValue"/>, or <paramref name="getData"/> is null.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="propertyId"/>, <paramref name="propertyValue"/>, or <paramref name="getData"/> is <see langword="null"/>.</exception>
         protected virtual bool PropertyLookup<T>(string propertyId, string propertyValue, Func<string, JsonElement, T> getData, [NotNullWhen(true)] out T? value)
             where T : class, IExtractable, new()
         {
@@ -266,7 +362,8 @@ namespace Heroes.Icons.DataDocument
                 {
                     JsonDataDocument.Dispose();
                     GameStringDocument?.Dispose();
-                    _streamForAsync?.Dispose();
+                    _streamForDataAsync?.Dispose();
+                    _streamForGameStringAsync?.Dispose();
                 }
 
                 _disposedValue = true;

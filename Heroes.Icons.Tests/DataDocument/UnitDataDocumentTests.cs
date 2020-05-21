@@ -334,6 +334,30 @@ namespace Heroes.Icons.Tests.DataDocument
 
         [TestMethod]
         [TestCategory("DataDocument")]
+        public void DataDocumentStreamWithGameStringDocumentTest()
+        {
+            using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
+            using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+            using UnitDataDocument document = UnitDataDocument.Parse(stream, gameStringDocument);
+
+            Assert.AreEqual(Localization.KOKR, document.Localization);
+            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurEvolvedMonstrosity", out JsonElement _));
+        }
+
+        [TestMethod]
+        [TestCategory("DataDocument")]
+        public void DataDocumentStreamWithGameStringStreamTest()
+        {
+            using FileStream streamGameString = new FileStream(_jsonGameStringFileKOKR, FileMode.Open);
+            using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+            using UnitDataDocument document = UnitDataDocument.Parse(stream, streamGameString);
+
+            Assert.AreEqual(Localization.KOKR, document.Localization);
+            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurEvolvedMonstrosity", out JsonElement _));
+        }
+
+        [TestMethod]
+        [TestCategory("DataDocument")]
         public async Task DataDocumentStreamAsyncTest()
         {
             using FileStream stream = new FileStream(_dataFile, FileMode.Open);
@@ -341,6 +365,32 @@ namespace Heroes.Icons.Tests.DataDocument
 
             Assert.AreEqual(Localization.FRFR, document.Localization);
             Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurEvolvedMonstrosity", out JsonElement _));
+        }
+
+        [TestMethod]
+        [TestCategory("DataDocument")]
+        public async Task DataDocumentStreamWithGameStringDocumentAsyncTest()
+        {
+            using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
+            using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+            using UnitDataDocument document = await UnitDataDocument.ParseAsync(stream, gameStringDocument);
+
+            Assert.AreEqual(Localization.KOKR, document.Localization);
+            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurEvolvedMonstrosity", out JsonElement _));
+        }
+
+        [TestMethod]
+        [TestCategory("DataDocument")]
+        public async Task DataDocumentStreamWithGameStringStreamAsyncTest()
+        {
+            using FileStream streamGameString = new FileStream(_jsonGameStringFileKOKR, FileMode.Open);
+            using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+            using UnitDataDocument document = await UnitDataDocument.ParseAsync(stream, streamGameString);
+
+            Assert.AreEqual(Localization.KOKR, document.Localization);
+            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurEvolvedMonstrosity", out JsonElement _));
+
+            document.Dispose();
         }
 
         private static byte[] LoadJsonTestData()
@@ -542,7 +592,7 @@ namespace Heroes.Icons.Tests.DataDocument
             return memoryStream.ToArray();
         }
 
-        private byte[] LoadEnusLocalizedStringData()
+        private static byte[] LoadEnusLocalizedStringData()
         {
             using MemoryStream memoryStream = new MemoryStream();
             using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
@@ -590,7 +640,7 @@ namespace Heroes.Icons.Tests.DataDocument
             return memoryStream.ToArray();
         }
 
-        private void BasicAbathurEvolvedMonstrosityAsserts(Unit unit)
+        private static void BasicAbathurEvolvedMonstrosityAsserts(Unit unit)
         {
             Assert.AreEqual("AbathurEvolvedMonstrosity", unit.CUnitId);
             Assert.AreEqual("AbathurEvolvedMonstrosity", unit.Id);

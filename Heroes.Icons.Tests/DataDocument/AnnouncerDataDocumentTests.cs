@@ -88,12 +88,60 @@ namespace Heroes.Icons.Tests.DataDocument
 
         [TestMethod]
         [TestCategory("DataDocument")]
+        public void DataDocumentStreamWithGameStringDocumentTest()
+        {
+            using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
+            using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+            using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(stream, gameStringDocument);
+
+            Assert.AreEqual(Localization.KOKR, document.Localization);
+            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
+        }
+
+        [TestMethod]
+        [TestCategory("DataDocument")]
+        public void DataDocumentStreamWithGameStringStreamTest()
+        {
+            using FileStream streamGameString = new FileStream(_jsonGameStringFileKOKR, FileMode.Open);
+            using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+            using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(stream, streamGameString);
+
+            Assert.AreEqual(Localization.KOKR, document.Localization);
+            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
+        }
+
+        [TestMethod]
+        [TestCategory("DataDocument")]
         public async Task DataDocumentStreamAsyncTest()
         {
             using FileStream stream = new FileStream(_dataFile, FileMode.Open);
             using AnnouncerDataDocument document = await AnnouncerDataDocument.ParseAsync(stream, Localization.FRFR);
 
             Assert.AreEqual(Localization.FRFR, document.Localization);
+            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
+        }
+
+        [TestMethod]
+        [TestCategory("DataDocument")]
+        public async Task DataDocumentStreamWithGameStringDocumentAsyncTest()
+        {
+            using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
+            using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+            using AnnouncerDataDocument document = await AnnouncerDataDocument.ParseAsync(stream, gameStringDocument);
+
+            Assert.AreEqual(Localization.KOKR, document.Localization);
+            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
+        }
+
+        [TestMethod]
+        [TestCategory("DataDocument")]
+        public async Task DataDocumentStreamWithGameStringStreamAsyncTest()
+        {
+            using FileStream streamGameString = new FileStream(_jsonGameStringFileKOKR, FileMode.Open);
+            using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+            using AnnouncerDataDocument document = await AnnouncerDataDocument.ParseAsync(stream, streamGameString);
+
+            Assert.AreEqual(Localization.KOKR, document.Localization);
             Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
         }
 
@@ -334,7 +382,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual("asdfsn", announcer.SortName);
         }
 
-        private byte[] LoadJsonTestData()
+        private static byte[] LoadJsonTestData()
         {
             using MemoryStream memoryStream = new MemoryStream();
             using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
@@ -373,7 +421,7 @@ namespace Heroes.Icons.Tests.DataDocument
             return memoryStream.ToArray();
         }
 
-        private byte[] LoadEnusLocalizedStringData()
+        private static byte[] LoadEnusLocalizedStringData()
         {
             using MemoryStream memoryStream = new MemoryStream();
             using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
@@ -411,7 +459,7 @@ namespace Heroes.Icons.Tests.DataDocument
             return memoryStream.ToArray();
         }
 
-        private void BasicAdjutantAsserts(Announcer announcer)
+        private static void BasicAdjutantAsserts(Announcer announcer)
         {
             Assert.AreEqual("Adjutant", announcer.Id);
             Assert.AreEqual("Adjutant Announcer", announcer.Name);

@@ -17,7 +17,7 @@ namespace Heroes.Icons.DataDocument
         /// Initializes a new instance of the <see cref="UnitDataDocument"/> class.
         /// <see cref="Localization"/> will be inferred from <paramref name="jsonDataFilePath"/>.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file to parse.</param>
+        /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         protected UnitDataDocument(string jsonDataFilePath)
             : base(jsonDataFilePath)
         {
@@ -26,7 +26,7 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Initializes a new instance of the <see cref="UnitDataDocument"/> class.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file to parse.</param>
+        /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         protected UnitDataDocument(string jsonDataFilePath, Localization localization)
             : base(jsonDataFilePath, localization)
@@ -47,7 +47,7 @@ namespace Heroes.Icons.DataDocument
         /// Initializes a new instance of the <see cref="UnitDataDocument"/> class.
         /// The <paramref name="gameStringDocument"/> overrides the <paramref name="jsonDataFilePath"/> <see cref="Localization"/>.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file to parse.</param>
+        /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
         protected UnitDataDocument(string jsonDataFilePath, GameStringDocument gameStringDocument)
             : base(jsonDataFilePath, gameStringDocument)
@@ -69,17 +69,39 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as async.</param>
+        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
         protected UnitDataDocument(Stream utf8Json, Localization localization, bool isAsync = false)
             : base(utf8Json, localization, isAsync)
         {
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="UnitDataDocument"/> class.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
+        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
+        protected UnitDataDocument(Stream utf8Json, GameStringDocument gameStringDocument, bool isAsync = false)
+            : base(utf8Json, gameStringDocument, isAsync)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnitDataDocument"/> class.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
+        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
+        protected UnitDataDocument(Stream utf8Json, Stream utf8JsonGameStrings, bool isAsync = false)
+            : base(utf8Json, utf8JsonGameStrings, isAsync)
+        {
+        }
+
+        /// <summary>
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="Unit"/> data reading.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file to parse.</param>
-        /// <returns>an <see cref="UnitDataDocument"/> representation of the JSON value.</returns>
+        /// <param name="jsonDataFilePath">The JSON data to parse.</param>
+        /// <returns>An <see cref="UnitDataDocument"/> representation of the JSON value.</returns>
         public static UnitDataDocument Parse(string jsonDataFilePath)
         {
             return new UnitDataDocument(jsonDataFilePath);
@@ -88,9 +110,9 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="Unit"/> data reading.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file to parse.</param>
+        /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>an <see cref="UnitDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>An <see cref="UnitDataDocument"/> representation of the JSON value.</returns>
         public static UnitDataDocument Parse(string jsonDataFilePath, Localization localization)
         {
             return new UnitDataDocument(jsonDataFilePath, localization);
@@ -101,7 +123,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>an <see cref="UnitDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>An <see cref="UnitDataDocument"/> representation of the JSON value.</returns>
         public static UnitDataDocument Parse(ReadOnlyMemory<byte> jsonData, Localization localization)
         {
             return new UnitDataDocument(jsonData, localization);
@@ -110,9 +132,9 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="Unit"/> data reading.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file to parse.</param>
+        /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <returns>an <see cref="UnitDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>An <see cref="UnitDataDocument"/> representation of the JSON value.</returns>
         public static UnitDataDocument Parse(string jsonDataFilePath, GameStringDocument gameStringDocument)
         {
             return new UnitDataDocument(jsonDataFilePath, gameStringDocument);
@@ -123,7 +145,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <returns>an <see cref="UnitDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>An <see cref="UnitDataDocument"/> representation of the JSON value.</returns>
         public static UnitDataDocument Parse(ReadOnlyMemory<byte> jsonData, GameStringDocument gameStringDocument)
         {
             return new UnitDataDocument(jsonData, gameStringDocument);
@@ -134,7 +156,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>an <see cref="UnitDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>An <see cref="UnitDataDocument"/> representation of the JSON value.</returns>
         public static UnitDataDocument Parse(Stream utf8Json, Localization localization)
         {
             return new UnitDataDocument(utf8Json, localization);
@@ -144,11 +166,57 @@ namespace Heroes.Icons.DataDocument
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="Unit"/> data reading.
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
+        /// <returns>An <see cref="UnitDataDocument"/> representation of the JSON value.</returns>
+        public static UnitDataDocument Parse(Stream utf8Json, GameStringDocument gameStringDocument)
+        {
+            return new UnitDataDocument(utf8Json, gameStringDocument);
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for <see cref="Unit"/> data reading.
+        /// The <see cref="Localization"/> will be inferred from the meta property in the <paramref name="utf8JsonGameStrings"/> data.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
+        /// <returns>An <see cref="UnitDataDocument"/> representation of the JSON value.</returns>
+        public static UnitDataDocument Parse(Stream utf8Json, Stream utf8JsonGameStrings)
+        {
+            return new UnitDataDocument(utf8Json, utf8JsonGameStrings);
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for <see cref="Unit"/> data reading.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>an <see cref="UnitDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>An <see cref="UnitDataDocument"/> representation of the JSON value.</returns>
         public static Task<UnitDataDocument> ParseAsync(Stream utf8Json, Localization localization)
         {
-            return new UnitDataDocument(utf8Json, localization, true).InitializeParseAsync<UnitDataDocument>();
+            return new UnitDataDocument(utf8Json, localization, true).InitializeParseDataStreamAsync<UnitDataDocument>();
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for <see cref="Unit"/> data reading.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
+        /// <returns>An <see cref="UnitDataDocument"/> representation of the JSON value.</returns>
+        public static Task<UnitDataDocument> ParseAsync(Stream utf8Json, GameStringDocument gameStringDocument)
+        {
+            return new UnitDataDocument(utf8Json, gameStringDocument, true).InitializeParseDataStreamAsync<UnitDataDocument>();
+        }
+
+        /// <summary>
+        /// Parses a json file as UTF-8-encoded text to allow for <see cref="Unit"/> data reading.
+        /// The <see cref="Localization"/> will be inferred from the meta property in the <paramref name="utf8JsonGameStrings"/> data.
+        /// </summary>
+        /// <param name="utf8Json">The JSON data to parse.</param>
+        /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
+        /// <returns>An <see cref="UnitDataDocument"/> representation of the JSON value.</returns>
+        public static Task<UnitDataDocument> ParseAsync(Stream utf8Json, Stream utf8JsonGameStrings)
+        {
+            return new UnitDataDocument(utf8Json, utf8JsonGameStrings, true).InitializeParseDataWithGameStringStreamAsync<UnitDataDocument>();
         }
 
         /// <summary>
@@ -157,8 +225,8 @@ namespace Heroes.Icons.DataDocument
         /// <param name="id">A unit id property value.</param>
         /// <param name="abilities">A value indicating whether to include ability parsing.</param>
         /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
-        /// <returns>a <see cref="Unit"/> object.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="id"/> is null.</exception>
+        /// <returns>A <see cref="Unit"/> object.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="id"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
         public Unit GetUnitById(string id, bool abilities, bool subAbilities)
         {
@@ -178,8 +246,8 @@ namespace Heroes.Icons.DataDocument
         /// <param name="value">When this method returns, contains the <see cref="Unit"/> associated with the <paramref name="id"/> property value.</param>
         /// <param name="abilities">A value indicating whether to include ability parsing.</param>
         /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
-        /// <returns>true if the value was found; otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="id"/> is null.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="id"/> is <see langword="null"/>.</exception>
         public bool TryGetUnitById(string id, [NotNullWhen(true)] out Unit? value, bool abilities, bool subAbilities)
         {
             if (id is null)
@@ -203,8 +271,8 @@ namespace Heroes.Icons.DataDocument
         /// <param name="hyperlinkId">A unit hyperlinkId property value.</param>
         /// <param name="abilities">A value indicating whether to include ability parsing.</param>
         /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
-        /// <returns>a <see cref="Unit"/> object.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is null.</exception>
+        /// <returns>A <see cref="Unit"/> object.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">The <paramref name="hyperlinkId"/> property value was not found.</exception>
         public Unit GetUnitByHyperlinkId(string hyperlinkId, bool abilities, bool subAbilities)
         {
@@ -224,8 +292,8 @@ namespace Heroes.Icons.DataDocument
         /// <param name="value">When this method returns, contains the <see cref="Unit"/> associated with the <paramref name="hyperlinkId"/> property value.</param>
         /// <param name="abilities">A value indicating whether to include ability parsing.</param>
         /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
-        /// <returns>true if the value was found; otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is null.</exception>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
         public bool TryGetUnitByHyperlinkId(string hyperlinkId, [NotNullWhen(true)] out Unit? value, bool abilities, bool subAbilities)
             => PropertyLookup("hyperlinkId", hyperlinkId, out value, abilities, subAbilities);
 
@@ -234,7 +302,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="abilities">A value indicating whether to include ability parsing.</param>
         /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
-        /// <returns>a collection of <see cref="Unit"/>s.</returns>
+        /// <returns>A collection of <see cref="Unit"/>s.</returns>
         public IEnumerable<Unit> GetUnits(bool abilities, bool subAbilities)
         {
             List<Unit> unitList = new List<Unit>();
