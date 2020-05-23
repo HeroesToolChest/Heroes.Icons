@@ -25,7 +25,7 @@ namespace Heroes.Icons.Tests.DataDocument
 
         [TestMethod]
         [TestCategory("DataDocument")]
-        public void DataDocumentFileGSRTest()
+        public void DataDocumentFileGSDTest()
         {
             using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileFRFR);
             using MatchAwardDataDocument document = MatchAwardDataDocument.Parse(_dataFile, gameStringDocument);
@@ -56,7 +56,7 @@ namespace Heroes.Icons.Tests.DataDocument
 
         [TestMethod]
         [TestCategory("DataDocument")]
-        public void DataDocumentROMGSRTest()
+        public void DataDocumentROMGSDTest()
         {
             using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
             using MatchAwardDataDocument document = MatchAwardDataDocument.Parse(GetBytesForROM("HatTrick"), gameStringDocument);
@@ -88,7 +88,7 @@ namespace Heroes.Icons.Tests.DataDocument
 
         [TestMethod]
         [TestCategory("DataDocument")]
-        public void DataDocumentStreamWithGameStringDocumentTest()
+        public void DataDocumentStreamWithGSDTest()
         {
             using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
             using FileStream stream = new FileStream(_dataFile, FileMode.Open);

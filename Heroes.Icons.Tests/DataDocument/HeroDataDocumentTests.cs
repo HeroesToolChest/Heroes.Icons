@@ -15,6 +15,7 @@ namespace Heroes.Icons.Tests.DataDocument
     public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     {
         private readonly string _dataFile = Path.Combine("JsonData", "herodata_76003_kokr.json");
+        private readonly string _dataFileLocalized = Path.Combine("JsonData", "herodata_76003_localized.json");
         private readonly string _jsonGameStringFileKOKR = Path.Combine("JsonGameStrings", "gamestrings_76893_kokr.json");
         private readonly string _jsonGameStringFileFRFR = Path.Combine("JsonGameStrings", "gamestrings_76893_frfr.json");
 
@@ -1422,10 +1423,10 @@ namespace Heroes.Icons.Tests.DataDocument
 
         [TestMethod]
         [TestCategory("DataDocument")]
-        public void DataDocumentFileGSRTest()
+        public void DataDocumentFileGSDTest()
         {
             using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileFRFR);
-            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(_dataFile, gameStringDocument);
+            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(_dataFileLocalized, gameStringDocument);
 
             Assert.AreEqual(Localization.FRFR, heroDataDocument.Localization);
             Assert.IsTrue(heroDataDocument.TryGetHeroById("Abathur", out Hero _, false, false, false, false));
@@ -1433,7 +1434,7 @@ namespace Heroes.Icons.Tests.DataDocument
 
         [TestMethod]
         [TestCategory("DataDocument")]
-        public void DataDocumentROMGSRTest()
+        public void DataDocumentROMGSDTest()
         {
             using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
             using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(GetBytesForROM("Abathur"), gameStringDocument);
@@ -1455,7 +1456,7 @@ namespace Heroes.Icons.Tests.DataDocument
 
         [TestMethod]
         [TestCategory("DataDocument")]
-        public void DataDocumentStreamWithGameStringDocumentTest()
+        public void DataDocumentStreamWithGSDTest()
         {
             using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
             using FileStream stream = new FileStream(_dataFile, FileMode.Open);

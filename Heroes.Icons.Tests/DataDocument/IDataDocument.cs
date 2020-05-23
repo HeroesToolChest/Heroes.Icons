@@ -10,13 +10,13 @@ namespace Heroes.Icons.Tests.DataDocument
 
         void DataDocumentROMLocaleTest();
 
-        void DataDocumentFileGSRTest();
+        void DataDocumentFileGSDTest();
 
-        void DataDocumentROMGSRTest();
+        void DataDocumentROMGSDTest();
 
         void DataDocumentStreamTest();
 
-        void DataDocumentStreamWithGameStringDocumentTest();
+        void DataDocumentStreamWithGSDTest();
 
         void DataDocumentStreamWithGameStringStreamTest();
 
