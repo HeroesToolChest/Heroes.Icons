@@ -481,60 +481,6 @@ namespace Heroes.Icons.Tests.DataDocument
 
         [DataTestMethod]
         [DataRow(null, true, true, true, true)]
-        [DataRow("Ragnaros", true, true, true, true)]
-        [DataRow("asdf", true, true, true, true)]
-        public void TryGetHeroByNameTest(string name, bool abilities, bool subAbilities, bool talents, bool heroUnits)
-        {
-            if (name is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _heroDataDocument.TryGetHeroByName(name!, out _, abilities, subAbilities, talents, heroUnits);
-                });
-
-                return;
-            }
-            else if (name == "asdf")
-            {
-                Assert.IsFalse(_heroDataDocument.TryGetHeroByName(name!, out _, abilities, subAbilities, talents, heroUnits));
-
-                return;
-            }
-
-            Assert.IsTrue(_heroDataDocument.TryGetHeroByName(name, out Hero? hero, abilities, subAbilities, talents, heroUnits));
-            BasicRagnarosAsserts(hero!);
-        }
-
-        [DataTestMethod]
-        [DataRow(null, true, true, true, true)]
-        [DataRow("Ragnaros", true, true, true, true)]
-        [DataRow("asdf", true, true, true, true)]
-        public void GetHeroByNameTest(string name, bool abilities, bool subAbilities, bool talents, bool heroUnits)
-        {
-            if (name is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _heroDataDocument.GetHeroByName(name!, abilities, subAbilities, talents, heroUnits);
-                });
-
-                return;
-            }
-            else if (name == "asdf")
-            {
-                Assert.ThrowsException<KeyNotFoundException>(() =>
-                {
-                    _ = _heroDataDocument.GetHeroByName(name, abilities, subAbilities, talents, heroUnits);
-                });
-
-                return;
-            }
-
-            BasicRagnarosAsserts(_heroDataDocument.GetHeroByName(name, abilities, subAbilities, talents, heroUnits));
-        }
-
-        [DataTestMethod]
-        [DataRow(null, true, true, true, true)]
         [DataRow("HeroRagnaros", true, true, true, true)]
         [DataRow("asdf", true, true, true, true)]
         public void TryGetHeroByUnitIdTest(string unitId, bool abilities, bool subAbilities, bool talents, bool heroUnits)
@@ -709,6 +655,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteStartObject("Alarak");
             writer.WriteString("name", "AlarakName");
             writer.WriteEndObject();
+            writer.WriteStartObject("Nova");
+            writer.WriteEndObject();
             writer.WriteStartObject("Murky");
             writer.WriteString("name", "MurkyName");
             writer.WriteEndObject();
@@ -738,6 +686,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteEndObject();
             writer.WriteStartObject("Alarak");
             writer.WriteString("name", "AlarakName");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Nova");
             writer.WriteEndObject();
             writer.WriteStartObject("Murky");
             writer.WriteString("name", "MurkyName");
@@ -774,6 +724,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteString("name", "AlarakName");
             writer.WriteString("unitId", "hero2");
             writer.WriteEndObject();
+            writer.WriteStartObject("Nova");
+            writer.WriteEndObject();
             writer.WriteStartObject("Murky");
             writer.WriteString("name", "MurkyName");
             writer.WriteString("unitId", "hero3");
@@ -806,6 +758,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteStartObject("Alarak");
             writer.WriteString("name", "AlarakName");
             writer.WriteString("unitId", "hero2");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Nova");
             writer.WriteEndObject();
             writer.WriteStartObject("Murky");
             writer.WriteString("name", "MurkyName");
@@ -843,6 +797,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteString("name", "AlarakName");
             writer.WriteString("hyperlinkId", "hero2");
             writer.WriteEndObject();
+            writer.WriteStartObject("Nova");
+            writer.WriteEndObject();
             writer.WriteStartObject("Murky");
             writer.WriteString("name", "MurkyName");
             writer.WriteString("hyperlinkId", "hero3");
@@ -875,6 +831,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteStartObject("Alarak");
             writer.WriteString("name", "AlarakName");
             writer.WriteString("hyperlinkId", "hero2");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Nova");
             writer.WriteEndObject();
             writer.WriteStartObject("Murky");
             writer.WriteString("name", "MurkyName");
@@ -912,6 +870,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteString("name", "AlarakName");
             writer.WriteString("attributeId", "hero2");
             writer.WriteEndObject();
+            writer.WriteStartObject("Nova");
+            writer.WriteEndObject();
             writer.WriteStartObject("Murky");
             writer.WriteString("name", "MurkyName");
             writer.WriteString("attributeId", "hero3");
@@ -945,6 +905,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteString("name", "AlarakName");
             writer.WriteString("attributeId", "hero2");
             writer.WriteEndObject();
+            writer.WriteStartObject("Nova");
+            writer.WriteEndObject();
             writer.WriteStartObject("Murky");
             writer.WriteString("name", "MurkyName");
             writer.WriteString("attributeId", "hero3");
@@ -967,69 +929,6 @@ namespace Heroes.Icons.Tests.DataDocument
 
         [TestMethod]
         [TestCategory("Helper")]
-        public void GetHeroIdFromNameTest()
-        {
-            using MemoryStream memoryStream = new MemoryStream();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
-            writer.WriteStartObject();
-
-            writer.WriteStartObject("Abathur");
-            writer.WriteString("name", "AbathurName");
-            writer.WriteEndObject();
-            writer.WriteStartObject("Alarak");
-            writer.WriteString("name", "AlarakName");
-            writer.WriteEndObject();
-            writer.WriteStartObject("Murky");
-            writer.WriteString("name", "MurkyName");
-            writer.WriteEndObject();
-
-            writer.WriteEndObject();
-
-            writer.Flush();
-
-            byte[] bytes = memoryStream.ToArray();
-
-            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.GetHeroIdFromName(null!));
-            Assert.AreEqual("Alarak", heroDataDocument.GetHeroIdFromName("AlarakName"));
-            Assert.ThrowsException<KeyNotFoundException>(() => heroDataDocument.GetHeroIdFromName("hero5"));
-        }
-
-        [TestMethod]
-        [TestCategory("Helper")]
-        public void TryGetHeroIdFromNameTest()
-        {
-            using MemoryStream memoryStream = new MemoryStream();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
-            writer.WriteStartObject();
-
-            writer.WriteStartObject("Abathur");
-            writer.WriteString("name", "AbathurName");
-            writer.WriteEndObject();
-            writer.WriteStartObject("Alarak");
-            writer.WriteString("name", "AlarakName");
-            writer.WriteEndObject();
-            writer.WriteStartObject("Murky");
-            writer.WriteString("name", "MurkyName");
-            writer.WriteEndObject();
-
-            writer.WriteEndObject();
-
-            writer.Flush();
-
-            byte[] bytes = memoryStream.ToArray();
-
-            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.TryGetHeroIdFromName(null!, out string? _));
-
-            Assert.AreEqual(true, heroDataDocument.TryGetHeroIdFromName("AlarakName", out string? trueValue));
-            Assert.AreEqual("Alarak", trueValue);
-            Assert.AreEqual(false, heroDataDocument.TryGetHeroIdFromName("Hero5", out string? falseValue));
-            Assert.IsNull(falseValue);
-        }
-
-        [TestMethod]
-        [TestCategory("Helper")]
         public void GetHeroIdFromUnitIdTest()
         {
             using MemoryStream memoryStream = new MemoryStream();
@@ -1043,6 +942,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteStartObject("Alarak");
             writer.WriteString("name", "AlarakName");
             writer.WriteString("unitId", "hero2");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Nova");
             writer.WriteEndObject();
             writer.WriteStartObject("Murky");
             writer.WriteString("name", "MurkyName");
@@ -1076,6 +977,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteStartObject("Alarak");
             writer.WriteString("name", "AlarakName");
             writer.WriteString("unitId", "hero2");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Nova");
             writer.WriteEndObject();
             writer.WriteStartObject("Murky");
             writer.WriteString("name", "MurkyName");
@@ -1113,6 +1016,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteString("name", "AlarakName");
             writer.WriteString("hyperlinkId", "hero2");
             writer.WriteEndObject();
+            writer.WriteStartObject("Nova");
+            writer.WriteEndObject();
             writer.WriteStartObject("Murky");
             writer.WriteString("name", "MurkyName");
             writer.WriteString("hyperlinkId", "hero3");
@@ -1145,6 +1050,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteStartObject("Alarak");
             writer.WriteString("name", "AlarakName");
             writer.WriteString("hyperlinkId", "hero2");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Nova");
             writer.WriteEndObject();
             writer.WriteStartObject("Murky");
             writer.WriteString("name", "MurkyName");
@@ -1182,6 +1089,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteString("name", "AlarakName");
             writer.WriteString("attributeId", "hero2");
             writer.WriteEndObject();
+            writer.WriteStartObject("Nova");
+            writer.WriteEndObject();
             writer.WriteStartObject("Murky");
             writer.WriteString("name", "MurkyName");
             writer.WriteString("attributeId", "hero3");
@@ -1214,6 +1123,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteStartObject("Alarak");
             writer.WriteString("name", "AlarakName");
             writer.WriteString("attributeId", "hero2");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Nova");
             writer.WriteEndObject();
             writer.WriteStartObject("Murky");
             writer.WriteString("name", "MurkyName");
@@ -1264,39 +1175,6 @@ namespace Heroes.Icons.Tests.DataDocument
 
         [TestMethod]
         [TestCategory("Helper")]
-        public void IsHeroExistsByNameTest()
-        {
-            using MemoryStream memoryStream = new MemoryStream();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
-            writer.WriteStartObject();
-
-            writer.WriteStartObject("Abathur");
-            writer.WriteString("name", "AbathurName");
-            writer.WriteString("attributeId", "hero1");
-            writer.WriteEndObject();
-            writer.WriteStartObject("Alarak");
-            writer.WriteString("name", "AlarakName");
-            writer.WriteString("attributeId", "hero2");
-            writer.WriteEndObject();
-            writer.WriteStartObject("Murky");
-            writer.WriteString("name", "MurkyName");
-            writer.WriteString("attributeId", "hero3");
-            writer.WriteEndObject();
-
-            writer.WriteEndObject();
-
-            writer.Flush();
-
-            byte[] bytes = memoryStream.ToArray();
-
-            using HeroDataDocument heroDataDocument = HeroDataDocument.Parse(bytes, Localization.ENUS);
-            Assert.ThrowsException<ArgumentNullException>(() => heroDataDocument.IsHeroExistsByName(null!));
-            Assert.IsTrue(heroDataDocument.IsHeroExistsByName("AlarakName"));
-            Assert.IsFalse(heroDataDocument.IsHeroExistsByName("Peon"));
-        }
-
-        [TestMethod]
-        [TestCategory("Helper")]
         public void IsHeroExistsByUnitIdTest()
         {
             using MemoryStream memoryStream = new MemoryStream();
@@ -1310,6 +1188,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteStartObject("Alarak");
             writer.WriteString("name", "AlarakName");
             writer.WriteString("unitId", "hero2");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Nova");
             writer.WriteEndObject();
             writer.WriteStartObject("Murky");
             writer.WriteString("name", "MurkyName");
@@ -1344,6 +1224,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteString("name", "AlarakName");
             writer.WriteString("hyperlinkId", "hero2");
             writer.WriteEndObject();
+            writer.WriteStartObject("Nova");
+            writer.WriteEndObject();
             writer.WriteStartObject("Murky");
             writer.WriteString("name", "MurkyName");
             writer.WriteString("hyperlinkId", "hero3");
@@ -1377,6 +1259,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteString("name", "AlarakName");
             writer.WriteString("attributeId", "hero2");
             writer.WriteEndObject();
+            writer.WriteStartObject("Nova");
+            writer.WriteEndObject();
             writer.WriteStartObject("Murky");
             writer.WriteString("name", "MurkyName");
             writer.WriteString("attributeId", "hero3");
@@ -1400,7 +1284,7 @@ namespace Heroes.Icons.Tests.DataDocument
         {
             List<string> items = _heroDataDocument.GetIds.ToList();
 
-            Assert.AreEqual(2, items.Count);
+            Assert.AreEqual(3, items.Count);
             Assert.IsTrue(items.Contains("Alarak"));
             Assert.IsTrue(items.Contains("Ragnaros"));
         }
@@ -1418,6 +1302,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteEndObject();
             writer.WriteStartObject("Alarak");
             writer.WriteString("name", "AlarakName");
+            writer.WriteEndObject();
+            writer.WriteStartObject("Nova");
             writer.WriteEndObject();
             writer.WriteStartObject("Murky");
             writer.WriteString("name", "MurkyName");
@@ -1464,6 +1350,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteStartObject("Alarak");
             writer.WriteString("hyperlinkId", "AlarakName");
             writer.WriteEndObject();
+            writer.WriteStartObject("Nova");
+            writer.WriteEndObject();
             writer.WriteStartObject("Murky");
             writer.WriteString("hyperlinkId", "MurkyName");
             writer.WriteEndObject();
@@ -1497,9 +1385,9 @@ namespace Heroes.Icons.Tests.DataDocument
 
         [TestMethod]
         [TestCategory("Helper")]
-        public void GCountTest()
+        public void GetCountTest()
         {
-            Assert.AreEqual(2, _heroDataDocument.Count);
+            Assert.AreEqual(3, _heroDataDocument.Count);
         }
 
         [TestMethod]
@@ -1909,6 +1797,10 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteEndArray(); // end subabilities
 
             writer.WriteEndObject(); // end Alarak
+
+            // ======================================================
+            writer.WriteStartObject("Nova"); // start Nova
+            writer.WriteEndObject();
 
             // ======================================================
             writer.WriteStartObject("Ragnaros"); // start Ragnaros

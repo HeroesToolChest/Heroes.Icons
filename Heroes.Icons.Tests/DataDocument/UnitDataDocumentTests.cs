@@ -115,10 +115,10 @@ namespace Heroes.Icons.Tests.DataDocument
                 Assert.AreEqual("Damage nearby enemies", abilitiesList[0].Tooltip.ShortTooltip?.RawDescription);
                 Assert.AreEqual(AbilityTypes.Q, abilitiesList[0].AbilityTalentId.AbilityType);
 
-                Assert.AreEqual(AbilityTiers.Hidden, abilitiesList[2].Tier);
-                Assert.AreEqual("AlteracBossChargeApproach", abilitiesList[2].AbilityTalentId?.ReferenceId);
-                Assert.AreEqual("AlteracBossCharge", abilitiesList[2].AbilityTalentId?.ButtonId);
-                Assert.AreEqual("Charge", abilitiesList[2].Name);
+                Assert.AreEqual(AbilityTiers.Hidden, abilitiesList[3].Tier);
+                Assert.AreEqual("AlteracBossChargeApproach", abilitiesList[3].AbilityTalentId?.ReferenceId);
+                Assert.AreEqual("AlteracBossCharge", abilitiesList[3].AbilityTalentId?.ButtonId);
+                Assert.AreEqual("Charge", abilitiesList[3].Name);
             }
 
             if (subAbilities)
@@ -248,7 +248,7 @@ namespace Heroes.Icons.Tests.DataDocument
         {
             List<Unit> units = _unitDataDocument.GetUnits(true, true).ToList();
             Assert.AreEqual("AbathurEvolvedMonstrosity", units[0].CUnitId);
-            Assert.AreEqual("tombofthespiderqueen-JungleGraveGolemLaner", units[1].CUnitId);
+            Assert.AreEqual("tombofthespiderqueen-JungleGraveGolemLaner", units[2].CUnitId);
         }
 
         [TestMethod]
@@ -511,6 +511,15 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteString("shortTooltip", "Charge to an enemy and damage them");
             writer.WriteString("abilityType", "W");
             writer.WriteEndObject();
+            writer.WriteStartObject();
+            writer.WriteString("nameId", "FakeAbility");
+            writer.WriteString("buttonId", "FakeAbility");
+            writer.WriteString("name", "Fake Ability");
+            writer.WriteString("icon", "storm_ui_icon_sonya_whirlwind.png");
+            writer.WriteString("cooldownTooltip", "Cooldown: 999 seconds");
+            writer.WriteString("shortTooltip", "Enemies die in one hit.");
+            writer.WriteString("abilityType", "ZZZ");
+            writer.WriteEndObject();
             writer.WriteEndArray();
             writer.WriteStartArray("hidden");
             writer.WriteStartObject();
@@ -570,10 +579,25 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteEndObject();
             writer.WriteEndArray();
             writer.WriteEndObject();
+            writer.WriteStartObject("FakeAbility|FakeAbility");
+            writer.WriteStartArray("mapMechanic");
+            writer.WriteStartObject();
+            writer.WriteString("nameId", "Nonexists");
+            writer.WriteString("buttonId", "Nonexists");
+            writer.WriteString("name", "Nonexists");
+            writer.WriteString("icon", "hud_btn_bg_ability_cancel.png");
+            writer.WriteString("cooldownTooltip", "Cooldown: 0 seconds");
+            writer.WriteString("abilityType", "ZZZZ");
+            writer.WriteEndObject();
+            writer.WriteEndArray();
+            writer.WriteEndObject();
 
             writer.WriteEndObject();
             writer.WriteEndArray();
 
+            writer.WriteEndObject();
+
+            writer.WriteStartObject("kings-core");
             writer.WriteEndObject();
 
             writer.WriteStartObject("tombofthespiderqueen-JungleGraveGolemLaner");

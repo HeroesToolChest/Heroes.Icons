@@ -281,44 +281,6 @@ namespace Heroes.Icons.DataDocument
         }
 
         /// <summary>
-        /// Gets a <see cref="Hero"/> from the hero <paramref name="name"/> property value.
-        /// </summary>
-        /// <param name="name">A hero name property value.</param>
-        /// <param name="abilities">A value indicating whether to include ability parsing.</param>
-        /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
-        /// <param name="talents">A value indicating whether to include talent parsing.</param>
-        /// <param name="heroUnits">A value indicating whether to include hero unit parsing.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
-        /// <exception cref="KeyNotFoundException">The <paramref name="name"/> property value was not found.</exception>
-        /// <returns>A <see cref="Hero"/> object.</returns>
-        public Hero GetHeroByName(string name, bool abilities, bool subAbilities, bool talents, bool heroUnits)
-        {
-            if (name is null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            if (TryGetHeroByName(name, out Hero? value, abilities, subAbilities, talents, heroUnits))
-                return value;
-            else
-                throw new KeyNotFoundException();
-        }
-
-        /// <summary>
-        /// Looks for a hero with the <paramref name="name"/> property value, returning a value that indicates whether such value exists.
-        /// </summary>
-        /// <param name="name">A hero name property value.</param>
-        /// <param name="value">When this method returns, contains the <see cref="Unit"/> associated with the <paramref name="name"/> property value.</param>
-        /// <param name="abilities">A value indicating whether to include ability parsing.</param>
-        /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
-        /// <param name="talents">A value indicating whether to include talent parsing.</param>
-        /// <param name="heroUnits">A value indicating whether to include hero unit parsing.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
-        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetHeroByName(string name, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
-            => PropertyLookup("name", name, out value, abilities, subAbilities, talents, heroUnits);
-
-        /// <summary>
         /// Gets a <see cref="Hero"/> from the hero <paramref name="unitId"/> property value.
         /// </summary>
         /// <param name="unitId">A hero unitId property value.</param>
@@ -607,51 +569,6 @@ namespace Heroes.Icons.DataDocument
         }
 
         /// <summary>
-        /// Gets the hero's id from a <paramref name="name"/> property value.
-        /// </summary>
-        /// <param name="name">A hero name property value.</param>
-        /// <returns>The hero's id.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
-        /// <exception cref="KeyNotFoundException">No property was found with the requested property value.</exception>
-        public string GetHeroIdFromName(string name)
-        {
-            if (name is null)
-                throw new ArgumentNullException(nameof(name));
-
-            if (TryGetHeroIdFromName(name, out string? value))
-                return value;
-            else
-                throw new KeyNotFoundException();
-        }
-
-        /// <summary>
-        /// Looks for the hero's id from a <paramref name="name"/> property value.
-        /// </summary>
-        /// <param name="name">A hero name property value.</param>
-        /// <param name="value">When this method returns, contains the id of the hero.</param>
-        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
-        public bool TryGetHeroIdFromName(string name, [NotNullWhen(true)] out string? value)
-        {
-            if (name is null)
-                throw new ArgumentNullException(nameof(name));
-
-            value = null;
-
-            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
-            {
-                if (heroProperty.Value.TryGetProperty("name", out JsonElement element) && element.ValueEquals(name))
-                {
-                    value = heroProperty.Name;
-
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
         /// Gets the hero's id from a <paramref name="unitId"/> property value.
         /// </summary>
         /// <param name="unitId">A hero unitId property value.</param>
@@ -798,26 +715,6 @@ namespace Heroes.Icons.DataDocument
                 throw new ArgumentNullException(nameof(heroId));
 
             return JsonDataDocument.RootElement.TryGetProperty(heroId, out JsonElement _);
-        }
-
-        /// <summary>
-        /// Returns a value indicating whether a <paramref name="name"/> property value was found.
-        /// </summary>
-        /// <param name="name">A hero name property value.</param>
-        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
-        public bool IsHeroExistsByName(string name)
-        {
-            if (name is null)
-                throw new ArgumentNullException(nameof(name));
-
-            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
-            {
-                if (heroProperty.Value.TryGetProperty("name", out JsonElement element) && element.ValueEquals(name))
-                    return true;
-            }
-
-            return false;
         }
 
         /// <summary>
