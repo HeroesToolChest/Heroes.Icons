@@ -14,7 +14,7 @@ Another choice instead of using HDP is to use the already extracted data files a
 All data files will eventually be supported (strike-through is completed)
 - ~~Heroes~~
 - ~~Units~~
-- Match Awards
+- ~~Match Awards~~
 - Hero Skins
 - Mounts
 - Banners
@@ -33,17 +33,51 @@ All data files will eventually be supported (strike-through is completed)
 ## Usage
 There is a `<data-file-name>DataDocument` class for each json data file. Each provide static multiple `Parse` methods to parse the json files.
 
-Example file parsing usage for the `HeroDataDocument` class
+Example usage for parsing a non-localized json data file.
 ```
 // read as a json file
-// the localization will automatically be set as kokr since the files ends with _kokr
+// the localization will automatically be set as kokr since the file name ends with _kokr
 using HeroDataDocument heroDataDocument = HeroDataDocument.Parse("herodata_76003_kokr.json");
+
+// example getting hero data for Alarak
 Hero heroData = heroDataDocument.GetHeroById("Alarak", true, true, true, true);
 
-// or if the file doesn't the locale, it can be set as a parameter
+// or if the file name doesn't end with the locale, it can be set as a parameter
 using HeroDataDocument heroDataDocument = HeroDataDocument.Parse("herodata_76003.json", Localization.KOKR);
+
+// example getting hero data for Alarak
 Hero heroData = heroDataDocument.GetHeroById("Alarak", true, true, true, true);
 ```
+
+If the json data file is localized, then the gamestrings json file will need to be parsed as well.
+```
+using GameStringDocument gameStringDocument = GameStringDocument.Parse("gamestrings_76893_frfr.json");
+using HeroDataDocument heroDataDocument = HeroDataDocument.Parse("herodata_76003_localized", gameStringDocument);
+```
+
+The `Parse` methods that accept a file path will load up the file by using `File.ReadAllBytes(...)`. If instead a stream is desired, `Stream` overloaded parse methods are available. Example parsing a non-localized json data file.
+```
+// localization must be specified as a parameter.
+using FileStream stream = new FileStream("herodata_76003_enus.json", FileMode.Open);
+using HeroDataDocument document = HeroDataDocument.Parse(stream, Localization.ENUS);
+```
+
+For a localized json data file, the `GameStringDocument` can accept a `Stream` argument as well.
+```
+using FileStream gameStringStream = new FileStream("gamestrings_76893_enus.json", FileMode.Open);
+using GameStringDocument gameStringDocument = GameStringDocument.Parse(gameStringStream);
+
+using FileStream fileStream = new FileStream("herodata_76003_localized.json", FileMode.Open);
+using HeroDataDocument document = HeroDataDocument.Parse(fileStream, gameStringDocument);
+```
+However a better way would be to use the `Parse(Stream utf8Json, Stream utf8JsonGameStrings)` method.
+```
+using FileStream gameStringStream = new FileStream("gamestrings_76893_enus.json", FileMode.Open);
+using FileStream fileStream = new FileStream(_dataFile, FileMode.Open);
+using HeroDataDocument document = HeroDataDocument.Parse(fileStream, gameStringStream);
+```
+
+
 
 ## Developing
 To build and compile the code, it is recommended to use the latest version of [Visual Studio 2019 or Visual Studio Code](https://visualstudio.microsoft.com/downloads/).
