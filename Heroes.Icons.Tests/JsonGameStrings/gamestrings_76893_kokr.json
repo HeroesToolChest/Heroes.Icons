@@ -13,6 +13,14 @@
       "name": {
         "AbathurA": "아바투르 아나운서"
       }
+    },
+    "award": {
+      "description": {
+        "HatTrick": "경기의 처음 세 영웅 처치 기록"
+      },
+      "name": {
+        "HatTrick": "기선 제압자"
+      }
     }
   }
 }
