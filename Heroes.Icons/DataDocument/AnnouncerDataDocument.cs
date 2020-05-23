@@ -17,7 +17,7 @@ namespace Heroes.Icons.DataDocument
         /// Initializes a new instance of the <see cref="AnnouncerDataDocument"/> class.
         /// The <see cref="Localization"/> will be inferred from <paramref name="jsonDataFilePath"/>.
         /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file containing announcer data.</param>
+        /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         protected AnnouncerDataDocument(string jsonDataFilePath)
             : base(jsonDataFilePath)
         {
