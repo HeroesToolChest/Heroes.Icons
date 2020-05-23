@@ -1,43 +1,49 @@
-﻿using Heroes.Icons.ModelExtensions;
-using Heroes.Models;
+﻿using Heroes.Models.AbilityTalents;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Text.Json;
 
-namespace Heroes.Icons.Extensions.Tests
+namespace Heroes.Icons.ModelExtensions.Tests
 {
     [TestClass]
-    public class HeroExtensionsTests
+    public class AbilityExtensionsTests
     {
         [TestMethod]
         public void UpdateGameStringsTest()
         {
             using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-            Hero hero = new Hero
+            Ability ability = new Ability()
             {
-                CUnitId = "HeroAlarak",
-                CHeroId = "Alarak",
-                Id = "Alarak",
+                AbilityTalentId = new AbilityTalentId("AlarakDiscordStrike", "AlarakDiscordStrike")
+                {
+                    AbilityType = AbilityTypes.Q,
+                },
             };
 
-            hero.UpdateGameStrings(gameStringDocument);
+            ability.UpdateGameStrings(gameStringDocument);
 
-            Assert.AreEqual("Highlord of the Tal'darim", hero.Title);
+            Assert.AreEqual("Discord Strike", ability.Name);
+            Assert.AreEqual("Cooldown: 8 seconds", ability.Tooltip.Cooldown.CooldownTooltip!.RawDescription);
+            Assert.AreEqual("<s val=\"bfd4fd\" name=\"StandardTooltipDetails\">Mana: 55</s>", ability.Tooltip.Energy.EnergyTooltip!.RawDescription);
+            Assert.AreEqual("After a <c val=\"bfd4fd\">0.5</c> second delay, enemies in front of Alarak take <c val=\"bfd4fd\">175~~0.04~~</c> damage and are silenced for <c val=\"bfd4fd\">1.5</c> seconds. ", ability.Tooltip.FullTooltip!.RawDescription);
+            Assert.AreEqual("Damage and silence enemies in an area", ability.Tooltip.ShortTooltip!.RawDescription);
+            Assert.AreEqual("No life", ability.Tooltip.Life.LifeCostTooltip!.RawDescription);
         }
 
         [TestMethod]
         public void UpdateGameStringsThrowArgumentNullException()
         {
-            Hero hero = new Hero
+            Ability ability = new Ability()
             {
-                CUnitId = "HeroAlarak",
-                CHeroId = "Alarak",
-                Id = "Alarak",
+                AbilityTalentId = new AbilityTalentId("AlarakDiscordStrike", "AlarakDiscordStrike")
+                {
+                    AbilityType = AbilityTypes.Q,
+                },
             };
 
-            Assert.ThrowsException<ArgumentNullException>(() => hero.UpdateGameStrings(null!));
+            Assert.ThrowsException<ArgumentNullException>(() => ability.UpdateGameStrings(null!));
         }
 
         private static byte[] LoadEnusLocalizedStringData()

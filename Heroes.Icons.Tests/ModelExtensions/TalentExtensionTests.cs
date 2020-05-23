@@ -1,50 +1,46 @@
-﻿using Heroes.Icons.ModelExtensions;
-using Heroes.Models.AbilityTalents;
+﻿using Heroes.Models.AbilityTalents;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Text.Json;
 
-namespace Heroes.Icons.Extensions.Tests
+namespace Heroes.Icons.ModelExtensions.Tests
 {
     [TestClass]
-    public class AbilityExtensionsTests
+    public class TalentExtensionTests
     {
         [TestMethod]
         public void UpdateGameStringsTest()
         {
             using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-            Ability ability = new Ability()
+            Talent talent = new Talent()
             {
-                AbilityTalentId = new AbilityTalentId("AlarakDiscordStrike", "AlarakDiscordStrike")
+                AbilityTalentId = new AbilityTalentId("ZuljinWrongPlaceWrongTime", "ZuljinWrongPlaceWrongTime")
                 {
-                    AbilityType = AbilityTypes.Q,
+                    AbilityType = AbilityTypes.W,
                 },
+                Tier = TalentTiers.Level1,
             };
 
-            ability.UpdateGameStrings(gameStringDocument);
+            talent.UpdateGameStrings(gameStringDocument);
 
-            Assert.AreEqual("Discord Strike", ability.Name);
-            Assert.AreEqual("Cooldown: 8 seconds", ability.Tooltip.Cooldown.CooldownTooltip!.RawDescription);
-            Assert.AreEqual("<s val=\"bfd4fd\" name=\"StandardTooltipDetails\">Mana: 55</s>", ability.Tooltip.Energy.EnergyTooltip!.RawDescription);
-            Assert.AreEqual("After a <c val=\"bfd4fd\">0.5</c> second delay, enemies in front of Alarak take <c val=\"bfd4fd\">175~~0.04~~</c> damage and are silenced for <c val=\"bfd4fd\">1.5</c> seconds. ", ability.Tooltip.FullTooltip!.RawDescription);
-            Assert.AreEqual("Damage and silence enemies in an area", ability.Tooltip.ShortTooltip!.RawDescription);
-            Assert.AreEqual("No life", ability.Tooltip.Life.LifeCostTooltip!.RawDescription);
+            Assert.AreEqual("Bonus Twin Cleave damage at apex", talent.Tooltip.ShortTooltip!.RawDescription);
         }
 
         [TestMethod]
         public void UpdateGameStringsThrowArgumentNullException()
         {
-            Ability ability = new Ability()
+            Talent talent = new Talent()
             {
-                AbilityTalentId = new AbilityTalentId("AlarakDiscordStrike", "AlarakDiscordStrike")
+                AbilityTalentId = new AbilityTalentId("ZuljinWrongPlaceWrongTime", "ZuljinWrongPlaceWrongTime")
                 {
-                    AbilityType = AbilityTypes.Q,
+                    AbilityType = AbilityTypes.W,
                 },
+                Tier = TalentTiers.Level1,
             };
 
-            Assert.ThrowsException<ArgumentNullException>(() => ability.UpdateGameStrings(null!));
+            Assert.ThrowsException<ArgumentNullException>(() => talent.UpdateGameStrings(null!));
         }
 
         private static byte[] LoadEnusLocalizedStringData()

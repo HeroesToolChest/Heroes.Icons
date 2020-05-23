@@ -1,47 +1,42 @@
-﻿using Heroes.Icons.ModelExtensions;
-using Heroes.Models.AbilityTalents;
+﻿using Heroes.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Text.Json;
 
-namespace Heroes.Icons.Extensions.Tests
+namespace Heroes.Icons.ModelExtensions.Tests
 {
     [TestClass]
-    public class TalentExtensionTests
+    public class HeroExtensionsTests
     {
         [TestMethod]
         public void UpdateGameStringsTest()
         {
             using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-            Talent talent = new Talent()
+            Hero hero = new Hero
             {
-                AbilityTalentId = new AbilityTalentId("ZuljinWrongPlaceWrongTime", "ZuljinWrongPlaceWrongTime")
-                {
-                    AbilityType = AbilityTypes.W,
-                },
-                Tier = TalentTiers.Level1,
+                CUnitId = "HeroAlarak",
+                CHeroId = "Alarak",
+                Id = "Alarak",
             };
 
-            talent.UpdateGameStrings(gameStringDocument);
+            hero.UpdateGameStrings(gameStringDocument);
 
-            Assert.AreEqual("Bonus Twin Cleave damage at apex", talent.Tooltip.ShortTooltip!.RawDescription);
+            Assert.AreEqual("Highlord of the Tal'darim", hero.Title);
         }
 
         [TestMethod]
         public void UpdateGameStringsThrowArgumentNullException()
         {
-            Talent talent = new Talent()
+            Hero hero = new Hero
             {
-                AbilityTalentId = new AbilityTalentId("ZuljinWrongPlaceWrongTime", "ZuljinWrongPlaceWrongTime")
-                {
-                    AbilityType = AbilityTypes.W,
-                },
-                Tier = TalentTiers.Level1,
+                CUnitId = "HeroAlarak",
+                CHeroId = "Alarak",
+                Id = "Alarak",
             };
 
-            Assert.ThrowsException<ArgumentNullException>(() => talent.UpdateGameStrings(null!));
+            Assert.ThrowsException<ArgumentNullException>(() => hero.UpdateGameStrings(null!));
         }
 
         private static byte[] LoadEnusLocalizedStringData()
