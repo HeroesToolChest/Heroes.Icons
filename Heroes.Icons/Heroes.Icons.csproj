@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
-    <Version>5.0.0-alpha.2</Version>
+    <Version>5.0.0-beta.1</Version>
     <Authors>Kevin Oliva</Authors>
-    <Copyright>Copyright © 2016 - 2019 Kevin Oliva</Copyright>
+    <Copyright>Copyright © 2016 - 2020 Kevin Oliva</Copyright>
     <Description>A Heroes of the Storm game data access library that reads the json data files from Heroes Data Parser.</Description>
     <PackageProjectUrl>https://github.com/HeroesToolChest/Heroes.Icons</PackageProjectUrl>
     <RepositoryUrl>https://github.com/HeroesToolChest/Heroes.Icons</RepositoryUrl>
