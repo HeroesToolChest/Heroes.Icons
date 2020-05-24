@@ -15,7 +15,7 @@ All data files will eventually be supported (strike-through is completed)
 - ~~Heroes~~
 - ~~Units~~
 - ~~Match Awards~~
-- Hero Skins
+- ~~Hero Skins~~
 - Mounts
 - Banners
 - Sprays
