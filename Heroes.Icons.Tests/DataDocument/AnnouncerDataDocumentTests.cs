@@ -342,7 +342,7 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("AI")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetAnnouncerByHeroTest(string id)
+        public void TryGetAnnouncerByHeroIdTest(string id)
         {
             if (id is null)
             {

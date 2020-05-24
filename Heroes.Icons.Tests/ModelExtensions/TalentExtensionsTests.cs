@@ -7,7 +7,7 @@ using System.Text.Json;
 namespace Heroes.Icons.ModelExtensions.Tests
 {
     [TestClass]
-    public class TalentExtensionTests
+    public class TalentExtensionsTests
     {
         [TestMethod]
         public void UpdateGameStringsTest()

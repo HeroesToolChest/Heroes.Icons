@@ -21,6 +21,20 @@
       "name": {
         "HatTrick": "기선 제압자"
       }
+    },
+    "heroskin": {
+      "info": {
+        "AbathurBaseVar3": "케리건이 지배하는 저그 군단의 진화 군주인 아바투르는, 저그를 유전자 단계에서부터 발전시키기 위해 끊임없이 노력합니다. 불완전과 혼돈에 대한 그의 증오는 대명사와 어미에 대한 그의 증오에 거의 맞먹습니다."
+      },
+      "name": {
+        "AbathurBaseVar3": "칼디르 아바투르"
+      },
+      "searchText": {
+        "AbathurBaseVar3": "파랑"
+      },
+      "sortName": {
+        "AbathurBaseVar3": "zxAbathurVar1"
+      }
     }
   }
 }

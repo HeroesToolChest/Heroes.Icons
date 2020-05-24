@@ -242,28 +242,28 @@ namespace Heroes.Icons
             {
                 if (gameStringElement.TryGetProperty("unit", out JsonElement keyValue))
                 {
-                    if (TryGetValueFromJsonElement(keyValue, "difficulty", hero.Id, out JsonElement value))
-                        hero.Difficulty = value.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "difficulty", hero.Id, out JsonElement difficultyElement))
+                        hero.Difficulty = difficultyElement.ToString();
 
-                    if (TryGetValueFromJsonElement(keyValue, "expandedrole", hero.Id, out value))
-                        hero.ExpandedRole = value.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "expandedrole", hero.Id, out JsonElement expandedRoleElement))
+                        hero.ExpandedRole = expandedRoleElement.ToString();
 
-                    if (TryGetValueFromJsonElement(keyValue, "role", hero.Id, out value))
+                    if (TryGetValueFromJsonElement(keyValue, "role", hero.Id, out JsonElement roleElement))
                     {
-                        foreach (string roleValue in value.ToString().Split(',', StringSplitOptions.RemoveEmptyEntries))
+                        foreach (string roleValue in roleElement.ToString().Split(',', StringSplitOptions.RemoveEmptyEntries))
                         {
                             hero.Roles.Add(roleValue);
                         }
                     }
 
-                    if (TryGetValueFromJsonElement(keyValue, "searchtext", hero.Id, out value))
-                        hero.SearchText = value.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "searchtext", hero.Id, out JsonElement searchTextElement))
+                        hero.SearchText = searchTextElement.ToString();
 
-                    if (TryGetValueFromJsonElement(keyValue, "title", hero.Id, out value))
-                        hero.Title = value.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "title", hero.Id, out JsonElement titleElement))
+                        hero.Title = titleElement.ToString();
 
-                    if (TryGetValueFromJsonElement(keyValue, "type", hero.Id, out value))
-                        hero.Type = value.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "type", hero.Id, out JsonElement typeElement))
+                        hero.Type = typeElement.ToString();
                 }
 
                 foreach (Talent talent in hero.Talents)
@@ -294,18 +294,18 @@ namespace Heroes.Icons
             {
                 if (gameStringElement.TryGetProperty("unit", out JsonElement keyValue))
                 {
-                    if (TryGetValueFromJsonElement(keyValue, "damagetype", unit.Id, out JsonElement value))
-                        unit.DamageType = value.ToString();
-                    if (TryGetValueFromJsonElement(keyValue, "description", unit.Id, out value))
-                        unit.Description = new TooltipDescription(value.ToString(), Localization);
-                    if (TryGetValueFromJsonElement(keyValue, "energytype", unit.Id, out value))
-                        unit.Energy.EnergyType = value.ToString();
-                    if (TryGetValueFromJsonElement(keyValue, "lifetype", unit.Id, out value))
-                        unit.Life.LifeType = value.ToString();
-                    if (TryGetValueFromJsonElement(keyValue, "name", unit.Id, out value))
-                        unit.Name = value.ToString();
-                    if (TryGetValueFromJsonElement(keyValue, "shieldtype", unit.Id, out value))
-                        unit.Shield.ShieldType = value.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "damagetype", unit.Id, out JsonElement damageTypeElement))
+                        unit.DamageType = damageTypeElement.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "description", unit.Id, out JsonElement descriptionElement))
+                        unit.Description = new TooltipDescription(descriptionElement.ToString(), Localization);
+                    if (TryGetValueFromJsonElement(keyValue, "energytype", unit.Id, out JsonElement energyTypeElement))
+                        unit.Energy.EnergyType = energyTypeElement.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "lifetype", unit.Id, out JsonElement lifeTypeElement))
+                        unit.Life.LifeType = lifeTypeElement.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "name", unit.Id, out JsonElement nameElement))
+                        unit.Name = nameElement.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "shieldtype", unit.Id, out JsonElement shieldTypeElement))
+                        unit.Shield.ShieldType = shieldTypeElement.ToString();
                 }
 
                 foreach (Ability ability in unit.Abilities)
@@ -367,12 +367,12 @@ namespace Heroes.Icons
             {
                 if (gameStringElement.TryGetProperty("announcer", out JsonElement keyValue))
                 {
-                    if (TryGetValueFromJsonElement(keyValue, "name", announcer.Id, out JsonElement value))
-                        announcer.Name = value.ToString();
-                    if (TryGetValueFromJsonElement(keyValue, "sortName", announcer.Id, out value))
-                        announcer.SortName = value.ToString();
-                    if (TryGetValueFromJsonElement(keyValue, "description", announcer.Id, out value))
-                        announcer.Description = new TooltipDescription(value.ToString());
+                    if (TryGetValueFromJsonElement(keyValue, "name", announcer.Id, out JsonElement nameElement))
+                        announcer.Name = nameElement.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "sortName", announcer.Id, out JsonElement sortNameElement))
+                        announcer.SortName = sortNameElement.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "description", announcer.Id, out JsonElement descriptionElement))
+                        announcer.Description = new TooltipDescription(descriptionElement.ToString());
                 }
             }
         }
@@ -393,10 +393,41 @@ namespace Heroes.Icons
             {
                 if (gameStringElement.TryGetProperty("award", out JsonElement keyValue))
                 {
-                    if (TryGetValueFromJsonElement(keyValue, "name", matchAward.Id, out JsonElement value))
-                        matchAward.Name = value.ToString();
-                    if (TryGetValueFromJsonElement(keyValue, "description", matchAward.Id, out value))
-                        matchAward.Description = new TooltipDescription(value.ToString());
+                    if (TryGetValueFromJsonElement(keyValue, "name", matchAward.Id, out JsonElement nameElement))
+                        matchAward.Name = nameElement.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "description", matchAward.Id, out JsonElement descriptionElement))
+                        matchAward.Description = new TooltipDescription(descriptionElement.ToString());
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the <paramref name="heroSkin"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
+        /// </summary>
+        /// <param name="heroSkin">The data to be updated.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="heroSkin"/> is <see langword="null"/>.</exception>
+        public void UpdateGameStrings(HeroSkin heroSkin)
+        {
+            if (heroSkin is null)
+                throw new ArgumentNullException(nameof(heroSkin));
+
+            JsonElement element = JsonGameStringDocument.RootElement;
+
+            if (element.TryGetProperty("gamestrings", out JsonElement gameStringElement))
+            {
+                if (gameStringElement.TryGetProperty("heroskin", out JsonElement keyValue))
+                {
+                    if (TryGetValueFromJsonElement(keyValue, "name", heroSkin.Id, out JsonElement nameElement))
+                        heroSkin.Name = nameElement.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "searchtext", heroSkin.Id, out JsonElement searchTextElement))
+                        heroSkin.SearchText = searchTextElement.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "sortname", heroSkin.Id, out JsonElement sortNameElement))
+                        heroSkin.SortName = sortNameElement.ToString();
+
+                    if (TryGetValueFromJsonElement(keyValue, "description", heroSkin.Id, out JsonElement descriptionElement))
+                        heroSkin.Description = new TooltipDescription(descriptionElement.ToString());
+                    else if (TryGetValueFromJsonElement(keyValue, "info", heroSkin.Id, out JsonElement infoElement))
+                        heroSkin.Description = new TooltipDescription(infoElement.ToString());
                 }
             }
         }
