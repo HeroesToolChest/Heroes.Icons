@@ -35,6 +35,20 @@
       "sortName": {
         "AbathurBaseVar3": "zxAbathurVar1"
       }
+    },
+    "mount": {
+      "info": {
+        "AlarakTaldarimMarch": "그가 공중에 살짝만 떠올라도 당신은 군주를 따라잡을 수 없습니다."
+      },
+      "name": {
+        "AlarakTaldarimMarch": "군주의 승천"
+      },
+      "searchText": {
+        "AlarakTaldarimMarch": "군주의 승천"
+      },
+      "sortName": {
+        "AlarakTaldarimMarch": "1HeroAlarak"
+      }
     }
   }
 }

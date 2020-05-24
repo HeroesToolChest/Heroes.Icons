@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Heroes.Icons.DataDocument
 {
     /// <summary>
-    /// Provides access to obtain hero skin data as well as updating localized strings.
+    /// Provides access to obtain <see cref="HeroSkin"/> data as well as updating localized strings.
     /// </summary>
     public class HeroSkinDataDocument : DataDocumentBase, IDataDocument
     {
@@ -267,7 +267,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="hyperlinkId">A hero skin hyperlinkId property value.</param>
         /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException"><paramref name="hyperlinkId"/> property value was not found.</exception>
-        /// <returns>An <see cref="HeroSkin"/> object.</returns>
+        /// <returns>A <see cref="HeroSkin"/> object.</returns>
         public HeroSkin GetHeroSkinByHyperlinkId(string hyperlinkId)
         {
             if (hyperlinkId is null)
@@ -297,7 +297,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="attributeId">A hero skin attributeId property value.</param>
         /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException"><paramref name="attributeId"/> property value was not found.</exception>
-        /// <returns>An <see cref="HeroSkin"/> object.</returns>
+        /// <returns>A <see cref="HeroSkin"/> object.</returns>
         public HeroSkin GetHeroSkinByAttributeId(string attributeId)
         {
             if (attributeId is null)

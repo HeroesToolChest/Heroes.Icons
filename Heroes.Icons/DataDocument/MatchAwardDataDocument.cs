@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Heroes.Icons.DataDocument
 {
     /// <summary>
-    /// Provides access to obtain match award data as well as updating localized strings.
+    /// Provides access to obtain <see cref="MatchAward"/> data as well as updating localized strings.
     /// </summary>
     public class MatchAwardDataDocument : DataDocumentBase, IDataDocument
     {

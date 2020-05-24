@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Heroes.Icons.DataDocument
 {
     /// <summary>
-    /// Provides access to obtain hero data as well as updating localized strings.
+    /// Provides access to obtain <see cref="Hero"/> data as well as updating localized strings.
     /// </summary>
     public class HeroDataDocument : UnitBaseData, IDataDocument
     {

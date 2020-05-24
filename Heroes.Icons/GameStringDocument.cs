@@ -433,6 +433,37 @@ namespace Heroes.Icons
         }
 
         /// <summary>
+        /// Updates the <paramref name="mount"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
+        /// </summary>
+        /// <param name="mount">The data to be updated.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="mount"/> is <see langword="null"/>.</exception>
+        public void UpdateGameStrings(Mount mount)
+        {
+            if (mount is null)
+                throw new ArgumentNullException(nameof(mount));
+
+            JsonElement element = JsonGameStringDocument.RootElement;
+
+            if (element.TryGetProperty("gamestrings", out JsonElement gameStringElement))
+            {
+                if (gameStringElement.TryGetProperty("mount", out JsonElement keyValue))
+                {
+                    if (TryGetValueFromJsonElement(keyValue, "name", mount.Id, out JsonElement nameElement))
+                        mount.Name = nameElement.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "searchtext", mount.Id, out JsonElement searchTextElement))
+                        mount.SearchText = searchTextElement.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "sortname", mount.Id, out JsonElement sortNameElement))
+                        mount.SortName = sortNameElement.ToString();
+
+                    if (TryGetValueFromJsonElement(keyValue, "description", mount.Id, out JsonElement descriptionElement))
+                        mount.Description = new TooltipDescription(descriptionElement.ToString());
+                    else if (TryGetValueFromJsonElement(keyValue, "info", mount.Id, out JsonElement infoElement))
+                        mount.Description = new TooltipDescription(infoElement.ToString());
+                }
+            }
+        }
+
+        /// <summary>
         /// Parses the Json stream as <see langword="async"/>.
         /// </summary>
         /// <typeparam name="T">A class that derives <see cref="GameStringDocument"/>.</typeparam>

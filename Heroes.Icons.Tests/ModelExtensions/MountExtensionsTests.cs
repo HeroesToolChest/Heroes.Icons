@@ -8,32 +8,32 @@ using System.Text.Json;
 namespace Heroes.Icons.Tests.ModelExtensions
 {
     [TestClass]
-    public class HeroSkinExtensionsTests
+    public class MountExtensionsTests
     {
         [TestMethod]
         public void UpdateGameStringsTest()
         {
             using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-            HeroSkin heroSkin = new HeroSkin
+            Mount mount = new Mount
             {
-                Id = "AbathurBaseVar3",
+                Id = "AlarakTaldarimMarch",
             };
 
-            heroSkin.UpdateGameStrings(gameStringDocument);
+            mount.UpdateGameStrings(gameStringDocument);
 
-            Assert.AreEqual("Abathur, the Evolution Master of Kerrigan's Swarm, works ceaselessly to improve the zerg from the genetic level up. His hate for chaos and imperfection almost rivals his hatred of pronouns.", heroSkin.Description!.RawDescription);
+            Assert.AreEqual("Should he choose to float only an inch off the ground, you would still be beneath the Highlord.", mount.Description!.RawDescription);
         }
 
         [TestMethod]
         public void UpdateGameStringsThrowArgumentNullException()
         {
-            HeroSkin heroSkin = new HeroSkin
+            Mount mount = new Mount
             {
-                Id = "AbathurBaseVar3",
+                Id = "AlarakTaldarimMarch",
             };
 
-            Assert.ThrowsException<ArgumentNullException>(() => heroSkin.UpdateGameStrings(null!));
+            Assert.ThrowsException<ArgumentNullException>(() => mount.UpdateGameStrings(null!));
         }
 
         private static byte[] LoadEnusLocalizedStringData()
@@ -48,23 +48,23 @@ namespace Heroes.Icons.Tests.ModelExtensions
             writer.WriteEndObject(); // meta
 
             writer.WriteStartObject("gamestrings");
-            writer.WriteStartObject("heroskin");
+            writer.WriteStartObject("mount");
 
             writer.WriteStartObject("info");
-            writer.WriteString("AbathurBaseVar3", "Abathur, the Evolution Master of Kerrigan's Swarm, works ceaselessly to improve the zerg from the genetic level up. His hate for chaos and imperfection almost rivals his hatred of pronouns.");
-            writer.WriteString("AbathurBone", "Abathur, the Evolution Master of Kerrigan's Swarm, works ceaselessly to improve the zerg from the genetic level up. His hate for chaos and imperfection almost rivals his hatred of pronouns.");
+            writer.WriteString("AlarakTaldarimMarch", "Should he choose to float only an inch off the ground, you would still be beneath the Highlord.");
+            writer.WriteString("AnubarakWings", "In the years following the Third War, Azerothian scholars hypothesized that the wings of spiderlords were vestigal, incapable of flight. They were very wrong.");
             writer.WriteEndObject();
             writer.WriteStartObject("name");
-            writer.WriteString("AbathurBaseVar3", "Kaldir Abathur");
-            writer.WriteString("AbathurBone", "Bone Abathur");
+            writer.WriteString("AlarakTaldarimMarch", "Highlord's Ascent");
+            writer.WriteString("AnubarakWings", "Crypt Lord Wings");
             writer.WriteEndObject();
             writer.WriteStartObject("searchtext");
-            writer.WriteString("AbathurBaseVar3", "Blue");
-            writer.WriteString("AbathurBone", "White Pink");
+            writer.WriteString("AlarakTaldarimMarch", "Highlord's Ascent");
+            writer.WriteString("AnubarakWings", "Crypt Lord Wings");
             writer.WriteEndObject();
             writer.WriteStartObject("sortname");
-            writer.WriteString("AbathurBaseVar3", "zxAbathurVar1");
-            writer.WriteString("AbathurBone", "zxAbathurVar0");
+            writer.WriteString("AlarakTaldarimMarch", "1HeroAlarak");
+            writer.WriteString("AnubarakWings", "1HeroAnubarak");
             writer.WriteEndObject();
 
             writer.WriteEndObject(); // end hero skin
