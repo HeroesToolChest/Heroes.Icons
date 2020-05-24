@@ -1,4 +1,7 @@
-# Contributing
-Issues, questions, pull request are all welcomed.
+## Issues
+- Questions, bugs, issues, features/requests are welcomed
 
-If your wanting to add more images or modfiy major functionality of this project, then it it highly recommended to create and use your own fork of the project.
+## Pull requests
+- Submit to the `develop` branch
+- Before submitting, ensure that all unit tests pass and that all warnings are corrected
+- After submitting, wait for status of build servers and fix any issues that cause the builds to fail
