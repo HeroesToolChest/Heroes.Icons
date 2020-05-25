@@ -31,7 +31,9 @@ namespace Heroes.Icons.Tests.DataDocument
             using MountDataDocument document = MountDataDocument.Parse(_dataFile, gameStringDocument);
 
             Assert.AreEqual(Localization.FRFR, document.Localization);
-            Assert.IsTrue(document.TryGetMountById("AlarakTaldarimMarch", out Mount _));
+            Assert.IsTrue(document.TryGetMountById("AlarakTaldarimMarch", out Mount? mount));
+            Assert.AreEqual("군주의 승천", mount!.Name);
+            Assert.AreEqual("그가 공중에 살짝만 떠올라도 당신은 군주를 따라잡을 수 없습니다.", mount!.Description?.RawDescription);
         }
 
         [TestMethod]
@@ -62,7 +64,9 @@ namespace Heroes.Icons.Tests.DataDocument
             using MountDataDocument document = MountDataDocument.Parse(GetBytesForROM("AlarakTaldarimMarch"), gameStringDocument);
 
             Assert.AreEqual(Localization.KOKR, document.Localization);
-            Assert.IsTrue(document.TryGetMountById("AlarakTaldarimMarch", out Mount _));
+            Assert.IsTrue(document.TryGetMountById("AlarakTaldarimMarch", out Mount? mount));
+            Assert.AreEqual("군주의 승천", mount!.Name);
+            Assert.AreEqual("그가 공중에 살짝만 떠올라도 당신은 군주를 따라잡을 수 없습니다.", mount!.Description?.RawDescription);
         }
 
         [TestMethod]

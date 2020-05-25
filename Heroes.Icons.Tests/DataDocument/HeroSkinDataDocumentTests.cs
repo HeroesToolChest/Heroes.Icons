@@ -31,7 +31,9 @@ namespace Heroes.Icons.Tests.DataDocument
             using HeroSkinDataDocument document = HeroSkinDataDocument.Parse(_dataFile, gameStringDocument);
 
             Assert.AreEqual(Localization.FRFR, document.Localization);
-            Assert.IsTrue(document.TryGetHeroSkinById("AbathurBaseVar3", out HeroSkin _));
+            Assert.IsTrue(document.TryGetHeroSkinById("AbathurBaseVar3", out HeroSkin? heroSkin));
+            Assert.AreEqual("칼디르 아바투르", heroSkin!.Name);
+            Assert.AreEqual("케리건이 지배하는 저그 군단의 진화 군주인 아바투르는, 저그를 유전자 단계에서부터 발전시키기 위해 끊임없이 노력합니다. 불완전과 혼돈에 대한 그의 증오는 대명사와 어미에 대한 그의 증오에 거의 맞먹습니다.", heroSkin!.Description?.RawDescription);
         }
 
         [TestMethod]
@@ -62,7 +64,9 @@ namespace Heroes.Icons.Tests.DataDocument
             using HeroSkinDataDocument document = HeroSkinDataDocument.Parse(GetBytesForROM("AbathurBaseVar3"), gameStringDocument);
 
             Assert.AreEqual(Localization.KOKR, document.Localization);
-            Assert.IsTrue(document.TryGetHeroSkinById("AbathurBaseVar3", out HeroSkin _));
+            Assert.IsTrue(document.TryGetHeroSkinById("AbathurBaseVar3", out HeroSkin? heroSkin));
+            Assert.AreEqual("칼디르 아바투르", heroSkin!.Name);
+            Assert.AreEqual("케리건이 지배하는 저그 군단의 진화 군주인 아바투르는, 저그를 유전자 단계에서부터 발전시키기 위해 끊임없이 노력합니다. 불완전과 혼돈에 대한 그의 증오는 대명사와 어미에 대한 그의 증오에 거의 맞먹습니다.", heroSkin!.Description?.RawDescription);
         }
 
         [TestMethod]
