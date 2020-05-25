@@ -1,0 +1,12 @@
+{
+  "BannerD3DemonHunter": {
+    "name": "악마사냥꾼 깃발",
+    "hyperlinkId": "DemonHunterBanner",
+    "attributeId": "BN05",
+    "rarity": "Common",
+    "category": "Diablo",
+    "releaseDate": "2014-03-13",
+    "sortName": "3DemBaseVar0",
+    "description": "악마사냥꾼은 개인도 국가도 아닙니다. 그들은 복수의 이름 아래 하나로 뭉친 생존자들입니다."
+  }
+}

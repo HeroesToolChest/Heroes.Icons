@@ -423,10 +423,7 @@ namespace Heroes.Icons
                         heroSkin.SearchText = searchTextElement.ToString();
                     if (TryGetValueFromJsonElement(keyValue, "sortname", heroSkin.Id, out JsonElement sortNameElement))
                         heroSkin.SortName = sortNameElement.ToString();
-
-                    if (TryGetValueFromJsonElement(keyValue, "description", heroSkin.Id, out JsonElement descriptionElement))
-                        heroSkin.Description = new TooltipDescription(descriptionElement.ToString());
-                    else if (TryGetValueFromJsonElement(keyValue, "info", heroSkin.Id, out JsonElement infoElement))
+                    if (TryGetValueFromJsonElement(keyValue, "info", heroSkin.Id, out JsonElement infoElement))
                         heroSkin.Description = new TooltipDescription(infoElement.ToString());
                 }
             }
@@ -454,11 +451,34 @@ namespace Heroes.Icons
                         mount.SearchText = searchTextElement.ToString();
                     if (TryGetValueFromJsonElement(keyValue, "sortname", mount.Id, out JsonElement sortNameElement))
                         mount.SortName = sortNameElement.ToString();
-
-                    if (TryGetValueFromJsonElement(keyValue, "description", mount.Id, out JsonElement descriptionElement))
-                        mount.Description = new TooltipDescription(descriptionElement.ToString());
-                    else if (TryGetValueFromJsonElement(keyValue, "info", mount.Id, out JsonElement infoElement))
+                    if (TryGetValueFromJsonElement(keyValue, "info", mount.Id, out JsonElement infoElement))
                         mount.Description = new TooltipDescription(infoElement.ToString());
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the <paramref name="banner"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
+        /// </summary>
+        /// <param name="banner">The data to be updated.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="banner"/> is <see langword="null"/>.</exception>
+        public void UpdateGameStrings(Banner banner)
+        {
+            if (banner is null)
+                throw new ArgumentNullException(nameof(banner));
+
+            JsonElement element = JsonGameStringDocument.RootElement;
+
+            if (element.TryGetProperty("gamestrings", out JsonElement gameStringElement))
+            {
+                if (gameStringElement.TryGetProperty("banner", out JsonElement keyValue))
+                {
+                    if (TryGetValueFromJsonElement(keyValue, "name", banner.Id, out JsonElement nameElement))
+                        banner.Name = nameElement.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "sortname", banner.Id, out JsonElement sortNameElement))
+                        banner.SortName = sortNameElement.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "description", banner.Id, out JsonElement infoElement))
+                        banner.Description = new TooltipDescription(infoElement.ToString());
                 }
             }
         }
