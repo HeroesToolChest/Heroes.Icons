@@ -271,9 +271,7 @@ namespace Heroes.Icons.DataDocument
         public Announcer GetAnnouncerByHyperlinkId(string hyperlinkId)
         {
             if (hyperlinkId is null)
-            {
                 throw new ArgumentNullException(nameof(hyperlinkId));
-            }
 
             if (TryGetAnnouncerByHyperlinkId(hyperlinkId, out Announcer? value))
                 return value;
@@ -301,9 +299,7 @@ namespace Heroes.Icons.DataDocument
         public Announcer GetAnnouncerByAttributeId(string attributeId)
         {
             if (attributeId is null)
-            {
                 throw new ArgumentNullException(nameof(attributeId));
-            }
 
             if (TryGetAnnouncerByAttributeId(attributeId, out Announcer? value))
                 return value;

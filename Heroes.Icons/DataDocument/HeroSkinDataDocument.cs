@@ -271,9 +271,7 @@ namespace Heroes.Icons.DataDocument
         public HeroSkin GetHeroSkinByHyperlinkId(string hyperlinkId)
         {
             if (hyperlinkId is null)
-            {
                 throw new ArgumentNullException(nameof(hyperlinkId));
-            }
 
             if (TryGetHeroSkinByHyperlinkId(hyperlinkId, out HeroSkin? value))
                 return value;
@@ -301,9 +299,7 @@ namespace Heroes.Icons.DataDocument
         public HeroSkin GetHeroSkinByAttributeId(string attributeId)
         {
             if (attributeId is null)
-            {
                 throw new ArgumentNullException(nameof(attributeId));
-            }
 
             if (TryGetHeroSkinByAttributeId(attributeId, out HeroSkin? value))
                 return value;

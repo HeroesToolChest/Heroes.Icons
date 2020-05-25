@@ -271,9 +271,7 @@ namespace Heroes.Icons.DataDocument
         public Banner GetBannerByHyperlinkId(string hyperlinkId)
         {
             if (hyperlinkId is null)
-            {
                 throw new ArgumentNullException(nameof(hyperlinkId));
-            }
 
             if (TryGetBannerByHyperlinkId(hyperlinkId, out Banner? value))
                 return value;
@@ -301,9 +299,7 @@ namespace Heroes.Icons.DataDocument
         public Banner GetBannerByAttributeId(string attributeId)
         {
             if (attributeId is null)
-            {
                 throw new ArgumentNullException(nameof(attributeId));
-            }
 
             if (TryGetBannerByAttributeId(attributeId, out Banner? value))
                 return value;

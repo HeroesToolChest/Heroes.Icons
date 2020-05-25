@@ -272,9 +272,7 @@ namespace Heroes.Icons.DataDocument
         public MatchAward GetMatchAwardByGameLinkId(string gameLink)
         {
             if (gameLink is null)
-            {
                 throw new ArgumentNullException(nameof(gameLink));
-            }
 
             if (TryGetMatchAwardByGameLinkId(gameLink, out MatchAward? value))
                 return value;
@@ -303,9 +301,7 @@ namespace Heroes.Icons.DataDocument
         public MatchAward GetMatchAwardByTag(string tag)
         {
             if (tag is null)
-            {
                 throw new ArgumentNullException(nameof(tag));
-            }
 
             if (TryGetMatchAwardByTag(tag, out MatchAward? value))
                 return value;

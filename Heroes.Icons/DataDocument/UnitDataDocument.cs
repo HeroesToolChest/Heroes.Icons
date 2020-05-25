@@ -11,7 +11,7 @@ namespace Heroes.Icons.DataDocument
     /// <summary>
     /// Provides access to obtain <see cref="Unit"/> data as well as updating localized strings.
     /// </summary>
-    public class UnitDataDocument : UnitBaseData
+    public class UnitDataDocument : UnitDataBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UnitDataDocument"/> class.

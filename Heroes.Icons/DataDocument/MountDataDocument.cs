@@ -271,9 +271,7 @@ namespace Heroes.Icons.DataDocument
         public Mount GetMountByHyperlinkId(string hyperlinkId)
         {
             if (hyperlinkId is null)
-            {
                 throw new ArgumentNullException(nameof(hyperlinkId));
-            }
 
             if (TryGetMountByHyperlinkId(hyperlinkId, out Mount? value))
                 return value;
@@ -301,9 +299,7 @@ namespace Heroes.Icons.DataDocument
         public Mount GetMountByAttributeId(string attributeId)
         {
             if (attributeId is null)
-            {
                 throw new ArgumentNullException(nameof(attributeId));
-            }
 
             if (TryGetMountByAttributeId(attributeId, out Mount? value))
                 return value;

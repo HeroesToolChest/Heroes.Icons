@@ -9,86 +9,86 @@ namespace Heroes.Icons.DataDocument
     /// <summary>
     /// Base class reader for unit and hero related data.
     /// </summary>
-    public abstract class UnitBaseData : DataDocumentBase, IDataDocument
+    public abstract class UnitDataBase : DataDocumentBase, IDataDocument
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UnitBaseData"/> class.
+        /// Initializes a new instance of the <see cref="UnitDataBase"/> class.
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
-        protected UnitBaseData(string jsonDataFilePath)
+        protected UnitDataBase(string jsonDataFilePath)
             : base(jsonDataFilePath)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UnitBaseData"/> class.
+        /// Initializes a new instance of the <see cref="UnitDataBase"/> class.
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        protected UnitBaseData(string jsonDataFilePath, Localization localization)
+        protected UnitDataBase(string jsonDataFilePath, Localization localization)
             : base(jsonDataFilePath, localization)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UnitBaseData"/> class.
+        /// Initializes a new instance of the <see cref="UnitDataBase"/> class.
         /// </summary>
         /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        protected UnitBaseData(ReadOnlyMemory<byte> jsonData, Localization localization)
+        protected UnitDataBase(ReadOnlyMemory<byte> jsonData, Localization localization)
             : base(jsonData, localization)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UnitBaseData"/> class.
+        /// Initializes a new instance of the <see cref="UnitDataBase"/> class.
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        protected UnitBaseData(string jsonDataFilePath, GameStringDocument gameStringDocument)
+        protected UnitDataBase(string jsonDataFilePath, GameStringDocument gameStringDocument)
             : base(jsonDataFilePath, gameStringDocument)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UnitBaseData"/> class.
+        /// Initializes a new instance of the <see cref="UnitDataBase"/> class.
         /// </summary>
         /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        protected UnitBaseData(ReadOnlyMemory<byte> jsonData, GameStringDocument gameStringDocument)
+        protected UnitDataBase(ReadOnlyMemory<byte> jsonData, GameStringDocument gameStringDocument)
             : base(jsonData, gameStringDocument)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UnitBaseData"/> class.
+        /// Initializes a new instance of the <see cref="UnitDataBase"/> class.
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
-        protected UnitBaseData(Stream utf8Json, Localization localization, bool isAsync = false)
+        protected UnitDataBase(Stream utf8Json, Localization localization, bool isAsync = false)
             : base(utf8Json, localization, isAsync)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UnitBaseData"/> class.
+        /// Initializes a new instance of the <see cref="UnitDataBase"/> class.
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
         /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
-        protected UnitBaseData(Stream utf8Json, GameStringDocument gameStringDocument, bool isAsync = false)
+        protected UnitDataBase(Stream utf8Json, GameStringDocument gameStringDocument, bool isAsync = false)
             : base(utf8Json, gameStringDocument, isAsync)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UnitBaseData"/> class.
+        /// Initializes a new instance of the <see cref="UnitDataBase"/> class.
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
         /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
-        protected UnitBaseData(Stream utf8Json, Stream utf8JsonGameStrings, bool isAsync = false)
+        protected UnitDataBase(Stream utf8Json, Stream utf8JsonGameStrings, bool isAsync = false)
             : base(utf8Json, utf8JsonGameStrings, isAsync)
         {
         }
