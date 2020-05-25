@@ -1,0 +1,18 @@
+{
+  "SprayAnimatedCookieAbathur": {
+    "name": "과자 아바투르",
+    "hyperlinkId": "GingerbreadAbathur",
+    "attributeId": "Sy01",
+    "rarity": "Rare",
+    "category": "SeasonalEvents",
+    "event": "WinterVeil",
+    "releaseDate": "2017-12-12",
+    "sortName": "4WinterA17Cookie",
+    "image": "storm_lootspray_animated_cookie_abathur.gif",
+    "animation": {
+      "texture": "storm_lootspray_animated_cookie_abathur.png",
+      "frames": 2,
+      "duration": 2000
+    }
+  }
+}

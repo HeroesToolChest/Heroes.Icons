@@ -8,32 +8,32 @@ using System.Text.Json;
 namespace Heroes.Icons.Tests.ModelExtensions
 {
     [TestClass]
-    public class MountExtensionsTests
+    public class SprayExtensionsTests
     {
         [TestMethod]
         public void UpdateGameStringsTest()
         {
             using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-            Mount mount = new Mount
+            Spray spray = new Spray
             {
-                Id = "AlarakTaldarimMarch",
+                Id = "SprayAnimatedCarbotsAlarakDark",
             };
 
-            mount.UpdateGameStrings(gameStringDocument);
+            spray.UpdateGameStrings(gameStringDocument);
 
-            Assert.AreEqual("Should he choose to float only an inch off the ground, you would still be beneath the Highlord.", mount.Description!.RawDescription);
+            Assert.AreEqual(string.Empty, spray.Description!.RawDescription);
         }
 
         [TestMethod]
         public void UpdateGameStringsThrowArgumentNullException()
         {
-            Mount mount = new Mount
+            Spray spray = new Spray
             {
-                Id = "AlarakTaldarimMarch",
+                Id = "SprayAnimatedCarbotsAlarakDark",
             };
 
-            Assert.ThrowsException<ArgumentNullException>(() => mount.UpdateGameStrings(null!));
+            Assert.ThrowsException<ArgumentNullException>(() => spray.UpdateGameStrings(null!));
         }
 
         private static byte[] LoadEnusLocalizedStringData()
@@ -48,26 +48,22 @@ namespace Heroes.Icons.Tests.ModelExtensions
             writer.WriteEndObject(); // meta
 
             writer.WriteStartObject("gamestrings");
-            writer.WriteStartObject("mount");
+            writer.WriteStartObject("spray");
 
-            writer.WriteStartObject("info");
-            writer.WriteString("AlarakTaldarimMarch", "Should he choose to float only an inch off the ground, you would still be beneath the Highlord.");
-            writer.WriteString("AnubarakWings", "In the years following the Third War, Azerothian scholars hypothesized that the wings of spiderlords were vestigal, incapable of flight. They were very wrong.");
-            writer.WriteEndObject();
             writer.WriteStartObject("name");
-            writer.WriteString("AlarakTaldarimMarch", "Highlord's Ascent");
-            writer.WriteString("AnubarakWings", "Crypt Lord Wings");
+            writer.WriteString("SprayAnimatedCarbotsAlarakDark", "Tall, Dark, and Sadistic");
             writer.WriteEndObject();
             writer.WriteStartObject("searchtext");
-            writer.WriteString("AlarakTaldarimMarch", "Highlord's Ascent");
-            writer.WriteString("AnubarakWings", "Crypt Lord Wings");
+            writer.WriteString("SprayAnimatedCarbotsAlarakDark", "Dark Nexus Alarak Carbot");
             writer.WriteEndObject();
             writer.WriteStartObject("sortname");
-            writer.WriteString("AlarakTaldarimMarch", "1HeroAlarak");
-            writer.WriteString("AnubarakWings", "1HeroAnubarak");
+            writer.WriteString("SprayAnimatedCarbotsAlarakDark", "1Animated");
+            writer.WriteEndObject();
+            writer.WriteStartObject("description");
+            writer.WriteString("SprayAnimatedCarbotsAlarakDark", string.Empty);
             writer.WriteEndObject();
 
-            writer.WriteEndObject(); // end mount
+            writer.WriteEndObject(); // end spray
 
             writer.WriteEndObject(); // end gamestrings
 

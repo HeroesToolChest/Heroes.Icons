@@ -262,7 +262,7 @@ namespace Heroes.Icons.DataDocument
         }
 
         /// <summary>
-        /// Gets a <see cref="Banner"/> from the hero skin <paramref name="hyperlinkId"/> property value.
+        /// Gets a <see cref="Banner"/> from the banner <paramref name="hyperlinkId"/> property value.
         /// </summary>
         /// <param name="hyperlinkId">A banner hyperlinkId property value.</param>
         /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
@@ -290,7 +290,7 @@ namespace Heroes.Icons.DataDocument
             => PropertyLookup("hyperlinkId", hyperlinkId, GetBannerData, out value);
 
         /// <summary>
-        /// Gets a <see cref="Banner"/> from the hero skin <paramref name="attributeId"/> property value.
+        /// Gets a <see cref="Banner"/> from the banner <paramref name="attributeId"/> property value.
         /// </summary>
         /// <param name="attributeId">A banner attributeId property value.</param>
         /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is <see langword="null"/>.</exception>

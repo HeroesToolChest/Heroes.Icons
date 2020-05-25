@@ -477,8 +477,36 @@ namespace Heroes.Icons
                         banner.Name = nameElement.ToString();
                     if (TryGetValueFromJsonElement(keyValue, "sortname", banner.Id, out JsonElement sortNameElement))
                         banner.SortName = sortNameElement.ToString();
-                    if (TryGetValueFromJsonElement(keyValue, "description", banner.Id, out JsonElement infoElement))
-                        banner.Description = new TooltipDescription(infoElement.ToString());
+                    if (TryGetValueFromJsonElement(keyValue, "description", banner.Id, out JsonElement descriptionElement))
+                        banner.Description = new TooltipDescription(descriptionElement.ToString());
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the <paramref name="spray"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
+        /// </summary>
+        /// <param name="spray">The data to be updated.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="spray"/> is <see langword="null"/>.</exception>
+        public void UpdateGameStrings(Spray spray)
+        {
+            if (spray is null)
+                throw new ArgumentNullException(nameof(spray));
+
+            JsonElement element = JsonGameStringDocument.RootElement;
+
+            if (element.TryGetProperty("gamestrings", out JsonElement gameStringElement))
+            {
+                if (gameStringElement.TryGetProperty("spray", out JsonElement keyValue))
+                {
+                    if (TryGetValueFromJsonElement(keyValue, "name", spray.Id, out JsonElement nameElement))
+                        spray.Name = nameElement.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "searchtext", spray.Id, out JsonElement searchTextElement))
+                        spray.SearchText = searchTextElement.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "sortname", spray.Id, out JsonElement sortNameElement))
+                        spray.SortName = sortNameElement.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "description", spray.Id, out JsonElement descriptionElement))
+                        spray.Description = new TooltipDescription(descriptionElement.ToString());
                 }
             }
         }
