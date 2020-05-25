@@ -68,6 +68,11 @@
       "sortName": {
         "SprayAnimatedCookieAbathur": "4WinterA17Cookie"
       }
+    },
+    "voiceline": {
+      "name": {
+        "AbathurBase_VoiceLine01": "군단을 위하여"
+      }
     }
   }
 }

@@ -1,0 +1,10 @@
+{
+  "AbathurBase_VoiceLine01": {
+    "name": "군단을 위하여",
+    "hyperlinkId": "AbathurVoiceLine01",
+    "attributeId": "AB01",
+    "rarity": "Common",
+    "releaseDate": "2014-03-13",
+    "image": "storm_ui_voice_abathur.png"
+  }
+}

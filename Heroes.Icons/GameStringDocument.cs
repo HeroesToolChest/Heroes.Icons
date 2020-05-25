@@ -512,6 +512,32 @@ namespace Heroes.Icons
         }
 
         /// <summary>
+        /// Updates the <paramref name="voiceLine"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
+        /// </summary>
+        /// <param name="voiceLine">The data to be updated.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="voiceLine"/> is <see langword="null"/>.</exception>
+        public void UpdateGameStrings(VoiceLine voiceLine)
+        {
+            if (voiceLine is null)
+                throw new ArgumentNullException(nameof(voiceLine));
+
+            JsonElement element = JsonGameStringDocument.RootElement;
+
+            if (element.TryGetProperty("gamestrings", out JsonElement gameStringElement))
+            {
+                if (gameStringElement.TryGetProperty("voiceline", out JsonElement keyValue))
+                {
+                    if (TryGetValueFromJsonElement(keyValue, "name", voiceLine.Id, out JsonElement nameElement))
+                        voiceLine.Name = nameElement.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "sortname", voiceLine.Id, out JsonElement sortNameElement))
+                        voiceLine.SortName = sortNameElement.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "description", voiceLine.Id, out JsonElement descriptionElement))
+                        voiceLine.Description = new TooltipDescription(descriptionElement.ToString());
+                }
+            }
+        }
+
+        /// <summary>
         /// Parses the Json stream as <see langword="async"/>.
         /// </summary>
         /// <typeparam name="T">A class that derives <see cref="GameStringDocument"/>.</typeparam>
