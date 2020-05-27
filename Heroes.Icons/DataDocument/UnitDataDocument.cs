@@ -323,8 +323,8 @@ namespace Heroes.Icons.DataDocument
                 CUnitId = id,
             };
 
-            if (element.TryGetProperty("hyperlinkId", out JsonElement value))
-                unit.HyperlinkId = value.GetString();
+            if (element.TryGetProperty("hyperlinkId", out JsonElement hyperlinkId))
+                unit.HyperlinkId = hyperlinkId.GetString();
 
             int index = id.IndexOf('-', StringComparison.InvariantCultureIgnoreCase);
             if (index > -1)
@@ -332,49 +332,49 @@ namespace Heroes.Icons.DataDocument
                 unit.MapName = id.Substring(0, index);
             }
 
-            if (element.TryGetProperty("name", out value))
-                unit.Name = value.GetString();
-            if (element.TryGetProperty("innerRadius", out value))
-                unit.InnerRadius = value.GetDouble();
-            if (element.TryGetProperty("radius", out value))
-                unit.Radius = value.GetDouble();
-            if (element.TryGetProperty("sight", out value))
-                unit.Sight = value.GetDouble();
-            if (element.TryGetProperty("speed", out value))
-                unit.Speed = value.GetDouble();
-            if (element.TryGetProperty("killXP", out value))
-                unit.KillXP = value.GetInt32();
-            if (element.TryGetProperty("damageType", out value))
-                unit.DamageType = value.GetString();
-            if (element.TryGetProperty("scalingLinkId", out value))
-                unit.ScalingBehaviorLink = value.GetString();
-            if (element.TryGetProperty("description", out value))
-                unit.Description = new TooltipDescription(value.GetString(), Localization);
+            if (element.TryGetProperty("name", out JsonElement name))
+                unit.Name = name.GetString();
+            if (element.TryGetProperty("innerRadius", out JsonElement innerRadius))
+                unit.InnerRadius = innerRadius.GetDouble();
+            if (element.TryGetProperty("radius", out JsonElement radius))
+                unit.Radius = radius.GetDouble();
+            if (element.TryGetProperty("sight", out JsonElement sight))
+                unit.Sight = sight.GetDouble();
+            if (element.TryGetProperty("speed", out JsonElement speed))
+                unit.Speed = speed.GetDouble();
+            if (element.TryGetProperty("killXP", out JsonElement killXP))
+                unit.KillXP = killXP.GetInt32();
+            if (element.TryGetProperty("damageType", out JsonElement damageType))
+                unit.DamageType = damageType.GetString();
+            if (element.TryGetProperty("scalingLinkId", out JsonElement scalingLinkId))
+                unit.ScalingBehaviorLink = scalingLinkId.GetString();
+            if (element.TryGetProperty("description", out JsonElement description))
+                unit.Description = new TooltipDescription(description.GetString(), Localization);
 
-            if (element.TryGetProperty("descriptors", out value))
+            if (element.TryGetProperty("descriptors", out JsonElement descriptorElements))
             {
-                foreach (JsonElement descriptorArrayElement in value.EnumerateArray())
+                foreach (JsonElement descriptorArrayElement in descriptorElements.EnumerateArray())
                     unit.HeroDescriptors.Add(descriptorArrayElement.GetString());
             }
 
-            if (element.TryGetProperty("attributes", out value))
+            if (element.TryGetProperty("attributes", out JsonElement attributesElements))
             {
-                foreach (JsonElement attributeArrayElement in value.EnumerateArray())
+                foreach (JsonElement attributeArrayElement in attributesElements.EnumerateArray())
                     unit.Attributes.Add(attributeArrayElement.GetString());
             }
 
-            if (element.TryGetProperty("units", out value))
+            if (element.TryGetProperty("units", out JsonElement unitsElements))
             {
-                foreach (JsonElement unitArrayElement in value.EnumerateArray())
+                foreach (JsonElement unitArrayElement in unitsElements.EnumerateArray())
                     unit.UnitIds.Add(unitArrayElement.GetString());
             }
 
             // portraits
-            if (element.TryGetProperty("portraits", out value))
+            if (element.TryGetProperty("portraits", out JsonElement portraitsElement))
             {
-                if (value.TryGetProperty("targetInfo", out JsonElement portraitValue))
+                if (portraitsElement.TryGetProperty("targetInfo", out JsonElement portraitValue))
                     unit.UnitPortrait.TargetInfoPanelFileName = portraitValue.GetString();
-                if (value.TryGetProperty("minimap", out portraitValue))
+                if (portraitsElement.TryGetProperty("minimap", out portraitValue))
                     unit.UnitPortrait.MiniMapIconFileName = portraitValue.GetString();
             }
 
