@@ -73,6 +73,12 @@
       "name": {
         "AbathurBase_VoiceLine01": "군단을 위하여"
       }
+    },
+    "portrait": {
+      "name": {
+        "AbathurToys18Portrait": "애벌레투르 초상화",
+        "AdmiralKrakenovPortrait": "크라케노프 제독 초상화"
+      }
     }
   }
 }

@@ -538,6 +538,30 @@ namespace Heroes.Icons
         }
 
         /// <summary>
+        /// Updates the <paramref name="portraitPack"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
+        /// </summary>
+        /// <param name="portraitPack">The data to be updated.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="portraitPack"/> is <see langword="null"/>.</exception>
+        public void UpdateGameStrings(PortraitPack portraitPack)
+        {
+            if (portraitPack is null)
+                throw new ArgumentNullException(nameof(portraitPack));
+
+            JsonElement element = JsonGameStringDocument.RootElement;
+
+            if (element.TryGetProperty("gamestrings", out JsonElement gameStringElement))
+            {
+                if (gameStringElement.TryGetProperty("portrait", out JsonElement keyValue))
+                {
+                    if (TryGetValueFromJsonElement(keyValue, "name", portraitPack.Id, out JsonElement nameElement))
+                        portraitPack.Name = nameElement.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "sortname", portraitPack.Id, out JsonElement sortNameElement))
+                        portraitPack.SortName = sortNameElement.ToString();
+                }
+            }
+        }
+
+        /// <summary>
         /// Parses the Json stream as <see langword="async"/>.
         /// </summary>
         /// <typeparam name="T">A class that derives <see cref="GameStringDocument"/>.</typeparam>
