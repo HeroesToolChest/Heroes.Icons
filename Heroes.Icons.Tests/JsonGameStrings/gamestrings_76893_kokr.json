@@ -79,6 +79,20 @@
         "AbathurToys18Portrait": "애벌레투르 초상화",
         "AdmiralKrakenovPortrait": "크라케노프 제독 초상화"
       }
+    },
+    "rewardportrait": {
+      "description": {
+        "1YearAnniversaryPortrait": "히어로즈 오브 더 스톰이 1주년을 맞이했습니다. 앞으로도 시공의 폭풍에서 잊을 수 없는 시간을 보내시길 바랍니다!",
+        "AbathurCarbotsPortrait": "카봇 아바투르 초상화"
+      },
+      "descriptionUnearned": {
+        "1YearAnniversaryPortrait": "파편 또는 시공석으로 구매하거나 전리품 상자에서 획득 가능",
+        "AbathurCarbotsPortrait": "파편 또는 시공석으로 구매하거나 전리품 상자에서 획득 가능"
+      },
+      "name": {
+        "1YearAnniversaryPortrait": "1주년 기념 초상화",
+        "AbathurCarbotsPortrait": "카봇 아바투르 초상화"
+      }
     }
   }
 }

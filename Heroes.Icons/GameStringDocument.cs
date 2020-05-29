@@ -562,6 +562,32 @@ namespace Heroes.Icons
         }
 
         /// <summary>
+        /// Updates the <paramref name="rewardPortrait"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
+        /// </summary>
+        /// <param name="rewardPortrait">The data to be updated.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="rewardPortrait"/> is <see langword="null"/>.</exception>
+        public void UpdateGameStrings(RewardPortrait rewardPortrait)
+        {
+            if (rewardPortrait is null)
+                throw new ArgumentNullException(nameof(rewardPortrait));
+
+            JsonElement element = JsonGameStringDocument.RootElement;
+
+            if (element.TryGetProperty("gamestrings", out JsonElement gameStringElement))
+            {
+                if (gameStringElement.TryGetProperty("rewardportrait", out JsonElement keyValue))
+                {
+                    if (TryGetValueFromJsonElement(keyValue, "name", rewardPortrait.Id, out JsonElement nameElement))
+                        rewardPortrait.Name = nameElement.ToString();
+                    if (TryGetValueFromJsonElement(keyValue, "description", rewardPortrait.Id, out JsonElement descriptionElement))
+                        rewardPortrait.Description = new TooltipDescription(descriptionElement.ToString());
+                    if (TryGetValueFromJsonElement(keyValue, "descriptionunearned", rewardPortrait.Id, out JsonElement descriptionUnearnedElement))
+                        rewardPortrait.DescriptionUnearned = new TooltipDescription(descriptionUnearnedElement.ToString());
+                }
+            }
+        }
+
+        /// <summary>
         /// Parses the Json stream as <see langword="async"/>.
         /// </summary>
         /// <typeparam name="T">A class that derives <see cref="GameStringDocument"/>.</typeparam>

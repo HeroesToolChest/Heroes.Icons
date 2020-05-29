@@ -1,0 +1,30 @@
+{
+  "1YearAnniversaryPortrait": {
+    "name": "1주년 기념 초상화",
+    "hyperlinkId": "1YearAnniversaryPortrait",
+    "rarity": "Common",
+    "category": "PortraitAchievements1",
+    "description": "히어로즈 오브 더 스톰이 1주년을 맞이했습니다. 앞으로도 시공의 폭풍에서 잊을 수 없는 시간을 보내시길 바랍니다!",
+    "iconSlot": 23,
+    "textureSheet": {
+      "image": "ui_heroes_portraits_sheet5.png",
+      "columns": 6,
+      "rows": 6
+    }
+  },
+  "AbathurCarbotsPortrait": {
+    "name": "카봇 아바투르 초상화",
+    "hyperlinkId": "CarbotAbathurPortrait",
+    "rarity": "Common",
+    "category": "HeroStormPortrait",
+    "description": "수집품에 이 초상화가 해제되었습니다.",
+    "descriptionUnearned": "파편 또는 시공석으로 구매하거나 전리품 상자에서 획득 가능",
+    "portraitPackId": "AbathurCarbotsPortrait",
+    "iconSlot": 18,
+    "textureSheet": {
+      "image": "ui_heroes_portraits_sheet25.png",
+      "columns": 6,
+      "rows": 6
+    }
+  }
+}

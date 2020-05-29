@@ -237,7 +237,7 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("AdmiralKrakenovPortrait")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetPortraitPackByIdHyperlinkIdTest(string id)
+        public void TryGetPortraitPackByHyperlinkIdTest(string id)
         {
             if (id is null)
             {
