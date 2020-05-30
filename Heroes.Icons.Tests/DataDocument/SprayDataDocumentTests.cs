@@ -205,7 +205,7 @@ namespace Heroes.Icons.Tests.DataDocument
         }
 
         [DataTestMethod]
-        [DataRow("GingerbreadButcher")]
+        [DataRow("GingerbreadAbathur")]
         [DataRow(null)]
         [DataRow("asdf")]
         public void GetSprayByHyperlinkIdTest(string id)
@@ -229,7 +229,7 @@ namespace Heroes.Icons.Tests.DataDocument
                 return;
             }
 
-            BasicSprayAnimatedCookieButcherAsserts(_sprayDataDocument.GetSprayByHyperlinkId(id));
+            BasicSprayAnimatedCookieAbathurAsserts(_sprayDataDocument.GetSprayByHyperlinkId(id));
         }
 
         [DataTestMethod]
@@ -328,6 +328,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteString("releaseDate", "2017-12-12");
             writer.WriteString("sortName", "4WinterA17Cookie");
             writer.WriteString("image", "storm_lootspray_animated_cookie_abathur.gif");
+            writer.WriteString("description", "asdf");
+            writer.WriteString("searchText", "cookie");
             writer.WriteStartObject("animation");
             writer.WriteString("texture", "storm_lootspray_animated_cookie_abathur.png");
             writer.WriteNumber("frames", 2);
@@ -359,6 +361,24 @@ namespace Heroes.Icons.Tests.DataDocument
             return memoryStream.ToArray();
         }
 
+        private static void BasicSprayAnimatedCookieAbathurAsserts(Spray spray)
+        {
+            Assert.AreEqual("SprayAnimatedCookieAbathur", spray.Id);
+            Assert.AreEqual("Gingerbread Abathur", spray.Name);
+            Assert.AreEqual("GingerbreadAbathur", spray.HyperlinkId);
+            Assert.AreEqual("Sy01", spray.AttributeId);
+            Assert.AreEqual(Rarity.Rare, spray.Rarity);
+            Assert.AreEqual("SeasonalEvents", spray.CollectionCategory);
+            Assert.AreEqual("WinterVeil", spray.EventName);
+            Assert.AreEqual(new DateTime(2017, 12, 12), spray.ReleaseDate);
+            Assert.AreEqual("4WinterA17Cookie", spray.SortName);
+            Assert.AreEqual("asdf", spray.Description?.RawDescription);
+            Assert.AreEqual("cookie", spray.SearchText);
+            Assert.AreEqual(2, spray.AnimationCount);
+            Assert.AreEqual(2000, spray.AnimationDuration);
+            //Assert.AreEqual("storm_lootspray_animated_cookie_butcher.png", spray.OriginalTextureSheet);
+        }
+
         private static void BasicSprayAnimatedCookieButcherAsserts(Spray spray)
         {
             Assert.AreEqual("SprayAnimatedCookieButcher", spray.Id);
@@ -371,6 +391,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual(new DateTime(2017, 12, 12), spray.ReleaseDate);
             Assert.AreEqual("4WinterA17Cookie", spray.SortName);
             Assert.IsNull(spray.Description?.RawDescription);
+            Assert.IsNull(spray.SearchText);
             Assert.AreEqual(2, spray.AnimationCount);
             Assert.AreEqual(2000, spray.AnimationDuration);
             //Assert.AreEqual("storm_lootspray_animated_cookie_butcher.png", spray.OriginalTextureSheet);

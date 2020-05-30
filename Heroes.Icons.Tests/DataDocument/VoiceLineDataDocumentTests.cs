@@ -205,7 +205,7 @@ namespace Heroes.Icons.Tests.DataDocument
         }
 
         [DataTestMethod]
-        [DataRow("MephistoVoiceLine02")]
+        [DataRow("AbathurVoiceLine01")]
         [DataRow(null)]
         [DataRow("asdf")]
         public void GetVoiceLineByHyperlinkIdTest(string id)
@@ -229,7 +229,7 @@ namespace Heroes.Icons.Tests.DataDocument
                 return;
             }
 
-            BasicMephistoBase_VoiceLine02Asserts(_voiceLineDataDocument.GetVoiceLineByHyperlinkId(id));
+            BasicAbathurBase_VoiceLine01Asserts(_voiceLineDataDocument.GetVoiceLineByHyperlinkId(id));
         }
 
         [DataTestMethod]
@@ -325,6 +325,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteString("rarity", "Common");
             writer.WriteString("releaseDate", "2014-03-13");
             writer.WriteString("image", "storm_ui_voice_abathur.png");
+            writer.WriteString("sortName", "xxabathur");
+            writer.WriteString("description", "asdf");
             writer.WriteEndObject();
 
             writer.WriteStartObject("MephistoBase_VoiceLine02");
@@ -341,6 +343,19 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.Flush();
 
             return memoryStream.ToArray();
+        }
+
+        private static void BasicAbathurBase_VoiceLine01Asserts(VoiceLine voiceLine)
+        {
+            Assert.AreEqual("AbathurBase_VoiceLine01", voiceLine.Id);
+            Assert.AreEqual("For the Swarm", voiceLine.Name);
+            Assert.AreEqual("AbathurVoiceLine01", voiceLine.HyperlinkId);
+            Assert.AreEqual("AB01", voiceLine.AttributeId);
+            Assert.AreEqual(Rarity.Common, voiceLine.Rarity);
+            Assert.AreEqual(new DateTime(2014, 3, 13), voiceLine.ReleaseDate);
+            Assert.AreEqual("xxabathur", voiceLine.SortName);
+            Assert.AreEqual("asdf", voiceLine.Description?.RawDescription);
+            Assert.AreEqual("storm_ui_voice_abathur.png", voiceLine.ImageFileName);
         }
 
         private static void BasicMephistoBase_VoiceLine02Asserts(VoiceLine voiceLine)

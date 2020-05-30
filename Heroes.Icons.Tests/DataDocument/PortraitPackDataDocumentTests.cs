@@ -276,6 +276,7 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteString("name", "Admiral Krakenov Portrait");
             writer.WriteString("hyperlinkId", "AdmiralKrakenovPortrait");
             writer.WriteString("rarity", "Common");
+            writer.WriteString("sortName", "asdf");
             writer.WriteStartArray("rewardPortraitIds");
             writer.WriteStringValue("StukovPortraitPirate");
             writer.WriteEndArray();
@@ -306,7 +307,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual("AdmiralKrakenovPortrait", portraitPack.HyperlinkId);
             Assert.AreEqual(Rarity.Common, portraitPack.Rarity);
             Assert.IsNull(portraitPack.EventName);
-            Assert.IsNull(portraitPack.SortName);
+            Assert.AreEqual("asdf", portraitPack.SortName);
             Assert.AreEqual(1, portraitPack.RewardPortraitIds.Count);
             Assert.AreEqual("StukovPortraitPirate", portraitPack.RewardPortraitIds.ToList()[0]);
         }
