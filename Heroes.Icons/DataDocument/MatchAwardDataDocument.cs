@@ -101,7 +101,7 @@ namespace Heroes.Icons.DataDocument
         /// The <see cref="Localization"/> will be inferred from <paramref name="jsonDataFilePath"/>.
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
-        /// <returns>An <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
         public static MatchAwardDataDocument Parse(string jsonDataFilePath)
         {
             return new MatchAwardDataDocument(jsonDataFilePath);
@@ -112,7 +112,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>An <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
         public static MatchAwardDataDocument Parse(string jsonDataFilePath, Localization localization)
         {
             return new MatchAwardDataDocument(jsonDataFilePath, localization);
@@ -123,7 +123,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>An <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
         public static MatchAwardDataDocument Parse(ReadOnlyMemory<byte> jsonData, Localization localization)
         {
             return new MatchAwardDataDocument(jsonData, localization);
@@ -134,7 +134,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <returns>An <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
         public static MatchAwardDataDocument Parse(string jsonDataFilePath, GameStringDocument gameStringDocument)
         {
             return new MatchAwardDataDocument(jsonDataFilePath, gameStringDocument);
@@ -145,7 +145,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <returns>An <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
         public static MatchAwardDataDocument Parse(ReadOnlyMemory<byte> jsonData, GameStringDocument gameStringDocument)
         {
             return new MatchAwardDataDocument(jsonData, gameStringDocument);
@@ -156,7 +156,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>An <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
         public static MatchAwardDataDocument Parse(Stream utf8Json, Localization localization)
         {
             return new MatchAwardDataDocument(utf8Json, localization);
@@ -167,7 +167,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <returns>An <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
         public static MatchAwardDataDocument Parse(Stream utf8Json, GameStringDocument gameStringDocument)
         {
             return new MatchAwardDataDocument(utf8Json, gameStringDocument);
@@ -179,7 +179,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
-        /// <returns>An <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
         public static MatchAwardDataDocument Parse(Stream utf8Json, Stream utf8JsonGameStrings)
         {
             return new MatchAwardDataDocument(utf8Json, utf8JsonGameStrings);
@@ -190,7 +190,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>An <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
         public static Task<MatchAwardDataDocument> ParseAsync(Stream utf8Json, Localization localization)
         {
             return new MatchAwardDataDocument(utf8Json, localization, true).InitializeParseDataStreamAsync<MatchAwardDataDocument>();
@@ -201,7 +201,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <returns>An <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
         public static Task<MatchAwardDataDocument> ParseAsync(Stream utf8Json, GameStringDocument gameStringDocument)
         {
             return new MatchAwardDataDocument(utf8Json, gameStringDocument, true).InitializeParseDataStreamAsync<MatchAwardDataDocument>();
@@ -213,7 +213,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
-        /// <returns>An <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="MatchAwardDataDocument"/> representation of the JSON value.</returns>
         public static Task<MatchAwardDataDocument> ParseAsync(Stream utf8Json, Stream utf8JsonGameStrings)
         {
             return new MatchAwardDataDocument(utf8Json, utf8JsonGameStrings, true).InitializeParseDataWithGameStringStreamAsync<MatchAwardDataDocument>();
@@ -223,7 +223,7 @@ namespace Heroes.Icons.DataDocument
         /// Gets a <see cref="MatchAward"/> from the match award <paramref name="id"/> property value.
         /// </summary>
         /// <param name="id">A match award id property value.</param>
-        /// <returns>An <see cref="MatchAward"/> object.</returns>
+        /// <returns>A <see cref="MatchAward"/> object.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
         public MatchAward GetMatchAwardById(string id)
@@ -268,7 +268,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="gameLink">A match award gameLink property value.</param>
         /// <exception cref="ArgumentNullException"><paramref name="gameLink"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException"><paramref name="gameLink"/> property value was not found.</exception>
-        /// <returns>An <see cref="MatchAward"/> object.</returns>
+        /// <returns>A <see cref="MatchAward"/> object.</returns>
         public MatchAward GetMatchAwardByGameLinkId(string gameLink)
         {
             if (gameLink is null)
@@ -297,7 +297,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="tag">A match award tag property value.</param>
         /// <exception cref="ArgumentNullException"><paramref name="tag"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException"><paramref name="tag"/> property value was not found.</exception>
-        /// <returns>An <see cref="MatchAward"/> object.</returns>
+        /// <returns>A <see cref="MatchAward"/> object.</returns>
         public MatchAward GetMatchAwardByTag(string tag)
         {
             if (tag is null)

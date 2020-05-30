@@ -93,6 +93,16 @@
         "1YearAnniversaryPortrait": "1주년 기념 초상화",
         "AbathurCarbotsPortrait": "카봇 아바투르 초상화"
       }
+    },
+    "emoticon": {
+      "description": {
+        "cat_blink_anim": "저주받은 고양이 점멸 :고양점멸:",
+        "abathur_mecha_angry": "제노공학 아바투르 화남 :제노아바 화:"
+      },
+      "expression": {
+        "cat_blink_anim": "Unknown",
+        "abathur_mecha_angry": "Angry"
+      }
     }
   }
 }

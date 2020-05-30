@@ -101,7 +101,7 @@ namespace Heroes.Icons.DataDocument
         /// The <see cref="Localization"/> will be inferred from <paramref name="jsonDataFilePath"/>.
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
-        /// <returns>An <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
         public static BannerDataDocument Parse(string jsonDataFilePath)
         {
             return new BannerDataDocument(jsonDataFilePath);
@@ -112,7 +112,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>An <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
         public static BannerDataDocument Parse(string jsonDataFilePath, Localization localization)
         {
             return new BannerDataDocument(jsonDataFilePath, localization);
@@ -123,7 +123,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>An <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
         public static BannerDataDocument Parse(ReadOnlyMemory<byte> jsonData, Localization localization)
         {
             return new BannerDataDocument(jsonData, localization);
@@ -134,7 +134,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <returns>An <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
         public static BannerDataDocument Parse(string jsonDataFilePath, GameStringDocument gameStringDocument)
         {
             return new BannerDataDocument(jsonDataFilePath, gameStringDocument);
@@ -145,7 +145,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <returns>An <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
         public static BannerDataDocument Parse(ReadOnlyMemory<byte> jsonData, GameStringDocument gameStringDocument)
         {
             return new BannerDataDocument(jsonData, gameStringDocument);
@@ -156,7 +156,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>An <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
         public static BannerDataDocument Parse(Stream utf8Json, Localization localization)
         {
             return new BannerDataDocument(utf8Json, localization);
@@ -167,7 +167,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <returns>An <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
         public static BannerDataDocument Parse(Stream utf8Json, GameStringDocument gameStringDocument)
         {
             return new BannerDataDocument(utf8Json, gameStringDocument);
@@ -179,7 +179,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
-        /// <returns>An <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
         public static BannerDataDocument Parse(Stream utf8Json, Stream utf8JsonGameStrings)
         {
             return new BannerDataDocument(utf8Json, utf8JsonGameStrings);
@@ -190,7 +190,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>An <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
         public static Task<BannerDataDocument> ParseAsync(Stream utf8Json, Localization localization)
         {
             return new BannerDataDocument(utf8Json, localization, true).InitializeParseDataStreamAsync<BannerDataDocument>();
@@ -201,7 +201,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <returns>An <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
         public static Task<BannerDataDocument> ParseAsync(Stream utf8Json, GameStringDocument gameStringDocument)
         {
             return new BannerDataDocument(utf8Json, gameStringDocument, true).InitializeParseDataStreamAsync<BannerDataDocument>();
@@ -213,7 +213,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
-        /// <returns>An <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="BannerDataDocument"/> representation of the JSON value.</returns>
         public static Task<BannerDataDocument> ParseAsync(Stream utf8Json, Stream utf8JsonGameStrings)
         {
             return new BannerDataDocument(utf8Json, utf8JsonGameStrings, true).InitializeParseDataWithGameStringStreamAsync<BannerDataDocument>();
@@ -223,7 +223,7 @@ namespace Heroes.Icons.DataDocument
         /// Gets a <see cref="Banner"/> from the banner <paramref name="id"/> property value.
         /// </summary>
         /// <param name="id">A banner id property value.</param>
-        /// <returns>An <see cref="Banner"/> object.</returns>
+        /// <returns>A <see cref="Banner"/> object.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
         public Banner GetBannerById(string id)

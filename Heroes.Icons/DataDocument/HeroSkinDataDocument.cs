@@ -101,7 +101,7 @@ namespace Heroes.Icons.DataDocument
         /// The <see cref="Localization"/> will be inferred from <paramref name="jsonDataFilePath"/>.
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
-        /// <returns>An <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
         public static HeroSkinDataDocument Parse(string jsonDataFilePath)
         {
             return new HeroSkinDataDocument(jsonDataFilePath);
@@ -112,7 +112,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>An <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
         public static HeroSkinDataDocument Parse(string jsonDataFilePath, Localization localization)
         {
             return new HeroSkinDataDocument(jsonDataFilePath, localization);
@@ -123,7 +123,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>An <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
         public static HeroSkinDataDocument Parse(ReadOnlyMemory<byte> jsonData, Localization localization)
         {
             return new HeroSkinDataDocument(jsonData, localization);
@@ -134,7 +134,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <returns>An <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
         public static HeroSkinDataDocument Parse(string jsonDataFilePath, GameStringDocument gameStringDocument)
         {
             return new HeroSkinDataDocument(jsonDataFilePath, gameStringDocument);
@@ -145,7 +145,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <returns>An <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
         public static HeroSkinDataDocument Parse(ReadOnlyMemory<byte> jsonData, GameStringDocument gameStringDocument)
         {
             return new HeroSkinDataDocument(jsonData, gameStringDocument);
@@ -156,7 +156,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>An <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
         public static HeroSkinDataDocument Parse(Stream utf8Json, Localization localization)
         {
             return new HeroSkinDataDocument(utf8Json, localization);
@@ -167,7 +167,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <returns>An <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
         public static HeroSkinDataDocument Parse(Stream utf8Json, GameStringDocument gameStringDocument)
         {
             return new HeroSkinDataDocument(utf8Json, gameStringDocument);
@@ -179,7 +179,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
-        /// <returns>An <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
         public static HeroSkinDataDocument Parse(Stream utf8Json, Stream utf8JsonGameStrings)
         {
             return new HeroSkinDataDocument(utf8Json, utf8JsonGameStrings);
@@ -190,7 +190,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <returns>An <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
         public static Task<HeroSkinDataDocument> ParseAsync(Stream utf8Json, Localization localization)
         {
             return new HeroSkinDataDocument(utf8Json, localization, true).InitializeParseDataStreamAsync<HeroSkinDataDocument>();
@@ -201,7 +201,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <returns>An <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
         public static Task<HeroSkinDataDocument> ParseAsync(Stream utf8Json, GameStringDocument gameStringDocument)
         {
             return new HeroSkinDataDocument(utf8Json, gameStringDocument, true).InitializeParseDataStreamAsync<HeroSkinDataDocument>();
@@ -213,7 +213,7 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
-        /// <returns>An <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
+        /// <returns>A <see cref="HeroSkinDataDocument"/> representation of the JSON value.</returns>
         public static Task<HeroSkinDataDocument> ParseAsync(Stream utf8Json, Stream utf8JsonGameStrings)
         {
             return new HeroSkinDataDocument(utf8Json, utf8JsonGameStrings, true).InitializeParseDataWithGameStringStreamAsync<HeroSkinDataDocument>();
@@ -352,7 +352,7 @@ namespace Heroes.Icons.DataDocument
             {
                 foreach (JsonElement featureElement in featuresElement.EnumerateArray())
                 {
-                    heroSkin.Features.Add(featureElement.ToString());
+                    heroSkin.Features.Add(featureElement.GetString());
                 }
             }
 

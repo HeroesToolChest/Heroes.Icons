@@ -1,0 +1,34 @@
+{
+  "cat_blink_anim": {
+    "expression": "Unknown",
+    "description": "저주받은 고양이 점멸 :고양점멸:",
+    "aliases": [
+      ":catblink:"
+    ],
+    "image": "storm_emoji_cat_blink_anim_sheet_0.gif",
+    "animation": {
+      "texture": "storm_emoji_cat_blink_anim_sheet.png",
+      "frames": 29,
+      "duration": 50,
+      "width": 38
+    }
+  },
+  "abstract_rofl_casesensitive": {
+    "expression": "Rofl",
+    "caseSensitive": true,
+    "localizedAliases": [
+      ":D"
+    ]
+  },
+  "abathur_mecha_angry": {
+    "expression": "Angry",
+    "description": "제노공학 아바투르 화남 :제노아바 화:",
+    "aliases": [
+      ":abathurxenotechangry:",
+      ":abaxangry:"
+    ],
+    "heroId": "Abathur",
+    "heroSkinId": "AbathurMecha",
+    "image": "storm_emoji_abathur_mecha_sheet_0.png"
+  }
+}
