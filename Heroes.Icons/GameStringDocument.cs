@@ -639,6 +639,32 @@ namespace Heroes.Icons
         }
 
         /// <summary>
+        /// Updates the <paramref name="emoticonPack"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
+        /// </summary>
+        /// <param name="emoticonPack">The data to be updated.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="emoticonPack"/> is <see langword="null"/>.</exception>
+        public void UpdateGameStrings(EmoticonPack emoticonPack)
+        {
+            if (emoticonPack is null)
+                throw new ArgumentNullException(nameof(emoticonPack));
+
+            JsonElement element = JsonGameStringDocument.RootElement;
+
+            if (element.TryGetProperty("gamestrings", out JsonElement gameStringElement))
+            {
+                if (gameStringElement.TryGetProperty("emoticonpack", out JsonElement keyValue))
+                {
+                    if (TryGetValueFromJsonElement(keyValue, "name", emoticonPack.Id, out JsonElement nameElement))
+                        emoticonPack.Name = nameElement.GetString();
+                    if (TryGetValueFromJsonElement(keyValue, "sortName", emoticonPack.Id, out JsonElement sortNameElement))
+                        emoticonPack.Name = sortNameElement.GetString();
+                    if (TryGetValueFromJsonElement(keyValue, "description", emoticonPack.Id, out JsonElement descriptionElement))
+                        emoticonPack.Description = new TooltipDescription(descriptionElement.GetString());
+                }
+            }
+        }
+
+        /// <summary>
         /// Parses the Json stream as <see langword="async"/>.
         /// </summary>
         /// <typeparam name="T">A class that derives <see cref="GameStringDocument"/>.</typeparam>

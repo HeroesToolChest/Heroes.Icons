@@ -222,7 +222,7 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Gets an <see cref="Emoticon"/> from the emoticon <paramref name="id"/> property value.
         /// </summary>
-        /// <param name="id">A emoticon id property value.</param>
+        /// <param name="id">An emoticon id property value.</param>
         /// <returns>An <see cref="Emoticon"/> object.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>

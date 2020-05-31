@@ -154,7 +154,7 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("cat_blink_anim")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void GetHeroSkinByIdTest(string id)
+        public void GetEmoticonByIdTest(string id)
         {
             if (id is null)
             {
@@ -182,7 +182,7 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("abathur_mecha_angry")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetHeroSkinByIdTest(string id)
+        public void TryGetEmoticonByIdTest(string id)
         {
             if (id is null)
             {
@@ -211,7 +211,7 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("abstract_rofl_casesensitive")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void GetHeroSkinByHyperlinkIdTest(string id)
+        public void GetEmoticonByHyperlinkIdTest(string id)
         {
             if (id is null)
             {
@@ -239,7 +239,7 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("abstract_rofl_casesensitive")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetHeroSkinByIdHyperlinkIdTest(string id)
+        public void TryGetEmoticonByIdHyperlinkIdTest(string id)
         {
             if (id is null)
             {
