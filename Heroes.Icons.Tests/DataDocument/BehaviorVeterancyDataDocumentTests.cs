@@ -80,7 +80,7 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("alteracpass-CoreScaling")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void GetSprayByIdTest(string id)
+        public void GetBehaviorVeterancyByIdTest(string id)
         {
             if (id is null)
             {
@@ -108,7 +108,7 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("alteracpass-CoreScaling")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetSprayByIdTest(string id)
+        public void TryGetBehaviorVeterancyByIdTest(string id)
         {
             if (id is null)
             {
@@ -130,6 +130,35 @@ namespace Heroes.Icons.Tests.DataDocument
             if (_behaviorVeterancyDataDocument.TryGetBehaviorVeterancyById(id, out BehaviorVeterancy? behaviorVeterancy))
             {
                 BasicAlteracpassCoreScalingAsserts(behaviorVeterancy);
+            }
+        }
+
+        [DataTestMethod]
+        [DataRow("ExcellentMana")]
+        [DataRow(null)]
+        [DataRow("asdf")]
+        public void TryGetBehaviorVeterancyByIdExcellentManaTest(string id)
+        {
+            if (id is null)
+            {
+                Assert.ThrowsException<ArgumentNullException>(() =>
+                {
+                    _ = _behaviorVeterancyDataDocument.TryGetBehaviorVeterancyById(id!, out _);
+                });
+
+                return;
+            }
+            else if (id == "asdf")
+            {
+                Assert.IsFalse(_behaviorVeterancyDataDocument.TryGetBehaviorVeterancyById(id, out _));
+
+                return;
+            }
+
+            Assert.IsTrue(_behaviorVeterancyDataDocument.TryGetBehaviorVeterancyById(id, out BehaviorVeterancy? _));
+            if (_behaviorVeterancyDataDocument.TryGetBehaviorVeterancyById(id, out BehaviorVeterancy? behaviorVeterancy))
+            {
+                BasicExcellentManaAsserts(behaviorVeterancy);
             }
         }
 
@@ -184,6 +213,19 @@ namespace Heroes.Icons.Tests.DataDocument
 
             writer.WriteEndObject();
 
+            writer.WriteStartObject("ExcellentMana");
+            writer.WriteBoolean("combineModifications", true);
+            writer.WriteBoolean("combineXP", true);
+            writer.WriteStartArray("veterancyLevels");
+
+            writer.WriteStartObject();
+            writer.WriteNumber("minVeterancyXP", 0);
+            writer.WriteEndObject();
+
+            writer.WriteEndArray();
+
+            writer.WriteEndObject();
+
             writer.WriteEndObject();
 
             writer.Flush();
@@ -194,6 +236,10 @@ namespace Heroes.Icons.Tests.DataDocument
         private static void BasicAlteracpassCoreScalingAsserts(BehaviorVeterancy behaviorVeterancy)
         {
             Assert.AreEqual("alteracpass-CoreScaling", behaviorVeterancy.Id);
+
+            Assert.IsTrue(behaviorVeterancy.IsMapUnique);
+            Assert.AreEqual("alteracpass", behaviorVeterancy.MapName);
+
             Assert.IsTrue(behaviorVeterancy.CombineModifications);
             Assert.IsTrue(behaviorVeterancy.CombineXP);
 
@@ -216,6 +262,17 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual(0.1, list[2].VeterancyModification.VitalMaxFractionCollection.ToList()[0].Value);
             Assert.AreEqual("Life", list[2].VeterancyModification.VitalRegenFractionCollection.ToList()[0].Type);
             Assert.AreEqual(1.10, list[2].VeterancyModification.VitalRegenFractionCollection.ToList()[0].Value);
+        }
+
+        private static void BasicExcellentManaAsserts(BehaviorVeterancy behaviorVeterancy)
+        {
+            Assert.AreEqual("ExcellentMana", behaviorVeterancy.Id);
+
+            Assert.IsFalse(behaviorVeterancy.IsMapUnique);
+            Assert.IsNull(behaviorVeterancy.MapName);
+
+            Assert.IsTrue(behaviorVeterancy.CombineModifications);
+            Assert.IsTrue(behaviorVeterancy.CombineXP);
         }
     }
 }

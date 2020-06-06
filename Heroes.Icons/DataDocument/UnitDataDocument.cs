@@ -315,21 +315,28 @@ namespace Heroes.Icons.DataDocument
             return unitList;
         }
 
-        private Unit GetUnitData(string id, JsonElement element, bool includeAbilities, bool includeSubAbilities)
+        private Unit GetUnitData(string unitId, JsonElement element, bool includeAbilities, bool includeSubAbilities)
         {
             Unit unit = new Unit
             {
-                Id = id,
-                CUnitId = id,
+                Id = unitId,
+                CUnitId = unitId,
             };
+
+            int indexOfMapSplit = unit.Id.IndexOf('-', StringComparison.OrdinalIgnoreCase);
+
+            if (indexOfMapSplit > 0)
+            {
+                unit.MapName = unit.Id.Substring(0, indexOfMapSplit);
+            }
 
             if (element.TryGetProperty("hyperlinkId", out JsonElement hyperlinkId))
                 unit.HyperlinkId = hyperlinkId.GetString();
 
-            int index = id.IndexOf('-', StringComparison.InvariantCultureIgnoreCase);
+            int index = unitId.IndexOf('-', StringComparison.InvariantCultureIgnoreCase);
             if (index > -1)
             {
-                unit.MapName = id.Substring(0, index);
+                unit.MapName = unitId.Substring(0, index);
             }
 
             if (element.TryGetProperty("name", out JsonElement name))

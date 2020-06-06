@@ -159,6 +159,13 @@ namespace Heroes.Icons.DataDocument
                 Id = behaviorVeterancyId,
             };
 
+            int indexOfMapSplit = behaviorVeterancy.Id.IndexOf('-', StringComparison.OrdinalIgnoreCase);
+
+            if (indexOfMapSplit > 0)
+            {
+                behaviorVeterancy.MapName = behaviorVeterancy.Id.Substring(0, indexOfMapSplit);
+            }
+
             if (behaviorVeterancyElement.TryGetProperty("combineModifications", out JsonElement combineModifications))
                 behaviorVeterancy.CombineModifications = combineModifications.GetBoolean();
 

@@ -210,7 +210,7 @@ namespace Heroes.Icons.Tests.DataDocument
         }
 
         [DataTestMethod]
-        [DataRow("AbathurEvolvedMonstrosity2", true, true)]
+        [DataRow("tombofthespiderqueen-JungleGraveGolemLaner", true, true)]
         [DataRow(null, true, true)]
         [DataRow("asdf", true, true)]
         public void TryGetUnitByHyperlinkIdTest(string id, bool abilities, bool subAbilities)
@@ -232,7 +232,7 @@ namespace Heroes.Icons.Tests.DataDocument
             }
 
             Assert.IsTrue(_unitDataDocument.TryGetUnitByHyperlinkId(id, out Unit? unit, abilities, subAbilities));
-            BasicAbathurEvolvedMonstrosityAsserts(unit!);
+            BasicTomboftheSpiderQueenJungleGraveGolemLanerAsserts(unit!);
         }
 
         [TestMethod]
@@ -601,7 +601,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteEndObject();
 
             writer.WriteStartObject("tombofthespiderqueen-JungleGraveGolemLaner");
-            writer.WriteString("hyperlinkId", "JungleGraveGolemLaner");
+            writer.WriteString("hyperlinkId", "tombofthespiderqueen-JungleGraveGolemLaner");
+            writer.WriteString("name", "Sand Golem");
             writer.WriteNumber("radius", 1.25);
             writer.WriteNumber("sight", 8.0);
             writer.WriteNumber("speed", 3.75);
@@ -670,6 +671,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual("AbathurEvolvedMonstrosity", unit.Id);
             Assert.AreEqual("Evolved Monstrosity", unit.Name);
             Assert.IsFalse(unit.IsMapUnique);
+            Assert.IsNull(unit.MapName);
             Assert.AreEqual(0.375, unit.InnerRadius);
             Assert.AreEqual(1.0, unit.Radius);
             Assert.AreEqual(9.0, unit.Sight);
@@ -683,6 +685,16 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual("unit2", unit.UnitIds.ToList()[1]);
             Assert.AreEqual("storm_ui_ingame_targetinfopanel_unit_abathur_monstrosity.png", unit.UnitPortrait.TargetInfoPanelFileName);
             Assert.AreEqual("storm_ui_minimapicon_monstrosity.png", unit.UnitPortrait.MiniMapIconFileName);
+        }
+
+        private static void BasicTomboftheSpiderQueenJungleGraveGolemLanerAsserts(Unit unit)
+        {
+            Assert.AreEqual("tombofthespiderqueen-JungleGraveGolemLaner", unit.CUnitId);
+            Assert.AreEqual("tombofthespiderqueen-JungleGraveGolemLaner", unit.Id);
+            Assert.AreEqual("tombofthespiderqueen-JungleGraveGolemLaner", unit.HyperlinkId);
+            Assert.AreEqual("Sand Golem", unit.Name);
+            Assert.IsTrue(unit.IsMapUnique);
+            Assert.AreEqual("tombofthespiderqueen", unit.MapName);
         }
     }
 }
