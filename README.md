@@ -26,7 +26,7 @@ All data files are supported
 - Veterancy data
 
 ## Supported Platforms
-- .Net Core 3.1+ (aiming to be .Net 5)
+- .Net Core 3.1+ (aiming to be .NET 5)
 
 ## Usage
 There is a `<data-file-name>DataDocument` class for each json data file. Each provide static multiple `Parse` methods to parse the json files.
@@ -94,7 +94,7 @@ Rarity rarity = alarakData.Rarity
 List<Ability> abilities = alarakData.Abilities.ToList();
 
 // get a specific ability
-Ability heroicAbility = alarakData.GetAbility((new AbilityTalentId("AlarakDeadlyChargeActivate", "AlarakDeadlyCharge")
+Ability heroicAbility = alarakData.GetAbility(new AbilityTalentId("AlarakDeadlyChargeActivate", "AlarakDeadlyCharge")
 {
     AbilityType = AbilityTypes.Heroic,
 });
