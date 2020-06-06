@@ -22,7 +22,7 @@ namespace Heroes.Icons.Tests.ModelExtensions
 
             heroSkin.UpdateGameStrings(gameStringDocument);
 
-            Assert.AreEqual("Abathur, the Evolution Master of Kerrigan's Swarm, works ceaselessly to improve the zerg from the genetic level up. His hate for chaos and imperfection almost rivals his hatred of pronouns.", heroSkin.Description!.RawDescription);
+            Assert.AreEqual("Abathur, the Evolution Master of Kerrigan's Swarm, works ceaselessly to improve the zerg from the genetic level up. His hate for chaos and imperfection almost rivals his hatred of pronouns.", heroSkin.InfoText!.RawDescription);
         }
 
         [TestMethod]
@@ -50,7 +50,7 @@ namespace Heroes.Icons.Tests.ModelExtensions
             writer.WriteStartObject("gamestrings");
             writer.WriteStartObject("heroskin");
 
-            writer.WriteStartObject("info");
+            writer.WriteStartObject("infotext");
             writer.WriteString("AbathurBaseVar3", "Abathur, the Evolution Master of Kerrigan's Swarm, works ceaselessly to improve the zerg from the genetic level up. His hate for chaos and imperfection almost rivals his hatred of pronouns.");
             writer.WriteString("AbathurBone", "Abathur, the Evolution Master of Kerrigan's Swarm, works ceaselessly to improve the zerg from the genetic level up. His hate for chaos and imperfection almost rivals his hatred of pronouns.");
             writer.WriteEndObject();

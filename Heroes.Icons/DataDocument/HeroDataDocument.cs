@@ -844,6 +844,9 @@ namespace Heroes.Icons.DataDocument
             if (heroElement.TryGetProperty("description", out JsonElement descriptionElement))
                 hero.Description = new TooltipDescription(descriptionElement.GetString(), Localization);
 
+            if (heroElement.TryGetProperty("infoText", out JsonElement infoTextElement))
+                hero.InfoText = new TooltipDescription(infoTextElement.GetString(), Localization);
+
             if (heroElement.TryGetProperty("descriptors", out JsonElement descriptorsElement))
             {
                 foreach (JsonElement descriptorArrayElement in descriptorsElement.EnumerateArray())

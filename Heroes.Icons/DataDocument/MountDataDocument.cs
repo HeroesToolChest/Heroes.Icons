@@ -351,8 +351,8 @@ namespace Heroes.Icons.DataDocument
             if (mountElement.TryGetProperty("searchText", out JsonElement searchText))
                 mount.SearchText = searchText.GetString();
 
-            if (mountElement.TryGetProperty("description", out JsonElement description))
-                mount.Description = new TooltipDescription(description.GetString(), Localization);
+            if (mountElement.TryGetProperty("infoText", out JsonElement infoText))
+                mount.InfoText = new TooltipDescription(infoText.GetString(), Localization);
 
             GameStringDocument?.UpdateGameStrings(mount);
 

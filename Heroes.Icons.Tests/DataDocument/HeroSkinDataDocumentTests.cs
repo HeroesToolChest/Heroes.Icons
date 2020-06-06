@@ -33,7 +33,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual(Localization.FRFR, document.Localization);
             Assert.IsTrue(document.TryGetHeroSkinById("AbathurBaseVar3", out HeroSkin? heroSkin));
             Assert.AreEqual("칼디르 아바투르", heroSkin!.Name);
-            Assert.AreEqual("케리건이 지배하는 저그 군단의 진화 군주인 아바투르는, 저그를 유전자 단계에서부터 발전시키기 위해 끊임없이 노력합니다. 불완전과 혼돈에 대한 그의 증오는 대명사와 어미에 대한 그의 증오에 거의 맞먹습니다.", heroSkin!.Description?.RawDescription);
+            Assert.AreEqual("케리건이 지배하는 저그 군단의 진화 군주인 아바투르는, 저그를 유전자 단계에서부터 발전시키기 위해 끊임없이 노력합니다. 불완전과 혼돈에 대한 그의 증오는 대명사와 어미에 대한 그의 증오에 거의 맞먹습니다.", heroSkin!.InfoText?.RawDescription);
         }
 
         [TestMethod]
@@ -66,7 +66,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual(Localization.KOKR, document.Localization);
             Assert.IsTrue(document.TryGetHeroSkinById("AbathurBaseVar3", out HeroSkin? heroSkin));
             Assert.AreEqual("칼디르 아바투르", heroSkin!.Name);
-            Assert.AreEqual("케리건이 지배하는 저그 군단의 진화 군주인 아바투르는, 저그를 유전자 단계에서부터 발전시키기 위해 끊임없이 노력합니다. 불완전과 혼돈에 대한 그의 증오는 대명사와 어미에 대한 그의 증오에 거의 맞먹습니다.", heroSkin!.Description?.RawDescription);
+            Assert.AreEqual("케리건이 지배하는 저그 군단의 진화 군주인 아바투르는, 저그를 유전자 단계에서부터 발전시키기 위해 끊임없이 노력합니다. 불완전과 혼돈에 대한 그의 증오는 대명사와 어미에 대한 그의 증오에 거의 맞먹습니다.", heroSkin!.InfoText?.RawDescription);
         }
 
         [TestMethod]
@@ -328,7 +328,7 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteString("releaseDate", "2017-04-25");
             writer.WriteString("sortName", "zxAbathurVar1");
             writer.WriteString("searchText", "Blue");
-            writer.WriteString("description", "Abathur, the Evolution Master of Kerrigan's Swarm, works ceaselessly to improve the zerg from the genetic level up. His hate for chaos and imperfection almost rivals his hatred of pronouns.");
+            writer.WriteString("infoText", "Abathur, the Evolution Master of Kerrigan's Swarm, works ceaselessly to improve the zerg from the genetic level up. His hate for chaos and imperfection almost rivals his hatred of pronouns.");
             writer.WriteEndObject();
 
             writer.WriteStartObject("AbathurBone");
@@ -339,7 +339,7 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteString("releaseDate", "2014-03-13");
             writer.WriteString("sortName", "zxAbathurVar0");
             writer.WriteString("searchText", "White Pink");
-            writer.WriteString("description", "Abathur, the Evolution Master of Kerrigan's Swarm, works ceaselessly to improve the zerg from the genetic level up. His hate for chaos and imperfection almost rivals his hatred of pronouns.");
+            writer.WriteString("infoText", "Abathur, the Evolution Master of Kerrigan's Swarm, works ceaselessly to improve the zerg from the genetic level up. His hate for chaos and imperfection almost rivals his hatred of pronouns.");
             writer.WriteStartArray("features");
             writer.WriteStringValue("AlteredVO");
             writer.WriteStringValue("ThemedAbilities");
@@ -364,7 +364,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual(new DateTime(2014, 3, 13), heroSkin.ReleaseDate);
             Assert.AreEqual("zxAbathurVar0", heroSkin.SortName);
             Assert.AreEqual("White Pink", heroSkin.SearchText);
-            Assert.AreEqual("Abathur, the Evolution Master of Kerrigan's Swarm, works ceaselessly to improve the zerg from the genetic level up. His hate for chaos and imperfection almost rivals his hatred of pronouns.", heroSkin.Description?.RawDescription);
+            Assert.AreEqual("Abathur, the Evolution Master of Kerrigan's Swarm, works ceaselessly to improve the zerg from the genetic level up. His hate for chaos and imperfection almost rivals his hatred of pronouns.", heroSkin.InfoText?.RawDescription);
             Assert.IsTrue(heroSkin.Features.Contains("AlteredVO"));
             Assert.IsTrue(heroSkin.Features.Contains("ThemedAbilities"));
             Assert.IsTrue(heroSkin.Features.Contains("ThemedAnimations"));

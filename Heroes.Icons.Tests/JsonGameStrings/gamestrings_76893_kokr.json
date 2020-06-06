@@ -23,30 +23,30 @@
       }
     },
     "heroskin": {
-      "info": {
+      "infotext": {
         "AbathurBaseVar3": "케리건이 지배하는 저그 군단의 진화 군주인 아바투르는, 저그를 유전자 단계에서부터 발전시키기 위해 끊임없이 노력합니다. 불완전과 혼돈에 대한 그의 증오는 대명사와 어미에 대한 그의 증오에 거의 맞먹습니다."
       },
       "name": {
         "AbathurBaseVar3": "칼디르 아바투르"
       },
-      "searchText": {
+      "searchtext": {
         "AbathurBaseVar3": "파랑"
       },
-      "sortName": {
+      "sortname": {
         "AbathurBaseVar3": "zxAbathurVar1"
       }
     },
     "mount": {
-      "info": {
+      "infotext": {
         "AlarakTaldarimMarch": "그가 공중에 살짝만 떠올라도 당신은 군주를 따라잡을 수 없습니다."
       },
       "name": {
         "AlarakTaldarimMarch": "군주의 승천"
       },
-      "searchText": {
+      "searchtext": {
         "AlarakTaldarimMarch": "군주의 승천"
       },
-      "sortName": {
+      "sortname": {
         "AlarakTaldarimMarch": "1HeroAlarak"
       }
     },
@@ -57,7 +57,7 @@
       "name": {
         "BannerD3DemonHunter": "악마사냥꾼 깃발"
       },
-      "sortName": {
+      "sortname": {
         "BannerD3DemonHunter": "3DemBaseVar0"
       }
     },
@@ -65,7 +65,7 @@
       "name": {
         "SprayAnimatedCookieAbathur": "과자 아바투르"
       },
-      "sortName": {
+      "sortname": {
         "SprayAnimatedCookieAbathur": "4WinterA17Cookie"
       }
     },
@@ -98,6 +98,10 @@
       "description": {
         "cat_blink_anim": "저주받은 고양이 점멸 :고양점멸:",
         "abathur_mecha_angry": "제노공학 아바투르 화남 :제노아바 화:"
+      },
+      "descriptionlocked": {
+        "cat_blink_anim": "(잠김) 저주받은 고양이 점멸",
+        "abathur_mecha_angry": "(잠김) 제노공학 아바투르 화남"
       },
       "expression": {
         "cat_blink_anim": "Unknown",

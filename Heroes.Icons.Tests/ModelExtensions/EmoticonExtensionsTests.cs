@@ -24,6 +24,7 @@ namespace Heroes.Icons.Tests.ModelExtensions
             emoticon.UpdateGameStrings(gameStringDocument);
 
             Assert.AreEqual("Silly", emoticon.Description!.RawDescription);
+            Assert.AreEqual("(Locked) Abathur Silly", emoticon.DescriptionLocked!.RawDescription);
             Assert.AreEqual(1, emoticon.UniversalAliases.Count);
             Assert.AreEqual(":silly:", emoticon.UniversalAliases.ToList()[0]);
         }
@@ -61,6 +62,9 @@ namespace Heroes.Icons.Tests.ModelExtensions
             writer.WriteEndObject();
             writer.WriteStartObject("description");
             writer.WriteString("abathur_silly", "Silly");
+            writer.WriteEndObject();
+            writer.WriteStartObject("descriptionlocked");
+            writer.WriteString("abathur_silly", "(Locked) Abathur Silly");
             writer.WriteEndObject();
             writer.WriteStartObject("expression");
             writer.WriteString("abathur_silly", "Silly");

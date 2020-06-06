@@ -359,8 +359,8 @@ namespace Heroes.Icons.DataDocument
 
             if (sprayElement.TryGetProperty("animation", out JsonElement animationElement))
             {
-                //if (animationElement.TryGetProperty("texture", out JsonElement texture))
-                //    spray.OriginalTextureSheet = texture.GetString();
+                if (animationElement.TryGetProperty("texture", out JsonElement texture))
+                    spray.TextureSheet.Image = texture.GetString();
 
                 if (animationElement.TryGetProperty("frames", out JsonElement frames))
                     spray.AnimationCount = frames.GetInt32();

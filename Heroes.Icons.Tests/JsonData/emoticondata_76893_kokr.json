@@ -2,6 +2,7 @@
   "cat_blink_anim": {
     "expression": "Unknown",
     "description": "저주받은 고양이 점멸 :고양점멸:",
+    "descriptionLocked": "(잠김) 저주받은 고양이 점멸",
     "aliases": [
       ":catblink:"
     ],
@@ -10,7 +11,9 @@
       "texture": "storm_emoji_cat_blink_anim_sheet.png",
       "frames": 29,
       "duration": 50,
-      "width": 38
+      "width": 38,
+      "columns": 4,
+      "rows": 8
     }
   },
   "abstract_rofl_casesensitive": {

@@ -376,7 +376,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual("cookie", spray.SearchText);
             Assert.AreEqual(2, spray.AnimationCount);
             Assert.AreEqual(2000, spray.AnimationDuration);
-            //Assert.AreEqual("storm_lootspray_animated_cookie_butcher.png", spray.OriginalTextureSheet);
+            Assert.AreEqual("storm_lootspray_animated_cookie_abathur.png", spray.TextureSheet.Image);
         }
 
         private static void BasicSprayAnimatedCookieButcherAsserts(Spray spray)
@@ -394,7 +394,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.IsNull(spray.SearchText);
             Assert.AreEqual(2, spray.AnimationCount);
             Assert.AreEqual(2000, spray.AnimationDuration);
-            //Assert.AreEqual("storm_lootspray_animated_cookie_butcher.png", spray.OriginalTextureSheet);
+            Assert.AreEqual("storm_lootspray_animated_cookie_butcher.png", spray.TextureSheet.Image);
         }
     }
 }

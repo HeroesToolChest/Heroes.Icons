@@ -22,7 +22,7 @@ namespace Heroes.Icons.Tests.ModelExtensions
 
             mount.UpdateGameStrings(gameStringDocument);
 
-            Assert.AreEqual("Should he choose to float only an inch off the ground, you would still be beneath the Highlord.", mount.Description!.RawDescription);
+            Assert.AreEqual("Should he choose to float only an inch off the ground, you would still be beneath the Highlord.", mount.InfoText!.RawDescription);
         }
 
         [TestMethod]
@@ -50,7 +50,7 @@ namespace Heroes.Icons.Tests.ModelExtensions
             writer.WriteStartObject("gamestrings");
             writer.WriteStartObject("mount");
 
-            writer.WriteStartObject("info");
+            writer.WriteStartObject("infotext");
             writer.WriteString("AlarakTaldarimMarch", "Should he choose to float only an inch off the ground, you would still be beneath the Highlord.");
             writer.WriteString("AnubarakWings", "In the years following the Third War, Azerothian scholars hypothesized that the wings of spiderlords were vestigal, incapable of flight. They were very wrong.");
             writer.WriteEndObject();

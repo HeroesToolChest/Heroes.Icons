@@ -270,6 +270,7 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteStartObject("cat_blink_anim");
             writer.WriteString("expression", "Unknown");
             writer.WriteString("description", "Cursed Cats Blink :catblink:");
+            writer.WriteString("descriptionLocked", "(Locked) Cursed Cats Blink");
             writer.WriteStartArray("aliases");
             writer.WriteStringValue(":catblink:");
             writer.WriteEndArray();
@@ -279,6 +280,8 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteNumber("frames", 29);
             writer.WriteNumber("duration", 50);
             writer.WriteNumber("width", 38);
+            writer.WriteNumber("columns", 4);
+            writer.WriteNumber("rows", 8);
             writer.WriteEndObject();
             writer.WriteEndObject();
 
@@ -296,6 +299,7 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteStartObject("abathur_mecha_angry");
             writer.WriteString("expression", "Angry");
             writer.WriteString("description", "Xenotech Abathur Angry :abaxangry:");
+            writer.WriteString("descriptionLocked", "(Locked) Xenotech Abathur Angry");
             writer.WriteStartArray("aliases");
             writer.WriteStringValue(":abathurxenotechangry:");
             writer.WriteStringValue(":abaxangry:");
@@ -320,6 +324,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.IsFalse(emoticon.IsHidden);
             Assert.IsFalse(emoticon.IsAliasCaseSensitive);
             Assert.AreEqual("Cursed Cats Blink :catblink:", emoticon.Description?.RawDescription);
+            Assert.AreEqual("(Locked) Cursed Cats Blink", emoticon.DescriptionLocked?.RawDescription);
             Assert.AreEqual(1, emoticon.UniversalAliases.Count);
             Assert.AreEqual(":catblink:", emoticon.UniversalAliases.ToList()[0]);
             Assert.AreEqual("storm_emoji_cat_blink_anim_sheet_0.gif", emoticon.Image.FileName);
@@ -327,6 +332,8 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual(29, emoticon.Image.Count);
             Assert.AreEqual(50, emoticon.Image.DurationPerFrame);
             Assert.AreEqual(38, emoticon.Image.Width);
+            Assert.AreEqual(4, emoticon.TextureSheet.Columns);
+            Assert.AreEqual(8, emoticon.TextureSheet.Rows);
         }
 
         private static void Basicabstract_rofl_casesensitiveAsserts(Emoticon emoticon)
@@ -349,6 +356,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual("Angry", emoticon.Name);
             Assert.AreEqual(string.Empty, emoticon.HyperlinkId);
             Assert.AreEqual("Xenotech Abathur Angry :abaxangry:", emoticon.Description?.RawDescription);
+            Assert.AreEqual("(Locked) Xenotech Abathur Angry", emoticon.DescriptionLocked?.RawDescription);
             Assert.AreEqual(2, emoticon.UniversalAliases.Count);
             Assert.AreEqual(":abathurxenotechangry:", emoticon.UniversalAliases.ToList()[0]);
             Assert.AreEqual("storm_emoji_abathur_mecha_sheet_0.png", emoticon.Image.FileName);

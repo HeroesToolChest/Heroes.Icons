@@ -75,6 +75,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual("ExcellentMana", hero.ScalingBehaviorLink);
             Assert.AreEqual("Alarak Ascendant Protoss SC SC2 StarCraft Star2 Starcraft2 II 2 Legacy of the Void LotV Covert Ops CO", hero.SearchText);
             Assert.AreEqual("A combo Assassin that can move enemies around and punish mistakes.", hero.Description!.RawDescription);
+            Assert.AreEqual("Not all heroes are born of altruism... some, like Alarak, simply desire vengeance. As the new Highlord of the Tal'darim, Alarak leads his people to a destiny free of the corrupt influence of the fallen xel'naga, Amon.", hero.InfoText!.RawDescription);
             Assert.AreEqual("Escaper", hero.HeroDescriptors.ToList()[1]);
             Assert.AreEqual("AbathurEvolvedMonstrosity", hero.UnitIds.ToList()[0]);
             Assert.AreEqual("AbathurLocustAssaultStrain", hero.UnitIds.ToList()[1]);
@@ -1552,6 +1553,7 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteString("scalingLinkId", "ExcellentMana");
             writer.WriteString("searchText", "Alarak Ascendant Protoss SC SC2 StarCraft Star2 Starcraft2 II 2 Legacy of the Void LotV Covert Ops CO");
             writer.WriteString("description", "A combo Assassin that can move enemies around and punish mistakes.");
+            writer.WriteString("infoText", "Not all heroes are born of altruism... some, like Alarak, simply desire vengeance. As the new Highlord of the Tal'darim, Alarak leads his people to a destiny free of the corrupt influence of the fallen xel'naga, Amon.");
 
             writer.WriteStartArray("descriptors");
             writer.WriteStringValue("EnergyImportant");

@@ -33,7 +33,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual(Localization.FRFR, document.Localization);
             Assert.IsTrue(document.TryGetMountById("AlarakTaldarimMarch", out Mount? mount));
             Assert.AreEqual("군주의 승천", mount!.Name);
-            Assert.AreEqual("그가 공중에 살짝만 떠올라도 당신은 군주를 따라잡을 수 없습니다.", mount!.Description?.RawDescription);
+            Assert.AreEqual("그가 공중에 살짝만 떠올라도 당신은 군주를 따라잡을 수 없습니다.", mount!.InfoText?.RawDescription);
         }
 
         [TestMethod]
@@ -66,7 +66,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual(Localization.KOKR, document.Localization);
             Assert.IsTrue(document.TryGetMountById("AlarakTaldarimMarch", out Mount? mount));
             Assert.AreEqual("군주의 승천", mount!.Name);
-            Assert.AreEqual("그가 공중에 살짝만 떠올라도 당신은 군주를 따라잡을 수 없습니다.", mount!.Description?.RawDescription);
+            Assert.AreEqual("그가 공중에 살짝만 떠올라도 당신은 군주를 따라잡을 수 없습니다.", mount!.InfoText?.RawDescription);
         }
 
         [TestMethod]
@@ -330,7 +330,7 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteString("releaseDate", "2014-03-13");
             writer.WriteString("sortName", "1HeroAlarak");
             writer.WriteString("searchText", "Highlord's Ascent");
-            writer.WriteString("description", "Should he choose to float only an inch off the ground, you would still be beneath the Highlord.");
+            writer.WriteString("infoText", "Should he choose to float only an inch off the ground, you would still be beneath the Highlord.");
             writer.WriteEndObject();
 
             writer.WriteStartObject("AnubarakWings");
@@ -343,7 +343,7 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteString("releaseDate", "2014-03-13");
             writer.WriteString("sortName", "1HeroAnubarak");
             writer.WriteString("searchText", "Crypt Lord Wings");
-            writer.WriteString("description", "In the years following the Third War, Azerothian scholars hypothesized that the wings of spiderlords were vestigal, incapable of flight. They were very wrong..");
+            writer.WriteString("infoText", "In the years following the Third War, Azerothian scholars hypothesized that the wings of spiderlords were vestigal, incapable of flight. They were very wrong..");
             writer.WriteEndObject();
 
             writer.WriteEndObject();
@@ -365,7 +365,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual(new DateTime(2014, 3, 13), mount.ReleaseDate);
             Assert.AreEqual("1HeroAnubarak", mount.SortName);
             Assert.AreEqual("Crypt Lord Wings", mount.SearchText);
-            Assert.AreEqual("In the years following the Third War, Azerothian scholars hypothesized that the wings of spiderlords were vestigal, incapable of flight. They were very wrong..", mount.Description?.RawDescription);
+            Assert.AreEqual("In the years following the Third War, Azerothian scholars hypothesized that the wings of spiderlords were vestigal, incapable of flight. They were very wrong..", mount.InfoText?.RawDescription);
         }
     }
 }

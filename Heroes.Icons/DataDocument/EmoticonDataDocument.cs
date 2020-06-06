@@ -320,6 +320,9 @@ namespace Heroes.Icons.DataDocument
             if (emoticonElement.TryGetProperty("description", out JsonElement description))
                 emoticon.Description = new TooltipDescription(description.GetString(), Localization);
 
+            if (emoticonElement.TryGetProperty("descriptionLocked", out JsonElement descriptionLocked))
+                emoticon.DescriptionLocked = new TooltipDescription(descriptionLocked.GetString(), Localization);
+
             if (emoticonElement.TryGetProperty("localizedAliases", out JsonElement localizedAliasesElement))
             {
                 foreach (JsonElement localizedAlias in localizedAliasesElement.EnumerateArray())
@@ -358,6 +361,12 @@ namespace Heroes.Icons.DataDocument
 
                 if (animationElement.TryGetProperty("width", out JsonElement width))
                     emoticon.Image.Width = width.GetInt32();
+
+                if (animationElement.TryGetProperty("columns", out JsonElement columns))
+                    emoticon.TextureSheet.Columns = columns.GetInt32();
+
+                if (animationElement.TryGetProperty("rows", out JsonElement rows))
+                    emoticon.TextureSheet.Rows = rows.GetInt32();
             }
 
             GameStringDocument?.UpdateGameStrings(emoticon);

@@ -345,8 +345,8 @@ namespace Heroes.Icons.DataDocument
             if (heroSkinElement.TryGetProperty("searchText", out JsonElement searchText))
                 heroSkin.SearchText = searchText.GetString();
 
-            if (heroSkinElement.TryGetProperty("description", out JsonElement description))
-                heroSkin.Description = new TooltipDescription(description.GetString(), Localization);
+            if (heroSkinElement.TryGetProperty("infoText", out JsonElement infoText))
+                heroSkin.InfoText = new TooltipDescription(infoText.GetString(), Localization);
 
             if (heroSkinElement.TryGetProperty("features", out JsonElement featuresElement))
             {

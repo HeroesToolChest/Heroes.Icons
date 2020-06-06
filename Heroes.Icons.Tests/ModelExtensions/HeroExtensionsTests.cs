@@ -25,6 +25,8 @@ namespace Heroes.Icons.Tests.ModelExtensions
             hero.UpdateGameStrings(gameStringDocument);
 
             Assert.AreEqual("Highlord of the Tal'darim", hero.Title);
+            Assert.AreEqual("A combo Assassin that can move enemies around and punish mistakes.", hero.Description!.RawDescription);
+            Assert.AreEqual("Not all heroes are born of altruism... some, like Alarak, simply desire vengeance. As the new Highlord of the Tal'darim, Alarak leads his people to a destiny free of the corrupt influence of the fallen xel'naga, Amon.", hero.InfoText!.RawDescription);
         }
 
         [TestMethod]
@@ -83,12 +85,20 @@ namespace Heroes.Icons.Tests.ModelExtensions
 
             writer.WriteStartObject("unit");
 
+            writer.WriteStartObject("description");
+            writer.WriteString("Alarak", "A combo Assassin that can move enemies around and punish mistakes.");
+            writer.WriteEndObject();
+
             writer.WriteStartObject("difficulty");
             writer.WriteString("Alarak", "Hard");
             writer.WriteEndObject();
 
             writer.WriteStartObject("expandedrole");
             writer.WriteString("Alarak", "Melee Assassin");
+            writer.WriteEndObject();
+
+            writer.WriteStartObject("infotext");
+            writer.WriteString("Alarak", "Not all heroes are born of altruism... some, like Alarak, simply desire vengeance. As the new Highlord of the Tal'darim, Alarak leads his people to a destiny free of the corrupt influence of the fallen xel'naga, Amon.");
             writer.WriteEndObject();
 
             writer.WriteStartObject("role");

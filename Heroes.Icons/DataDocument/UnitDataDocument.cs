@@ -424,11 +424,11 @@ namespace Heroes.Icons.DataDocument
 
             value = null;
 
-            foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
+            foreach (JsonProperty unitProperty in JsonDataDocument.RootElement.EnumerateObject())
             {
-                if (heroProperty.Value.TryGetProperty(propertyId, out JsonElement nameElement) && nameElement.ValueEquals(propertyValue))
+                if (unitProperty.Value.TryGetProperty(propertyId, out JsonElement nameElement) && nameElement.ValueEquals(propertyValue))
                 {
-                    value = GetUnitData(heroProperty.Name, heroProperty.Value, abilities, subAbilities);
+                    value = GetUnitData(unitProperty.Name, unitProperty.Value, abilities, subAbilities);
 
                     return true;
                 }
