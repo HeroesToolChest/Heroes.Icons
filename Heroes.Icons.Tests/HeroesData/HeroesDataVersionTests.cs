@@ -211,15 +211,15 @@ namespace Heroes.Icons.HeroesData.Tests
             {
                 HeroesDataVersion.Parse(string.Empty);
             });
-
             Assert.ThrowsException<ArgumentNullException>(() =>
             {
                 HeroesDataVersion.Parse(null!);
             });
 
-            Assert.ThrowsException<FormatException>(() =>
+            Assert.ThrowsException<ArgumentNullException>(() =>
             {
-                HeroesDataVersion.Parse("  ");
+                string? value = null;
+                HeroesDataVersion.Parse(value.AsSpan());
             });
         }
 
@@ -238,9 +238,19 @@ namespace Heroes.Icons.HeroesData.Tests
             Assert.AreEqual(revision, result.Revision);
             Assert.AreEqual(build, result.Build);
             Assert.AreEqual(isPtr, result.IsPtr);
+
+            Assert.IsTrue(HeroesDataVersion.TryParse(value.AsSpan(), out HeroesDataVersion? resultSpan));
+            Assert.AreEqual(major, resultSpan!.Major);
+            Assert.AreEqual(minor, resultSpan.Minor);
+            Assert.AreEqual(revision, resultSpan.Revision);
+            Assert.AreEqual(build, resultSpan.Build);
+            Assert.AreEqual(isPtr, resultSpan.IsPtr);
         }
 
         [DataTestMethod]
+        [DataRow("")]
+        [DataRow(" ")]
+        [DataRow(null)]
         [DataRow("2.34.3.34567a")]
         [DataRow("k2.34.3.34567")]
         [DataRow("2.34k.3.34567")]
@@ -251,9 +261,10 @@ namespace Heroes.Icons.HeroesData.Tests
         [DataRow("2.34.3.34567_ptr_ptr")]
         [DataRow("2.34.3.34567_dfg")]
         [DataRow("2.34.3.345679a_ptr")]
-        public void TryParseFailTest(string value)
+        public void TryParseFailTest(string? value)
         {
             Assert.IsFalse(HeroesDataVersion.TryParse(value, out HeroesDataVersion? _));
+            Assert.IsFalse(HeroesDataVersion.TryParse(value.AsSpan(), out HeroesDataVersion? _));
         }
 
         [DataTestMethod]
@@ -271,9 +282,18 @@ namespace Heroes.Icons.HeroesData.Tests
             Assert.AreEqual(revision, version.Revision);
             Assert.AreEqual(build, version.Build);
             Assert.AreEqual(isPtr, version.IsPtr);
+
+            HeroesDataVersion versionSpan = HeroesDataVersion.Parse(value.AsSpan());
+            Assert.AreEqual(major, versionSpan!.Major);
+            Assert.AreEqual(minor, versionSpan.Minor);
+            Assert.AreEqual(revision, versionSpan.Revision);
+            Assert.AreEqual(build, versionSpan.Build);
+            Assert.AreEqual(isPtr, versionSpan.IsPtr);
         }
 
         [DataTestMethod]
+        [DataRow("")]
+        [DataRow(" ")]
         [DataRow("2.34.3.34567a")]
         [DataRow("k2.34.3.34567")]
         [DataRow("2.34k.3.34567")]
@@ -287,6 +307,7 @@ namespace Heroes.Icons.HeroesData.Tests
         public void ParseFailTest(string value)
         {
             Assert.ThrowsException<FormatException>(() => { HeroesDataVersion.Parse(value); });
+            Assert.ThrowsException<FormatException>(() => { HeroesDataVersion.Parse(value.AsSpan()); });
         }
     }
 }
