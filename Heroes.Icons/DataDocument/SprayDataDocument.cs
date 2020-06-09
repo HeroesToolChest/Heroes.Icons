@@ -243,13 +243,12 @@ namespace Heroes.Icons.DataDocument
         /// <param name="id">A spray id property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="Spray"/> associated with the <paramref name="id"/> property value.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="id"/> is <see langword="null"/>.</exception>
-        public bool TryGetSprayById(string id, [NotNullWhen(true)] out Spray? value)
+        public bool TryGetSprayById(string? id, [NotNullWhen(true)] out Spray? value)
         {
-            if (id is null)
-                throw new ArgumentNullException(nameof(id));
-
             value = null;
+
+            if (id is null)
+                return false;
 
             if (JsonDataDocument.RootElement.TryGetProperty(id, out JsonElement element))
             {
@@ -284,9 +283,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="hyperlinkId">A spray hyperlinkId property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="Spray"/> associated with the <paramref name="hyperlinkId"/> property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetSprayByHyperlinkId(string hyperlinkId, [NotNullWhen(true)] out Spray? value)
+        public bool TryGetSprayByHyperlinkId(string? hyperlinkId, [NotNullWhen(true)] out Spray? value)
             => PropertyLookup("hyperlinkId", hyperlinkId, GetSprayData, out value);
 
         /// <summary>
@@ -312,9 +310,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="attributeId">A spray attributeId property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="Spray"/> associated with the <paramref name="attributeId"/> property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetSprayByAttributeId(string attributeId, [NotNullWhen(true)] out Spray? value)
+        public bool TryGetSprayByAttributeId(string? attributeId, [NotNullWhen(true)] out Spray? value)
             => PropertyLookup("attributeId", attributeId, GetSprayData, out value);
 
         private Spray GetSprayData(string sprayId, JsonElement sprayElement)

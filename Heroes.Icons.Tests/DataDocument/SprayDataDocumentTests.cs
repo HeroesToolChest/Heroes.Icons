@@ -179,18 +179,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("SprayAnimatedCookieButcher")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetSprayByIdTest(string id)
+        public void TryGetSprayByIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _sprayDataDocument.TryGetSprayById(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_sprayDataDocument.TryGetSprayById(id, out _));
 
@@ -236,18 +227,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("GingerbreadButcher")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetSprayByIdHyperlinkIdTest(string id)
+        public void TryGetSprayByIdHyperlinkIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _sprayDataDocument.TryGetSprayByHyperlinkId(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_sprayDataDocument.TryGetSprayByHyperlinkId(id, out _));
 
@@ -290,18 +272,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("Sy02")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetSprayByAttributeIdTest(string id)
+        public void TryGetSprayByAttributeIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _sprayDataDocument.TryGetSprayByAttributeId(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_sprayDataDocument.TryGetSprayByAttributeId(id, out _));
 

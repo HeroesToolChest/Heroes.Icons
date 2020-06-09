@@ -181,18 +181,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("AnubarakWings")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetMountByIdTest(string id)
+        public void TryGetMountByIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _mountDataDocument.TryGetMountById(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_mountDataDocument.TryGetMountById(id, out _));
 
@@ -238,18 +229,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("CryptLordWings")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetMountByIdHyperlinkIdTest(string id)
+        public void TryGetMountByIdHyperlinkIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _mountDataDocument.TryGetMountByHyperlinkId(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_mountDataDocument.TryGetMountByHyperlinkId(id, out _));
 
@@ -292,18 +274,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("AnWg")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetMountByAttributeIdTest(string id)
+        public void TryGetMountByAttributeIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _mountDataDocument.TryGetMountByAttributeId(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_mountDataDocument.TryGetMountByAttributeId(id, out _));
 

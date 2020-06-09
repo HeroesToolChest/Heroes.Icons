@@ -261,14 +261,13 @@ namespace Heroes.Icons.DataDocument
         /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
         /// <param name="talents">A value indicating whether to include talent parsing.</param>
         /// <param name="heroUnits">A value indicating whether to include hero unit parsing.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="id"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetHeroById(string id, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        public bool TryGetHeroById(string? id, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
         {
-            if (id is null)
-                throw new ArgumentNullException(nameof(id));
-
             value = null;
+
+            if (id is null)
+                return false;
 
             if (JsonDataDocument.RootElement.TryGetProperty(id, out JsonElement element))
             {
@@ -311,9 +310,8 @@ namespace Heroes.Icons.DataDocument
         /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
         /// <param name="talents">A value indicating whether to include talent parsing.</param>
         /// <param name="heroUnits">A value indicating whether to include hero unit parsing.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="unitId"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetHeroByUnitId(string unitId, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        public bool TryGetHeroByUnitId(string? unitId, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
             => PropertyLookup("unitId", unitId, out value, abilities, subAbilities, talents, heroUnits);
 
         /// <summary>
@@ -347,9 +345,8 @@ namespace Heroes.Icons.DataDocument
         /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
         /// <param name="talents">A value indicating whether to include talent parsing.</param>
         /// <param name="heroUnits">A value indicating whether to include hero unit parsing.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetHeroByHyperlinkId(string hyperlinkId, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        public bool TryGetHeroByHyperlinkId(string? hyperlinkId, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
             => PropertyLookup("hyperlinkId", hyperlinkId, out value, abilities, subAbilities, talents, heroUnits);
 
         /// <summary>
@@ -383,9 +380,8 @@ namespace Heroes.Icons.DataDocument
         /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
         /// <param name="talents">A value indicating whether to include talent parsing.</param>
         /// <param name="heroUnits">A value indicating whether to include hero unit parsing.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetHeroByAttributeId(string attributeId, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        public bool TryGetHeroByAttributeId(string? attributeId, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
             => PropertyLookup("attributeId", attributeId, out value, abilities, subAbilities, talents, heroUnits);
 
         /// <summary>
@@ -412,13 +408,12 @@ namespace Heroes.Icons.DataDocument
         /// <param name="heroId">A hero heroId property value.</param>
         /// <param name="value">When this method returns, contains the name of the hero.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="heroId"/> is <see langword="null"/>.</exception>
-        public bool TryGetNameFromHeroId(string heroId, [NotNullWhen(true)] out string? value)
+        public bool TryGetNameFromHeroId(string? heroId, [NotNullWhen(true)] out string? value)
         {
-            if (heroId is null)
-                throw new ArgumentNullException(nameof(heroId));
-
             value = null;
+
+            if (heroId is null)
+                return false;
 
             if (JsonDataDocument.RootElement.TryGetProperty(heroId, out JsonElement element) && element.TryGetProperty("name", out JsonElement nameElement))
             {
@@ -454,13 +449,12 @@ namespace Heroes.Icons.DataDocument
         /// <param name="unitId">A hero unitId property value.</param>
         /// <param name="value">When this method returns, contains the name of the hero.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="unitId"/> is <see langword="null"/>.</exception>
-        public bool TryGetNameFromUnitId(string unitId, [NotNullWhen(true)] out string? value)
+        public bool TryGetNameFromUnitId(string? unitId, [NotNullWhen(true)] out string? value)
         {
-            if (unitId is null)
-                throw new ArgumentNullException(nameof(unitId));
-
             value = null;
+
+            if (unitId is null)
+                return false;
 
             foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
             {
@@ -500,13 +494,12 @@ namespace Heroes.Icons.DataDocument
         /// <param name="hyperlinkId">A hero hyperlinkId property value.</param>
         /// <param name="value">When this method returns, contains the name of the hero.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
-        public bool TryGetNameFromHyperlinkId(string hyperlinkId, [NotNullWhen(true)] out string? value)
+        public bool TryGetNameFromHyperlinkId(string? hyperlinkId, [NotNullWhen(true)] out string? value)
         {
-            if (hyperlinkId is null)
-                throw new ArgumentNullException(nameof(hyperlinkId));
-
             value = null;
+
+            if (hyperlinkId is null)
+                return false;
 
             foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
             {
@@ -546,13 +539,12 @@ namespace Heroes.Icons.DataDocument
         /// <param name="attributeId">A hero attributeId property value.</param>
         /// <param name="value">When this method returns, contains the name of the hero.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is <see langword="null"/>.</exception>
-        public bool TryGetNameFromAttributeId(string attributeId, [NotNullWhen(true)] out string? value)
+        public bool TryGetNameFromAttributeId(string? attributeId, [NotNullWhen(true)] out string? value)
         {
-            if (attributeId is null)
-                throw new ArgumentNullException(nameof(attributeId));
-
             value = null;
+
+            if (attributeId is null)
+                return false;
 
             foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
             {
@@ -592,13 +584,12 @@ namespace Heroes.Icons.DataDocument
         /// <param name="unitId">A hero unitId property value.</param>
         /// <param name="value">When this method returns, contains the id of the hero.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="unitId"/> is <see langword="null"/>.</exception>
-        public bool TryGetHeroIdFromUnitId(string unitId, [NotNullWhen(true)] out string? value)
+        public bool TryGetHeroIdFromUnitId(string? unitId, [NotNullWhen(true)] out string? value)
         {
-            if (unitId is null)
-                throw new ArgumentNullException(nameof(unitId));
-
             value = null;
+
+            if (unitId is null)
+                return false;
 
             foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
             {
@@ -637,13 +628,12 @@ namespace Heroes.Icons.DataDocument
         /// <param name="hyperlinkId">A hero hyperlinkId property value.</param>
         /// <param name="value">When this method returns, contains the id of the hero.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
-        public bool TryGetHeroIdFromHyperlinkId(string hyperlinkId, [NotNullWhen(true)] out string? value)
+        public bool TryGetHeroIdFromHyperlinkId(string? hyperlinkId, [NotNullWhen(true)] out string? value)
         {
-            if (hyperlinkId is null)
-                throw new ArgumentNullException(nameof(hyperlinkId));
-
             value = null;
+
+            if (hyperlinkId is null)
+                return false;
 
             foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
             {
@@ -682,13 +672,12 @@ namespace Heroes.Icons.DataDocument
         /// <param name="attributeId">A hero attributeId property value.</param>
         /// <param name="value">When this method returns, contains the id of the hero.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is <see langword="null"/>.</exception>
-        public bool TryGetHeroIdFromAttributeId(string attributeId, [NotNullWhen(true)] out string? value)
+        public bool TryGetHeroIdFromAttributeId(string? attributeId, [NotNullWhen(true)] out string? value)
         {
-            if (attributeId is null)
-                throw new ArgumentNullException(nameof(attributeId));
-
             value = null;
+
+            if (attributeId is null)
+                return false;
 
             foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
             {
@@ -1007,12 +996,12 @@ namespace Heroes.Icons.DataDocument
             }
         }
 
-        private bool PropertyLookup(string propertyId, string propertyValue, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
+        private bool PropertyLookup(string propertyId, string? propertyValue, [NotNullWhen(true)] out Hero? value, bool abilities, bool subAbilities, bool talents, bool heroUnits)
         {
-            if (propertyValue is null)
-                throw new ArgumentNullException(nameof(propertyValue));
-
             value = null;
+
+            if (propertyValue is null)
+                return false;
 
             foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
             {

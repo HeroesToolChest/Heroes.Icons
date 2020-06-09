@@ -323,19 +323,19 @@ namespace Heroes.Icons.DataDocument
         /// <param name="value">An <see cref="IExtractable"/> object with the given <paramref name="propertyId"/>.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="propertyId"/>, <paramref name="propertyValue"/>, or <paramref name="getData"/> is <see langword="null"/>.</exception>
-        protected virtual bool PropertyLookup<T>(string propertyId, string propertyValue, Func<string, JsonElement, T> getData, [NotNullWhen(true)] out T? value)
+        protected virtual bool PropertyLookup<T>(string propertyId, string? propertyValue, Func<string, JsonElement, T> getData, [NotNullWhen(true)] out T? value)
             where T : class, IExtractable, new()
         {
             if (propertyId is null)
                 throw new ArgumentNullException(nameof(propertyId));
 
-            if (propertyValue is null)
-                throw new ArgumentNullException(nameof(propertyValue));
-
             if (getData is null)
                 throw new ArgumentNullException(nameof(getData));
 
             value = null;
+
+            if (propertyValue is null)
+                return false;
 
             foreach (JsonProperty property in JsonDataDocument.RootElement.EnumerateObject())
             {

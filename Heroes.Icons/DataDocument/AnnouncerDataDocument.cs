@@ -243,13 +243,12 @@ namespace Heroes.Icons.DataDocument
         /// <param name="id">An announcer id property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="Announcer"/> associated with the <paramref name="id"/> property value.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="id"/> is <see langword="null"/>.</exception>
-        public bool TryGetAnnouncerById(string id, [NotNullWhen(true)] out Announcer? value)
+        public bool TryGetAnnouncerById(string? id, [NotNullWhen(true)] out Announcer? value)
         {
-            if (id is null)
-                throw new ArgumentNullException(nameof(id));
-
             value = null;
+
+            if (id is null)
+                return false;
 
             if (JsonDataDocument.RootElement.TryGetProperty(id, out JsonElement element))
             {
@@ -284,9 +283,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="hyperlinkId">An announcer hyperlinkId property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="Announcer"/> associated with the <paramref name="hyperlinkId"/> property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetAnnouncerByHyperlinkId(string hyperlinkId, [NotNullWhen(true)] out Announcer? value)
+        public bool TryGetAnnouncerByHyperlinkId(string? hyperlinkId, [NotNullWhen(true)] out Announcer? value)
             => PropertyLookup("hyperlinkId", hyperlinkId, GetAnnouncerData, out value);
 
         /// <summary>
@@ -312,9 +310,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="attributeId">An announcer attributeId property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="Announcer"/> associated with the <paramref name="attributeId"/> property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetAnnouncerByAttributeId(string attributeId, [NotNullWhen(true)] out Announcer? value)
+        public bool TryGetAnnouncerByAttributeId(string? attributeId, [NotNullWhen(true)] out Announcer? value)
             => PropertyLookup("attributeId", attributeId, GetAnnouncerData, out value);
 
         /// <summary>
@@ -342,9 +339,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="heroId">An announcer heroId property value to find.</param>
         /// <param name="value">When this method returns, contains the <see cref="Announcer"/> associated with the <paramref name="heroId"/> property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="heroId"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetAnnouncerByHeroId(string heroId, [NotNullWhen(true)] out Announcer? value)
+        public bool TryGetAnnouncerByHeroId(string? heroId, [NotNullWhen(true)] out Announcer? value)
             => PropertyLookup("heroId", heroId, GetAnnouncerData, out value);
 
         private Announcer GetAnnouncerData(string announcerId, JsonElement announcerElement)

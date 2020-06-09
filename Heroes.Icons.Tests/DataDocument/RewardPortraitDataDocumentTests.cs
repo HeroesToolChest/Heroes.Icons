@@ -179,18 +179,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("AbathurCarbotsPortrait")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetRewardPortraitByIdTest(string id)
+        public void TryGetRewardPortraitByIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _rewardPortraitDataDocument.TryGetRewardPortraitById(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_rewardPortraitDataDocument.TryGetRewardPortraitById(id, out _));
 
@@ -236,18 +227,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("CarbotAbathurPortrait")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetRewardPortraitByHyperlinkIdTest(string id)
+        public void TryGetRewardPortraitByHyperlinkIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _rewardPortraitDataDocument.TryGetRewardPortraitByHyperlinkId(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_rewardPortraitDataDocument.TryGetRewardPortraitByHyperlinkId(id, out _));
 

@@ -243,13 +243,12 @@ namespace Heroes.Icons.DataDocument
         /// <param name="id">A reward portrait id property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="RewardPortrait"/> associated with the <paramref name="id"/> property value.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="id"/> is <see langword="null"/>.</exception>
-        public bool TryGetRewardPortraitById(string id, [NotNullWhen(true)] out RewardPortrait? value)
+        public bool TryGetRewardPortraitById(string? id, [NotNullWhen(true)] out RewardPortrait? value)
         {
-            if (id is null)
-                throw new ArgumentNullException(nameof(id));
-
             value = null;
+
+            if (id is null)
+                return false;
 
             if (JsonDataDocument.RootElement.TryGetProperty(id, out JsonElement element))
             {
@@ -284,9 +283,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="hyperlinkId">A reward portrait hyperlinkId property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="RewardPortrait"/> associated with the <paramref name="hyperlinkId"/> property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetRewardPortraitByHyperlinkId(string hyperlinkId, [NotNullWhen(true)] out RewardPortrait? value)
+        public bool TryGetRewardPortraitByHyperlinkId(string? hyperlinkId, [NotNullWhen(true)] out RewardPortrait? value)
             => PropertyLookup("hyperlinkId", hyperlinkId, GetRewardPortraitData, out value);
 
         private RewardPortrait GetRewardPortraitData(string rewardPortraitId, JsonElement rewardPortraitElement)

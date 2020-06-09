@@ -108,18 +108,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("alteracpass-CoreScaling")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetBehaviorVeterancyByIdTest(string id)
+        public void TryGetBehaviorVeterancyByIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _behaviorVeterancyDataDocument.TryGetBehaviorVeterancyById(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_behaviorVeterancyDataDocument.TryGetBehaviorVeterancyById(id, out _));
 
@@ -137,18 +128,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("ExcellentMana")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetBehaviorVeterancyByIdExcellentManaTest(string id)
+        public void TryGetBehaviorVeterancyByIdExcellentManaTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _behaviorVeterancyDataDocument.TryGetBehaviorVeterancyById(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_behaviorVeterancyDataDocument.TryGetBehaviorVeterancyById(id, out _));
 

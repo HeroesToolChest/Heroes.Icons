@@ -177,18 +177,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("BannerD3DemonHunterRare")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetBannerByIdTest(string id)
+        public void TryGetBannerByIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _bannerDataDocument.TryGetBannerById(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_bannerDataDocument.TryGetBannerById(id, out _));
 
@@ -234,18 +225,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("DemonHunterWarbanner")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetBannerByIdHyperlinkIdTest(string id)
+        public void TryGetBannerByIdHyperlinkIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _bannerDataDocument.TryGetBannerByHyperlinkId(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_bannerDataDocument.TryGetBannerByHyperlinkId(id, out _));
 
@@ -288,18 +270,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("BN08")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetBannerByAttributeIdTest(string id)
+        public void TryGetBannerByAttributeIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _bannerDataDocument.TryGetBannerByAttributeId(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_bannerDataDocument.TryGetBannerByAttributeId(id, out _));
 

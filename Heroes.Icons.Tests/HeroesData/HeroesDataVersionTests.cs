@@ -205,44 +205,19 @@ namespace Heroes.Icons.HeroesData.Tests
         }
 
         [TestMethod]
-        public void TryParseExceptionsTest()
-        {
-            Assert.ThrowsException<ArgumentException>(() =>
-            {
-                if (HeroesDataVersion.TryParse(string.Empty, out HeroesDataVersion? _))
-                {
-                }
-            });
-
-            Assert.ThrowsException<ArgumentException>(() =>
-            {
-                if (HeroesDataVersion.TryParse(null!, out HeroesDataVersion? _))
-                {
-                }
-            });
-
-            Assert.ThrowsException<ArgumentException>(() =>
-            {
-                if (HeroesDataVersion.TryParse("   ", out HeroesDataVersion? _))
-                {
-                }
-            });
-        }
-
-        [TestMethod]
         public void ParseExceptionsTest()
         {
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.ThrowsException<FormatException>(() =>
             {
                 HeroesDataVersion.Parse(string.Empty);
             });
 
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.ThrowsException<ArgumentNullException>(() =>
             {
                 HeroesDataVersion.Parse(null!);
             });
 
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.ThrowsException<FormatException>(() =>
             {
                 HeroesDataVersion.Parse("  ");
             });

@@ -243,13 +243,12 @@ namespace Heroes.Icons.DataDocument
         /// <param name="id">A banner id property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="Banner"/> associated with the <paramref name="id"/> property value.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="id"/> is <see langword="null"/>.</exception>
-        public bool TryGetBannerById(string id, [NotNullWhen(true)] out Banner? value)
+        public bool TryGetBannerById(string? id, [NotNullWhen(true)] out Banner? value)
         {
-            if (id is null)
-                throw new ArgumentNullException(nameof(id));
-
             value = null;
+
+            if (id is null)
+                return false;
 
             if (JsonDataDocument.RootElement.TryGetProperty(id, out JsonElement element))
             {
@@ -284,9 +283,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="hyperlinkId">A banner hyperlinkId property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="Banner"/> associated with the <paramref name="hyperlinkId"/> property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetBannerByHyperlinkId(string hyperlinkId, [NotNullWhen(true)] out Banner? value)
+        public bool TryGetBannerByHyperlinkId(string? hyperlinkId, [NotNullWhen(true)] out Banner? value)
             => PropertyLookup("hyperlinkId", hyperlinkId, GetBannerData, out value);
 
         /// <summary>
@@ -312,9 +310,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="attributeId">A banner attributeId property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="Banner"/> associated with the <paramref name="attributeId"/> property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetBannerByAttributeId(string attributeId, [NotNullWhen(true)] out Banner? value)
+        public bool TryGetBannerByAttributeId(string? attributeId, [NotNullWhen(true)] out Banner? value)
             => PropertyLookup("attributeId", attributeId, GetBannerData, out value);
 
         private Banner GetBannerData(string bannerId, JsonElement bannerElement)

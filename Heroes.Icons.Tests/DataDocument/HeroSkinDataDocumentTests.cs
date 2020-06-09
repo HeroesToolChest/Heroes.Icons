@@ -181,18 +181,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("AbathurBone")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetHeroSkinByIdTest(string id)
+        public void TryGetHeroSkinByIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _heroSkinDataDocument.TryGetHeroSkinById(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_heroSkinDataDocument.TryGetHeroSkinById(id, out _));
 
@@ -238,18 +229,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("BoneAbathur")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetHeroSkinByIdHyperlinkIdTest(string id)
+        public void TryGetHeroSkinByIdHyperlinkIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _heroSkinDataDocument.TryGetHeroSkinByHyperlinkId(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_heroSkinDataDocument.TryGetHeroSkinByHyperlinkId(id, out _));
 
@@ -292,18 +274,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("Aba1")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetHeroSkinByAttributeIdTest(string id)
+        public void TryGetHeroSkinByAttributeIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _heroSkinDataDocument.TryGetHeroSkinByAttributeId(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_heroSkinDataDocument.TryGetHeroSkinByAttributeId(id, out _));
 

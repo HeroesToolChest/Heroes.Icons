@@ -243,13 +243,12 @@ namespace Heroes.Icons.DataDocument
         /// <param name="id">A hero skin id property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="HeroSkin"/> associated with the <paramref name="id"/> property value.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="id"/> is <see langword="null"/>.</exception>
-        public bool TryGetHeroSkinById(string id, [NotNullWhen(true)] out HeroSkin? value)
+        public bool TryGetHeroSkinById(string? id, [NotNullWhen(true)] out HeroSkin? value)
         {
-            if (id is null)
-                throw new ArgumentNullException(nameof(id));
-
             value = null;
+
+            if (id is null)
+                return false;
 
             if (JsonDataDocument.RootElement.TryGetProperty(id, out JsonElement element))
             {
@@ -284,9 +283,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="hyperlinkId">A hero skin hyperlinkId property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="HeroSkin"/> associated with the <paramref name="hyperlinkId"/> property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetHeroSkinByHyperlinkId(string hyperlinkId, [NotNullWhen(true)] out HeroSkin? value)
+        public bool TryGetHeroSkinByHyperlinkId(string? hyperlinkId, [NotNullWhen(true)] out HeroSkin? value)
             => PropertyLookup("hyperlinkId", hyperlinkId, GetHeroSkinData, out value);
 
         /// <summary>
@@ -312,9 +310,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="attributeId">A hero skin attributeId property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="HeroSkin"/> associated with the <paramref name="attributeId"/> property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetHeroSkinByAttributeId(string attributeId, [NotNullWhen(true)] out HeroSkin? value)
+        public bool TryGetHeroSkinByAttributeId(string? attributeId, [NotNullWhen(true)] out HeroSkin? value)
             => PropertyLookup("attributeId", attributeId, GetHeroSkinData, out value);
 
         private HeroSkin GetHeroSkinData(string heroSkinId, JsonElement heroSkinElement)

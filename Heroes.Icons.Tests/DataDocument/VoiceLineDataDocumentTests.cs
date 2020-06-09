@@ -179,18 +179,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("MephistoBase_VoiceLine02")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetVoiceLineByIdTest(string id)
+        public void TryGetVoiceLineByIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _voiceLineDataDocument.TryGetVoiceLineById(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_voiceLineDataDocument.TryGetVoiceLineById(id, out _));
 
@@ -236,18 +227,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("MephistoVoiceLine02")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetVoiceLineByIdHyperlinkIdTest(string id)
+        public void TryGetVoiceLineByIdHyperlinkIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _voiceLineDataDocument.TryGetVoiceLineByHyperlinkId(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_voiceLineDataDocument.TryGetVoiceLineByHyperlinkId(id, out _));
 
@@ -290,18 +272,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("MP02")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetVoiceLineByAttributeIdTest(string id)
+        public void TryGetVoiceLineByAttributeIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _voiceLineDataDocument.TryGetVoiceLineByAttributeId(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_voiceLineDataDocument.TryGetVoiceLineByAttributeId(id, out _));
 

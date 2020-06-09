@@ -243,13 +243,12 @@ namespace Heroes.Icons.DataDocument
         /// <param name="id">A match award id property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="MatchAward"/> associated with the <paramref name="id"/> property value.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="id"/> is <see langword="null"/>.</exception>
-        public bool TryGetMatchAwardById(string id, [NotNullWhen(true)] out MatchAward? value)
+        public bool TryGetMatchAwardById(string? id, [NotNullWhen(true)] out MatchAward? value)
         {
-            if (id is null)
-                throw new ArgumentNullException(nameof(id));
-
             value = null;
+
+            if (id is null)
+                return false;
 
             if (JsonDataDocument.RootElement.TryGetProperty(id, out JsonElement element))
             {
@@ -286,9 +285,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="gameLink">A match award gameLink property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="MatchAward"/> associated with the <paramref name="gameLink"/> property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="gameLink"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetMatchAwardByGameLinkId(string gameLink, [NotNullWhen(true)] out MatchAward? value)
+        public bool TryGetMatchAwardByGameLinkId(string? gameLink, [NotNullWhen(true)] out MatchAward? value)
             => PropertyLookup("gameLink", gameLink, GetMatchAwardData, out value);
 
         /// <summary>
@@ -314,9 +312,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="tag">A match award tag property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="MatchAward"/> associated with the <paramref name="tag"/> property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="tag"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetMatchAwardByTag(string tag, [NotNullWhen(true)] out MatchAward? value)
+        public bool TryGetMatchAwardByTag(string? tag, [NotNullWhen(true)] out MatchAward? value)
             => PropertyLookup("tag", tag, GetMatchAwardData, out value);
 
         private MatchAward GetMatchAwardData(string matchAwardId, JsonElement matchAwardElement)

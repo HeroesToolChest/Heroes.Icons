@@ -177,18 +177,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("ClutchHealer")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryMatchAwardByIdTest(string id)
+        public void TryMatchAwardByIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _matchAwardDataDocument.TryGetMatchAwardById(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_matchAwardDataDocument.TryGetMatchAwardById(id, out _));
 
@@ -234,18 +225,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("EndOfMatchAwardClutchHealerBoolean")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetMatchAwardByGameLinkIdTest(string id)
+        public void TryGetMatchAwardByGameLinkIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _matchAwardDataDocument.TryGetMatchAwardByGameLinkId(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_matchAwardDataDocument.TryGetMatchAwardByGameLinkId(id, out _));
 
@@ -288,18 +270,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("AwCH")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetMatchAwardByTagTest(string id)
+        public void TryGetMatchAwardByTagTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _matchAwardDataDocument.TryGetMatchAwardByTag(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_matchAwardDataDocument.TryGetMatchAwardByTag(id, out _));
 

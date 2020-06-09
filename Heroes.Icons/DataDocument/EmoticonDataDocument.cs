@@ -243,13 +243,12 @@ namespace Heroes.Icons.DataDocument
         /// <param name="id">An emoticon id property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="Emoticon"/> associated with the <paramref name="id"/> property value.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="id"/> is <see langword="null"/>.</exception>
-        public bool TryGetEmoticonById(string id, [NotNullWhen(true)] out Emoticon? value)
+        public bool TryGetEmoticonById(string? id, [NotNullWhen(true)] out Emoticon? value)
         {
-            if (id is null)
-                throw new ArgumentNullException(nameof(id));
-
             value = null;
+
+            if (id is null)
+                return false;
 
             if (JsonDataDocument.RootElement.TryGetProperty(id, out JsonElement element))
             {
@@ -284,9 +283,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="hyperlinkId">An emoticon hyperlinkId property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="Emoticon"/> associated with the <paramref name="hyperlinkId"/> property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetEmoticonByHyperlinkId(string hyperlinkId, [NotNullWhen(true)] out Emoticon? value)
+        public bool TryGetEmoticonByHyperlinkId(string? hyperlinkId, [NotNullWhen(true)] out Emoticon? value)
             => PropertyLookup("hyperlinkId", hyperlinkId, GetEmoticonData, out value);
 
         private Emoticon GetEmoticonData(string emoticonId, JsonElement emoticonElement)

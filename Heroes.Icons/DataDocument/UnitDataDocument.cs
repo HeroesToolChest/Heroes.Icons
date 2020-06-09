@@ -247,13 +247,12 @@ namespace Heroes.Icons.DataDocument
         /// <param name="abilities">A value indicating whether to include ability parsing.</param>
         /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="id"/> is <see langword="null"/>.</exception>
-        public bool TryGetUnitById(string id, [NotNullWhen(true)] out Unit? value, bool abilities, bool subAbilities)
+        public bool TryGetUnitById(string? id, [NotNullWhen(true)] out Unit? value, bool abilities, bool subAbilities)
         {
-            if (id is null)
-                throw new ArgumentNullException(nameof(id));
-
             value = null;
+
+            if (id is null)
+                return false;
 
             if (JsonDataDocument.RootElement.TryGetProperty(id, out JsonElement element))
             {
@@ -293,8 +292,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="abilities">A value indicating whether to include ability parsing.</param>
         /// <param name="subAbilities">A value indicating whether to include sub-ability parsing.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
-        public bool TryGetUnitByHyperlinkId(string hyperlinkId, [NotNullWhen(true)] out Unit? value, bool abilities, bool subAbilities)
+        public bool TryGetUnitByHyperlinkId(string? hyperlinkId, [NotNullWhen(true)] out Unit? value, bool abilities, bool subAbilities)
             => PropertyLookup("hyperlinkId", hyperlinkId, out value, abilities, subAbilities);
 
         /// <summary>
@@ -424,12 +422,12 @@ namespace Heroes.Icons.DataDocument
             return unit;
         }
 
-        private bool PropertyLookup(string propertyId, string propertyValue, [NotNullWhen(true)] out Unit? value, bool abilities, bool subAbilities)
+        private bool PropertyLookup(string propertyId, string? propertyValue, [NotNullWhen(true)] out Unit? value, bool abilities, bool subAbilities)
         {
-            if (propertyValue is null)
-                throw new ArgumentNullException(nameof(propertyValue));
-
             value = null;
+
+            if (propertyValue is null)
+                return false;
 
             foreach (JsonProperty unitProperty in JsonDataDocument.RootElement.EnumerateObject())
             {

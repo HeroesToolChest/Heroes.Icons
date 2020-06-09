@@ -243,13 +243,12 @@ namespace Heroes.Icons.DataDocument
         /// <param name="id">A mount id property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="Mount"/> associated with the <paramref name="id"/> property value.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="id"/> is <see langword="null"/>.</exception>
-        public bool TryGetMountById(string id, [NotNullWhen(true)] out Mount? value)
+        public bool TryGetMountById(string? id, [NotNullWhen(true)] out Mount? value)
         {
-            if (id is null)
-                throw new ArgumentNullException(nameof(id));
-
             value = null;
+
+            if (id is null)
+                return false;
 
             if (JsonDataDocument.RootElement.TryGetProperty(id, out JsonElement element))
             {
@@ -284,9 +283,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="hyperlinkId">A mount hyperlinkId property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="Mount"/> associated with the <paramref name="hyperlinkId"/> property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetMountByHyperlinkId(string hyperlinkId, [NotNullWhen(true)] out Mount? value)
+        public bool TryGetMountByHyperlinkId(string? hyperlinkId, [NotNullWhen(true)] out Mount? value)
             => PropertyLookup("hyperlinkId", hyperlinkId, GetMountData, out value);
 
         /// <summary>
@@ -312,9 +310,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="attributeId">A mount attributeId property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="Mount"/> associated with the <paramref name="attributeId"/> property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetMountByAttributeId(string attributeId, [NotNullWhen(true)] out Mount? value)
+        public bool TryGetMountByAttributeId(string? attributeId, [NotNullWhen(true)] out Mount? value)
             => PropertyLookup("attributeId", attributeId, GetMountData, out value);
 
         private Mount GetMountData(string mountId, JsonElement mountElement)

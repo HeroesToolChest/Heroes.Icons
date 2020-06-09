@@ -180,18 +180,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("AdmiralKrakenovPortrait")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetPortraitPackByIdTest(string id)
+        public void TryGetPortraitPackByIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _portraitPackDataDocument.TryGetPortraitPackById(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_portraitPackDataDocument.TryGetPortraitPackById(id, out _));
 
@@ -237,18 +228,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("AdmiralKrakenovPortrait")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetPortraitPackByHyperlinkIdTest(string id)
+        public void TryGetPortraitPackByHyperlinkIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _portraitPackDataDocument.TryGetPortraitPackByHyperlinkId(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_portraitPackDataDocument.TryGetPortraitPackByHyperlinkId(id, out _));
 

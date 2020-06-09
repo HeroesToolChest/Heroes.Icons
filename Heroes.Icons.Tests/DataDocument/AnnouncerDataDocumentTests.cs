@@ -177,18 +177,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("Adjutant")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetAnnouncerByIdTest(string id)
+        public void TryGetAnnouncerByIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _announcerDataDocument.TryGetAnnouncerById(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_announcerDataDocument.TryGetAnnouncerById(id, out _));
 
@@ -234,18 +225,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("AdjutantAnnouncer")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetAnnouncerByIdHyperlinkIdTest(string id)
+        public void TryGetAnnouncerByIdHyperlinkIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _announcerDataDocument.TryGetAnnouncerByHyperlinkId(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_announcerDataDocument.TryGetAnnouncerByHyperlinkId(id, out _));
 
@@ -288,18 +270,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("AADJ")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetAnnouncerByAttributeIdTest(string id)
+        public void TryGetAnnouncerByAttributeIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _announcerDataDocument.TryGetAnnouncerByAttributeId(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_announcerDataDocument.TryGetAnnouncerByAttributeId(id, out _));
 
@@ -344,16 +317,7 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("asdf")]
         public void TryGetAnnouncerByHeroIdTest(string id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _announcerDataDocument.TryGetAnnouncerByHeroId(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_announcerDataDocument.TryGetAnnouncerByHeroId(id, out _));
 

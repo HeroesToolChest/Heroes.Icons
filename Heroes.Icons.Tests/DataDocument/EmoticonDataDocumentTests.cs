@@ -182,18 +182,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("abathur_mecha_angry")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetEmoticonByIdTest(string id)
+        public void TryGetEmoticonByIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _emoticonDataDocument.TryGetEmoticonById(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_emoticonDataDocument.TryGetEmoticonById(id, out _));
 
@@ -239,18 +230,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("abstract_rofl_casesensitive")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetEmoticonByIdHyperlinkIdTest(string id)
+        public void TryGetEmoticonByIdHyperlinkIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _emoticonDataDocument.TryGetEmoticonByHyperlinkId(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_emoticonDataDocument.TryGetEmoticonByHyperlinkId(id, out _));
 

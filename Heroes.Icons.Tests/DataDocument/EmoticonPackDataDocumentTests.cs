@@ -182,18 +182,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("CatSpooky18Pack")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetEmoticonPackByIdTest(string id)
+        public void TryGetEmoticonPackByIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _emoticonPackDataDocument.TryGetEmoticonPackById(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_emoticonPackDataDocument.TryGetEmoticonPackById(id, out _));
 
@@ -239,18 +230,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("CatSpooky18Pack")]
         [DataRow(null)]
         [DataRow("asdf")]
-        public void TryGetEmoticonPackByIdHyperlinkIdTest(string id)
+        public void TryGetEmoticonPackByIdHyperlinkIdTest(string? id)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _emoticonPackDataDocument.TryGetEmoticonPackByHyperlinkId(id!, out _);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_emoticonPackDataDocument.TryGetEmoticonPackByHyperlinkId(id, out _));
 

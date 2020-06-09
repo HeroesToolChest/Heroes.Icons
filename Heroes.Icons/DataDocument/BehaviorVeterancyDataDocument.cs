@@ -134,13 +134,12 @@ namespace Heroes.Icons.DataDocument
         /// <param name="id">A behavior veterancy id property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="BehaviorVeterancy"/> associated with the <paramref name="id"/> property value.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="id"/> is <see langword="null"/>.</exception>
-        public bool TryGetBehaviorVeterancyById(string id, [NotNullWhen(true)] out BehaviorVeterancy? value)
+        public bool TryGetBehaviorVeterancyById(string? id, [NotNullWhen(true)] out BehaviorVeterancy? value)
         {
-            if (id is null)
-                throw new ArgumentNullException(nameof(id));
-
             value = null;
+
+            if (id is null)
+                return false;
 
             if (JsonDataDocument.RootElement.TryGetProperty(id, out JsonElement element))
             {

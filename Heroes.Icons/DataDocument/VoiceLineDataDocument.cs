@@ -243,13 +243,12 @@ namespace Heroes.Icons.DataDocument
         /// <param name="id">A voice line id property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="VoiceLine"/> associated with the <paramref name="id"/> property value.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="id"/> is <see langword="null"/>.</exception>
-        public bool TryGetVoiceLineById(string id, [NotNullWhen(true)] out VoiceLine? value)
+        public bool TryGetVoiceLineById(string? id, [NotNullWhen(true)] out VoiceLine? value)
         {
-            if (id is null)
-                throw new ArgumentNullException(nameof(id));
-
             value = null;
+
+            if (id is null)
+                return false;
 
             if (JsonDataDocument.RootElement.TryGetProperty(id, out JsonElement element))
             {
@@ -284,9 +283,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="hyperlinkId">A voice line hyperlinkId property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="VoiceLine"/> associated with the <paramref name="hyperlinkId"/> property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetVoiceLineByHyperlinkId(string hyperlinkId, [NotNullWhen(true)] out VoiceLine? value)
+        public bool TryGetVoiceLineByHyperlinkId(string? hyperlinkId, [NotNullWhen(true)] out VoiceLine? value)
             => PropertyLookup("hyperlinkId", hyperlinkId, GetVoiceLineData, out value);
 
         /// <summary>
@@ -312,9 +310,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="attributeId">A voice line attributeId property value.</param>
         /// <param name="value">When this method returns, contains the <see cref="VoiceLine"/> associated with the <paramref name="attributeId"/> property value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetVoiceLineByAttributeId(string attributeId, [NotNullWhen(true)] out VoiceLine? value)
+        public bool TryGetVoiceLineByAttributeId(string? attributeId, [NotNullWhen(true)] out VoiceLine? value)
             => PropertyLookup("attributeId", attributeId, GetVoiceLineData, out value);
 
         private VoiceLine GetVoiceLineData(string voiceLineId, JsonElement voiceLineElement)

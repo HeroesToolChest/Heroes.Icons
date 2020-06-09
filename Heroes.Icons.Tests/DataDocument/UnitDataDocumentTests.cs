@@ -156,18 +156,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("AbathurEvolvedMonstrosity", true, true)]
         [DataRow(null, true, true)]
         [DataRow("asdf", true, true)]
-        public void TryGetUnitByIdTest(string id, bool abilities, bool subAbilities)
+        public void TryGetUnitByIdTest(string? id, bool abilities, bool subAbilities)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _unitDataDocument.TryGetUnitById(id!, out Unit? unit, abilities, subAbilities);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_unitDataDocument.TryGetUnitById(id, out _, abilities, subAbilities));
 
@@ -213,18 +204,9 @@ namespace Heroes.Icons.Tests.DataDocument
         [DataRow("tombofthespiderqueen-JungleGraveGolemLaner", true, true)]
         [DataRow(null, true, true)]
         [DataRow("asdf", true, true)]
-        public void TryGetUnitByHyperlinkIdTest(string id, bool abilities, bool subAbilities)
+        public void TryGetUnitByHyperlinkIdTest(string? id, bool abilities, bool subAbilities)
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _unitDataDocument.TryGetUnitByHyperlinkId(id!, out Unit? unit, abilities, subAbilities);
-                });
-
-                return;
-            }
-            else if (id == "asdf")
+            if (id is null || id == "asdf")
             {
                 Assert.IsFalse(_unitDataDocument.TryGetUnitByHyperlinkId(id, out _, abilities, subAbilities));
 
