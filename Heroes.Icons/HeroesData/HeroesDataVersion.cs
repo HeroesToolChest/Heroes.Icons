@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Heroes.Icons.HeroesData
 {
@@ -131,46 +130,24 @@ namespace Heroes.Icons.HeroesData
         /// <param name="s">The string representation of the heroes-data version number.</param>
         /// <param name="result">When this method returns, contains the version number in a <see cref="HeroesDataVersion"/>.</param>
         /// <returns><see langword="true"/> if <paramref name="s"/> was converted; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentException"><paramref name="s"/> is <see langword="null"/> or whitespace.</exception>
-        public static bool TryParse(string s, [NotNullWhen(true)] out HeroesDataVersion? result)
+        public static bool TryParse(string? s, [NotNullWhen(true)] out HeroesDataVersion? result)
         {
-            if (string.IsNullOrWhiteSpace(s))
-                throw new ArgumentException("Cannot be null or whitespace.", nameof(s));
-
             result = null;
 
-            string[] values = s.Split('.', StringSplitOptions.RemoveEmptyEntries);
+            return ParseVersionString(s, ref result);
+        }
 
-            if (values.Length != 4)
-                return false;
+        /// <summary>
+        /// Converts a span representation of the heroes-data version number into <see cref="HeroesDataVersion"/>.
+        /// </summary>
+        /// <param name="s">The span representation of the heroes-data version number.</param>
+        /// <param name="result">When this method returns, contains the version number in a <see cref="HeroesDataVersion"/>.</param>
+        /// <returns><see langword="true"/> if <paramref name="s"/> was converted; otherwise <see langword="false"/>.</returns>
+        public static bool TryParse(ReadOnlySpan<char> s, [NotNullWhen(true)] out HeroesDataVersion? result)
+        {
+            result = null;
 
-            if (int.TryParse(values[0], out int major) &&
-                int.TryParse(values[1], out int minor) &&
-                int.TryParse(values[2], out int revision))
-            {
-                int indexPtr = values[3].IndexOf('_', StringComparison.OrdinalIgnoreCase);
-
-                int build;
-
-                if (indexPtr > 0)
-                {
-                    ReadOnlySpan<char> buildSpan = values[3].AsSpan();
-
-                    if (int.TryParse(buildSpan.Slice(0, indexPtr), out build) &&
-                        buildSpan.Slice(indexPtr + 1).Equals("ptr", StringComparison.OrdinalIgnoreCase))
-                    {
-                        result = new HeroesDataVersion(major, minor, revision, build, true);
-                        return true;
-                    }
-                }
-                else if (int.TryParse(values[3], out build))
-                {
-                    result = new HeroesDataVersion(major, minor, revision, build);
-                    return true;
-                }
-            }
-
-            return false;
+            return ParseVersionString(s, ref result);
         }
 
         /// <summary>
@@ -178,12 +155,30 @@ namespace Heroes.Icons.HeroesData
         /// </summary>
         /// <param name="s">The string representation of the heroes-data version number.</param>
         /// <returns>The version number in <see cref="HeroesDataVersion"/>.</returns>
-        /// <exception cref="ArgumentException"><paramref name="s"/> is <see langword="null"/> or whitespace.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="s"/> is <see langword="null"/>.</exception>
         /// <exception cref="FormatException"><paramref name="s"/> is not in a valid format.</exception>
         public static HeroesDataVersion Parse(string s)
         {
-            if (string.IsNullOrWhiteSpace(s))
-                throw new ArgumentException("Cannot be null or whitespace.", nameof(s));
+            if (s is null)
+                throw new ArgumentNullException(nameof(s));
+
+            if (TryParse(s, out HeroesDataVersion? value))
+                return value;
+            else
+                throw new FormatException("Invalid format");
+        }
+
+        /// <summary>
+        /// Converts a span representation of the heroes-data version number into <see cref="HeroesDataVersion"/>.
+        /// </summary>
+        /// <param name="s">The span representation of the heroes-data version number.</param>
+        /// <returns>The version number in <see cref="HeroesDataVersion"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="s"/> is <see langword="null"/>.</exception>
+        /// <exception cref="FormatException"><paramref name="s"/> is not in a valid format.</exception>
+        public static HeroesDataVersion Parse(ReadOnlySpan<char> s)
+        {
+            if (s == null)
+                throw new ArgumentNullException(nameof(s));
 
             if (TryParse(s, out HeroesDataVersion? value))
                 return value;
@@ -275,6 +270,48 @@ namespace Heroes.Icons.HeroesData
                 return $"{Major}.{Minor}.{Revision}.{Build}_ptr";
             else
                 return $"{Major}.{Minor}.{Revision}.{Build}";
+        }
+
+        // TODO Refactor implementation to use ReadOnlySpan<char> split in .NET 5.0
+        private static bool ParseVersionString(ReadOnlySpan<char> value, [NotNullWhen(true)] ref HeroesDataVersion? result)
+        {
+            if (value == null || value.IsEmpty)
+                return false;
+
+            string sString = value.ToString();
+
+            string[] values = sString.Split('.', StringSplitOptions.RemoveEmptyEntries);
+
+            if (values.Length != 4)
+                return false;
+
+            if (int.TryParse(values[0], out int major) &&
+                int.TryParse(values[1], out int minor) &&
+                int.TryParse(values[2], out int revision))
+            {
+                int indexPtr = values[3].IndexOf('_', StringComparison.OrdinalIgnoreCase);
+
+                int build;
+
+                if (indexPtr > 0)
+                {
+                    ReadOnlySpan<char> buildSpan = values[3].AsSpan();
+
+                    if (int.TryParse(buildSpan.Slice(0, indexPtr), out build) &&
+                        buildSpan.Slice(indexPtr + 1).Equals("ptr", StringComparison.OrdinalIgnoreCase))
+                    {
+                        result = new HeroesDataVersion(major, minor, revision, build, true);
+                        return true;
+                    }
+                }
+                else if (int.TryParse(values[3], out build))
+                {
+                    result = new HeroesDataVersion(major, minor, revision, build);
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
