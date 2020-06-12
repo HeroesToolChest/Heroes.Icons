@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Heroes.Icons.HeroesData
 {
@@ -39,7 +40,7 @@ namespace Heroes.Icons.HeroesData
                 }
             }
 
-            return heroesDataVersions;
+            return heroesDataVersions.OrderByDescending(x => x);
         }
 
         /// <summary>
