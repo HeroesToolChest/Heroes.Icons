@@ -11,7 +11,7 @@ namespace Heroes.Icons.HeroesData
     public static class HeroesDataDirectory
     {
         /// <summary>
-        /// Gets a collection of <see cref="HeroesDataVersion"/>s in the heroes-data directory.
+        /// Gets a collection of <see cref="HeroesDataVersion"/>s in the heroes-data directory ordered by newest to oldest (descending).
         /// </summary>
         /// <param name="path">The directory that contains the heroes-data version directories.</param>
         /// <returns>A collection of <see cref="HeroesDataVersion"/>s.</returns>
