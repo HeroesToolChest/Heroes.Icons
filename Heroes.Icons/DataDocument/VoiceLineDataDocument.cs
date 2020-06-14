@@ -45,7 +45,7 @@ namespace Heroes.Icons.DataDocument
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VoiceLineDataDocument"/> class.
-        /// The <paramref name="gameStringDocument"/> overrides the <paramref name="jsonDataFilePath"/> <see cref="Localization"/>. 
+        /// The <paramref name="gameStringDocument"/> overrides the <paramref name="jsonDataFilePath"/> <see cref="Localization"/>.
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
