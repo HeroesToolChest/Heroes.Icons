@@ -99,6 +99,7 @@ namespace Heroes.Icons.DataDocument
 
         /// <summary>
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="Unit"/> data reading.
+        /// <see cref="Localization"/> will be inferred from <paramref name="jsonDataFilePath"/>.
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <returns>An <see cref="UnitDataDocument"/> representation of the JSON value.</returns>
@@ -131,6 +132,7 @@ namespace Heroes.Icons.DataDocument
 
         /// <summary>
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="Unit"/> data reading.
+        /// The <paramref name="gameStringDocument"/> overrides the <paramref name="jsonDataFilePath"/> <see cref="Localization"/>.
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>

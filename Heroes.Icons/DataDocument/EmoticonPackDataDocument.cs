@@ -45,6 +45,7 @@ namespace Heroes.Icons.DataDocument
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EmoticonPackDataDocument"/> class.
+        /// The <paramref name="gameStringDocument"/> overrides the <paramref name="jsonDataFilePath"/> <see cref="Localization"/>.
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
@@ -131,6 +132,7 @@ namespace Heroes.Icons.DataDocument
 
         /// <summary>
         /// Parses a json file as UTF-8-encoded text to allow for <see cref="EmoticonPack"/> data reading.
+        /// The <paramref name="gameStringDocument"/> overrides the <paramref name="jsonDataFilePath"/> <see cref="Localization"/>.
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
