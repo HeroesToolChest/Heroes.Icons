@@ -22,8 +22,11 @@ jobs:
         version: 3.1.x
         installationPath: $(Agent.ToolsDirectory)/dotnet
      
-    - script: dotnet restore --no-cache
-      displayName: Restore
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+        includeNuGetOrg: true
+      displayName: 'Restore'
       
     - script: dotnet build -c $(configuration)
       displayName: Build
