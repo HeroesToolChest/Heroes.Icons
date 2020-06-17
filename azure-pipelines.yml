@@ -64,7 +64,7 @@ jobs:
 
     - task: DotNetCoreCLI@2
       inputs:
-        projects: $env:MAIN_PROJECT
+        projects: $(MAIN_PROJECT)
         command: 'restore'
         includeNuGetOrg: true
       displayName: 'Restore'
