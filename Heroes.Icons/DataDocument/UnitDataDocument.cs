@@ -305,14 +305,10 @@ namespace Heroes.Icons.DataDocument
         /// <returns>A collection of <see cref="Unit"/>s.</returns>
         public IEnumerable<Unit> GetUnits(bool abilities, bool subAbilities)
         {
-            List<Unit> unitList = new List<Unit>();
-
             foreach (JsonProperty unit in JsonDataDocument.RootElement.EnumerateObject())
             {
-                unitList.Add(GetUnitById(unit.Name, abilities, subAbilities));
+                yield return GetUnitById(unit.Name, abilities, subAbilities);
             }
-
-            return unitList;
         }
 
         private Unit GetUnitData(string unitId, JsonElement element, bool includeAbilities, bool includeSubAbilities)

@@ -188,14 +188,10 @@ namespace Heroes.Icons.DataDocument
         {
             get
             {
-                List<string> items = new List<string>();
-
                 foreach (JsonProperty property in JsonDataDocument.RootElement.EnumerateObject())
                 {
-                    items.Add(property.Name);
+                    yield return property.Name;
                 }
-
-                return items;
             }
         }
 
@@ -303,15 +299,11 @@ namespace Heroes.Icons.DataDocument
         /// <returns>a collection of the <paramref name="property"/> values.</returns>
         protected IEnumerable<string> GetCollectionOfPropety(string property)
         {
-            List<string> items = new List<string>();
-
             foreach (JsonProperty jsonProperty in JsonDataDocument.RootElement.EnumerateObject())
             {
                 if (jsonProperty.Value.TryGetProperty(property, out JsonElement element))
-                    items.Add(element.GetString());
+                    yield return element.GetString();
             }
-
-            return items;
         }
 
         /// <summary>
