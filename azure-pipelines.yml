@@ -62,7 +62,14 @@ jobs:
       displayName: Non-master version build number
       condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
 
-    - powershell: dotnet publish $env:MAIN_PROJECT -c release -o $env:PUBLISH_ANY_PATH
+    - task: DotNetCoreCLI@2
+      inputs:
+        projects: $(MAIN_PROJECT)
+        command: 'restore'
+        includeNuGetOrg: true
+      displayName: 'Restore'
+      
+    - powershell: dotnet publish $env:MAIN_PROJECT -c release --no-restore -o $env:PUBLISH_ANY_PATH
       displayName: Publish release
 
     - powershell: dotnet pack $env:MAIN_PROJECT -c release --no-build -o $env:NUPKG_PATH       
