@@ -121,6 +121,26 @@ using GameStringDocument gameStringDocument = GameStringDocument.Parse("gamestri
 alarakData.UpdateGameStrings(gameStringDocument);
 ```
 
+### HeroesDataDirectory class for heroes-data directory
+If using [heroes-data](https://github.com/HeroesToolChest/heroes-data) or a similar directory structure and file naming convention, then the `HeroesDataDirectory` class provides methods to parse the files without having to use the `<data-file-name>DataDocument` classes.
+
+Example of usage.
+```
+// by default, this will look into the heroesdata directory, otherwise provide the name of the directory
+HeroesDataDirectory heroesDataDirectory = new HeroesDataDirectory();
+
+// get the hero data document
+using HeroDataDocument heroDataDocument = heroesDataDirectory.HeroData(new HeroesDataVersion(2, 49, 4, 78679), true, Localization.ENUS);
+
+// now the hero data for Alarak can be obtained
+Hero alarakData = dataDocument.GetHeroById("Alarak", true, true, true, true);
+
+// later on we need the korean localization, so the gamestrings need to be updated
+heroesDataDirectory.UpdateGameString(alarakData, new HeroesDataVersion(2, 49, 4, 78679), Localization.KOKR);
+```
+
+`HeroesDataDirectory` automatically accounts for the "duplicate" version directories by reading the `.hdp.json` files.
+
 ## Developing
 To build and compile the code, it is recommended to use the latest version of [Visual Studio 2019 or Visual Studio Code](https://visualstudio.microsoft.com/downloads/).
 
