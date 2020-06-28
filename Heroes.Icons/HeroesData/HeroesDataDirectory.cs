@@ -41,6 +41,8 @@ namespace Heroes.Icons.HeroesData
         /// Initializes a new instance of the <see cref="HeroesDataDirectory"/> class. Loads all the version directories.
         /// </summary>
         /// <param name="heroesDataPath">The path of the heroes-data directory.</param>
+        /// <exception cref="ArgumentException"><paramref name="heroesDataPath"/> is <see langword="null"/> or whitespace.</exception>
+        /// <exception cref="DirectoryNotFoundException"><paramref name="heroesDataPath"/> is not a valid directory.</exception>
         public HeroesDataDirectory(string heroesDataPath = "heroesdata")
         {
             if (string.IsNullOrWhiteSpace(heroesDataPath))
