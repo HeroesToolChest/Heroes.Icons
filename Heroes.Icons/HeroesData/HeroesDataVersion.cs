@@ -62,7 +62,7 @@ namespace Heroes.Icons.HeroesData
         /// <param name="left">The left hand side of the operator.</param>
         /// <param name="right">The right hand side of the operator.</param>
         /// <returns><see langword="true"/> if the <paramref name="left"/> value is equal to the <paramref name="right"/> value; otherwise <see langword="false"/>.</returns>
-        public static bool operator ==(HeroesDataVersion left, HeroesDataVersion right)
+        public static bool operator ==(HeroesDataVersion? left, HeroesDataVersion? right)
         {
             if (left is null)
                 return right is null;
@@ -75,7 +75,7 @@ namespace Heroes.Icons.HeroesData
         /// <param name="left">The left hand side of the operator.</param>
         /// <param name="right">The right hand side of the operator.</param>
         /// <returns><see langword="true"/> if the <paramref name="left"/> value is not equal to the <paramref name="right"/> value; otherwise <see langword="false"/>.</returns>
-        public static bool operator !=(HeroesDataVersion left, HeroesDataVersion right)
+        public static bool operator !=(HeroesDataVersion? left, HeroesDataVersion? right)
         {
             return !(left == right);
         }
@@ -86,7 +86,7 @@ namespace Heroes.Icons.HeroesData
         /// <param name="left">The left hand side of the operator.</param>
         /// <param name="right">The right hand side of the operator.</param>
         /// <returns><see langword="true"/> if the <paramref name="left"/> value is less than the <paramref name="right"/> value; otherwise <see langword="false"/>.</returns>
-        public static bool operator <(HeroesDataVersion left, HeroesDataVersion right)
+        public static bool operator <(HeroesDataVersion? left, HeroesDataVersion? right)
         {
             return left is null ? right is object : left.CompareTo(right) < 0;
         }
@@ -97,7 +97,7 @@ namespace Heroes.Icons.HeroesData
         /// <param name="left">The left hand side of the operator.</param>
         /// <param name="right">The right hand side of the operator.</param>
         /// <returns><see langword="true"/> if the <paramref name="left"/> value is less than or equal to the <paramref name="right"/> value; otherwise <see langword="false"/>.</returns>
-        public static bool operator <=(HeroesDataVersion left, HeroesDataVersion right)
+        public static bool operator <=(HeroesDataVersion? left, HeroesDataVersion? right)
         {
             return left is null || left.CompareTo(right) <= 0;
         }
@@ -108,7 +108,7 @@ namespace Heroes.Icons.HeroesData
         /// <param name="left">The left hand side of the operator.</param>
         /// <param name="right">The right hand side of the operator.</param>
         /// <returns><see langword="true"/> if the <paramref name="left"/> value is greater than the <paramref name="right"/> value; otherwise <see langword="false"/>.</returns>
-        public static bool operator >(HeroesDataVersion left, HeroesDataVersion right)
+        public static bool operator >(HeroesDataVersion? left, HeroesDataVersion? right)
         {
             return left is object && left.CompareTo(right) > 0;
         }
@@ -119,7 +119,7 @@ namespace Heroes.Icons.HeroesData
         /// <param name="left">The left hand side of the operator.</param>
         /// <param name="right">The right hand side of the operator.</param>
         /// <returns><see langword="true"/> if the <paramref name="left"/> value is greater than or equal to the <paramref name="right"/> value; otherwise <see langword="false"/>.</returns>
-        public static bool operator >=(HeroesDataVersion left, HeroesDataVersion right)
+        public static bool operator >=(HeroesDataVersion? left, HeroesDataVersion? right)
         {
             return left is null ? right is null : left.CompareTo(right) >= 0;
         }
@@ -260,11 +260,11 @@ namespace Heroes.Icons.HeroesData
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return ToString()!.GetHashCode(StringComparison.OrdinalIgnoreCase);
+            return HashCode.Combine(Major, Minor, Revision, Build, IsPtr);
         }
 
         /// <inheritdoc/>
-        public override string? ToString()
+        public override string ToString()
         {
             if (IsPtr)
                 return $"{Major}.{Minor}.{Revision}.{Build}_ptr";
