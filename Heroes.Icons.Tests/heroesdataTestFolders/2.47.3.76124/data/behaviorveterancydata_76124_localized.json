@@ -1,0 +1,314 @@
+{
+  "alteracpass-CoreScaling": {
+    "combineModifications": true,
+    "combineXP": true,
+    "veterancyLevels": [
+      {
+        "minVeterancyXP": 1
+      },
+      {
+        "minVeterancyXP": 1,
+        "modifications": {
+          "vitalMax": {
+            "Life": 405.0,
+            "Shields": 0.0
+          },
+          "vitalRegen": {
+            "Shields": 0.0
+          }
+        }
+      },
+      {
+        "minVeterancyXP": 1,
+        "modifications": {
+          "vitalMax": {
+            "Life": 405.0,
+            "Shields": 0.0
+          },
+          "vitalRegen": {
+            "Shields": 0.0
+          }
+        }
+      },
+      {
+        "minVeterancyXP": 1,
+        "modifications": {
+          "vitalMax": {
+            "Life": 405.0,
+            "Shields": 0.0
+          },
+          "vitalRegen": {
+            "Shields": 0.0
+          }
+        }
+      },
+      {
+        "minVeterancyXP": 1,
+        "modifications": {
+          "vitalMax": {
+            "Life": 405.0,
+            "Shields": 0.0
+          },
+          "vitalRegen": {
+            "Shields": 0.0
+          }
+        }
+      },
+      {
+        "minVeterancyXP": 1,
+        "modifications": {
+          "vitalMax": {
+            "Life": 405.0,
+            "Shields": 0.0
+          },
+          "vitalRegen": {
+            "Shields": 0.0
+          }
+        }
+      },
+      {
+        "minVeterancyXP": 1,
+        "modifications": {
+          "vitalMax": {
+            "Life": 405.0,
+            "Shields": 0.0
+          },
+          "vitalRegen": {
+            "Shields": 0.0
+          }
+        }
+      },
+      {
+        "minVeterancyXP": 1,
+        "modifications": {
+          "vitalMax": {
+            "Life": 405.0,
+            "Shields": 0.0
+          },
+          "vitalRegen": {
+            "Shields": 0.0
+          }
+        }
+      },
+      {
+        "minVeterancyXP": 1,
+        "modifications": {
+          "vitalMax": {
+            "Life": 405.0,
+            "Shields": 0.0
+          },
+          "vitalRegen": {
+            "Shields": 0.0
+          }
+        }
+      },
+      {
+        "minVeterancyXP": 1,
+        "modifications": {
+          "vitalMax": {
+            "Life": 405.0,
+            "Shields": 0.0
+          },
+          "vitalRegen": {
+            "Shields": 0.0
+          }
+        }
+      },
+      {
+        "minVeterancyXP": 1,
+        "modifications": {
+          "vitalMax": {
+            "Life": 405.0,
+            "Shields": 0.0
+          },
+          "vitalRegen": {
+            "Shields": 0.0
+          }
+        }
+      },
+      {
+        "minVeterancyXP": 1,
+        "modifications": {
+          "vitalMax": {
+            "Life": 405.0,
+            "Shields": 0.0
+          },
+          "vitalRegen": {
+            "Shields": 0.0
+          }
+        }
+      },
+      {
+        "minVeterancyXP": 1,
+        "modifications": {
+          "vitalMax": {
+            "Life": 405.0,
+            "Shields": 0.0
+          },
+          "vitalRegen": {
+            "Shields": 0.0
+          }
+        }
+      },
+      {
+        "minVeterancyXP": 1,
+        "modifications": {
+          "vitalMax": {
+            "Life": 405.0,
+            "Shields": 0.0
+          },
+          "vitalRegen": {
+            "Shields": 0.0
+          }
+        }
+      },
+      {
+        "minVeterancyXP": 1,
+        "modifications": {
+          "vitalMax": {
+            "Life": 405.0,
+            "Shields": 0.0
+          },
+          "vitalRegen": {
+            "Shields": 0.0
+          }
+        }
+      },
+      {
+        "minVeterancyXP": 1,
+        "modifications": {
+          "vitalMax": {
+            "Life": 405.0,
+            "Shields": 0.0
+          },
+          "vitalRegen": {
+            "Shields": 0.0
+          }
+        }
+      },
+      {
+        "minVeterancyXP": 1,
+        "modifications": {
+          "vitalMax": {
+            "Life": 405.0,
+            "Shields": 0.0
+          },
+          "vitalRegen": {
+            "Shields": 0.0
+          }
+        }
+      },
+      {
+        "minVeterancyXP": 1,
+        "modifications": {
+          "vitalMax": {
+            "Life": 405.0,
+            "Shields": 0.0
+          },
+          "vitalRegen": {
+            "Shields": 0.0
+          }
+        }
+      },
+      {
+        "minVeterancyXP": 1,
+        "modifications": {
+          "vitalMax": {
+            "Life": 405.0,
+            "Shields": 0.0
+          },
+          "vitalRegen": {
+            "Shields": 0.0
+          }
+        }
+      },
+      {
+        "minVeterancyXP": 1,
+        "modifications": {
+          "vitalMax": {
+            "Life": 405.0,
+            "Shields": 0.0
+          },
+          "vitalRegen": {
+            "Shields": 0.0
+          }
+        }
+      },
+      {
+        "minVeterancyXP": 1,
+        "modifications": {
+          "vitalMax": {
+            "Life": 405.0,
+            "Shields": 0.0
+          },
+          "vitalRegen": {
+            "Shields": 0.0
+          }
+        }
+      },
+      {
+        "minVeterancyXP": 1
+      },
+      {
+        "minVeterancyXP": 1
+      },
+      {
+        "minVeterancyXP": 1
+      },
+      {
+        "minVeterancyXP": 1
+      },
+      {
+        "minVeterancyXP": 1
+      },
+      {
+        "minVeterancyXP": 1
+      },
+      {
+        "minVeterancyXP": 1
+      },
+      {
+        "minVeterancyXP": 1
+      },
+      {
+        "minVeterancyXP": 1
+      },
+      {
+        "minVeterancyXP": 1
+      },
+      {
+        "minVeterancyXP": 1
+      },
+      {
+        "minVeterancyXP": 1
+      },
+      {
+        "minVeterancyXP": 1
+      },
+      {
+        "minVeterancyXP": 1
+      },
+      {
+        "minVeterancyXP": 1
+      },
+      {
+        "minVeterancyXP": 1
+      },
+      {
+        "minVeterancyXP": 1
+      },
+      {
+        "minVeterancyXP": 1
+      },
+      {
+        "minVeterancyXP": 1
+      },
+      {
+        "minVeterancyXP": 1
+      },
+      {
+        "minVeterancyXP": 0
+      }
+    ]
+  }
+}

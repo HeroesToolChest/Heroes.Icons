@@ -102,10 +102,10 @@ namespace Heroes.Icons.HeroesData.Tests
         [DataRow(2, 48, 4, 77406, false, true, Localization.KOKR)]
         [DataRow(2, 48, 4, 77407, false, true, Localization.KOKR)]
         [DataRow(8, 50, 3, 9999999, false, false, Localization.KOKR)]
-        public void GetHeroDataTest(int major, int minor, int revision, int build, bool isPtr, bool gamestrings, Localization localization)
+        public void HeroDataTest(int major, int minor, int revision, int build, bool isPtr, bool gamestrings, Localization localization)
         {
-            HeroDataDocument heroDataDocument = _heroesDataDirectory.HeroData(new HeroesDataVersion(major, minor, revision, build, isPtr), gamestrings, localization);
-            Assert.IsTrue(heroDataDocument.TryGetHeroById("Abathur", out Hero? hero, false, false, false, false));
+            HeroDataDocument dataDocument = _heroesDataDirectory.HeroData(new HeroesDataVersion(major, minor, revision, build, isPtr), gamestrings, localization);
+            Assert.IsTrue(dataDocument.TryGetHeroById("Abathur", out Hero? hero, false, false, false, false));
 
             if (gamestrings)
                 Assert.IsTrue(!string.IsNullOrEmpty(hero!.Description?.RawDescription));
@@ -115,7 +115,7 @@ namespace Heroes.Icons.HeroesData.Tests
 
         [DataTestMethod]
         [DataRow(2, 48, 3, 77205, false, true, Localization.KOKR)]
-        public void GetHeroDataLoadDuplicateDataTest(int major, int minor, int revision, int build, bool isPtr, bool gamestrings, Localization localization)
+        public void HeroDataLoadDuplicateDataTest(int major, int minor, int revision, int build, bool isPtr, bool gamestrings, Localization localization)
         {
             HeroDataDocument heroDataDocument = _heroesDataDirectory.HeroData(new HeroesDataVersion(major, minor, revision, build, isPtr), gamestrings, localization);
             Assert.IsTrue(heroDataDocument.TryGetHeroById("Abathur", out Hero? hero, false, false, false, false));
@@ -126,10 +126,207 @@ namespace Heroes.Icons.HeroesData.Tests
                 Assert.IsFalse(!string.IsNullOrEmpty(hero!.Description?.RawDescription));
         }
 
+        [DataTestMethod]
+        [DataRow(2, 47, 3, 76124, false, true, Localization.KOKR)]
+        [DataRow(2, 47, 3, 76124, false, false, Localization.KOKR)]
+        public void AnnouncerDataTest(int major, int minor, int revision, int build, bool isPtr, bool gamestrings, Localization localization)
+        {
+            AnnouncerDataDocument dataDocument = _heroesDataDirectory.AnnouncerData(new HeroesDataVersion(major, minor, revision, build, isPtr), gamestrings, localization);
+            Assert.IsTrue(dataDocument.TryGetAnnouncerById("AbathurA", out Announcer? value));
+
+            if (gamestrings)
+                Assert.IsTrue(!string.IsNullOrEmpty(value!.Name));
+            else
+                Assert.IsFalse(!string.IsNullOrEmpty(value!.Name));
+        }
+
+        [DataTestMethod]
+        [DataRow(2, 47, 3, 76124, false)]
+        public void BehaviorVeterancyDataTest(int major, int minor, int revision, int build, bool isPtr)
+        {
+            BehaviorVeterancyDataDocument dataDocument = _heroesDataDirectory.BehaviorVeterancyData(new HeroesDataVersion(major, minor, revision, build, isPtr));
+            Assert.IsTrue(dataDocument.TryGetBehaviorVeterancyById("alteracpass-CoreScaling", out BehaviorVeterancy? value));
+
+            Assert.IsTrue(value!.CombineModifications);
+        }
+
+        [DataTestMethod]
+        [DataRow(2, 47, 3, 76124, false, true, Localization.KOKR)]
+        [DataRow(2, 47, 3, 76124, false, false, Localization.KOKR)]
+        public void EmoticonDataTest(int major, int minor, int revision, int build, bool isPtr, bool gamestrings, Localization localization)
+        {
+            EmoticonDataDocument dataDocument = _heroesDataDirectory.EmoticonData(new HeroesDataVersion(major, minor, revision, build, isPtr), gamestrings, localization);
+            Assert.IsTrue(dataDocument.TryGetEmoticonById("cat_blink_anim", out Emoticon? value));
+
+            if (gamestrings)
+            {
+                Assert.IsTrue(!string.IsNullOrEmpty(value!.Name));
+                Assert.IsTrue(!string.IsNullOrEmpty(value!.Description?.RawDescription));
+            }
+            else
+            {
+                Assert.IsFalse(!string.IsNullOrEmpty(value!.Name));
+                Assert.IsFalse(!string.IsNullOrEmpty(value!.Description?.RawDescription));
+            }
+        }
+
+        [DataTestMethod]
+        [DataRow(2, 47, 3, 76124, false, true, Localization.KOKR)]
+        [DataRow(2, 47, 3, 76124, false, false, Localization.KOKR)]
+        public void EmoticonPackDataTest(int major, int minor, int revision, int build, bool isPtr, bool gamestrings, Localization localization)
+        {
+            EmoticonPackDataDocument dataDocument = _heroesDataDirectory.EmoticonPackData(new HeroesDataVersion(major, minor, revision, build, isPtr), gamestrings, localization);
+            Assert.IsTrue(dataDocument.TryGetEmoticonPackById("CassiaEmoticonPack2", out EmoticonPack? value));
+
+            if (gamestrings)
+                Assert.IsTrue(!string.IsNullOrEmpty(value!.Name));
+            else
+                Assert.IsFalse(!string.IsNullOrEmpty(value!.Name));
+        }
+
+        [DataTestMethod]
+        [DataRow(2, 47, 3, 76124, false, true, Localization.KOKR)]
+        [DataRow(2, 47, 3, 76124, false, false, Localization.KOKR)]
+        public void HeroSkinDataTest(int major, int minor, int revision, int build, bool isPtr, bool gamestrings, Localization localization)
+        {
+            HeroSkinDataDocument dataDocument = _heroesDataDirectory.HeroSkinData(new HeroesDataVersion(major, minor, revision, build, isPtr), gamestrings, localization);
+            Assert.IsTrue(dataDocument.TryGetHeroSkinById("AbathurBaseVar3", out HeroSkin? value));
+
+            if (gamestrings)
+                Assert.IsTrue(!string.IsNullOrEmpty(value!.Name));
+            else
+                Assert.IsFalse(!string.IsNullOrEmpty(value!.Name));
+        }
+
+        [DataTestMethod]
+        [DataRow(2, 47, 3, 76124, false, true, Localization.KOKR)]
+        [DataRow(2, 47, 3, 76124, false, false, Localization.KOKR)]
+        public void MatchAwardDataTest(int major, int minor, int revision, int build, bool isPtr, bool gamestrings, Localization localization)
+        {
+            MatchAwardDataDocument dataDocument = _heroesDataDirectory.MatchAwardData(new HeroesDataVersion(major, minor, revision, build, isPtr), gamestrings, localization);
+            Assert.IsTrue(dataDocument.TryGetMatchAwardById("HatTrick", out MatchAward? value));
+
+            if (gamestrings)
+                Assert.IsTrue(!string.IsNullOrEmpty(value!.Name));
+            else
+                Assert.IsFalse(!string.IsNullOrEmpty(value!.Name));
+        }
+
+        [DataTestMethod]
+        [DataRow(2, 47, 3, 76124, false, true, Localization.KOKR)]
+        [DataRow(2, 47, 3, 76124, false, false, Localization.KOKR)]
+        public void MountDataTest(int major, int minor, int revision, int build, bool isPtr, bool gamestrings, Localization localization)
+        {
+            MountDataDocument dataDocument = _heroesDataDirectory.MountData(new HeroesDataVersion(major, minor, revision, build, isPtr), gamestrings, localization);
+            Assert.IsTrue(dataDocument.TryGetMountById("AlarakTaldarimMarch", out Mount? value));
+
+            if (gamestrings)
+                Assert.IsTrue(!string.IsNullOrEmpty(value!.Name));
+            else
+                Assert.IsFalse(!string.IsNullOrEmpty(value!.Name));
+        }
+
+        [DataTestMethod]
+        [DataRow(2, 47, 3, 76124, false, true, Localization.KOKR)]
+        [DataRow(2, 47, 3, 76124, false, false, Localization.KOKR)]
+        public void PortraitPackDataTest(int major, int minor, int revision, int build, bool isPtr, bool gamestrings, Localization localization)
+        {
+            PortraitPackDataDocument dataDocument = _heroesDataDirectory.PortraitPackData(new HeroesDataVersion(major, minor, revision, build, isPtr), gamestrings, localization);
+            Assert.IsTrue(dataDocument.TryGetPortraitPackById("AbathurToys18Portrait", out PortraitPack? value));
+
+            if (gamestrings)
+                Assert.IsTrue(!string.IsNullOrEmpty(value!.Name));
+            else
+                Assert.IsFalse(!string.IsNullOrEmpty(value!.Name));
+        }
+
+        [DataTestMethod]
+        [DataRow(2, 47, 3, 76124, false, true, Localization.KOKR)]
+        [DataRow(2, 47, 3, 76124, false, false, Localization.KOKR)]
+        public void RewardPortraitDataTest(int major, int minor, int revision, int build, bool isPtr, bool gamestrings, Localization localization)
+        {
+            RewardPortraitDataDocument dataDocument = _heroesDataDirectory.RewardPortraitData(new HeroesDataVersion(major, minor, revision, build, isPtr), gamestrings, localization);
+            Assert.IsTrue(dataDocument.TryGetRewardPortraitById("1YearAnniversaryPortrait", out RewardPortrait? value));
+
+            if (gamestrings)
+                Assert.IsTrue(!string.IsNullOrEmpty(value!.Name));
+            else
+                Assert.IsFalse(!string.IsNullOrEmpty(value!.Name));
+        }
+
+        [DataTestMethod]
+        [DataRow(2, 47, 3, 76124, false, true, Localization.KOKR)]
+        [DataRow(2, 47, 3, 76124, false, false, Localization.KOKR)]
+        public void SprayDataTest(int major, int minor, int revision, int build, bool isPtr, bool gamestrings, Localization localization)
+        {
+            SprayDataDocument dataDocument = _heroesDataDirectory.SprayData(new HeroesDataVersion(major, minor, revision, build, isPtr), gamestrings, localization);
+            Assert.IsTrue(dataDocument.TryGetSprayById("SprayAnimatedCookieAbathur", out Spray? value));
+
+            if (gamestrings)
+                Assert.IsTrue(!string.IsNullOrEmpty(value!.Name));
+            else
+                Assert.IsFalse(!string.IsNullOrEmpty(value!.Name));
+        }
+
+        [DataTestMethod]
+        [DataRow(2, 47, 3, 76124, false, true, Localization.KOKR)]
+        [DataRow(2, 47, 3, 76124, false, false, Localization.KOKR)]
+        public void UnitDataTest(int major, int minor, int revision, int build, bool isPtr, bool gamestrings, Localization localization)
+        {
+            UnitDataDocument dataDocument = _heroesDataDirectory.UnitData(new HeroesDataVersion(major, minor, revision, build, isPtr), gamestrings, localization);
+            Assert.IsTrue(dataDocument.TryGetUnitById("AbathurEvolvedMonstrosity", out Unit? value, false, false));
+
+            if (gamestrings)
+                Assert.IsTrue(!string.IsNullOrEmpty(value!.Description?.RawDescription));
+            else
+                Assert.IsFalse(!string.IsNullOrEmpty(value!.Description?.RawDescription));
+        }
+
+        [DataTestMethod]
+        [DataRow(2, 47, 3, 76124, false, true, Localization.KOKR)]
+        [DataRow(2, 47, 3, 76124, false, false, Localization.KOKR)]
+        public void VoiceLineDataTest(int major, int minor, int revision, int build, bool isPtr, bool gamestrings, Localization localization)
+        {
+            VoiceLineDataDocument dataDocument = _heroesDataDirectory.VoiceLineData(new HeroesDataVersion(major, minor, revision, build, isPtr), gamestrings, localization);
+            Assert.IsTrue(dataDocument.TryGetVoiceLineById("AbathurBase_VoiceLine01", out VoiceLine? value));
+
+            if (gamestrings)
+                Assert.IsTrue(!string.IsNullOrEmpty(value!.Name));
+            else
+                Assert.IsFalse(!string.IsNullOrEmpty(value!.Name));
+        }
+
+        [DataTestMethod]
+        [DataRow(2, 47, 3, 76124, false, true, Localization.KOKR)]
+        [DataRow(2, 47, 3, 76124, false, false, Localization.KOKR)]
+        public void BannerDataTest(int major, int minor, int revision, int build, bool isPtr, bool gamestrings, Localization localization)
+        {
+            BannerDataDocument dataDocument = _heroesDataDirectory.BannerData(new HeroesDataVersion(major, minor, revision, build, isPtr), gamestrings, localization);
+            Assert.IsTrue(dataDocument.TryGetBannerById("BannerD3DemonHunter", out Banner? value));
+
+            if (gamestrings)
+                Assert.IsTrue(!string.IsNullOrEmpty(value!.Name));
+            else
+                Assert.IsFalse(!string.IsNullOrEmpty(value!.Name));
+        }
+
         [TestMethod]
-        public void HeroDataExceptionsTest()
+        public void DataExceptionsTest()
         {
             Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.HeroData(null!, true, Localization.KOKR));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.AnnouncerData(null!, true, Localization.KOKR));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.BannerData(null!, true, Localization.KOKR));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.BehaviorVeterancyData(null!));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.EmoticonData(null!, true, Localization.KOKR));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.EmoticonPackData(null!, true, Localization.KOKR));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.HeroSkinData(null!, true, Localization.KOKR));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.MatchAwardData(null!, true, Localization.KOKR));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.MountData(null!, true, Localization.KOKR));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.PortraitPackData(null!, true, Localization.KOKR));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.RewardPortraitData(null!, true, Localization.KOKR));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.SprayData(null!, true, Localization.KOKR));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UnitData(null!, true, Localization.KOKR));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.VoiceLineData(null!, true, Localization.KOKR));
         }
     }
 }

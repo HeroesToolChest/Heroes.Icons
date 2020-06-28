@@ -119,7 +119,8 @@
     },
     "unit": {
       "description": {
-        "Abathur": "전장 어디에서나 전투에 영향을 줄 수 있는 독특한 영웅입니다."
+        "Abathur": "전장 어디에서나 전투에 영향을 줄 수 있는 독특한 영웅입니다.",
+        "AbathurEvolvedMonstrosity": "some description"
       }
     }
   }

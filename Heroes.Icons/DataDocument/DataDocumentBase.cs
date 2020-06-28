@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -198,20 +199,7 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Gets the amount of total items.
         /// </summary>
-        public int Count
-        {
-            get
-            {
-                int count = 0;
-
-                foreach (JsonProperty property in JsonDataDocument.RootElement.EnumerateObject())
-                {
-                    count++;
-                }
-
-                return count;
-            }
-        }
+        public int Count => JsonDataDocument.RootElement.EnumerateObject().Count();
 
         /// <summary>
         /// Gets the current <see cref="GameStringDocument"/> associated with this reader.

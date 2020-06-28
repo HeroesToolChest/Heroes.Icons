@@ -70,7 +70,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual(new DateTime(2016, 9, 13), hero.ReleaseDate);
             Assert.AreEqual(12.0, hero.Sight);
             Assert.AreEqual(4.8398, hero.Speed);
-            Assert.AreEqual("Melee", hero.Type);
+            Assert.AreEqual("Melee", hero.Type?.RawDescription);
             Assert.AreEqual(Rarity.Epic, hero.Rarity);
             Assert.AreEqual("ExcellentMana", hero.ScalingBehaviorLink);
             Assert.AreEqual("Alarak Ascendant Protoss SC SC2 StarCraft Star2 Starcraft2 II 2 Legacy of the Void LotV Covert Ops CO", hero.SearchText);
@@ -407,7 +407,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual("Warrior", hero.Roles.ToList()[1]);
             Assert.AreEqual("Alarak Ascendant Protoss SC SC2 StarCraft Star2 Starcraft2 II 2 Legacy of the Void LotV Covert Ops CO", hero.SearchText);
             Assert.AreEqual("Highlord of the Tal'darim", hero.Title);
-            Assert.AreEqual("Melee", hero.Type);
+            Assert.AreEqual("Melee", hero.Type?.RawDescription);
 
             Ability ability = hero.GetAbility(new AbilityTalentId("AlarakDiscordStrike", "AlarakDiscordStrike")
             {

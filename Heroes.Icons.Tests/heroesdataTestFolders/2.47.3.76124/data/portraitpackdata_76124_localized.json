@@ -1,0 +1,14 @@
+{
+  "AbathurToys18Portrait": {
+    "hyperlinkId": "AbathurToys18Portrait",
+    "rarity": "Common",
+    "event": "WinterVeil"
+  },
+  "AdmiralKrakenovPortrait": {
+    "hyperlinkId": "AdmiralKrakenovPortrait",
+    "rarity": "Common",
+    "rewardPortraitIds": [
+      "StukovPortraitPirate"
+    ]
+  }
+}

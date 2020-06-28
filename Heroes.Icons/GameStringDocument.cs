@@ -263,7 +263,7 @@ namespace Heroes.Icons
                         hero.Title = titleElement.GetString();
 
                     if (TryGetValueFromJsonElement(keyValue, "type", hero.Id, out JsonElement typeElement))
-                        hero.Type = typeElement.GetString();
+                        hero.Type = new TooltipDescription(typeElement.GetString(), Localization);
                 }
 
                 foreach (Talent talent in hero.Talents)

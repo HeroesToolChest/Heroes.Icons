@@ -1,0 +1,25 @@
+{
+  "1YearAnniversaryPortrait": {
+    "hyperlinkId": "1YearAnniversaryPortrait",
+    "rarity": "Common",
+    "category": "PortraitAchievements1",
+    "iconSlot": 23,
+    "textureSheet": {
+      "image": "ui_heroes_portraits_sheet5.png",
+      "columns": 6,
+      "rows": 6
+    }
+  },
+  "AbathurCarbotsPortrait": {
+    "hyperlinkId": "CarbotAbathurPortrait",
+    "rarity": "Common",
+    "category": "HeroStormPortrait",
+    "portraitPackId": "AbathurCarbotsPortrait",
+    "iconSlot": 18,
+    "textureSheet": {
+      "image": "ui_heroes_portraits_sheet25.png",
+      "columns": 6,
+      "rows": 6
+    }
+  }
+}

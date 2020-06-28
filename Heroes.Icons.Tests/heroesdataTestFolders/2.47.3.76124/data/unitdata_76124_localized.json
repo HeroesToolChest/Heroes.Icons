@@ -1,0 +1,9 @@
+{
+  "AbathurEvolvedMonstrosity": {
+    "hyperlinkId": "AbathurEvolvedMonstrosity",
+    "innerRadius": 0.375,
+    "radius": 1.0,
+    "sight": 9.0,
+    "speed": 4.0
+  }
+}

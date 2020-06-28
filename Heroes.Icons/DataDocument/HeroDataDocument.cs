@@ -820,7 +820,7 @@ namespace Heroes.Icons.DataDocument
                 hero.Speed = speedElement.GetDouble();
 
             if (heroElement.TryGetProperty("type", out JsonElement typeElement))
-                hero.Type = typeElement.GetString();
+                hero.Type = new TooltipDescription(typeElement.GetString(), Localization);
 
             if (heroElement.TryGetProperty("rarity", out JsonElement rarityElement) && Enum.TryParse(rarityElement.GetString(), out Rarity rarity))
                 hero.Rarity = rarity;

@@ -1,0 +1,29 @@
+{
+  "CassiaEmoticonPack2": {
+    "hyperlinkId": "CassiaEmoticonPack2",
+    "rarity": "Common",
+    "category": "Diablo",
+    "releaseDate": "2017-03-14",
+    "emoticons": [
+      "cassia_angry",
+      "cassia_cool",
+      "cassia_embarrassed",
+      "cassia_inlove",
+      "cassia_surprised"
+    ]
+  },
+  "CatSpooky18Pack": {
+    "hyperlinkId": "CatSpooky18Pack",
+    "rarity": "Common",
+    "category": "SeasonalEvents",
+    "event": "HallowsEnd",
+    "releaseDate": "2018-09-25",
+    "emoticons": [
+      "cat_dealwithit_anim",
+      "cat_puke_anim",
+      "cat_blink_anim",
+      "cat_gleam_anim",
+      "cat_grumpy_anim"
+    ]
+  }
+}

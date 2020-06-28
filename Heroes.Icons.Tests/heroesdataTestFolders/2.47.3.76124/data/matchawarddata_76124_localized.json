@@ -1,0 +1,9 @@
+{
+  "HatTrick": {
+    "gameLink": "EndOfMatchAwardHatTrickBoolean",
+    "tag": "AwHT",
+    "mvpScreenIcon": "storm_ui_mvp_hattrick_%color%.png",
+    "scoreScreenIcon": "storm_ui_scorescreen_mvp_hattrick_%team%.png",
+    "description": "First Three Kills of Match"
+  }
+}
