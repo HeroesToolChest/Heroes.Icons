@@ -15,7 +15,7 @@ namespace Heroes.Icons.HeroesData
     /// </summary>
     [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "need lower")]
     [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "will be disposed by caller.")]
-    public class HeroesDataDirectory
+    public partial class HeroesDataDirectory
     {
         private const string _hdpJsonFile = ".hdp.json";
         private const string _announcerFileTemplateName = "announcerdata_{0}_localized.json";
@@ -36,7 +36,6 @@ namespace Heroes.Icons.HeroesData
         private const string _gameStringTemplateName = "gamestrings_{0}_{1}.json";
 
         private readonly string _heroesDataDirectoryPath;
-        private readonly SortedSet<HeroesDataVersion> _versions;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HeroesDataDirectory"/> class. Loads all the version directories.
@@ -52,23 +51,18 @@ namespace Heroes.Icons.HeroesData
 
             _heroesDataDirectoryPath = heroesDataPath;
 
-            _versions = new SortedSet<HeroesDataVersion>(GetVersions(_heroesDataDirectoryPath, true));
+            Versions = new SortedSet<HeroesDataVersion>(GetVersions(_heroesDataDirectoryPath, true));
         }
 
         /// <summary>
         /// Gets the newest (latest) version.
         /// </summary>
-        public HeroesDataVersion? NewestVersion => _versions.Max;
+        public HeroesDataVersion? NewestVersion => Versions.Max;
 
         /// <summary>
         /// Gets the oldest (earliest) version.
         /// </summary>
-        public HeroesDataVersion? OldestVersion => _versions.Min;
-
-        /// <summary>
-        /// Gets a collection of versions.
-        /// </summary>
-        public IEnumerable<HeroesDataVersion> Versions => _versions;
+        public HeroesDataVersion? OldestVersion => Versions.Min;
 
         /// <summary>
         /// Gets or sets the name of the data directory.
@@ -79,6 +73,11 @@ namespace Heroes.Icons.HeroesData
         /// Gets or sets the name of the gamestring directory.
         /// </summary>
         public string GameStringsDirectoryName { get; set; } = "gamestrings";
+
+        /// <summary>
+        /// Gets the currently loaded versions.
+        /// </summary>
+        public SortedSet<HeroesDataVersion> Versions { get; }
 
         /// <summary>
         /// Gets a collection of <see cref="HeroesDataVersion"/>s from the <paramref name="path"/>.
@@ -116,34 +115,50 @@ namespace Heroes.Icons.HeroesData
         /// Checks if the version exists as a directory in the <paramref name="path"/>.
         /// </summary>
         /// <param name="path">The directory to check.</param>
-        /// <param name="heroesVersion">The version to find.</param>
-        /// <returns><see langword="true"/> if the <paramref name="heroesVersion"/> directory was found at the <paramref name="path"/>; otherwise <see langword="false"/>.</returns>
+        /// <param name="version">The version to find.</param>
+        /// <returns><see langword="true"/> if the <paramref name="version"/> directory was found at the <paramref name="path"/>; otherwise <see langword="false"/>.</returns>
         /// <exception cref="ArgumentException"><paramref name="path"/> is <see langword="null"/> or whitespace.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="heroesVersion"/> is <see langword="null"/>.</exception>
-        public static bool VersionExists(string path, HeroesDataVersion heroesVersion)
+        /// <exception cref="ArgumentNullException"><paramref name="version"/> is <see langword="null"/>.</exception>
+        public static bool VersionExists(string path, HeroesDataVersion version)
         {
             if (string.IsNullOrWhiteSpace(path))
                 throw new ArgumentException("Cannot be null or whitespace", nameof(path));
 
-            if (heroesVersion is null)
-                throw new ArgumentNullException(nameof(heroesVersion));
+            if (version is null)
+                throw new ArgumentNullException(nameof(version));
 
-            return Directory.Exists(Path.Combine(path, heroesVersion.ToString()!));
+            return Directory.Exists(Path.Combine(path, version.ToString()!));
+        }
+
+        /// <summary>
+        /// Reloads all the version directories.
+        /// </summary>
+        /// <returns>Returns the amount of successfully added versions.</returns>
+        public int ReloadVersions()
+        {
+            Versions.Clear();
+
+            foreach (HeroesDataVersion version in GetVersions(_heroesDataDirectoryPath, true))
+            {
+                Versions.Add(version);
+            }
+
+            return Versions.Count;
         }
 
         /// <summary>
         /// Checks if the version exists.
         /// </summary>
-        /// <param name="heroesVersion">The version to find.</param>
-        /// <returns><see langword="true"/> if the <paramref name="heroesVersion"/> exists, otherwise <see langword="false"/>.</returns>
-        public bool VersionExists(HeroesDataVersion heroesVersion) => _versions.Contains(heroesVersion);
+        /// <param name="version">The version to find.</param>
+        /// <returns><see langword="true"/> if the <paramref name="version"/> exists, otherwise <see langword="false"/>.</returns>
+        public bool VersionExists(HeroesDataVersion version) => Versions.Contains(version);
 
         /// <summary>
         /// Checks if the build exists.
         /// </summary>
         /// <param name="build">The build to find.</param>
         /// <returns><see langword="true"/> if the <paramref name="build"/> exists, otherwise <see langword="false"/>.</returns>
-        public bool BuildExists(int build) => _versions.Any(x => x.Build == build);
+        public bool BuildExists(int build) => Versions.Any(x => x.Build == build);
 
         /// <summary>
         /// Loads the <see cref="AnnouncerDataDocument"/> from the <paramref name="version"/> directory.
@@ -161,7 +176,7 @@ namespace Heroes.Icons.HeroesData
             (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _announcerFileTemplateName);
 
             if (includeGameStrings)
-                return AnnouncerDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath, localization));
+                return AnnouncerDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath));
             else
                 return AnnouncerDataDocument.Parse(dataPath, localization);
         }
@@ -182,7 +197,7 @@ namespace Heroes.Icons.HeroesData
             (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _bannerFileTemplateName);
 
             if (includeGameStrings)
-                return BannerDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath, localization));
+                return BannerDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath));
             else
                 return BannerDataDocument.Parse(dataPath, localization);
         }
@@ -198,7 +213,7 @@ namespace Heroes.Icons.HeroesData
             if (version is null)
                 throw new ArgumentNullException(nameof(version));
 
-            (string dataPath, _) = GetDataAndGameStringPaths(version, false, Localization.ENUS, _behaviorVeterancyFileTemplateName);
+            (string dataPath, _) = GetDataAndGameStringPaths(version, false, Localization.ENUS, _behaviorVeterancyFileTemplateName, true, false);
 
             return BehaviorVeterancyDataDocument.Parse(dataPath);
         }
@@ -219,7 +234,7 @@ namespace Heroes.Icons.HeroesData
             (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _emoticonFileTemplateName);
 
             if (includeGameStrings)
-                return EmoticonDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath, localization));
+                return EmoticonDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath));
             else
                 return EmoticonDataDocument.Parse(dataPath, localization);
         }
@@ -240,7 +255,7 @@ namespace Heroes.Icons.HeroesData
             (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _emoticonPackFileTemplateName);
 
             if (includeGameStrings)
-                return EmoticonPackDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath, localization));
+                return EmoticonPackDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath));
             else
                 return EmoticonPackDataDocument.Parse(dataPath, localization);
         }
@@ -261,7 +276,7 @@ namespace Heroes.Icons.HeroesData
             (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _heroFileTemplateName);
 
             if (includeGameStrings)
-                return HeroDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath, localization));
+                return HeroDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath));
             else
                 return HeroDataDocument.Parse(dataPath, localization);
         }
@@ -282,7 +297,7 @@ namespace Heroes.Icons.HeroesData
             (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _heroSkinFileTemplateName);
 
             if (includeGameStrings)
-                return HeroSkinDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath, localization));
+                return HeroSkinDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath));
             else
                 return HeroSkinDataDocument.Parse(dataPath, localization);
         }
@@ -303,7 +318,7 @@ namespace Heroes.Icons.HeroesData
             (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _matchAwardFileTemplateName);
 
             if (includeGameStrings)
-                return MatchAwardDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath, localization));
+                return MatchAwardDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath));
             else
                 return MatchAwardDataDocument.Parse(dataPath, localization);
         }
@@ -324,7 +339,7 @@ namespace Heroes.Icons.HeroesData
             (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _mountFileTemplateName);
 
             if (includeGameStrings)
-                return MountDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath, localization));
+                return MountDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath));
             else
                 return MountDataDocument.Parse(dataPath, localization);
         }
@@ -345,7 +360,7 @@ namespace Heroes.Icons.HeroesData
             (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _portraitPackFileTemplateName);
 
             if (includeGameStrings)
-                return PortraitPackDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath, localization));
+                return PortraitPackDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath));
             else
                 return PortraitPackDataDocument.Parse(dataPath, localization);
         }
@@ -366,7 +381,7 @@ namespace Heroes.Icons.HeroesData
             (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _rewardPortraitFileTemplateName);
 
             if (includeGameStrings)
-                return RewardPortraitDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath, localization));
+                return RewardPortraitDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath));
             else
                 return RewardPortraitDataDocument.Parse(dataPath, localization);
         }
@@ -387,7 +402,7 @@ namespace Heroes.Icons.HeroesData
             (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _sprayFileTemplateName);
 
             if (includeGameStrings)
-                return SprayDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath, localization));
+                return SprayDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath));
             else
                 return SprayDataDocument.Parse(dataPath, localization);
         }
@@ -408,7 +423,7 @@ namespace Heroes.Icons.HeroesData
             (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _unitFileTemplateName);
 
             if (includeGameStrings)
-                return UnitDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath, localization));
+                return UnitDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath));
             else
                 return UnitDataDocument.Parse(dataPath, localization);
         }
@@ -429,14 +444,14 @@ namespace Heroes.Icons.HeroesData
             (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _voiceLineFileTemplateName);
 
             if (includeGameStrings)
-                return VoiceLineDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath, localization));
+                return VoiceLineDataDocument.Parse(dataPath, GameStringDocument.Parse(gameStringPath));
             else
                 return VoiceLineDataDocument.Parse(dataPath, localization);
         }
 
-        private (string DataPath, string GameStringPath) GetDataAndGameStringPaths(HeroesDataVersion version, bool includeGameStrings, Localization localization, string dataTemplateName)
+        private (string DataPath, string GameStringPath) GetDataAndGameStringPaths(HeroesDataVersion version, bool includeGameStrings, Localization localization, string dataTemplateName, bool getData = true, bool getGameStrings = true)
         {
-            if (_versions.Count > 0)
+            if (Versions.Count > 0)
             {
                 if (version < OldestVersion)
                     version = OldestVersion;
@@ -456,7 +471,7 @@ namespace Heroes.Icons.HeroesData
             JsonDocument hdpJsonDocument = JsonDocument.Parse(File.ReadAllBytes(Path.Join(_heroesDataDirectoryPath, versionString, _hdpJsonFile)));
             if (hdpJsonDocument.RootElement.TryGetProperty("duplicate", out JsonElement duplicateElement))
             {
-                if (duplicateElement.TryGetProperty(DataDirectoryName, out JsonElement dataElement) && HeroesDataVersion.TryParse(dataElement.GetString(), out HeroesDataVersion? dataVersion))
+                if (getData && duplicateElement.TryGetProperty(DataDirectoryName, out JsonElement dataElement) && HeroesDataVersion.TryParse(dataElement.GetString(), out HeroesDataVersion? dataVersion))
                 {
                     dataPath = Path.Join(
                         _heroesDataDirectoryPath,
@@ -467,7 +482,7 @@ namespace Heroes.Icons.HeroesData
                     dataDuplicate = true;
                 }
 
-                if (duplicateElement.TryGetProperty(GameStringsDirectoryName, out JsonElement gameStringsElement) && HeroesDataVersion.TryParse(gameStringsElement.GetString(), out HeroesDataVersion? gameStringsVersion))
+                if (getGameStrings && duplicateElement.TryGetProperty(GameStringsDirectoryName, out JsonElement gameStringsElement) && HeroesDataVersion.TryParse(gameStringsElement.GetString(), out HeroesDataVersion? gameStringsVersion))
                 {
                     gamestringPath = Path.Join(
                         _heroesDataDirectoryPath,
@@ -479,7 +494,7 @@ namespace Heroes.Icons.HeroesData
                 }
             }
 
-            if (!dataDuplicate)
+            if (getData && !dataDuplicate)
             {
                 dataPath = Path.Join(
                     _heroesDataDirectoryPath,
@@ -488,7 +503,7 @@ namespace Heroes.Icons.HeroesData
                     string.Format(CultureInfo.InvariantCulture, dataTemplateName, version.Build));
             }
 
-            if (includeGameStrings)
+            if (getGameStrings && includeGameStrings)
             {
                 if (!gameStringDuplicate)
                 {

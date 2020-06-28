@@ -100,7 +100,7 @@ namespace Heroes.Icons.HeroesData.Tests
         [DataRow(2, 48, 3, 77205, false, false, Localization.KOKR)]
         [DataRow(2, 48, 3, 77205, false, true, Localization.KOKR)]
         [DataRow(2, 48, 4, 77406, false, true, Localization.KOKR)]
-        [DataRow(2, 48, 4, 77407, false, true, Localization.KOKR)]
+        [DataRow(2, 48, 4, 77407, false, true, Localization.ENUS)]
         [DataRow(8, 50, 3, 9999999, false, false, Localization.KOKR)]
         public void HeroDataTest(int major, int minor, int revision, int build, bool isPtr, bool gamestrings, Localization localization)
         {
@@ -327,6 +327,199 @@ namespace Heroes.Icons.HeroesData.Tests
             Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.SprayData(null!, true, Localization.KOKR));
             Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UnitData(null!, true, Localization.KOKR));
             Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.VoiceLineData(null!, true, Localization.KOKR));
+        }
+
+        [TestMethod]
+        public void UpdateGameStringAnnouncerTest()
+        {
+            using AnnouncerDataDocument dataDocument = _heroesDataDirectory.AnnouncerData(new HeroesDataVersion(2, 47, 3, 76124), true, Localization.KOKR);
+            Announcer data = dataDocument.GetAnnouncerById("AbathurA");
+            Assert.AreEqual("아바투르 아나운서", data.Name);
+
+            _heroesDataDirectory.UpdateGameString(data, new HeroesDataVersion(2, 48, 4, 77407), Localization.ENUS);
+            Assert.AreEqual("annNane", data.Name);
+        }
+
+        [TestMethod]
+        public void UpdateGameStringBannerTest()
+        {
+            using BannerDataDocument dataDocument = _heroesDataDirectory.BannerData(new HeroesDataVersion(2, 47, 3, 76124), true, Localization.KOKR);
+            Banner data = dataDocument.GetBannerById("BannerD3DemonHunter");
+            Assert.AreEqual("악마사냥꾼 깃발", data.Name);
+
+            _heroesDataDirectory.UpdateGameString(data, new HeroesDataVersion(2, 48, 4, 77407), Localization.ENUS);
+            Assert.AreEqual("bannerName", data.Name);
+        }
+
+        [TestMethod]
+        public void UpdateGameStringEmoticonTest()
+        {
+            using EmoticonDataDocument dataDocument = _heroesDataDirectory.EmoticonData(new HeroesDataVersion(2, 47, 3, 76124), true, Localization.KOKR);
+            Emoticon data = dataDocument.GetEmoticonById("cat_blink_anim");
+            Assert.AreEqual("Unknown", data.Name);
+
+            _heroesDataDirectory.UpdateGameString(data, new HeroesDataVersion(2, 48, 4, 77407), Localization.ENUS);
+            Assert.AreEqual("blinky blink", data.Name);
+        }
+
+        [TestMethod]
+        public void UpdateGameStringEmoticonPackTest()
+        {
+            using EmoticonPackDataDocument dataDocument = _heroesDataDirectory.EmoticonPackData(new HeroesDataVersion(2, 47, 3, 76124), true, Localization.KOKR);
+            EmoticonPack data = dataDocument.GetEmoticonPackById("CassiaEmoticonPack2");
+            Assert.AreEqual("카시아 팩 2", data.Name);
+
+            _heroesDataDirectory.UpdateGameString(data, new HeroesDataVersion(2, 48, 4, 77407), Localization.ENUS);
+            Assert.AreEqual("emotPackName", data.Name);
+        }
+
+        [TestMethod]
+        public void UpdateGameStringHeroTest()
+        {
+            using HeroDataDocument dataDocument = _heroesDataDirectory.HeroData(new HeroesDataVersion(2, 47, 3, 76124), true, Localization.KOKR);
+            Hero data = dataDocument.GetHeroById("Abathur", false, false, false, false);
+            Assert.AreEqual("전장 어디에서나 전투에 영향을 줄 수 있는 독특한 영웅입니다.", data.Description?.RawDescription);
+
+            _heroesDataDirectory.UpdateGameString(data, new HeroesDataVersion(2, 48, 4, 77407), Localization.ENUS);
+            Assert.AreEqual("heroDescription", data.Description?.RawDescription);
+        }
+
+        [TestMethod]
+        public void UpdateGameStringHeroSkinTest()
+        {
+            using HeroSkinDataDocument dataDocument = _heroesDataDirectory.HeroSkinData(new HeroesDataVersion(2, 47, 3, 76124), true, Localization.KOKR);
+            HeroSkin data = dataDocument.GetHeroSkinById("AbathurBaseVar3");
+            Assert.AreEqual("칼디르 아바투르", data.Name);
+
+            _heroesDataDirectory.UpdateGameString(data, new HeroesDataVersion(2, 48, 4, 77407), Localization.ENUS);
+            Assert.AreEqual("heroskinName", data.Name);
+        }
+
+        [TestMethod]
+        public void UpdateGameStringMatchAwardTest()
+        {
+            using MatchAwardDataDocument dataDocument = _heroesDataDirectory.MatchAwardData(new HeroesDataVersion(2, 47, 3, 76124), true, Localization.KOKR);
+            MatchAward data = dataDocument.GetMatchAwardById("HatTrick");
+            Assert.AreEqual("기선 제압자", data.Name);
+
+            _heroesDataDirectory.UpdateGameString(data, new HeroesDataVersion(2, 48, 4, 77407), Localization.ENUS);
+            Assert.AreEqual("awardName", data.Name);
+        }
+
+        [TestMethod]
+        public void UpdateGameStringMountTest()
+        {
+            using MountDataDocument dataDocument = _heroesDataDirectory.MountData(new HeroesDataVersion(2, 47, 3, 76124), true, Localization.KOKR);
+            Mount data = dataDocument.GetMountById("AlarakTaldarimMarch");
+            Assert.AreEqual("군주의 승천", data.Name);
+
+            _heroesDataDirectory.UpdateGameString(data, new HeroesDataVersion(2, 48, 4, 77407), Localization.ENUS);
+            Assert.AreEqual("mountName", data.Name);
+        }
+
+        [TestMethod]
+        public void UpdateGameStringPortraitPackTest()
+        {
+            using PortraitPackDataDocument dataDocument = _heroesDataDirectory.PortraitPackData(new HeroesDataVersion(2, 47, 3, 76124), true, Localization.KOKR);
+            PortraitPack data = dataDocument.GetPortraitPackById("AbathurToys18Portrait");
+            Assert.AreEqual("애벌레투르 초상화", data.Name);
+
+            _heroesDataDirectory.UpdateGameString(data, new HeroesDataVersion(2, 48, 4, 77407), Localization.ENUS);
+            Assert.AreEqual("portraitName", data.Name);
+        }
+
+        [TestMethod]
+        public void UpdateGameStringRewardPortraitTest()
+        {
+            using RewardPortraitDataDocument dataDocument = _heroesDataDirectory.RewardPortraitData(new HeroesDataVersion(2, 47, 3, 76124), true, Localization.KOKR);
+            RewardPortrait data = dataDocument.GetRewardPortraitById("1YearAnniversaryPortrait");
+            Assert.AreEqual("1주년 기념 초상화", data.Name);
+
+            _heroesDataDirectory.UpdateGameString(data, new HeroesDataVersion(2, 48, 4, 77407), Localization.ENUS);
+            Assert.AreEqual("rewardportraitName", data.Name);
+        }
+
+        [TestMethod]
+        public void UpdateGameStringSprayTest()
+        {
+            using SprayDataDocument dataDocument = _heroesDataDirectory.SprayData(new HeroesDataVersion(2, 47, 3, 76124), true, Localization.KOKR);
+            Spray data = dataDocument.GetSprayById("SprayAnimatedCookieAbathur");
+            Assert.AreEqual("과자 아바투르", data.Name);
+
+            _heroesDataDirectory.UpdateGameString(data, new HeroesDataVersion(2, 48, 4, 77407), Localization.ENUS);
+            Assert.AreEqual("sprayName", data.Name);
+        }
+
+        [TestMethod]
+        public void UpdateGameStringUnitTest()
+        {
+            using UnitDataDocument dataDocument = _heroesDataDirectory.UnitData(new HeroesDataVersion(2, 47, 3, 76124), true, Localization.KOKR);
+            Unit data = dataDocument.GetUnitById("AbathurEvolvedMonstrosity", false, false);
+            Assert.AreEqual("some description", data.Description?.RawDescription);
+
+            _heroesDataDirectory.UpdateGameString(data, new HeroesDataVersion(2, 48, 4, 77407), Localization.ENUS);
+            Assert.AreEqual("unitDescription", data.Description?.RawDescription);
+        }
+
+        [TestMethod]
+        public void UpdateGameStringVoiceLineTest()
+        {
+            using VoiceLineDataDocument dataDocument = _heroesDataDirectory.VoiceLineData(new HeroesDataVersion(2, 47, 3, 76124), true, Localization.KOKR);
+            VoiceLine data = dataDocument.GetVoiceLineById("AbathurBase_VoiceLine01");
+            Assert.AreEqual("군단을 위하여", data.Name);
+
+            _heroesDataDirectory.UpdateGameString(data, new HeroesDataVersion(2, 48, 4, 77407), Localization.ENUS);
+            Assert.AreEqual("voiceName", data.Name);
+        }
+
+        [TestMethod]
+        public void UpdateGameStringsExceptionTest()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(announcer: null!, new HeroesDataVersion(0, 0, 0, 0), Localization.ENUS));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(new Announcer(), null!, Localization.ENUS));
+
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(banner: null!, new HeroesDataVersion(0, 0, 0, 0), Localization.ENUS));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(new Banner(), null!, Localization.ENUS));
+
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(emoticon: null!, new HeroesDataVersion(0, 0, 0, 0), Localization.ENUS));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(new Emoticon(), null!, Localization.ENUS));
+
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(emoticonPack: null!, new HeroesDataVersion(0, 0, 0, 0), Localization.ENUS));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(new EmoticonPack(), null!, Localization.ENUS));
+
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(hero: null!, new HeroesDataVersion(0, 0, 0, 0), Localization.ENUS));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(new Hero(), null!, Localization.ENUS));
+
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(heroSkin: null!, new HeroesDataVersion(0, 0, 0, 0), Localization.ENUS));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(new HeroSkin(), null!, Localization.ENUS));
+
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(matchAward: null!, new HeroesDataVersion(0, 0, 0, 0), Localization.ENUS));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(new MatchAward(), null!, Localization.ENUS));
+
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(mount: null!, new HeroesDataVersion(0, 0, 0, 0), Localization.ENUS));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(new Mount(), null!, Localization.ENUS));
+
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(portraitPack: null!, new HeroesDataVersion(0, 0, 0, 0), Localization.ENUS));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(new PortraitPack(), null!, Localization.ENUS));
+
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(rewardPortrait: null!, new HeroesDataVersion(0, 0, 0, 0), Localization.ENUS));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(new RewardPortrait(), null!, Localization.ENUS));
+
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(spray: null!, new HeroesDataVersion(0, 0, 0, 0), Localization.ENUS));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(new Spray(), null!, Localization.ENUS));
+
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(unit: null!, new HeroesDataVersion(0, 0, 0, 0), Localization.ENUS));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(new Unit(), null!, Localization.ENUS));
+
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(voiceLine: null!, new HeroesDataVersion(0, 0, 0, 0), Localization.ENUS));
+            Assert.ThrowsException<ArgumentNullException>(() => _heroesDataDirectory.UpdateGameString(new VoiceLine(), null!, Localization.ENUS));
+        }
+
+        [TestMethod]
+        public void ReloadVersionsTest()
+        {
+            int count = _heroesDataDirectory.Versions.Count;
+            Assert.AreEqual(count, _heroesDataDirectory.ReloadVersions());
         }
     }
 }
