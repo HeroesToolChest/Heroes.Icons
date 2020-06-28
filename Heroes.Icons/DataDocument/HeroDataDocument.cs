@@ -772,6 +772,7 @@ namespace Heroes.Icons.DataDocument
         {
             Hero hero = new Hero
             {
+                Id = heroId,
                 CHeroId = heroId,
             };
 
