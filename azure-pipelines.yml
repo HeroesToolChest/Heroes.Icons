@@ -72,7 +72,7 @@ jobs:
     - powershell: dotnet publish $env:MAIN_PROJECT -c release --no-restore -o $env:PUBLISH_ANY_PATH
       displayName: Publish release
 
-    - powershell: dotnet pack $env:MAIN_PROJECT -c release --no-build -o $env:NUPKG_PATH       
+    - powershell: dotnet pack $env:MAIN_PROJECT -c release --no-build -o $env:NUPKG_PATH -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg       
       displayName: Nuget pack
 
     - task: NuGetCommand@2
