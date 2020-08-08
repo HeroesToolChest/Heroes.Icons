@@ -81,6 +81,12 @@ jobs:
         command: 'custom'
         arguments: 'sign $(nupkg_path)Heroes.Icons.*.nupkg -CertificatePath $(Agent.TempDirectory)\certificate -CertificatePassword $(cert_password) -Timestamper http://timestamp.digicert.com'
 
+    - task: NuGetCommand@2
+      displayName: Sign symbol pack
+      inputs:
+        command: 'custom'
+        arguments: 'sign $(nupkg_path)Heroes.Icons.*.snupkg -CertificatePath $(Agent.TempDirectory)\certificate -CertificatePassword $(cert_password) -Timestamper http://timestamp.digicert.com'
+
     - powershell: |
         $s = get-content $env:MAIN_PROJECT | select-string -pattern "<Version>"
         $s -match "<Version>(?<content>.*)</Version>"
