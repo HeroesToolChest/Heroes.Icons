@@ -6,7 +6,7 @@
     <Version>5.0.0</Version>
     <Authors>Kevin Oliva</Authors>
     <Copyright>Copyright © 2016 - 2020 Kevin Oliva</Copyright>
-    <Description>A Heroes of the Storm library that parses the json data files from Heroes Data Parser.</Description>
+    <Description>A dotnet library to parse the json data files from Heroes Data Parser.</Description>
     <PackageProjectUrl>https://github.com/HeroesToolChest/Heroes.Icons</PackageProjectUrl>
     <RepositoryUrl>https://github.com/HeroesToolChest/Heroes.Icons</RepositoryUrl>
     <PackageReleaseNotes>https://github.com/HeroesToolChest/Heroes.Icons/releases</PackageReleaseNotes>
@@ -29,7 +29,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.164">
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.205">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
