@@ -6,7 +6,7 @@
     <Version>5.0.1</Version>
     <Authors>Kevin Oliva</Authors>
     <Copyright>Copyright © 2016 - 2020 Kevin Oliva</Copyright>
-    <Description>A dotnet library to parse the json data files from Heroes Data Parser.</Description>
+    <Description>A Heroes of the Storm dotnet library to parse the json data files from Heroes Data Parser.</Description>
     <PackageProjectUrl>https://github.com/HeroesToolChest/Heroes.Icons</PackageProjectUrl>
     <RepositoryUrl>https://github.com/HeroesToolChest/Heroes.Icons</RepositoryUrl>
     <PackageReleaseNotes>https://github.com/HeroesToolChest/Heroes.Icons/releases</PackageReleaseNotes>
