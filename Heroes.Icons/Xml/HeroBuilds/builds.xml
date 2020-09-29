@@ -174,4 +174,9 @@
   <Patch type="" link="" version="2.50.2.79999"/>
   <Patch type="" link="" version="2.50.2.80046"/>
   <Patch type="" link="" version="2.50.2.80333"/>
+  
+  <Patch type="" link="" version="2.51.1.80702"/>
+  <Patch type="" link="" version="2.51.2.81376"/>
+  <Patch type="" link="" version="2.52.0.81571"/>
+  <Patch type="" link="" version="2.52.0.81700"/>
 </Builds>
