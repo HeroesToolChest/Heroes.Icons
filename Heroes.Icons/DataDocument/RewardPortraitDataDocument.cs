@@ -309,10 +309,10 @@ namespace Heroes.Icons.DataDocument
                 rewardPortrait.CollectionCategory = eventElement.GetString();
 
             if (rewardPortraitElement.TryGetProperty("description", out JsonElement description))
-                rewardPortrait.Description = new TooltipDescription(description.GetString(), Localization);
+                rewardPortrait.Description = SetTooltipDescription(description.GetString(), Localization);
 
             if (rewardPortraitElement.TryGetProperty("descriptionUnearned", out JsonElement descriptionUnearned))
-                rewardPortrait.DescriptionUnearned = new TooltipDescription(descriptionUnearned.GetString(), Localization);
+                rewardPortrait.DescriptionUnearned = SetTooltipDescription(descriptionUnearned.GetString(), Localization);
 
             if (rewardPortraitElement.TryGetProperty("heroId", out JsonElement heroIdElement))
                 rewardPortrait.HeroId = heroIdElement.GetString();

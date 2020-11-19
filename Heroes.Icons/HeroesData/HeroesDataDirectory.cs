@@ -46,7 +46,7 @@ namespace Heroes.Icons.HeroesData
         public HeroesDataDirectory(string heroesDataPath = "heroesdata")
         {
             if (string.IsNullOrWhiteSpace(heroesDataPath))
-                throw new ArgumentException("Cannot be null or whitespace", nameof(heroesDataPath));
+                throw new ArgumentException($"'{nameof(heroesDataPath)}' cannot be null or whitespace", nameof(heroesDataPath));
 
             if (!Directory.Exists(heroesDataPath))
                 throw new DirectoryNotFoundException("Path does not exist as a directory");
@@ -91,14 +91,14 @@ namespace Heroes.Icons.HeroesData
         public static IEnumerable<HeroesDataVersion> GetVersions(string path, bool includePtr = false)
         {
             if (string.IsNullOrWhiteSpace(path))
-                throw new ArgumentException("Cannot be null or whitespace", nameof(path));
+                throw new ArgumentException($"'{nameof(path)}' cannot be null or whitespace", nameof(path));
 
             IEnumerable<string> pathDirectories = Directory.EnumerateDirectories(path, "*.*.*.*");
 
             foreach (string directoryPath in pathDirectories)
             {
                 ReadOnlySpan<char> pathSpan = Path.TrimEndingDirectorySeparator(directoryPath.AsSpan());
-                ReadOnlySpan<char> name = pathSpan.Slice(pathSpan.LastIndexOf(Path.DirectorySeparatorChar) + 1);
+                ReadOnlySpan<char> name = pathSpan[(pathSpan.LastIndexOf(Path.DirectorySeparatorChar) + 1)..];
 
                 if (!name.IsEmpty)
                 {
@@ -124,7 +124,7 @@ namespace Heroes.Icons.HeroesData
         public static bool VersionExists(string path, HeroesDataVersion version)
         {
             if (string.IsNullOrWhiteSpace(path))
-                throw new ArgumentException("Cannot be null or whitespace", nameof(path));
+                throw new ArgumentException($"'{nameof(path)}' cannot be null or whitespace", nameof(path));
 
             if (version is null)
                 throw new ArgumentNullException(nameof(version));

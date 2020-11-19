@@ -207,14 +207,21 @@ namespace Heroes.Icons.DataDocument
             {
                 foreach (JsonElement weaponArrayElement in weapons.EnumerateArray())
                 {
+                    string? weaponIdValue = weaponArrayElement.GetProperty("nameId").GetString();
+                    if (weaponIdValue is null)
+                        continue;
+
                     UnitWeapon unitWeapon = new UnitWeapon
                     {
-                        WeaponNameId = weaponArrayElement.GetProperty("nameId").GetString(),
+                        WeaponNameId = weaponIdValue,
                         Range = weaponArrayElement.GetProperty("range").GetDouble(),
                         Period = weaponArrayElement.GetProperty("period").GetDouble(),
                         Damage = weaponArrayElement.GetProperty("damage").GetDouble(),
                         DamageScaling = weaponArrayElement.GetProperty("damageScale").GetDouble(),
                     };
+
+                    if (weaponArrayElement.TryGetProperty("name", out JsonElement nameElement))
+                        unitWeapon.Name = nameElement.ToString();
 
                     // attribute factors
                     if (weaponArrayElement.TryGetProperty("damageFactor", out JsonElement damageFactor))
@@ -329,10 +336,10 @@ namespace Heroes.Icons.DataDocument
             if (abilityTalentBase is null)
                 throw new ArgumentNullException(nameof(abilityTalentBase));
 
-            abilityTalentBase.AbilityTalentId.ReferenceId = abilityTalentElement.GetProperty("nameId").GetString();
+            abilityTalentBase.AbilityTalentId.ReferenceId = abilityTalentElement.GetProperty("nameId").GetString() ?? string.Empty;
 
             if (abilityTalentElement.TryGetProperty("buttonId", out JsonElement buttonElement))
-                abilityTalentBase.AbilityTalentId.ButtonId = buttonElement.GetString();
+                abilityTalentBase.AbilityTalentId.ButtonId = buttonElement.GetString() ?? string.Empty;
 
             if (abilityTalentElement.TryGetProperty("name", out JsonElement nameElement))
                 abilityTalentBase.Name = nameElement.GetString();
@@ -341,10 +348,12 @@ namespace Heroes.Icons.DataDocument
                 abilityTalentBase.IconFileName = iconElement.GetString();
             if (abilityTalentElement.TryGetProperty("toggleCooldown", out JsonElement toggleCooldownElement))
                 abilityTalentBase.Tooltip.Cooldown.ToggleCooldown = toggleCooldownElement.GetDouble();
+
             if (abilityTalentElement.TryGetProperty("lifeTooltip", out JsonElement lifeTooltipElement))
-                abilityTalentBase.Tooltip.Life.LifeCostTooltip = new TooltipDescription(lifeTooltipElement.GetString(), Localization);
+                abilityTalentBase.Tooltip.Life.LifeCostTooltip = SetTooltipDescription(lifeTooltipElement.GetString(), Localization);
+
             if (abilityTalentElement.TryGetProperty("energyTooltip", out JsonElement energyTooltipElement))
-                abilityTalentBase.Tooltip.Energy.EnergyTooltip = new TooltipDescription(energyTooltipElement.GetString(), Localization);
+                abilityTalentBase.Tooltip.Energy.EnergyTooltip = SetTooltipDescription(energyTooltipElement.GetString(), Localization);
 
             // charges
             if (abilityTalentElement.TryGetProperty("charges", out JsonElement chargeElement))
@@ -362,11 +371,13 @@ namespace Heroes.Icons.DataDocument
             }
 
             if (abilityTalentElement.TryGetProperty("cooldownTooltip", out JsonElement cooldownTooltipElement))
-                abilityTalentBase.Tooltip.Cooldown.CooldownTooltip = new TooltipDescription(cooldownTooltipElement.GetString(), Localization);
+                abilityTalentBase.Tooltip.Cooldown.CooldownTooltip = SetTooltipDescription(cooldownTooltipElement.GetString(), Localization);
+
             if (abilityTalentElement.TryGetProperty("shortTooltip", out JsonElement shortTooltipElement))
-                abilityTalentBase.Tooltip.ShortTooltip = new TooltipDescription(shortTooltipElement.GetString(), Localization);
+                abilityTalentBase.Tooltip.ShortTooltip = SetTooltipDescription(shortTooltipElement.GetString(), Localization);
+
             if (abilityTalentElement.TryGetProperty("fullTooltip", out JsonElement fullTooltipElement))
-                abilityTalentBase.Tooltip.FullTooltip = new TooltipDescription(fullTooltipElement.GetString(), Localization);
+                abilityTalentBase.Tooltip.FullTooltip = SetTooltipDescription(fullTooltipElement.GetString(), Localization);
 
             if (Enum.TryParse(abilityTalentElement.GetProperty("abilityType").GetString(), out AbilityTypes abilityTypes))
                 abilityTalentBase.AbilityTalentId.AbilityType = abilityTypes;

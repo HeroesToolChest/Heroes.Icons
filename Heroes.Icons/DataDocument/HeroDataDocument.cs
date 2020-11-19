@@ -393,7 +393,7 @@ namespace Heroes.Icons.DataDocument
         /// <returns>The hero's name.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="heroId"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">No property was found with the requested property value.</exception>
-        public string GetNameFromHeroId(string heroId)
+        public string? GetNameFromHeroId(string heroId)
         {
             if (heroId is null)
                 throw new ArgumentNullException(nameof(heroId));
@@ -410,7 +410,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="heroId">A hero heroId property value.</param>
         /// <param name="value">When this method returns, contains the name of the hero.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetNameFromHeroId(string? heroId, [NotNullWhen(true)] out string? value)
+        public bool TryGetNameFromHeroId(string? heroId, out string? value)
         {
             value = null;
 
@@ -434,7 +434,7 @@ namespace Heroes.Icons.DataDocument
         /// <returns>The hero's name.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="unitId"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">No property was found with the requested property value.</exception>
-        public string GetNameFromUnitId(string unitId)
+        public string? GetNameFromUnitId(string unitId)
         {
             if (unitId is null)
                 throw new ArgumentNullException(nameof(unitId));
@@ -451,7 +451,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="unitId">A hero unitId property value.</param>
         /// <param name="value">When this method returns, contains the name of the hero.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetNameFromUnitId(string? unitId, [NotNullWhen(true)] out string? value)
+        public bool TryGetNameFromUnitId(string? unitId, out string? value)
         {
             value = null;
 
@@ -479,7 +479,7 @@ namespace Heroes.Icons.DataDocument
         /// <returns>The hero's name.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">No property was found with the requested property value.</exception>
-        public string GetNameFromHyperlinkId(string hyperlinkId)
+        public string? GetNameFromHyperlinkId(string hyperlinkId)
         {
             if (hyperlinkId is null)
                 throw new ArgumentNullException(nameof(hyperlinkId));
@@ -496,7 +496,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="hyperlinkId">A hero hyperlinkId property value.</param>
         /// <param name="value">When this method returns, contains the name of the hero.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetNameFromHyperlinkId(string? hyperlinkId, [NotNullWhen(true)] out string? value)
+        public bool TryGetNameFromHyperlinkId(string? hyperlinkId, out string? value)
         {
             value = null;
 
@@ -524,7 +524,7 @@ namespace Heroes.Icons.DataDocument
         /// <returns>The hero's name.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is <see langword="null"/>.</exception>
         /// <exception cref="KeyNotFoundException">No property was found with the requested property value.</exception>
-        public string GetNameFromAttributeId(string attributeId)
+        public string? GetNameFromAttributeId(string attributeId)
         {
             if (attributeId is null)
                 throw new ArgumentNullException(nameof(attributeId));
@@ -541,7 +541,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="attributeId">A hero attributeId property value.</param>
         /// <param name="value">When this method returns, contains the name of the hero.</param>
         /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        public bool TryGetNameFromAttributeId(string? attributeId, [NotNullWhen(true)] out string? value)
+        public bool TryGetNameFromAttributeId(string? attributeId, out string? value)
         {
             value = null;
 
@@ -777,7 +777,7 @@ namespace Heroes.Icons.DataDocument
             };
 
             if (heroElement.TryGetProperty("unitId", out JsonElement unitIdElement))
-                hero.CUnitId = unitIdElement.GetString();
+                hero.CUnitId = unitIdElement.GetString() ?? string.Empty;
 
             if (heroElement.TryGetProperty("hyperlinkId", out JsonElement hyperlinkIdElement))
                 hero.HyperlinkId = hyperlinkIdElement.GetString();
@@ -820,7 +820,7 @@ namespace Heroes.Icons.DataDocument
                 hero.Speed = speedElement.GetDouble();
 
             if (heroElement.TryGetProperty("type", out JsonElement typeElement))
-                hero.Type = new TooltipDescription(typeElement.GetString(), Localization);
+                hero.Type = SetTooltipDescription(typeElement.ToString(), Localization);
 
             if (heroElement.TryGetProperty("rarity", out JsonElement rarityElement) && Enum.TryParse(rarityElement.GetString(), out Rarity rarity))
                 hero.Rarity = rarity;
@@ -834,21 +834,29 @@ namespace Heroes.Icons.DataDocument
                 hero.SearchText = searchTextElement.GetString();
 
             if (heroElement.TryGetProperty("description", out JsonElement descriptionElement))
-                hero.Description = new TooltipDescription(descriptionElement.GetString(), Localization);
+                hero.Description = SetTooltipDescription(descriptionElement.ToString(), Localization);
 
             if (heroElement.TryGetProperty("infoText", out JsonElement infoTextElement))
-                hero.InfoText = new TooltipDescription(infoTextElement.GetString(), Localization);
+                hero.InfoText = SetTooltipDescription(infoTextElement.ToString(), Localization);
 
             if (heroElement.TryGetProperty("descriptors", out JsonElement descriptorsElement))
             {
                 foreach (JsonElement descriptorArrayElement in descriptorsElement.EnumerateArray())
-                    hero.HeroDescriptors.Add(descriptorArrayElement.GetString());
+                {
+                    string? descriptorValue = descriptorArrayElement.GetString();
+                    if (descriptorValue is not null)
+                        hero.HeroDescriptors.Add(descriptorValue);
+                }
             }
 
             if (heroElement.TryGetProperty("units", out JsonElement units))
             {
                 foreach (JsonElement unitArrayElement in units.EnumerateArray())
-                    hero.UnitIds.Add(unitArrayElement.GetString());
+                {
+                    string? unitValue = unitArrayElement.GetString();
+                    if (unitValue is not null)
+                        hero.UnitIds.Add(unitValue);
+                }
             }
 
             // portraits
@@ -870,7 +878,9 @@ namespace Heroes.Icons.DataDocument
                 {
                     foreach (JsonElement partyFrameArrayElement in partyFramesElement.EnumerateArray())
                     {
-                        hero.HeroPortrait.PartyFrameFileName.Add(partyFrameArrayElement.GetString());
+                        string? partyFrameValue = partyFrameArrayElement.GetString();
+                        if (partyFrameValue is not null)
+                            hero.HeroPortrait.PartyFrameFileName.Add(partyFrameValue);
                     }
                 }
 
@@ -896,7 +906,11 @@ namespace Heroes.Icons.DataDocument
             if (heroElement.TryGetProperty("roles", out JsonElement rolesElement))
             {
                 foreach (JsonElement roleArrayElement in rolesElement.EnumerateArray())
-                    hero.Roles.Add(roleArrayElement.GetString());
+                {
+                    string? roleValue = roleArrayElement.GetString();
+                    if (roleValue is not null)
+                        hero.Roles.Add(roleValue);
+                }
             }
 
             // expandedRole
@@ -986,13 +1000,21 @@ namespace Heroes.Icons.DataDocument
                 if (element.TryGetProperty("abilityTalentLinkIds", out JsonElement abilityTalentLinkIds))
                 {
                     foreach (JsonElement abilityTalentLinkIdElement in abilityTalentLinkIds.EnumerateArray())
-                        talent.AbilityTalentLinkIds.Add(abilityTalentLinkIdElement.GetString());
+                    {
+                        string? abilityTalentLinkValue = abilityTalentLinkIdElement.GetString();
+                        if (abilityTalentLinkValue is not null)
+                            talent.AbilityTalentLinkIds.Add(abilityTalentLinkValue);
+                    }
                 }
 
                 if (element.TryGetProperty("prerequisiteTalentIds", out JsonElement prerequisiteTalentIds))
                 {
                     foreach (JsonElement prerequisiteTalentIdElement in prerequisiteTalentIds.EnumerateArray())
-                        talent.PrerequisiteTalentIds.Add(prerequisiteTalentIdElement.GetString());
+                    {
+                        string? prerequisiteTalentValue = prerequisiteTalentIdElement.GetString();
+                        if (prerequisiteTalentValue is not null)
+                            talent.PrerequisiteTalentIds.Add(prerequisiteTalentValue);
+                    }
                 }
 
                 hero.AddTalent(talent);

@@ -351,25 +351,38 @@ namespace Heroes.Icons.DataDocument
                 unit.DamageType = damageType.GetString();
             if (element.TryGetProperty("scalingLinkId", out JsonElement scalingLinkId))
                 unit.ScalingBehaviorLink = scalingLinkId.GetString();
+
             if (element.TryGetProperty("description", out JsonElement description))
-                unit.Description = new TooltipDescription(description.GetString(), Localization);
+                unit.Description = SetTooltipDescription(description.GetString(), Localization);
 
             if (element.TryGetProperty("descriptors", out JsonElement descriptorElements))
             {
                 foreach (JsonElement descriptorArrayElement in descriptorElements.EnumerateArray())
-                    unit.HeroDescriptors.Add(descriptorArrayElement.GetString());
+                {
+                    string? descriptorValue = descriptorArrayElement.GetString();
+                    if (descriptorValue is not null)
+                        unit.HeroDescriptors.Add(descriptorValue);
+                }
             }
 
             if (element.TryGetProperty("attributes", out JsonElement attributesElements))
             {
                 foreach (JsonElement attributeArrayElement in attributesElements.EnumerateArray())
-                    unit.Attributes.Add(attributeArrayElement.GetString());
+                {
+                    string? attributeValue = attributeArrayElement.GetString();
+                    if (attributeValue is not null)
+                        unit.Attributes.Add(attributeValue);
+                }
             }
 
             if (element.TryGetProperty("units", out JsonElement unitsElements))
             {
                 foreach (JsonElement unitArrayElement in unitsElements.EnumerateArray())
-                    unit.UnitIds.Add(unitArrayElement.GetString());
+                {
+                    string? unitValue = unitArrayElement.GetString();
+                    if (unitValue is not null)
+                        unit.UnitIds.Add(unitValue);
+                }
             }
 
             // portraits

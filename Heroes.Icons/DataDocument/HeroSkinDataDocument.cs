@@ -345,13 +345,15 @@ namespace Heroes.Icons.DataDocument
                 heroSkin.SearchText = searchText.GetString();
 
             if (heroSkinElement.TryGetProperty("infoText", out JsonElement infoText))
-                heroSkin.InfoText = new TooltipDescription(infoText.GetString(), Localization);
+                heroSkin.InfoText = SetTooltipDescription(infoText.GetString(), Localization);
 
             if (heroSkinElement.TryGetProperty("features", out JsonElement featuresElement))
             {
                 foreach (JsonElement featureElement in featuresElement.EnumerateArray())
                 {
-                    heroSkin.Features.Add(featureElement.GetString());
+                    string? featureValue = featureElement.GetString();
+                    if (featureValue is not null)
+                        heroSkin.Features.Add(featureValue);
                 }
             }
 

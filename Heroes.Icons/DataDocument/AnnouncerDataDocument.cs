@@ -380,7 +380,7 @@ namespace Heroes.Icons.DataDocument
                 announcer.SortName = sortName.GetString();
 
             if (announcerElement.TryGetProperty("description", out JsonElement description))
-                announcer.Description = new TooltipDescription(description.GetString(), Localization);
+                announcer.Description = SetTooltipDescription(description.GetString(), Localization);
 
             if (announcerElement.TryGetProperty("image", out JsonElement image))
                 announcer.ImageFileName = image.GetString();

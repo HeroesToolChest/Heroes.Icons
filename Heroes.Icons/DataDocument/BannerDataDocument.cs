@@ -345,7 +345,7 @@ namespace Heroes.Icons.DataDocument
                 banner.SortName = sortName.GetString();
 
             if (bannerElement.TryGetProperty("description", out JsonElement description))
-                banner.Description = new TooltipDescription(description.GetString(), Localization);
+                banner.Description = SetTooltipDescription(description.GetString(), Localization);
 
             GameStringDocument?.UpdateGameStrings(banner);
 

@@ -214,6 +214,20 @@ namespace Heroes.Icons.DataDocument
         }
 
         /// <summary>
+        /// Sets the <see cref="TooltipDescription"/>.
+        /// </summary>
+        /// <param name="value">The value to parse for the description.</param>
+        /// <param name="scaleLocalization">The <see cref="Localization"/> for the scale text. Does not affect the actually locazation of <paramref name="value"/>.</param>
+        /// <returns>The <see cref="TooltipDescription"/> or <see langword="null"/> if <paramref name="value"/> is <see langword="null"/>.</returns>
+        protected static TooltipDescription? SetTooltipDescription(string? value, Localization scaleLocalization)
+        {
+            if (value is null)
+                return null;
+
+            return new TooltipDescription(value, scaleLocalization);
+        }
+
+        /// <summary>
         /// Sets the <see cref="Localization"/> from <paramref name="jsonDataFilePath"/>.
         /// </summary>
         /// <param name="jsonDataFilePath">The json file path.</param>
@@ -225,7 +239,7 @@ namespace Heroes.Icons.DataDocument
             int index = file.LastIndexOf('_');
             if (index > -1)
             {
-                if (Enum.TryParse(file.Substring(index + 1), true, out Localization localization))
+                if (Enum.TryParse(file[(index + 1)..], true, out Localization localization))
                 {
                     Localization = localization;
 
@@ -246,7 +260,7 @@ namespace Heroes.Icons.DataDocument
             where T : DataDocumentBase
         {
             if (_streamForDataAsync is null)
-                throw new InvalidOperationException($"{nameof(_streamForDataAsync)} is null.");
+                throw new InvalidOperationException($"'{nameof(_streamForDataAsync)}' is null.");
 
             JsonDataDocument = await JsonDocument.ParseAsync(_streamForDataAsync).ConfigureAwait(false);
 
@@ -264,10 +278,10 @@ namespace Heroes.Icons.DataDocument
             where T : DataDocumentBase
         {
             if (_streamForDataAsync is null)
-                throw new InvalidOperationException($"{nameof(_streamForDataAsync)} is null.");
+                throw new InvalidOperationException($"'{nameof(_streamForDataAsync)}' is null.");
 
             if (_streamForGameStringAsync is null)
-                throw new InvalidOperationException($"{nameof(_streamForGameStringAsync)} is null.");
+                throw new InvalidOperationException($"'{nameof(_streamForGameStringAsync)}' is null.");
 
             Task<JsonDocument> dataDocumentTask = JsonDocument.ParseAsync(_streamForDataAsync);
             Task<GameStringDocument> gameStringDocumentTask = GameStringDocument.ParseAsync(_streamForGameStringAsync);
@@ -290,7 +304,11 @@ namespace Heroes.Icons.DataDocument
             foreach (JsonProperty jsonProperty in JsonDataDocument.RootElement.EnumerateObject())
             {
                 if (jsonProperty.Value.TryGetProperty(property, out JsonElement element))
-                    yield return element.GetString();
+                {
+                    string? propertyValue = element.GetString();
+                    if (propertyValue is not null)
+                        yield return propertyValue;
+                }
             }
         }
 

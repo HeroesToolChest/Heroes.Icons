@@ -342,7 +342,7 @@ namespace Heroes.Icons.DataDocument
                 voiceLine.SortName = sortName.GetString();
 
             if (voiceLineElement.TryGetProperty("description", out JsonElement description))
-                voiceLine.Description = new TooltipDescription(description.GetString(), Localization);
+                voiceLine.Description = SetTooltipDescription(description.GetString(), Localization);
 
             if (voiceLineElement.TryGetProperty("image", out JsonElement image))
                 voiceLine.ImageFileName = image.GetString();

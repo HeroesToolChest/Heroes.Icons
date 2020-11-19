@@ -351,7 +351,7 @@ namespace Heroes.Icons.DataDocument
                 spray.SearchText = searchText.GetString();
 
             if (sprayElement.TryGetProperty("description", out JsonElement description))
-                spray.Description = new TooltipDescription(description.GetString(), Localization);
+                spray.Description = SetTooltipDescription(description.GetString(), Localization);
 
             if (sprayElement.TryGetProperty("image", out JsonElement image))
                 spray.ImageFileName = image.GetString();

@@ -315,7 +315,9 @@ namespace Heroes.Icons.DataDocument
             {
                 foreach (JsonElement rewardPortraitIdElement in rewardPortraitIdsElements.EnumerateArray())
                 {
-                    portraitPack.RewardPortraitIds.Add(rewardPortraitIdElement.GetString());
+                    string? rewardPortraitValue = rewardPortraitIdElement.GetString();
+                    if (rewardPortraitValue is not null)
+                        portraitPack.RewardPortraitIds.Add(rewardPortraitValue);
                 }
             }
 

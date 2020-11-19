@@ -341,7 +341,7 @@ namespace Heroes.Icons.DataDocument
                 matchAward.ScoreScreenImageFileName = scoreScreenIcon.GetString();
 
             if (matchAwardElement.TryGetProperty("description", out JsonElement description))
-                matchAward.Description = new TooltipDescription(description.GetString(), Localization);
+                matchAward.Description = SetTooltipDescription(description.GetString(), Localization);
 
             GameStringDocument?.UpdateGameStrings(matchAward);
 

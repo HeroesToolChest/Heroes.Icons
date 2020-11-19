@@ -310,24 +310,30 @@ namespace Heroes.Icons.DataDocument
 
             if (emoticonElement.TryGetProperty("searchText", out JsonElement searchText))
             {
-                string[] values = searchText.GetString().Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                foreach (string value in values)
+                string? searchTextValue = searchText.GetString();
+                if (!string.IsNullOrEmpty(searchTextValue))
                 {
-                    emoticon.SearchTexts.Add(value);
+                    string[] values = searchTextValue.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                    foreach (string value in values)
+                    {
+                        emoticon.SearchTexts.Add(value);
+                    }
                 }
             }
 
             if (emoticonElement.TryGetProperty("description", out JsonElement description))
-                emoticon.Description = new TooltipDescription(description.GetString(), Localization);
+                emoticon.Description = SetTooltipDescription(description.GetString(), Localization);
 
             if (emoticonElement.TryGetProperty("descriptionLocked", out JsonElement descriptionLocked))
-                emoticon.DescriptionLocked = new TooltipDescription(descriptionLocked.GetString(), Localization);
+                emoticon.DescriptionLocked = SetTooltipDescription(descriptionLocked.GetString(), Localization);
 
             if (emoticonElement.TryGetProperty("localizedAliases", out JsonElement localizedAliasesElement))
             {
                 foreach (JsonElement localizedAlias in localizedAliasesElement.EnumerateArray())
                 {
-                    emoticon.LocalizedAliases.Add(localizedAlias.GetString());
+                    string? localizedAliasValue = localizedAlias.GetString();
+                    if (localizedAliasValue is not null)
+                        emoticon.LocalizedAliases.Add(localizedAliasValue);
                 }
             }
 
@@ -335,7 +341,9 @@ namespace Heroes.Icons.DataDocument
             {
                 foreach (JsonElement alias in aliasesElement.EnumerateArray())
                 {
-                    emoticon.UniversalAliases.Add(alias.GetString());
+                    string? aliasValue = alias.GetString();
+                    if (aliasValue is not null)
+                        emoticon.UniversalAliases.Add(aliasValue);
                 }
             }
 

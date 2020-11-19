@@ -250,9 +250,13 @@ namespace Heroes.Icons
 
                     if (TryGetValueFromJsonElement(keyValue, "role", hero.Id, out JsonElement roleElement))
                     {
-                        foreach (string roleValue in roleElement.GetString().Split(',', StringSplitOptions.RemoveEmptyEntries))
+                        string? roleElementValue = roleElement.GetString();
+                        if (roleElementValue is not null)
                         {
-                            hero.Roles.Add(roleValue);
+                            foreach (string roleValue in roleElementValue.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                            {
+                                hero.Roles.Add(roleValue);
+                            }
                         }
                     }
 
@@ -263,7 +267,7 @@ namespace Heroes.Icons
                         hero.Title = titleElement.GetString();
 
                     if (TryGetValueFromJsonElement(keyValue, "type", hero.Id, out JsonElement typeElement))
-                        hero.Type = new TooltipDescription(typeElement.GetString(), Localization);
+                        hero.Type = SetTooltipDescription(typeElement.GetString(), Localization);
                 }
 
                 foreach (Talent talent in hero.Talents)
@@ -297,9 +301,9 @@ namespace Heroes.Icons
                     if (TryGetValueFromJsonElement(keyValue, "damagetype", unit.Id, out JsonElement damageTypeElement))
                         unit.DamageType = damageTypeElement.GetString();
                     if (TryGetValueFromJsonElement(keyValue, "description", unit.Id, out JsonElement descriptionElement))
-                        unit.Description = new TooltipDescription(descriptionElement.GetString(), Localization);
+                        unit.Description = SetTooltipDescription(descriptionElement.GetString(), Localization);
                     if (TryGetValueFromJsonElement(keyValue, "infotext", unit.Id, out JsonElement infoTextElement))
-                        unit.InfoText = new TooltipDescription(infoTextElement.GetString(), Localization);
+                        unit.InfoText = SetTooltipDescription(infoTextElement.GetString(), Localization);
                     if (TryGetValueFromJsonElement(keyValue, "energytype", unit.Id, out JsonElement energyTypeElement))
                         unit.Energy.EnergyType = energyTypeElement.GetString();
                     if (TryGetValueFromJsonElement(keyValue, "lifetype", unit.Id, out JsonElement lifeTypeElement))
@@ -374,7 +378,7 @@ namespace Heroes.Icons
                     if (TryGetValueFromJsonElement(keyValue, "sortName", announcer.Id, out JsonElement sortNameElement))
                         announcer.SortName = sortNameElement.GetString();
                     if (TryGetValueFromJsonElement(keyValue, "description", announcer.Id, out JsonElement descriptionElement))
-                        announcer.Description = new TooltipDescription(descriptionElement.GetString());
+                            announcer.Description = SetTooltipDescription(descriptionElement.GetString());
                 }
             }
         }
@@ -397,8 +401,9 @@ namespace Heroes.Icons
                 {
                     if (TryGetValueFromJsonElement(keyValue, "name", matchAward.Id, out JsonElement nameElement))
                         matchAward.Name = nameElement.GetString();
+
                     if (TryGetValueFromJsonElement(keyValue, "description", matchAward.Id, out JsonElement descriptionElement))
-                        matchAward.Description = new TooltipDescription(descriptionElement.GetString());
+                        matchAward.Description = SetTooltipDescription(descriptionElement.GetString());
                 }
             }
         }
@@ -426,7 +431,7 @@ namespace Heroes.Icons
                     if (TryGetValueFromJsonElement(keyValue, "sortname", heroSkin.Id, out JsonElement sortNameElement))
                         heroSkin.SortName = sortNameElement.GetString();
                     if (TryGetValueFromJsonElement(keyValue, "infotext", heroSkin.Id, out JsonElement infoTextElement))
-                        heroSkin.InfoText = new TooltipDescription(infoTextElement.GetString());
+                        heroSkin.InfoText = SetTooltipDescription(infoTextElement.GetString());
                 }
             }
         }
@@ -454,7 +459,7 @@ namespace Heroes.Icons
                     if (TryGetValueFromJsonElement(keyValue, "sortname", mount.Id, out JsonElement sortNameElement))
                         mount.SortName = sortNameElement.GetString();
                     if (TryGetValueFromJsonElement(keyValue, "infotext", mount.Id, out JsonElement infoTextElement))
-                        mount.InfoText = new TooltipDescription(infoTextElement.GetString());
+                        mount.InfoText = SetTooltipDescription(infoTextElement.GetString());
                 }
             }
         }
@@ -480,7 +485,7 @@ namespace Heroes.Icons
                     if (TryGetValueFromJsonElement(keyValue, "sortname", banner.Id, out JsonElement sortNameElement))
                         banner.SortName = sortNameElement.GetString();
                     if (TryGetValueFromJsonElement(keyValue, "description", banner.Id, out JsonElement descriptionElement))
-                        banner.Description = new TooltipDescription(descriptionElement.GetString());
+                        banner.Description = SetTooltipDescription(descriptionElement.GetString());
                 }
             }
         }
@@ -508,7 +513,7 @@ namespace Heroes.Icons
                     if (TryGetValueFromJsonElement(keyValue, "sortname", spray.Id, out JsonElement sortNameElement))
                         spray.SortName = sortNameElement.GetString();
                     if (TryGetValueFromJsonElement(keyValue, "description", spray.Id, out JsonElement descriptionElement))
-                        spray.Description = new TooltipDescription(descriptionElement.GetString());
+                        spray.Description = SetTooltipDescription(descriptionElement.GetString());
                 }
             }
         }
@@ -534,7 +539,7 @@ namespace Heroes.Icons
                     if (TryGetValueFromJsonElement(keyValue, "sortname", voiceLine.Id, out JsonElement sortNameElement))
                         voiceLine.SortName = sortNameElement.GetString();
                     if (TryGetValueFromJsonElement(keyValue, "description", voiceLine.Id, out JsonElement descriptionElement))
-                        voiceLine.Description = new TooltipDescription(descriptionElement.GetString());
+                            voiceLine.Description = SetTooltipDescription(descriptionElement.GetString());
                 }
             }
         }
@@ -581,10 +586,12 @@ namespace Heroes.Icons
                 {
                     if (TryGetValueFromJsonElement(keyValue, "name", rewardPortrait.Id, out JsonElement nameElement))
                         rewardPortrait.Name = nameElement.GetString();
+
                     if (TryGetValueFromJsonElement(keyValue, "description", rewardPortrait.Id, out JsonElement descriptionElement))
-                        rewardPortrait.Description = new TooltipDescription(descriptionElement.GetString());
+                        rewardPortrait.Description = SetTooltipDescription(descriptionElement.GetString());
+
                     if (TryGetValueFromJsonElement(keyValue, "descriptionunearned", rewardPortrait.Id, out JsonElement descriptionUnearnedElement))
-                        rewardPortrait.DescriptionUnearned = new TooltipDescription(descriptionUnearnedElement.GetString());
+                        rewardPortrait.DescriptionUnearned = SetTooltipDescription(descriptionUnearnedElement.GetString());
                 }
             }
         }
@@ -607,36 +614,49 @@ namespace Heroes.Icons
                 {
                     if (TryGetValueFromJsonElement(keyValue, "expression", emoticon.Id, out JsonElement expressionElement))
                         emoticon.Name = expressionElement.GetString();
+
                     if (TryGetValueFromJsonElement(keyValue, "searchtext", emoticon.Id, out JsonElement searchTextElement))
                     {
-                        string[] values = searchTextElement.GetString().Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                        foreach (string value in values)
+                        string? seachTextValues = searchTextElement.GetString();
+                        if (!string.IsNullOrEmpty(seachTextValues))
                         {
-                            emoticon.SearchTexts.Add(value);
+                            string[] values = seachTextValues.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                            foreach (string value in values)
+                            {
+                                emoticon.SearchTexts.Add(value);
+                            }
                         }
                     }
 
                     if (TryGetValueFromJsonElement(keyValue, "description", emoticon.Id, out JsonElement descriptionElement))
-                        emoticon.Description = new TooltipDescription(descriptionElement.GetString());
+                        emoticon.Description = SetTooltipDescription(descriptionElement.GetString());
 
                     if (TryGetValueFromJsonElement(keyValue, "descriptionlocked", emoticon.Id, out JsonElement descriptionLockedElement))
-                        emoticon.DescriptionLocked = new TooltipDescription(descriptionLockedElement.GetString());
+                        emoticon.DescriptionLocked = SetTooltipDescription(descriptionLockedElement.GetString());
 
                     if (TryGetValueFromJsonElement(keyValue, "localizedaliases", emoticon.Id, out JsonElement localizedAliasesElement))
                     {
-                        string[] values = localizedAliasesElement.GetString().Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                        foreach (string value in values)
+                        string? localizedAliasesValue = localizedAliasesElement.GetString();
+                        if (!string.IsNullOrEmpty(localizedAliasesValue))
                         {
-                            emoticon.LocalizedAliases.Add(value);
+                            string[] values = localizedAliasesValue.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                            foreach (string value in values)
+                            {
+                                emoticon.LocalizedAliases.Add(value);
+                            }
                         }
                     }
 
                     if (TryGetValueFromJsonElement(keyValue, "aliases", emoticon.Id, out JsonElement aliasesElement))
                     {
-                        string[] values = aliasesElement.GetString().Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                        foreach (string value in values)
+                        string? aliasesValue = aliasesElement.GetString();
+                        if (!string.IsNullOrEmpty(aliasesValue))
                         {
-                            emoticon.UniversalAliases.Add(value);
+                            string[] values = aliasesValue.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                            foreach (string value in values)
+                            {
+                                emoticon.UniversalAliases.Add(value);
+                            }
                         }
                     }
                 }
@@ -662,9 +682,9 @@ namespace Heroes.Icons
                     if (TryGetValueFromJsonElement(keyValue, "name", emoticonPack.Id, out JsonElement nameElement))
                         emoticonPack.Name = nameElement.GetString();
                     if (TryGetValueFromJsonElement(keyValue, "sortName", emoticonPack.Id, out JsonElement sortNameElement))
-                        emoticonPack.Name = sortNameElement.GetString();
+                        emoticonPack.SortName = sortNameElement.GetString();
                     if (TryGetValueFromJsonElement(keyValue, "description", emoticonPack.Id, out JsonElement descriptionElement))
-                        emoticonPack.Description = new TooltipDescription(descriptionElement.GetString());
+                        emoticonPack.Description = SetTooltipDescription(descriptionElement.GetString());
                 }
             }
         }
@@ -677,6 +697,9 @@ namespace Heroes.Icons
         protected async Task<T> InitializeParseAsync<T>()
             where T : GameStringDocument
         {
+            if (_streamForAsync is null)
+                throw new InvalidOperationException($"'{nameof(_streamForAsync)}' is null.");
+
             JsonGameStringDocument = await JsonDocument.ParseAsync(_streamForAsync).ConfigureAwait(false);
 
             return (T)this;
@@ -731,7 +754,7 @@ namespace Heroes.Icons
             int index = file.LastIndexOf('_');
             if (index > -1)
             {
-                if (Enum.TryParse(file.Substring(index + 1), true, out Localization localization))
+                if (Enum.TryParse(file[(index + 1)..], true, out Localization localization))
                 {
                     Localization = localization;
 
@@ -749,22 +772,30 @@ namespace Heroes.Icons
             return element.TryGetProperty(key, out JsonElement keyInnerValue) && keyInnerValue.TryGetProperty(id, out value);
         }
 
+        private static TooltipDescription? SetTooltipDescription(string? value, Localization localization = Localization.ENUS)
+        {
+            if (value is null)
+                return null;
+
+            return new TooltipDescription(value, localization);
+        }
+
         private void SetAbilityTalentData(JsonElement gameStringElement, AbilityTalentBase abilityTalentBase)
         {
             if (gameStringElement.TryGetProperty("abiltalent", out JsonElement keyValue))
             {
                 if (TryGetValueFromJsonElement(keyValue, "cooldown", abilityTalentBase.AbilityTalentId.Id, out JsonElement value))
-                    abilityTalentBase.Tooltip.Cooldown.CooldownTooltip = new TooltipDescription(value.GetString(), Localization);
+                    abilityTalentBase.Tooltip.Cooldown.CooldownTooltip = SetTooltipDescription(value.GetString(), Localization);
                 if (TryGetValueFromJsonElement(keyValue, "energy", abilityTalentBase.AbilityTalentId.Id, out value))
-                    abilityTalentBase.Tooltip.Energy.EnergyTooltip = new TooltipDescription(value.GetString(), Localization);
+                    abilityTalentBase.Tooltip.Energy.EnergyTooltip = SetTooltipDescription(value.GetString(), Localization);
                 if (TryGetValueFromJsonElement(keyValue, "full", abilityTalentBase.AbilityTalentId.Id, out value))
-                    abilityTalentBase.Tooltip.FullTooltip = new TooltipDescription(value.GetString(), Localization);
+                    abilityTalentBase.Tooltip.FullTooltip = SetTooltipDescription(value.GetString(), Localization);
                 if (TryGetValueFromJsonElement(keyValue, "life", abilityTalentBase.AbilityTalentId.Id, out value))
-                    abilityTalentBase.Tooltip.Life.LifeCostTooltip = new TooltipDescription(value.GetString(), Localization);
+                    abilityTalentBase.Tooltip.Life.LifeCostTooltip = SetTooltipDescription(value.GetString(), Localization);
                 if (TryGetValueFromJsonElement(keyValue, "name", abilityTalentBase.AbilityTalentId.Id, out value))
                     abilityTalentBase.Name = value.GetString();
                 if (TryGetValueFromJsonElement(keyValue, "short", abilityTalentBase.AbilityTalentId.Id, out value))
-                    abilityTalentBase.Tooltip.ShortTooltip = new TooltipDescription(value.GetString(), Localization);
+                    abilityTalentBase.Tooltip.ShortTooltip = SetTooltipDescription(value.GetString(), Localization);
             }
         }
     }

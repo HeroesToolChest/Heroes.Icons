@@ -224,7 +224,7 @@ namespace Heroes.Icons.HeroesData
             if (obj is null)
                 return 1;
 
-            if (!(obj is HeroesDataVersion heroesDataVersion))
+            if (obj is not HeroesDataVersion heroesDataVersion)
                 throw new ArgumentException($"{nameof(obj)} is not a {nameof(HeroesDataVersion)}");
             else
                 return CompareTo(heroesDataVersion);
@@ -251,7 +251,7 @@ namespace Heroes.Icons.HeroesData
             if (obj is null)
                 return false;
 
-            if (!(obj is HeroesDataVersion heroesDataVersion))
+            if (obj is not HeroesDataVersion heroesDataVersion)
                 return false;
             else
                 return Equals(heroesDataVersion);
@@ -272,7 +272,6 @@ namespace Heroes.Icons.HeroesData
                 return $"{Major}.{Minor}.{Revision}.{Build}";
         }
 
-        // TODO Refactor implementation to use ReadOnlySpan<char> split in .NET 5.0
         private static bool ParseVersionString(ReadOnlySpan<char> value, [NotNullWhen(true)] ref HeroesDataVersion? result)
         {
             if (value == null || value.IsEmpty)
@@ -298,7 +297,7 @@ namespace Heroes.Icons.HeroesData
                     ReadOnlySpan<char> buildSpan = values[3].AsSpan();
 
                     if (int.TryParse(buildSpan.Slice(0, indexPtr), out build) &&
-                        buildSpan.Slice(indexPtr + 1).Equals("ptr", StringComparison.OrdinalIgnoreCase))
+                        buildSpan[(indexPtr + 1)..].Equals("ptr", StringComparison.OrdinalIgnoreCase))
                     {
                         result = new HeroesDataVersion(major, minor, revision, build, true);
                         return true;

@@ -11,8 +11,9 @@
     <RepositoryUrl>https://github.com/HeroesToolChest/Heroes.Icons</RepositoryUrl>
     <PackageReleaseNotes>https://github.com/HeroesToolChest/Heroes.Icons/releases</PackageReleaseNotes>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageTags>C# dotnet core json</PackageTags>
+    <PackageTags>C# dotnet json</PackageTags>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -24,11 +25,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Heroes.Models" Version="3.4.1" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="Heroes.Models" Version="4.1.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

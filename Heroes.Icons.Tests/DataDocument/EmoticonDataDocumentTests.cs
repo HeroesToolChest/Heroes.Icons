@@ -302,7 +302,7 @@ namespace Heroes.Icons.Tests.DataDocument
         {
             Assert.AreEqual("cat_blink_anim", emoticon.Id);
             Assert.AreEqual("Unknown", emoticon.Name);
-            Assert.AreEqual(string.Empty, emoticon.HyperlinkId);
+            Assert.IsNull(emoticon.HyperlinkId);
             Assert.IsFalse(emoticon.IsHidden);
             Assert.IsFalse(emoticon.IsAliasCaseSensitive);
             Assert.AreEqual("Cursed Cats Blink :catblink:", emoticon.Description?.RawDescription);
@@ -336,7 +336,7 @@ namespace Heroes.Icons.Tests.DataDocument
         {
             Assert.AreEqual("abathur_mecha_angry", emoticon.Id);
             Assert.AreEqual("Angry", emoticon.Name);
-            Assert.AreEqual(string.Empty, emoticon.HyperlinkId);
+            Assert.IsNull(emoticon.HyperlinkId);
             Assert.AreEqual("Xenotech Abathur Angry :abaxangry:", emoticon.Description?.RawDescription);
             Assert.AreEqual("(Locked) Xenotech Abathur Angry", emoticon.DescriptionLocked?.RawDescription);
             Assert.AreEqual(2, emoticon.UniversalAliases.Count);

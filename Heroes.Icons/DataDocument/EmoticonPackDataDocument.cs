@@ -318,13 +318,15 @@ namespace Heroes.Icons.DataDocument
                 emoticonPack.SortName = sortName.GetString();
 
             if (emoticonPackElement.TryGetProperty("description", out JsonElement description))
-                emoticonPack.Description = new TooltipDescription(description.GetString(), Localization);
+                emoticonPack.Description = SetTooltipDescription(description.GetString(), Localization);
 
             if (emoticonPackElement.TryGetProperty("emoticons", out JsonElement emoticons))
             {
                 foreach (JsonElement emoticon in emoticons.EnumerateArray())
                 {
-                    emoticonPack.EmoticonIds.Add(emoticon.GetString());
+                    string? emoticonValue = emoticon.GetString();
+                    if (emoticonValue is not null)
+                        emoticonPack.EmoticonIds.Add(emoticonValue);
                 }
             }
 
