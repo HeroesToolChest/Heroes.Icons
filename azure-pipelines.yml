@@ -39,16 +39,16 @@ jobs:
         secureFile: certificate
 
     - task: UseDotNet@2
-      displayName: 'Use .NET Core sdk'
+      displayName: 'Use .NET sdk'
       inputs:
         packageType: sdk
-        version: 3.1.x
+        version: 5.0.x
         installationPath: $(Agent.ToolsDirectory)\dotnet
 
     - task: NuGetToolInstaller@0
-      displayName: nuget installer 5.5.1
+      displayName: nuget installer 5.7.0
       inputs:
-        versionSpec: '5.5.1'
+        versionSpec: '5.7.0'
 
     - powershell: |
         $csproj = get-content Heroes.Icons\Heroes.Icons.csproj
