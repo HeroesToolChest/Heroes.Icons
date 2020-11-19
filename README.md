@@ -1,7 +1,7 @@
 # Heroes Icons
 [![Build Status](https://dev.azure.com/kevinkoliva/Heroes%20of%20the%20Storm%20Projects/_apis/build/status/HeroesToolChest.Heroes.Icons?branchName=master)](https://dev.azure.com/kevinkoliva/Heroes%20of%20the%20Storm%20Projects/_build/latest?definitionId=4&branchName=master) [![Release](https://img.shields.io/github/release/HeroesToolChest/Heroes.Icons.svg)](https://github.com/HeroesToolChest/Heroes.Icons/releases/latest) [![NuGet](https://img.shields.io/nuget/v/Heroes.Icons.svg)](https://www.nuget.org/packages/Heroes.Icons/)
 
-Heroes Icons is a dotnet core library that parses the json data extracted from [Heroes Data Parser](https://github.com/HeroesToolChest/HeroesDataParser) and provides objects to easily access the data along with multi-localization support.
+Heroes Icons is a dotnet library that parses the json data extracted from [Heroes Data Parser](https://github.com/HeroesToolChest/HeroesDataParser) and provides objects to easily access the data along with multi-localization support.
 
 The gamestrings can be either part of the json data files or be in localized form. If there is only going to be one supported locale, then have HDP leave it as is, otherwise include the option `--localized-text`. 
 
@@ -24,9 +24,6 @@ All data files are supported
 - Emoticons
 - Emoticon Packs
 - Veterancy data
-
-## Supported Platforms
-- .Net Core 3.1+ (aiming to be .NET 5)
 
 ## Usage
 There is a `<data-file-name>DataDocument` class for each json data file. Each provide static multiple `Parse` methods to parse the json files.
@@ -144,7 +141,7 @@ heroesDataDirectory.UpdateGameString(alarakData, new HeroesDataVersion(2, 49, 4,
 ## Developing
 To build and compile the code, it is recommended to use the latest version of [Visual Studio 2019 or Visual Studio Code](https://visualstudio.microsoft.com/downloads/).
 
-Another option is to use the dotnet CLI tools from the [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download).
+Another option is to use the dotnet CLI tools from the [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download).
 
 ## License
 [MIT license](/LICENSE)
