@@ -79,13 +79,13 @@ jobs:
       displayName: Sign nuget pack
       inputs:
         command: 'custom'
-        arguments: 'sign $(nupkg_path)Heroes.Icons.*.nupkg -CertificatePath $(Agent.TempDirectory)\certificate -CertificatePassword $(cert_password) -Timestamper http://timestamp.digicert.com'
+        arguments: 'sign $(nupkg_path)Heroes.Icons.*.nupkg -CertificatePath $(Agent.TempDirectory)\certificate -CertificatePassword $(cert_password) -Timestamper http://ts.ssl.com'
 
     - task: NuGetCommand@2
       displayName: Sign symbol pack
       inputs:
         command: 'custom'
-        arguments: 'sign $(nupkg_path)Heroes.Icons.*.snupkg -CertificatePath $(Agent.TempDirectory)\certificate -CertificatePassword $(cert_password) -Timestamper http://timestamp.digicert.com'
+        arguments: 'sign $(nupkg_path)Heroes.Icons.*.snupkg -CertificatePath $(Agent.TempDirectory)\certificate -CertificatePassword $(cert_password) -Timestamper http://ts.ssl.com'
 
     - powershell: |
         $s = get-content $env:MAIN_PROJECT | select-string -pattern "<Version>"
@@ -114,7 +114,7 @@ jobs:
     - task: PublishBuildArtifacts@1
       displayName: Publish Artifacts - Release Files - Zip
       inputs:
-        pathtoPublish: '$(Build.ArtifactStagingDirectory)\Heroes.Icons.$(version).zip'
+        pathToPublish: '$(Build.ArtifactStagingDirectory)\Heroes.Icons.$(version).zip'
         artifactName: 'Heroes.Icons'
 
     - task: PublishBuildArtifacts@1
