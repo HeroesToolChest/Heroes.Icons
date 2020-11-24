@@ -29,7 +29,7 @@ All data files are supported
 There is a `<data-file-name>DataDocument` class for each json data file. Each provide static multiple `Parse` methods to parse the json files.
 
 Example usage for parsing a non-localized json data file.
-```
+```C#
 // read as a json file
 // the localization will automatically be set as kokr since the file name ends with _kokr
 using HeroDataDocument heroDataDocument = HeroDataDocument.Parse("herodata_78679_kokr.json");
@@ -42,20 +42,20 @@ Hero heroData = heroDataDocument.GetHeroById("Alarak", true, true, true, true);
 ```
 
 If the json data file is localized, then the gamestrings json file will need to be parsed as well.
-```
+```C#
 using GameStringDocument gameStringDocument = GameStringDocument.Parse("gamestrings_78679_frfr.json");
 using HeroDataDocument heroDataDocument = HeroDataDocument.Parse("herodata_78679_localized", gameStringDocument);
 ```
 
 The `Parse` methods that accept a file path will load up the file by using `File.ReadAllBytes(...)`. If instead a stream is desired, `Stream` overloaded parse methods are available. Example parsing a non-localized json data file.
-```
+```C#
 // localization must be specified as a parameter.
 using FileStream stream = new FileStream("herodata_78679_enus.json", FileMode.Open);
 using HeroDataDocument document = HeroDataDocument.Parse(stream, Localization.ENUS);
 ```
 
 For a localized json data file, the `GameStringDocument` can accept a `Stream` argument as well.
-```
+```C#
 using FileStream gameStringStream = new FileStream("gamestrings_78679_enus.json", FileMode.Open);
 using GameStringDocument gameStringDocument = GameStringDocument.Parse(gameStringStream);
 
@@ -63,7 +63,7 @@ using FileStream fileStream = new FileStream("herodata_78679_localized.json", Fi
 using HeroDataDocument document = HeroDataDocument.Parse(fileStream, gameStringDocument);
 ```
 However a better way would be to use the `Parse(Stream utf8Json, Stream utf8JsonGameStrings)` method.
-```
+```C#
 using FileStream gameStringStream = new FileStream("gamestrings_78679_enus.json", FileMode.Open);
 using FileStream fileStream = new FileStream("herodata_78679_localized.json", FileMode.Open);
 using HeroDataDocument document = HeroDataDocument.Parse(fileStream, gameStringStream);
@@ -73,7 +73,7 @@ using HeroDataDocument document = HeroDataDocument.Parse(fileStream, gameStringS
 The data objects are provided from [Heroes.Models](https://github.com/HeroesToolChest/Heroes.Models).
 
 Example of obtaining hero data from `HeroDataDocument` and some methods that are available.
-```
+```C#
 // parse the json file
 using HeroDataDocument heroDataDocument = HeroDataDocument.Parse("herodata_78679_enus.json");
 
@@ -103,7 +103,7 @@ To update an object's gamestrings to a different localization without having to 
 The method only accepts a `GameStringDocument` argument (since the gamestrings are just being updated, not all the data). It does not matter if the existing data is parsed from a localized or non-localized json file.
 
 Example of usage.
-```
+```C#
 // parse the json file
 using HeroDataDocument heroDataDocument = HeroDataDocument.Parse("herodata_78679_enus.json");
 
@@ -122,7 +122,7 @@ alarakData.UpdateGameStrings(gameStringDocument);
 If using [heroes-data](https://github.com/HeroesToolChest/heroes-data) or a similar directory structure and file naming convention, then the `HeroesDataDirectory` class provides methods to parse the files without having to use the `<data-file-name>DataDocument` classes.
 
 Example of usage.
-```
+```C#
 // by default, this will look into the heroesdata directory, otherwise provide the name of the directory
 HeroesDataDirectory heroesDataDirectory = new HeroesDataDirectory();
 
