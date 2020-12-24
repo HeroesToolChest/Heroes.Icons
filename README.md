@@ -85,7 +85,7 @@ Hero alarakData = heroDataDocument.GetHeroById("Alarak", true, true, true, true)
 string att = alarakData.AttributeId;
 
 // his rarity
-Rarity rarity = alarakData.Rarity
+Rarity rarity = alarakData.Rarity;
 
 // his abilities
 List<Ability> abilities = alarakData.Abilities.ToList();
