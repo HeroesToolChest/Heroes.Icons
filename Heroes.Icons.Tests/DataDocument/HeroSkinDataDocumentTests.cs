@@ -318,6 +318,18 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteStringValue("ThemedAbilities");
             writer.WriteStringValue("ThemedAnimations");
             writer.WriteEndArray();
+            writer.WriteString("franchise", "Nexus");
+
+            writer.WriteStartArray("variationSkins");
+            writer.WriteStringValue("AbathurMechaVar1");
+            writer.WriteStringValue("AbathurMechaVar2");
+            writer.WriteEndArray();
+
+            writer.WriteStartArray("voiceLines");
+            writer.WriteStringValue("AbathurMecha_VoiceLine01");
+            writer.WriteStringValue("AbathurMecha_VoiceLine02");
+            writer.WriteEndArray();
+
             writer.WriteEndObject();
 
             writer.WriteEndObject();
@@ -341,6 +353,11 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.IsTrue(heroSkin.Features.Contains("AlteredVO"));
             Assert.IsTrue(heroSkin.Features.Contains("ThemedAbilities"));
             Assert.IsTrue(heroSkin.Features.Contains("ThemedAnimations"));
+            Assert.AreEqual(Franchise.Nexus, heroSkin.Franchise);
+            Assert.IsTrue(heroSkin.VariationSkinIds.Contains("AbathurMechaVar1"));
+            Assert.IsTrue(heroSkin.VariationSkinIds.Contains("AbathurMechaVar2"));
+            Assert.IsTrue(heroSkin.VoiceLineIds.Contains("AbathurMecha_VoiceLine01"));
+            Assert.IsTrue(heroSkin.VoiceLineIds.Contains("AbathurMecha_VoiceLine02"));
         }
     }
 }

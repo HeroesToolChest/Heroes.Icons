@@ -371,6 +371,31 @@ namespace Heroes.Icons.DataDocument
                 }
             }
 
+            if (heroSkinElement.TryGetProperty("franchise", out JsonElement franchiseElement) && Enum.TryParse(franchiseElement.GetString(), out Franchise franchise))
+                heroSkin.Franchise = franchise;
+            else
+                heroSkin.Franchise = Franchise.Unknown;
+
+            if (heroSkinElement.TryGetProperty("variationSkins", out JsonElement variationSkinsElement))
+            {
+                foreach (JsonElement variationSkin in variationSkinsElement.EnumerateArray())
+                {
+                    string? variationSkinValue = variationSkin.GetString();
+                    if (variationSkinValue is not null)
+                        heroSkin.VariationSkinIds.Add(variationSkinValue);
+                }
+            }
+
+            if (heroSkinElement.TryGetProperty("voiceLines", out JsonElement variationVoiceLinesElement))
+            {
+                foreach (JsonElement variationVoiceLine in variationVoiceLinesElement.EnumerateArray())
+                {
+                    string? variationVoiceLineValue = variationVoiceLine.GetString();
+                    if (variationVoiceLineValue is not null)
+                        heroSkin.VoiceLineIds.Add(variationVoiceLineValue);
+                }
+            }
+
             GameStringDocument?.UpdateGameStrings(heroSkin);
 
             return heroSkin;
