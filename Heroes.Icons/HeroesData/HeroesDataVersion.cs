@@ -54,7 +54,7 @@ namespace Heroes.Icons.HeroesData
         /// <summary>
         /// Gets a value indicating whether it's a ptr version.
         /// </summary>
-        public bool IsPtr { get; } = false;
+        public bool IsPtr { get; }
 
         /// <summary>
         /// Compares the <paramref name="left"/> value to the <paramref name="right"/> value and determines if they are equal.

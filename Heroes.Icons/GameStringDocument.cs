@@ -12,9 +12,9 @@ namespace Heroes.Icons
     /// </summary>
     public class GameStringDocument : IDisposable
     {
-        private readonly Stream? _streamForAsync = null;
+        private readonly Stream? _streamForAsync;
 
-        private bool _disposedValue = false;
+        private bool _disposedValue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GameStringDocument"/> class.

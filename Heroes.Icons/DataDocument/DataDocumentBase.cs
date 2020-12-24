@@ -14,10 +14,10 @@ namespace Heroes.Icons.DataDocument
     /// </summary>
     public abstract class DataDocumentBase : IDisposable
     {
-        private readonly Stream? _streamForDataAsync = null;
-        private readonly Stream? _streamForGameStringAsync = null;
+        private readonly Stream? _streamForDataAsync;
+        private readonly Stream? _streamForGameStringAsync;
 
-        private bool _disposedValue = false;
+        private bool _disposedValue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
@@ -150,8 +150,6 @@ namespace Heroes.Icons.DataDocument
         private DataDocumentBase(ReadOnlyMemory<byte> jsonData)
         {
             JsonDataDocument = JsonDocument.Parse(jsonData);
-            if (JsonDataDocument is null)
-                throw new NullReferenceException(nameof(JsonDataDocument));
         }
 
         /// <summary>
@@ -204,7 +202,7 @@ namespace Heroes.Icons.DataDocument
         /// <summary>
         /// Gets the current <see cref="GameStringDocument"/> associated with this reader.
         /// </summary>
-        protected GameStringDocument? GameStringDocument { get; private set; } = null;
+        protected GameStringDocument? GameStringDocument { get; private set; }
 
         /// <inheritdoc/>
         public void Dispose()
