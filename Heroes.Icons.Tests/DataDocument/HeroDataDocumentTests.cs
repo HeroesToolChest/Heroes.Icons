@@ -73,6 +73,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual("Melee", hero.Type?.RawDescription);
             Assert.AreEqual(Rarity.Epic, hero.Rarity);
             Assert.AreEqual("ExcellentMana", hero.ScalingBehaviorLink);
+            Assert.AreEqual("AlarakTaldarimMarch", hero.DefaultMountId);
             Assert.AreEqual("Alarak Ascendant Protoss SC SC2 StarCraft Star2 Starcraft2 II 2 Legacy of the Void LotV Covert Ops CO", hero.SearchText);
             Assert.AreEqual("A combo Assassin that can move enemies around and punish mistakes.", hero.Description!.RawDescription);
             Assert.AreEqual("Not all heroes are born of altruism... some, like Alarak, simply desire vengeance. As the new Highlord of the Tal'darim, Alarak leads his people to a destiny free of the corrupt influence of the fallen xel'naga, Amon.", hero.InfoText!.RawDescription);
@@ -143,6 +144,18 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual(40.1, heroWeapons[1].Period);
             Assert.AreEqual("summoned", heroWeapons[1].AttributeFactors.ToList()[1].Type);
             Assert.AreEqual(1.0, heroWeapons[1].AttributeFactors.ToList()[1].Value);
+
+            Assert.IsTrue(hero.SkinIds.Contains("AlarakUltimate"));
+            Assert.IsTrue(hero.SkinIds.Contains("AlarakHunter"));
+
+            Assert.IsTrue(hero.VariationSkinIds.Contains("AlarakBaseVar1"));
+            Assert.IsTrue(hero.VariationSkinIds.Contains("AlarakBaseVar2"));
+
+            Assert.IsTrue(hero.VoiceLineIds.Contains("AlarakBase_VoiceLine01"));
+            Assert.IsTrue(hero.VoiceLineIds.Contains("AlarakBase_VoiceLine02"));
+
+            Assert.IsTrue(hero.AllowedMountCategoryIds.Contains("AlarakTaldarimMarch"));
+            Assert.IsTrue(hero.AllowedMountCategoryIds.Contains("Ridesurf"));
 
             if (abilities)
             {
@@ -1515,6 +1528,7 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteString("type", "Melee");
             writer.WriteString("rarity", "Epic");
             writer.WriteString("scalingLinkId", "ExcellentMana");
+            writer.WriteString("defaultMountId", "AlarakTaldarimMarch");
             writer.WriteString("searchText", "Alarak Ascendant Protoss SC SC2 StarCraft Star2 Starcraft2 II 2 Legacy of the Void LotV Covert Ops CO");
             writer.WriteString("description", "A combo Assassin that can move enemies around and punish mistakes.");
             writer.WriteString("infoText", "Not all heroes are born of altruism... some, like Alarak, simply desire vengeance. As the new Highlord of the Tal'darim, Alarak leads his people to a destiny free of the corrupt influence of the fallen xel'naga, Amon.");
@@ -1614,6 +1628,26 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteNumber("summoned", 1.0);
             writer.WriteEndObject();
             writer.WriteEndObject();
+            writer.WriteEndArray();
+
+            writer.WriteStartArray("skins");
+            writer.WriteStringValue("AlarakUltimate");
+            writer.WriteStringValue("AlarakHunter");
+            writer.WriteEndArray();
+
+            writer.WriteStartArray("variationSkins");
+            writer.WriteStringValue("AlarakBaseVar1");
+            writer.WriteStringValue("AlarakBaseVar2");
+            writer.WriteEndArray();
+
+            writer.WriteStartArray("voiceLines");
+            writer.WriteStringValue("AlarakBase_VoiceLine01");
+            writer.WriteStringValue("AlarakBase_VoiceLine02");
+            writer.WriteEndArray();
+
+            writer.WriteStartArray("mountCategories");
+            writer.WriteStringValue("AlarakTaldarimMarch");
+            writer.WriteStringValue("Ridesurf");
             writer.WriteEndArray();
 
             writer.WriteStartObject("abilities");

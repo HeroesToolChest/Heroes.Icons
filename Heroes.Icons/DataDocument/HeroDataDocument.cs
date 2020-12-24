@@ -844,6 +844,9 @@ namespace Heroes.Icons.DataDocument
             if (heroElement.TryGetProperty("scalingLinkId", out JsonElement scalingLinkIdElement))
                 hero.ScalingBehaviorLink = scalingLinkIdElement.GetString();
 
+            if (heroElement.TryGetProperty("defaultMountId", out JsonElement defaultMountIdElement))
+                hero.DefaultMountId = defaultMountIdElement.GetString();
+
             if (heroElement.TryGetProperty("searchText", out JsonElement searchTextElement))
                 hero.SearchText = searchTextElement.GetString();
 
@@ -942,6 +945,46 @@ namespace Heroes.Icons.DataDocument
 
             // weapons
             SetUnitWeapons(heroElement, hero);
+
+            if (heroElement.TryGetProperty("skins", out JsonElement skinsElement))
+            {
+                foreach (JsonElement skin in skinsElement.EnumerateArray())
+                {
+                    string? skinValue = skin.GetString();
+                    if (skinValue is not null)
+                        hero.SkinIds.Add(skinValue);
+                }
+            }
+
+            if (heroElement.TryGetProperty("variationSkins", out JsonElement variationSkinsElement))
+            {
+                foreach (JsonElement variationSkin in variationSkinsElement.EnumerateArray())
+                {
+                    string? variationSkinValue = variationSkin.GetString();
+                    if (variationSkinValue is not null)
+                        hero.VariationSkinIds.Add(variationSkinValue);
+                }
+            }
+
+            if (heroElement.TryGetProperty("voiceLines", out JsonElement voiceLinesElement))
+            {
+                foreach (JsonElement voiceLine in voiceLinesElement.EnumerateArray())
+                {
+                    string? voiceLineValue = voiceLine.GetString();
+                    if (voiceLineValue is not null)
+                        hero.VoiceLineIds.Add(voiceLineValue);
+                }
+            }
+
+            if (heroElement.TryGetProperty("mountCategories", out JsonElement mountCategoriesElement))
+            {
+                foreach (JsonElement mountCategory in mountCategoriesElement.EnumerateArray())
+                {
+                    string? mountCategoryValue = mountCategory.GetString();
+                    if (mountCategoryValue is not null)
+                        hero.AllowedMountCategoryIds.Add(mountCategoryValue);
+                }
+            }
 
             // abilities
             if (includeAbilities && heroElement.TryGetProperty("abilities", out JsonElement abilities))
