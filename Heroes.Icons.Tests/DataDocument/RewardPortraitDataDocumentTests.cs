@@ -258,6 +258,7 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteNumber("columns", 6);
             writer.WriteNumber("rows", 6);
             writer.WriteEndObject();
+            writer.WriteString("image", "storm_portrait_2015tespamembershipportrait.png");
             writer.WriteEndObject();
 
             writer.WriteStartObject("AbathurCarbotsPortrait");
@@ -300,6 +301,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual("ui_heroes_portraits_sheet5.png", rewardPortrait.TextureSheet.Image);
             Assert.AreEqual(6, rewardPortrait.TextureSheet.Columns);
             Assert.AreEqual(6, rewardPortrait.TextureSheet.Rows);
+            Assert.AreEqual("storm_portrait_2015tespamembershipportrait.png", rewardPortrait.ImageFileName);
         }
 
         private static void BasicAbathurCarbotsPortraitAsserts(RewardPortrait rewardPortrait)

@@ -349,6 +349,9 @@ namespace Heroes.Icons.DataDocument
                     rewardPortrait.TextureSheet.Rows = rows.GetInt32();
             }
 
+            if (rewardPortraitElement.TryGetProperty("image", out JsonElement imageElement))
+                rewardPortrait.ImageFileName = imageElement.GetString();
+
             GameStringDocument?.UpdateGameStrings(rewardPortrait);
 
             return rewardPortrait;
