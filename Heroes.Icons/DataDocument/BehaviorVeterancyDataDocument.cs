@@ -61,6 +61,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <returns>A <see cref="BehaviorVeterancyDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="FileNotFoundException">The file specified in <paramref name="jsonDataFilePath"/> was not found.</exception>
+        /// <exception cref="JsonException">The json data in <paramref name="jsonDataFilePath"/> is not valid.</exception>
         public static BehaviorVeterancyDataDocument Parse(string jsonDataFilePath)
         {
             return new BehaviorVeterancyDataDocument(jsonDataFilePath);
@@ -72,6 +74,8 @@ namespace Heroes.Icons.DataDocument
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         /// <returns>A <see cref="BehaviorVeterancyDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="FileNotFoundException">The file specified in <paramref name="jsonDataFilePath"/> was not found.</exception>
+        /// <exception cref="JsonException">The json data in <paramref name="jsonDataFilePath"/> is not valid.</exception>
         public static BehaviorVeterancyDataDocument Parse(string jsonDataFilePath, Localization localization)
         {
             return new BehaviorVeterancyDataDocument(jsonDataFilePath, localization);
@@ -83,6 +87,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         /// <returns>A <see cref="BehaviorVeterancyDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="JsonException"><paramref name="jsonData"/> does not represent a valid single JSON value.</exception>
         public static BehaviorVeterancyDataDocument Parse(ReadOnlyMemory<byte> jsonData, Localization localization)
         {
             return new BehaviorVeterancyDataDocument(jsonData, localization);
@@ -94,6 +99,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         /// <returns>A <see cref="BehaviorVeterancyDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="JsonException"><paramref name="utf8Json"/> does not represent a valid single JSON value.</exception>
         public static BehaviorVeterancyDataDocument Parse(Stream utf8Json, Localization localization)
         {
             return new BehaviorVeterancyDataDocument(utf8Json, localization);
@@ -105,6 +111,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         /// <returns>A <see cref="BehaviorVeterancyDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="JsonException"><paramref name="utf8Json"/> does not represent a valid single JSON value.</exception>
         public static Task<BehaviorVeterancyDataDocument> ParseAsync(Stream utf8Json, Localization localization)
         {
             return new BehaviorVeterancyDataDocument(utf8Json, localization, true).InitializeParseDataStreamAsync<BehaviorVeterancyDataDocument>();

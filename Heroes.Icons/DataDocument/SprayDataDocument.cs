@@ -103,6 +103,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <returns>A <see cref="SprayDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="FileNotFoundException">The file specified in <paramref name="jsonDataFilePath"/> was not found.</exception>
+        /// <exception cref="JsonException">The json data in <paramref name="jsonDataFilePath"/> is not valid.</exception>
         public static SprayDataDocument Parse(string jsonDataFilePath)
         {
             return new SprayDataDocument(jsonDataFilePath);
@@ -114,6 +116,8 @@ namespace Heroes.Icons.DataDocument
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         /// <returns>A <see cref="SprayDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="FileNotFoundException">The file specified in <paramref name="jsonDataFilePath"/> was not found.</exception>
+        /// <exception cref="JsonException">The json data in <paramref name="jsonDataFilePath"/> is not valid.</exception>
         public static SprayDataDocument Parse(string jsonDataFilePath, Localization localization)
         {
             return new SprayDataDocument(jsonDataFilePath, localization);
@@ -125,6 +129,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         /// <returns>A <see cref="SprayDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="JsonException"><paramref name="jsonData"/> does not represent a valid single JSON value.</exception>
         public static SprayDataDocument Parse(ReadOnlyMemory<byte> jsonData, Localization localization)
         {
             return new SprayDataDocument(jsonData, localization);
@@ -137,6 +142,8 @@ namespace Heroes.Icons.DataDocument
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
         /// <returns>A <see cref="SprayDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="FileNotFoundException">The file specified in <paramref name="jsonDataFilePath"/> was not found.</exception>
+        /// <exception cref="JsonException">The json data in <paramref name="jsonDataFilePath"/> is not valid.</exception>
         public static SprayDataDocument Parse(string jsonDataFilePath, GameStringDocument gameStringDocument)
         {
             return new SprayDataDocument(jsonDataFilePath, gameStringDocument);
@@ -148,6 +155,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
         /// <returns>A <see cref="SprayDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="JsonException"><paramref name="jsonData"/> does not represent a valid single JSON value.</exception>
         public static SprayDataDocument Parse(ReadOnlyMemory<byte> jsonData, GameStringDocument gameStringDocument)
         {
             return new SprayDataDocument(jsonData, gameStringDocument);
@@ -159,6 +167,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         /// <returns>A <see cref="SprayDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="JsonException"><paramref name="utf8Json"/> does not represent a valid single JSON value.</exception>
         public static SprayDataDocument Parse(Stream utf8Json, Localization localization)
         {
             return new SprayDataDocument(utf8Json, localization);
@@ -170,6 +179,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
         /// <returns>A <see cref="SprayDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="JsonException"><paramref name="utf8Json"/> does not represent a valid single JSON value.</exception>
         public static SprayDataDocument Parse(Stream utf8Json, GameStringDocument gameStringDocument)
         {
             return new SprayDataDocument(utf8Json, gameStringDocument);
@@ -182,6 +192,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
         /// <returns>A <see cref="SprayDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="JsonException"><paramref name="utf8Json"/> or <paramref name="utf8JsonGameStrings"/> does not represent a valid single JSON value.</exception>
         public static SprayDataDocument Parse(Stream utf8Json, Stream utf8JsonGameStrings)
         {
             return new SprayDataDocument(utf8Json, utf8JsonGameStrings);
@@ -193,6 +204,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         /// <returns>A <see cref="SprayDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="JsonException"><paramref name="utf8Json"/> does not represent a valid single JSON value.</exception>
         public static Task<SprayDataDocument> ParseAsync(Stream utf8Json, Localization localization)
         {
             return new SprayDataDocument(utf8Json, localization, true).InitializeParseDataStreamAsync<SprayDataDocument>();
@@ -204,6 +216,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
         /// <returns>A <see cref="SprayDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="JsonException"><paramref name="utf8Json"/> does not represent a valid single JSON value.</exception>
         public static Task<SprayDataDocument> ParseAsync(Stream utf8Json, GameStringDocument gameStringDocument)
         {
             return new SprayDataDocument(utf8Json, gameStringDocument, true).InitializeParseDataStreamAsync<SprayDataDocument>();
@@ -216,6 +229,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
         /// <returns>A <see cref="SprayDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="JsonException"><paramref name="utf8Json"/> or <paramref name="utf8JsonGameStrings"/> does not represent a valid single JSON value.</exception>
         public static Task<SprayDataDocument> ParseAsync(Stream utf8Json, Stream utf8JsonGameStrings)
         {
             return new SprayDataDocument(utf8Json, utf8JsonGameStrings, true).InitializeParseDataWithGameStringStreamAsync<SprayDataDocument>();

@@ -103,6 +103,8 @@ namespace Heroes.Icons.DataDocument
         /// </summary>
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <returns>A <see cref="PortraitPackDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="FileNotFoundException">The file specified in <paramref name="jsonDataFilePath"/> was not found.</exception>
+        /// <exception cref="JsonException">The json data in <paramref name="jsonDataFilePath"/> is not valid.</exception>
         public static PortraitPackDataDocument Parse(string jsonDataFilePath)
         {
             return new PortraitPackDataDocument(jsonDataFilePath);
@@ -114,6 +116,8 @@ namespace Heroes.Icons.DataDocument
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         /// <returns>A <see cref="PortraitPackDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="FileNotFoundException">The file specified in <paramref name="jsonDataFilePath"/> was not found.</exception>
+        /// <exception cref="JsonException">The json data in <paramref name="jsonDataFilePath"/> is not valid.</exception>
         public static PortraitPackDataDocument Parse(string jsonDataFilePath, Localization localization)
         {
             return new PortraitPackDataDocument(jsonDataFilePath, localization);
@@ -125,6 +129,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         /// <returns>A <see cref="PortraitPackDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="JsonException"><paramref name="jsonData"/> does not represent a valid single JSON value.</exception>
         public static PortraitPackDataDocument Parse(ReadOnlyMemory<byte> jsonData, Localization localization)
         {
             return new PortraitPackDataDocument(jsonData, localization);
@@ -137,6 +142,8 @@ namespace Heroes.Icons.DataDocument
         /// <param name="jsonDataFilePath">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
         /// <returns>A <see cref="PortraitPackDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="FileNotFoundException">The file specified in <paramref name="jsonDataFilePath"/> was not found.</exception>
+        /// <exception cref="JsonException">The json data in <paramref name="jsonDataFilePath"/> is not valid.</exception>
         public static PortraitPackDataDocument Parse(string jsonDataFilePath, GameStringDocument gameStringDocument)
         {
             return new PortraitPackDataDocument(jsonDataFilePath, gameStringDocument);
@@ -148,6 +155,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="jsonData">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
         /// <returns>A <see cref="PortraitPackDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="JsonException"><paramref name="jsonData"/> does not represent a valid single JSON value.</exception>
         public static PortraitPackDataDocument Parse(ReadOnlyMemory<byte> jsonData, GameStringDocument gameStringDocument)
         {
             return new PortraitPackDataDocument(jsonData, gameStringDocument);
@@ -159,6 +167,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         /// <returns>A <see cref="PortraitPackDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="JsonException"><paramref name="utf8Json"/> does not represent a valid single JSON value.</exception>
         public static PortraitPackDataDocument Parse(Stream utf8Json, Localization localization)
         {
             return new PortraitPackDataDocument(utf8Json, localization);
@@ -170,6 +179,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
         /// <returns>A <see cref="PortraitPackDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="JsonException"><paramref name="utf8Json"/> does not represent a valid single JSON value.</exception>
         public static PortraitPackDataDocument Parse(Stream utf8Json, GameStringDocument gameStringDocument)
         {
             return new PortraitPackDataDocument(utf8Json, gameStringDocument);
@@ -182,6 +192,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
         /// <returns>A <see cref="PortraitPackDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="JsonException"><paramref name="utf8Json"/> or <paramref name="utf8JsonGameStrings"/> does not represent a valid single JSON value.</exception>
         public static PortraitPackDataDocument Parse(Stream utf8Json, Stream utf8JsonGameStrings)
         {
             return new PortraitPackDataDocument(utf8Json, utf8JsonGameStrings);
@@ -193,6 +204,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="localization">The <see cref="Localization"/> of the file.</param>
         /// <returns>A <see cref="PortraitPackDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="JsonException"><paramref name="utf8Json"/> does not represent a valid single JSON value.</exception>
         public static Task<PortraitPackDataDocument> ParseAsync(Stream utf8Json, Localization localization)
         {
             return new PortraitPackDataDocument(utf8Json, localization, true).InitializeParseDataStreamAsync<PortraitPackDataDocument>();
@@ -204,6 +216,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
         /// <returns>A <see cref="PortraitPackDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="JsonException"><paramref name="utf8Json"/> does not represent a valid single JSON value.</exception>
         public static Task<PortraitPackDataDocument> ParseAsync(Stream utf8Json, GameStringDocument gameStringDocument)
         {
             return new PortraitPackDataDocument(utf8Json, gameStringDocument, true).InitializeParseDataStreamAsync<PortraitPackDataDocument>();
@@ -216,6 +229,7 @@ namespace Heroes.Icons.DataDocument
         /// <param name="utf8Json">The JSON data to parse.</param>
         /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
         /// <returns>A <see cref="PortraitPackDataDocument"/> representation of the JSON value.</returns>
+        /// <exception cref="JsonException"><paramref name="utf8Json"/> or <paramref name="utf8JsonGameStrings"/> does not represent a valid single JSON value.</exception>
         public static Task<PortraitPackDataDocument> ParseAsync(Stream utf8Json, Stream utf8JsonGameStrings)
         {
             return new PortraitPackDataDocument(utf8Json, utf8JsonGameStrings, true).InitializeParseDataWithGameStringStreamAsync<PortraitPackDataDocument>();
