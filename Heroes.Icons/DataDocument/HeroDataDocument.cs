@@ -791,10 +791,10 @@ namespace Heroes.Icons.DataDocument
             if (heroElement.TryGetProperty("difficulty", out JsonElement difficultyElement))
                 hero.Difficulty = difficultyElement.GetString();
 
-            if (heroElement.TryGetProperty("franchise", out JsonElement franchiseElement) && Enum.TryParse(franchiseElement.GetString(), out HeroFranchise heroFranchise))
+            if (heroElement.TryGetProperty("franchise", out JsonElement franchiseElement) && Enum.TryParse(franchiseElement.GetString(), out Franchise heroFranchise))
                 hero.Franchise = heroFranchise;
             else
-                hero.Franchise = HeroFranchise.Unknown;
+                hero.Franchise = Franchise.Unknown;
 
             if (heroElement.TryGetProperty("gender", out JsonElement genderElement) && Enum.TryParse(genderElement.GetString(), out UnitGender unitGender))
                 hero.Gender = unitGender;

@@ -62,7 +62,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual("Alarak", hero.HyperlinkId);
             Assert.AreEqual("Alar", hero.AttributeId);
             Assert.AreEqual("Hard", hero.Difficulty);
-            Assert.AreEqual(HeroFranchise.Starcraft, hero.Franchise);
+            Assert.AreEqual(Franchise.Starcraft, hero.Franchise);
             Assert.AreEqual(UnitGender.Male, hero.Gender);
             Assert.AreEqual("Highlord of the Tal'darim", hero.Title);
             Assert.AreEqual(0.8125, hero.InnerRadius);
@@ -288,7 +288,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual("Ragnaros", hero.HyperlinkId);
             Assert.AreEqual("Ragn", hero.AttributeId);
             Assert.AreEqual("Medium", hero.Difficulty);
-            Assert.AreEqual(HeroFranchise.Unknown, hero.Franchise);
+            Assert.AreEqual(Franchise.Unknown, hero.Franchise);
             Assert.AreEqual(UnitGender.Neutral, hero.Gender);
             Assert.AreEqual(Rarity.Unknown, hero.Rarity);
 
@@ -1487,7 +1487,7 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual("Ragnaros", hero.HyperlinkId);
             Assert.AreEqual("Ragn", hero.AttributeId);
             Assert.AreEqual("Medium", hero.Difficulty);
-            Assert.AreEqual(HeroFranchise.Unknown, hero.Franchise);
+            Assert.AreEqual(Franchise.Unknown, hero.Franchise);
             Assert.AreEqual(UnitGender.Neutral, hero.Gender);
             Assert.AreEqual(Rarity.Unknown, hero.Rarity);
         }
