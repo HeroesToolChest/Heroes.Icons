@@ -367,6 +367,21 @@ namespace Heroes.Icons.DataDocument
             if (mountElement.TryGetProperty("infoText", out JsonElement infoText))
                 mount.InfoText = SetTooltipDescription(infoText.GetString(), Localization);
 
+            if (mountElement.TryGetProperty("franchise", out JsonElement franchiseElement) && Enum.TryParse(franchiseElement.GetString(), out Franchise franchise))
+                mount.Franchise = franchise;
+            else
+                mount.Franchise = Franchise.Unknown;
+
+            if (mountElement.TryGetProperty("variationMounts", out JsonElement variationMountsElement))
+            {
+                foreach (JsonElement variationMount in variationMountsElement.EnumerateArray())
+                {
+                    string? variationMountValue = variationMount.GetString();
+                    if (variationMountValue is not null)
+                        mount.VariationMountIds.Add(variationMountValue);
+                }
+            }
+
             GameStringDocument?.UpdateGameStrings(mount);
 
             return mount;

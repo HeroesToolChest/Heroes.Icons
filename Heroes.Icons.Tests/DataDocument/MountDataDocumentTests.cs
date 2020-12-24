@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -317,6 +318,13 @@ namespace Heroes.Icons.Tests.DataDocument
             writer.WriteString("sortName", "1HeroAnubarak");
             writer.WriteString("searchText", "Crypt Lord Wings");
             writer.WriteString("infoText", "In the years following the Third War, Azerothian scholars hypothesized that the wings of spiderlords were vestigal, incapable of flight. They were very wrong..");
+            writer.WriteString("franchise", "Warcraft");
+
+            writer.WriteStartArray("variationMounts");
+            writer.WriteStringValue("ArmoredHorseBrown");
+            writer.WriteStringValue("ArmoredHorsePurple");
+            writer.WriteEndArray();
+
             writer.WriteEndObject();
 
             writer.WriteEndObject();
@@ -339,6 +347,9 @@ namespace Heroes.Icons.Tests.DataDocument
             Assert.AreEqual("1HeroAnubarak", mount.SortName);
             Assert.AreEqual("Crypt Lord Wings", mount.SearchText);
             Assert.AreEqual("In the years following the Third War, Azerothian scholars hypothesized that the wings of spiderlords were vestigal, incapable of flight. They were very wrong..", mount.InfoText?.RawDescription);
+            Assert.AreEqual(Franchise.Warcraft, mount.Franchise);
+            Assert.AreEqual(2, mount.VariationMountIds.Count);
+            Assert.AreEqual("ArmoredHorsePurple", mount.VariationMountIds.ToList()[1]);
         }
     }
 }
