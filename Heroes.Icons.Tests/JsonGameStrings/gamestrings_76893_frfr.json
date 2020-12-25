@@ -140,6 +140,11 @@
       "description": {
         "EpicProgChest": "A Loot Chest that guarantees at least one Epic or better item."
       }
+    },
+    "typedescription": {
+      "name": {
+        "BasicPortrait": "some basic portrait"
+      }
     }
   }
 }

@@ -1,0 +1,12 @@
+{
+  "BasicPortrait": {
+    "hyperlinkId": "BasicPortrait",
+    "iconSlot": 10,
+    "textureSheet": {
+      "image": "storm_ui_heroes_rewardicons_sheet.png",
+      "columns": 5,
+      "rows": 12
+    },
+    "image": "storm_typedescription_basicportrait.png"
+  }
+}

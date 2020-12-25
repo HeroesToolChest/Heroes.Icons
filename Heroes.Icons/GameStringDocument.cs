@@ -764,6 +764,28 @@ namespace Heroes.Icons
         }
 
         /// <summary>
+        /// Updates the <paramref name="typeDescription"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
+        /// </summary>
+        /// <param name="typeDescription">The data to be updated.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="typeDescription"/> is <see langword="null"/>.</exception>
+        public void UpdateGameStrings(TypeDescription typeDescription)
+        {
+            if (typeDescription is null)
+                throw new ArgumentNullException(nameof(typeDescription));
+
+            JsonElement element = JsonGameStringDocument.RootElement;
+
+            if (element.TryGetProperty("gamestrings", out JsonElement gameStringElement))
+            {
+                if (gameStringElement.TryGetProperty("typedescription", out JsonElement keyValue))
+                {
+                    if (TryGetValueFromJsonElement(keyValue, "name", typeDescription.Id, out JsonElement nameElement))
+                        typeDescription.Name = nameElement.GetString();
+                }
+            }
+        }
+
+        /// <summary>
         /// Parses the Json stream as <see langword="async"/>.
         /// </summary>
         /// <typeparam name="T">A class that derives <see cref="GameStringDocument"/>.</typeparam>
