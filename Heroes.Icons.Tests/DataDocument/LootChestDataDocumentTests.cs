@@ -12,7 +12,7 @@ namespace Heroes.Icons.Tests.DataDocument
     [TestClass]
     public class LootChestDataDocumentTests : DataDocumentBase, IDataDocument
     {
-        private readonly string _dataFile = Path.Combine("JsonData", "lootChestdata_76893_kokr.json");
+        private readonly string _dataFile = Path.Combine("JsonData", "lootchestdata_76893_kokr.json");
         private readonly string _jsonGameStringFileKOKR = Path.Combine("JsonGameStrings", "gamestrings_76893_kokr.json");
         private readonly string _jsonGameStringFileFRFR = Path.Combine("JsonGameStrings", "gamestrings_76893_frfr.json");
 
