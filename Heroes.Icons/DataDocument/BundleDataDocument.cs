@@ -303,6 +303,60 @@ namespace Heroes.Icons.DataDocument
         public bool TryGetBundleByHyperlinkId(string? hyperlinkId, [NotNullWhen(true)] out Bundle? value)
             => PropertyLookup("hyperlinkId", hyperlinkId, GetBundleData, out value);
 
+        /// <summary>
+        /// Gets an <see cref="Bundle"/> from the bundle <paramref name="lootChestBonus"/> property value.
+        /// </summary>
+        /// <param name="lootChestBonus">A bundle loot chest bonus id property value.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="lootChestBonus"/> is <see langword="null"/>.</exception>
+        /// <exception cref="KeyNotFoundException"><paramref name="lootChestBonus"/> property value was not found.</exception>
+        /// <returns>A <see cref="Bundle"/> object.</returns>
+        public Bundle GetBundleByLootChestBonus(string lootChestBonus)
+        {
+            if (lootChestBonus is null)
+                throw new ArgumentNullException(nameof(lootChestBonus));
+
+            if (TryGetBundleByLootChestBonus(lootChestBonus, out Bundle? value))
+                return value;
+            else
+                throw new KeyNotFoundException();
+        }
+
+        /// <summary>
+        /// Looks for a bundle with the <paramref name="lootChestBonus"/> property value, returning a value that indicates whether such value exists.
+        /// </summary>
+        /// <param name="lootChestBonus">A bundle loot chest bonus id property value.</param>
+        /// <param name="value">When this method returns, contains the <see cref="Bundle"/> associated with the <paramref name="lootChestBonus"/> property value.</param>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        public bool TryGetBundleByLootChestBonus(string? lootChestBonus, [NotNullWhen(true)] out Bundle? value)
+            => PropertyLookup("lootChestBonus", lootChestBonus, GetBundleData, out value);
+
+        /// <summary>
+        /// Gets an <see cref="Bundle"/> from the bundle <paramref name="boostId"/> property value.
+        /// </summary>
+        /// <param name="boostId">A bundle boost id property value.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="boostId"/> is <see langword="null"/>.</exception>
+        /// <exception cref="KeyNotFoundException"><paramref name="boostId"/> property value was not found.</exception>
+        /// <returns>A <see cref="Bundle"/> object.</returns>
+        public Bundle GetBundleByBoostId(string boostId)
+        {
+            if (boostId is null)
+                throw new ArgumentNullException(nameof(boostId));
+
+            if (TryGetBundleByBoostId(boostId, out Bundle? value))
+                return value;
+            else
+                throw new KeyNotFoundException();
+        }
+
+        /// <summary>
+        /// Looks for a bundle with the <paramref name="boostId"/> property value, returning a value that indicates whether such value exists.
+        /// </summary>
+        /// <param name="boostId">A bundle boost id property value.</param>
+        /// <param name="value">When this method returns, contains the <see cref="Bundle"/> associated with the <paramref name="boostId"/> property value.</param>
+        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+        public bool TryGetBundleByBoostId(string? boostId, [NotNullWhen(true)] out Bundle? value)
+            => PropertyLookup("boostId", boostId, GetBundleData, out value);
+
         private Bundle GetBundleData(string bundleId, JsonElement bundleElement)
         {
             Bundle bundle = new Bundle()

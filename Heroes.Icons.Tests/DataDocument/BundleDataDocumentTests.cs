@@ -241,6 +241,96 @@ namespace Heroes.Icons.Tests.DataDocument
             RaiderRexxarBundleAsserts(bundle!);
         }
 
+        [DataTestMethod]
+        [DataRow("boost1Id")]
+        [DataRow(null)]
+        [DataRow("asdf")]
+        public void GetBundleByBoostIdTest(string id)
+        {
+            if (id is null)
+            {
+                Assert.ThrowsException<ArgumentNullException>(() =>
+                {
+                    _ = _bundleDataDocument.GetBundleByBoostId(id!);
+                });
+
+                return;
+            }
+            else if (id == "asdf")
+            {
+                Assert.ThrowsException<KeyNotFoundException>(() =>
+                {
+                    _ = _bundleDataDocument.GetBundleByBoostId(id);
+                });
+
+                return;
+            }
+
+            RaiderRexxarBundleAsserts(_bundleDataDocument.GetBundleByBoostId(id));
+        }
+
+        [DataTestMethod]
+        [DataRow("boost1Id")]
+        [DataRow(null)]
+        [DataRow("asdf")]
+        public void TryGetBundleByIdBoostIdTest(string? id)
+        {
+            if (id is null || id == "asdf")
+            {
+                Assert.IsFalse(_bundleDataDocument.TryGetBundleByBoostId(id, out _));
+
+                return;
+            }
+
+            Assert.IsTrue(_bundleDataDocument.TryGetBundleByBoostId(id, out Bundle? bundle));
+            RaiderRexxarBundleAsserts(bundle!);
+        }
+
+        [DataTestMethod]
+        [DataRow("lootChestBonus")]
+        [DataRow(null)]
+        [DataRow("asdf")]
+        public void GetBundleByLootChestBonusTest(string id)
+        {
+            if (id is null)
+            {
+                Assert.ThrowsException<ArgumentNullException>(() =>
+                {
+                    _ = _bundleDataDocument.GetBundleByLootChestBonus(id!);
+                });
+
+                return;
+            }
+            else if (id == "asdf")
+            {
+                Assert.ThrowsException<KeyNotFoundException>(() =>
+                {
+                    _ = _bundleDataDocument.GetBundleByLootChestBonus(id);
+                });
+
+                return;
+            }
+
+            RaiderRexxarBundleAsserts(_bundleDataDocument.GetBundleByLootChestBonus(id));
+        }
+
+        [DataTestMethod]
+        [DataRow("lootChestBonus")]
+        [DataRow(null)]
+        [DataRow("asdf")]
+        public void TryGetBundleByIdLootChestBonusTest(string? id)
+        {
+            if (id is null || id == "asdf")
+            {
+                Assert.IsFalse(_bundleDataDocument.TryGetBundleByLootChestBonus(id, out _));
+
+                return;
+            }
+
+            Assert.IsTrue(_bundleDataDocument.TryGetBundleByLootChestBonus(id, out Bundle? bundle));
+            RaiderRexxarBundleAsserts(bundle!);
+        }
+
         private static byte[] LoadJsonTestData()
         {
             using MemoryStream memoryStream = new MemoryStream();
