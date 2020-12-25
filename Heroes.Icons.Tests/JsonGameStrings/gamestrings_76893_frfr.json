@@ -116,6 +116,14 @@
         "CassiaEmoticonPack2": "카시아 팩 2",
         "CatSpooky18Pack": "저주받은 고양이 이모티콘 팩"
       }
+    },
+    "bundle": {
+      "name": {
+        "RaiderRexxarBundle": "특공대원 렉사르 묶음 상품"
+      },
+      "sortname": {
+        "RaiderRexxarBundle": "카시아 팩 2"
+      }
     }
   }
 }

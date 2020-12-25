@@ -121,6 +121,14 @@
       "description": {
         "Abathur": "전장 어디에서나 전투에 영향을 줄 수 있는 독특한 영웅입니다."
       }
+    },
+    "bundle": {
+      "name": {
+        "RaiderRexxarBundle": "특공대원 렉사르 묶음 상품"
+      },
+      "sortname": {
+        "RaiderRexxarBundle": "카시아 팩 2"
+      }
     }
   }
 }

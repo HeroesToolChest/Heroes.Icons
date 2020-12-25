@@ -1,0 +1,19 @@
+{
+  "RaiderRexxarBundle": {
+    "name": "특공대원 렉사르 묶음 상품",
+    "hyperlinkId": "RaiderRexxarBundle",
+    "releaseDate": "2016-09-27",
+    "franchise": "Warcraft",
+    "heroes": [
+      "Rexxar"
+    ],
+    "skins": [
+      {
+        "Rexxar": [
+          "RexxarMarine"
+        ]
+      }
+    ],
+    "image": "storm_ui_bundles_h20_raiderrexxar.png"
+  }
+}

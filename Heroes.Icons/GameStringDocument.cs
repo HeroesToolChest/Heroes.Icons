@@ -690,6 +690,31 @@ namespace Heroes.Icons
         }
 
         /// <summary>
+        /// Updates the <paramref name="bunndle"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
+        /// </summary>
+        /// <param name="bunndle">The data to be updated.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="bunndle"/> is <see langword="null"/>.</exception>
+        public void UpdateGameStrings(Bundle bunndle)
+        {
+            if (bunndle is null)
+                throw new ArgumentNullException(nameof(bunndle));
+
+            JsonElement element = JsonGameStringDocument.RootElement;
+
+            if (element.TryGetProperty("gamestrings", out JsonElement gameStringElement))
+            {
+                if (gameStringElement.TryGetProperty("bundle", out JsonElement keyValue))
+                {
+                    if (TryGetValueFromJsonElement(keyValue, "name", bunndle.Id, out JsonElement nameElement))
+                        bunndle.Name = nameElement.GetString();
+
+                    if (TryGetValueFromJsonElement(keyValue, "sortname", bunndle.Id, out JsonElement sortNameElement))
+                        bunndle.SortName = sortNameElement.GetString();
+                }
+            }
+        }
+
+        /// <summary>
         /// Parses the Json stream as <see langword="async"/>.
         /// </summary>
         /// <typeparam name="T">A class that derives <see cref="GameStringDocument"/>.</typeparam>
