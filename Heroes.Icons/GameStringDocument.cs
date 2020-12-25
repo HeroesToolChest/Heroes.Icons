@@ -690,14 +690,14 @@ namespace Heroes.Icons
         }
 
         /// <summary>
-        /// Updates the <paramref name="bunndle"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
+        /// Updates the <paramref name="bundle"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
         /// </summary>
-        /// <param name="bunndle">The data to be updated.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="bunndle"/> is <see langword="null"/>.</exception>
-        public void UpdateGameStrings(Bundle bunndle)
+        /// <param name="bundle">The data to be updated.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="bundle"/> is <see langword="null"/>.</exception>
+        public void UpdateGameStrings(Bundle bundle)
         {
-            if (bunndle is null)
-                throw new ArgumentNullException(nameof(bunndle));
+            if (bundle is null)
+                throw new ArgumentNullException(nameof(bundle));
 
             JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -705,11 +705,36 @@ namespace Heroes.Icons
             {
                 if (gameStringElement.TryGetProperty("bundle", out JsonElement keyValue))
                 {
-                    if (TryGetValueFromJsonElement(keyValue, "name", bunndle.Id, out JsonElement nameElement))
-                        bunndle.Name = nameElement.GetString();
+                    if (TryGetValueFromJsonElement(keyValue, "name", bundle.Id, out JsonElement nameElement))
+                        bundle.Name = nameElement.GetString();
 
-                    if (TryGetValueFromJsonElement(keyValue, "sortname", bunndle.Id, out JsonElement sortNameElement))
-                        bunndle.SortName = sortNameElement.GetString();
+                    if (TryGetValueFromJsonElement(keyValue, "sortname", bundle.Id, out JsonElement sortNameElement))
+                        bundle.SortName = sortNameElement.GetString();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the <paramref name="boost"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
+        /// </summary>
+        /// <param name="boost">The data to be updated.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="boost"/> is <see langword="null"/>.</exception>
+        public void UpdateGameStrings(Boost boost)
+        {
+            if (boost is null)
+                throw new ArgumentNullException(nameof(boost));
+
+            JsonElement element = JsonGameStringDocument.RootElement;
+
+            if (element.TryGetProperty("gamestrings", out JsonElement gameStringElement))
+            {
+                if (gameStringElement.TryGetProperty("boost", out JsonElement keyValue))
+                {
+                    if (TryGetValueFromJsonElement(keyValue, "name", boost.Id, out JsonElement nameElement))
+                        boost.Name = nameElement.GetString();
+
+                    if (TryGetValueFromJsonElement(keyValue, "sortname", boost.Id, out JsonElement sortNameElement))
+                        boost.SortName = sortNameElement.GetString();
                 }
             }
         }

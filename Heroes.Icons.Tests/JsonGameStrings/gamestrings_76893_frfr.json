@@ -124,6 +124,14 @@
       "sortname": {
         "RaiderRexxarBundle": "카시아 팩 2"
       }
+    },
+    "boost": {
+      "name": {
+        "30DayPromo": "30 Day Boost"
+      },
+      "sortname": {
+        "30DayPromo": "xx30DayBoost"
+      }
     }
   }
 }
