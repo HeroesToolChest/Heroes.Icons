@@ -740,6 +740,30 @@ namespace Heroes.Icons
         }
 
         /// <summary>
+        /// Updates the <paramref name="lootChest"/>'s localized gamestrings to the currently selected <see cref="Localization"/>.
+        /// </summary>
+        /// <param name="lootChest">The data to be updated.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="lootChest"/> is <see langword="null"/>.</exception>
+        public void UpdateGameStrings(LootChest lootChest)
+        {
+            if (lootChest is null)
+                throw new ArgumentNullException(nameof(lootChest));
+
+            JsonElement element = JsonGameStringDocument.RootElement;
+
+            if (element.TryGetProperty("gamestrings", out JsonElement gameStringElement))
+            {
+                if (gameStringElement.TryGetProperty("lootchest", out JsonElement keyValue))
+                {
+                    if (TryGetValueFromJsonElement(keyValue, "name", lootChest.Id, out JsonElement nameElement))
+                        lootChest.Name = nameElement.GetString();
+                    if (TryGetValueFromJsonElement(keyValue, "description", lootChest.Id, out JsonElement descriptionElement))
+                        lootChest.Description = SetTooltipDescription(descriptionElement.GetString());
+                }
+            }
+        }
+
+        /// <summary>
         /// Parses the Json stream as <see langword="async"/>.
         /// </summary>
         /// <typeparam name="T">A class that derives <see cref="GameStringDocument"/>.</typeparam>

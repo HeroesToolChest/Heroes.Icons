@@ -1,0 +1,10 @@
+{
+  "EpicProgChest": {
+    "name": "Epic Chest",
+    "hyperlinkId": "EpicProgChest",
+    "rarity": "Epic",
+    "maxRerolls": 3,
+    "typeDescription": "LootChestEpic",
+    "description": "A Loot Chest that guarantees at least one Epic or better item."
+  }
+}

@@ -132,6 +132,14 @@
       "sortname": {
         "30DayPromo": "xx30DayBoost"
       }
+    },
+    "lootchest": {
+      "name": {
+        "EpicProgChest": "Epic Chest"
+      },
+      "description": {
+        "EpicProgChest": "A Loot Chest that guarantees at least one Epic or better item."
+      }
     }
   }
 }
