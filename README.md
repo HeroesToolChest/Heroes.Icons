@@ -24,6 +24,10 @@ All data files are supported
 - Emoticons
 - Emoticon Packs
 - Veterancy data
+- Boosts
+- Bundles
+- Loot Chests
+- Type Description data
 
 ## Usage
 There is a `<data-file-name>DataDocument` class for each json data file. Each provide static multiple `Parse` methods to parse the json files.
