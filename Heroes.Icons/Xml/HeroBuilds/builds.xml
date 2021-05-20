@@ -179,7 +179,6 @@
   <Patch type="" link="" version="2.52.0.81571"/>
   <Patch type="" link="" version="2.52.0.81700"/>
   <Patch type="" link="" version="2.52.1.82169"/>
-  <Patch type="" link="" version="2.52.1.82169"/>
   <Patch type="" link="" version="2.52.2.82624"/>
   <Patch type="" link="" version="2.53.0.83004"/>
   <Patch type="" link="" version="2.53.0.83077"/>
@@ -187,4 +186,5 @@
   <Patch type="" link="" version="2.53.1.83632"/>
   <Patch pre="83632" version="2.53.1.83716"/>
   <Patch type="" link="" version="2.53.2.84200"/>
+  <Patch type="" link="" version="2.54.0.85027"/>
 </Builds>
