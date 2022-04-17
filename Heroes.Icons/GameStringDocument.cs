@@ -1,11 +1,4 @@
-﻿using Heroes.Models;
-using Heroes.Models.AbilityTalents;
-using System;
-using System.IO;
-using System.Text.Json;
-using System.Threading.Tasks;
-
-namespace Heroes.Icons;
+﻿namespace Heroes.Icons;
 
 /// <summary>
 /// Provides the methods to update gamestrings for game data objects.
@@ -378,7 +371,7 @@ public class GameStringDocument : IDisposable
                 if (TryGetValueFromJsonElement(keyValue, "sortName", announcer.Id, out JsonElement sortNameElement))
                     announcer.SortName = sortNameElement.GetString();
                 if (TryGetValueFromJsonElement(keyValue, "description", announcer.Id, out JsonElement descriptionElement))
-                        announcer.Description = SetTooltipDescription(descriptionElement.GetString());
+                    announcer.Description = SetTooltipDescription(descriptionElement.GetString());
             }
         }
     }
@@ -539,7 +532,7 @@ public class GameStringDocument : IDisposable
                 if (TryGetValueFromJsonElement(keyValue, "sortname", voiceLine.Id, out JsonElement sortNameElement))
                     voiceLine.SortName = sortNameElement.GetString();
                 if (TryGetValueFromJsonElement(keyValue, "description", voiceLine.Id, out JsonElement descriptionElement))
-                        voiceLine.Description = SetTooltipDescription(descriptionElement.GetString());
+                    voiceLine.Description = SetTooltipDescription(descriptionElement.GetString());
             }
         }
     }

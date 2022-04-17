@@ -1,12 +1,4 @@
-﻿using Heroes.Icons.DataDocument;
-using Heroes.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
-namespace Heroes.Icons.HeroesData.Tests;
+﻿namespace Heroes.Icons.HeroesData.Tests;
 
 [TestClass]
 public class HeroesDataDirectoryTests

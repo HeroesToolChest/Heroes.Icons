@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Heroes.Icons.Tests.DataDocument;
+﻿namespace Heroes.Icons.Tests.DataDocument;
 
 public interface IDataDocument
 {

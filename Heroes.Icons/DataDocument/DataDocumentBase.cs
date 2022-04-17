@@ -1,13 +1,4 @@
-﻿using Heroes.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
-
-namespace Heroes.Icons.DataDocument;
+﻿namespace Heroes.Icons.DataDocument;
 
 /// <summary>
 /// Base class for the data reader classes.

@@ -1,13 +1,4 @@
-﻿using Heroes.Icons.DataDocument;
-using Heroes.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
-using System.Threading.Tasks;
-
-namespace Heroes.Icons.Tests.DataDocument;
+﻿namespace Heroes.Icons.Tests.DataDocument;
 
 [TestClass]
 public class LootChestDataDocumentTests : DataDocumentBase, IDataDocument

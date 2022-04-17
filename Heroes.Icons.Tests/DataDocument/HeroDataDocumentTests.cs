@@ -1,15 +1,4 @@
-﻿using Heroes.Icons.DataDocument;
-using Heroes.Models;
-using Heroes.Models.AbilityTalents;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
-
-namespace Heroes.Icons.Tests.DataDocument;
+﻿namespace Heroes.Icons.Tests.DataDocument;
 
 [TestClass]
 public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
@@ -398,7 +387,7 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
         {
             AbilityTalentId = new AbilityTalentId("ZuljinWrongPlaceWrongTime", "ZuljinWrongPlaceWrongTime")
             {
-                 AbilityType = AbilityTypes.W,
+                AbilityType = AbilityTypes.W,
             },
             Tier = TalentTiers.Level1,
         });

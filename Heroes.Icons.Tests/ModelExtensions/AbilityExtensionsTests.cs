@@ -1,11 +1,4 @@
-﻿using Heroes.Icons.ModelExtensions;
-using Heroes.Models.AbilityTalents;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.IO;
-using System.Text.Json;
-
-namespace Heroes.Icons.Tests.ModelExtensions;
+﻿namespace Heroes.Icons.Tests.ModelExtensions;
 
 [TestClass]
 public class AbilityExtensionsTests

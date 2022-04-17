@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Heroes.Icons.DataDocument;
+﻿namespace Heroes.Icons.DataDocument;
 
 /// <summary>
 /// Provides the basic properties for a data document.

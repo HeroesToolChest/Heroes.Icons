@@ -1,11 +1,8 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-
-namespace Heroes.Icons.HeroesData;
+﻿namespace Heroes.Icons.HeroesData;
 
 /// <summary>
 /// Contains the information for a heroes-data version number.
-/// https://github.com/HeroesToolChest/heroes-data.
+/// See <see href="https://github.com/HeroesToolChest/heroes-data"/>.
 /// </summary>
 public class HeroesDataVersion : IComparable, IComparable<HeroesDataVersion>, IEquatable<HeroesDataVersion>
 {

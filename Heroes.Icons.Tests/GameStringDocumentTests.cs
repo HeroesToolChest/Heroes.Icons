@@ -1,10 +1,4 @@
-﻿using Heroes.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO;
-using System.Text.Json;
-using System.Threading.Tasks;
-
-namespace Heroes.Icons.Tests;
+﻿namespace Heroes.Icons.Tests;
 
 [TestClass]
 public class GameStringDocumentTests

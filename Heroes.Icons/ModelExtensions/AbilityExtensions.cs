@@ -1,8 +1,4 @@
-﻿using Heroes.Models;
-using Heroes.Models.AbilityTalents;
-using System;
-
-namespace Heroes.Icons.ModelExtensions;
+﻿namespace Heroes.Icons.ModelExtensions;
 
 /// <summary>
 /// Contains extensions for <see cref="Ability"/>.

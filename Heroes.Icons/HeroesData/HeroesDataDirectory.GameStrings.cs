@@ -1,8 +1,4 @@
-﻿using Heroes.Icons.ModelExtensions;
-using Heroes.Models;
-using System;
-
-namespace Heroes.Icons.HeroesData;
+﻿namespace Heroes.Icons.HeroesData;
 
 /// <summary>
 /// Contains the information for the heroes-data directory.

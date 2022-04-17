@@ -1,7 +1,4 @@
-﻿using Heroes.Models;
-using System;
-
-namespace Heroes.Icons.ModelExtensions;
+﻿namespace Heroes.Icons.ModelExtensions;
 
 /// <summary>
 /// Contains extensions for <see cref="Bundle"/>.

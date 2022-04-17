@@ -1,10 +1,4 @@
-﻿using Heroes.Models;
-using Heroes.Models.AbilityTalents;
-using System;
-using System.IO;
-using System.Text.Json;
-
-namespace Heroes.Icons.DataDocument;
+﻿namespace Heroes.Icons.DataDocument;
 
 /// <summary>
 /// Base class reader for unit and hero related data.

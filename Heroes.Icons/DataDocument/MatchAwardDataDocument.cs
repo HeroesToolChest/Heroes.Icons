@@ -1,12 +1,4 @@
-﻿using Heroes.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Text.Json;
-using System.Threading.Tasks;
-
-namespace Heroes.Icons.DataDocument;
+﻿namespace Heroes.Icons.DataDocument;
 
 /// <summary>
 /// Provides access to obtain <see cref="MatchAward"/> data as well as updating localized strings.
