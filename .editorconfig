@@ -108,6 +108,9 @@ csharp_style_unused_value_expression_statement_preference = discard_variable:sil
 # 'using' directive preferences
 csharp_using_directive_placement = outside_namespace:silent
 
+# Namespace preference
+csharp_style_namespace_declarations = file_scoped:warning
+
 #### C# Formatting Rules ####
 
 # New line preferences
@@ -232,3 +235,6 @@ dotnet_diagnostic.SA1309.severity = none
 
 # IDE0005: Using directive is unnecessary.
 dotnet_diagnostic.IDE0005.severity = warning
+
+# SA1518: Use line endings correctly at end of file
+dotnet_diagnostic.SA1518.severity = none

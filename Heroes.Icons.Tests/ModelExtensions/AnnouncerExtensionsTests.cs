@@ -5,69 +5,68 @@ using System;
 using System.IO;
 using System.Text.Json;
 
-namespace Heroes.Icons.Tests.ModelExtensions
+namespace Heroes.Icons.Tests.ModelExtensions;
+
+[TestClass]
+public class AnnouncerExtensionsTests
 {
-    [TestClass]
-    public class AnnouncerExtensionsTests
+    [TestMethod]
+    public void UpdateGameStringsTest()
     {
-        [TestMethod]
-        public void UpdateGameStringsTest()
+        using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
+
+        Announcer announcer = new Announcer
         {
-            using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
+            Id = "AbathurA",
+        };
 
-            Announcer announcer = new Announcer
-            {
-                Id = "AbathurA",
-            };
+        announcer.UpdateGameStrings(gameStringDocument);
 
-            announcer.UpdateGameStrings(gameStringDocument);
+        Assert.AreEqual("asdf", announcer.Description!.RawDescription);
+    }
 
-            Assert.AreEqual("asdf", announcer.Description!.RawDescription);
-        }
-
-        [TestMethod]
-        public void UpdateGameStringsThrowArgumentNullException()
+    [TestMethod]
+    public void UpdateGameStringsThrowArgumentNullException()
+    {
+        Announcer announcer = new Announcer
         {
-            Announcer announcer = new Announcer
-            {
-                Id = "AbathurA",
-            };
+            Id = "AbathurA",
+        };
 
-            Assert.ThrowsException<ArgumentNullException>(() => announcer.UpdateGameStrings(null!));
-        }
+        Assert.ThrowsException<ArgumentNullException>(() => announcer.UpdateGameStrings(null!));
+    }
 
-        private static byte[] LoadEnusLocalizedStringData()
-        {
-            using MemoryStream memoryStream = new MemoryStream();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+    private static byte[] LoadEnusLocalizedStringData()
+    {
+        using MemoryStream memoryStream = new MemoryStream();
+        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
 
-            writer.WriteStartObject();
+        writer.WriteStartObject();
 
-            writer.WriteStartObject("meta");
-            writer.WriteString("locale", "enus");
-            writer.WriteEndObject(); // meta
+        writer.WriteStartObject("meta");
+        writer.WriteString("locale", "enus");
+        writer.WriteEndObject(); // meta
 
-            writer.WriteStartObject("gamestrings");
-            writer.WriteStartObject("announcer");
+        writer.WriteStartObject("gamestrings");
+        writer.WriteStartObject("announcer");
 
-            writer.WriteStartObject("name");
-            writer.WriteString("AbathurA", "Abathur Announcer");
-            writer.WriteString("Adjutant", "Adjutant Announcer");
-            writer.WriteEndObject();
-            writer.WriteStartObject("description");
-            writer.WriteString("AbathurA", "asdf");
-            writer.WriteString("Adjutant", "qwer");
-            writer.WriteEndObject();
+        writer.WriteStartObject("name");
+        writer.WriteString("AbathurA", "Abathur Announcer");
+        writer.WriteString("Adjutant", "Adjutant Announcer");
+        writer.WriteEndObject();
+        writer.WriteStartObject("description");
+        writer.WriteString("AbathurA", "asdf");
+        writer.WriteString("Adjutant", "qwer");
+        writer.WriteEndObject();
 
-            writer.WriteEndObject(); // end announcer
+        writer.WriteEndObject(); // end announcer
 
-            writer.WriteEndObject(); // end gamestrings
+        writer.WriteEndObject(); // end gamestrings
 
-            writer.WriteEndObject();
+        writer.WriteEndObject();
 
-            writer.Flush();
+        writer.Flush();
 
-            return memoryStream.ToArray();
-        }
+        return memoryStream.ToArray();
     }
 }

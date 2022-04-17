@@ -5,68 +5,67 @@ using System;
 using System.IO;
 using System.Text.Json;
 
-namespace Heroes.Icons.Tests.ModelExtensions
+namespace Heroes.Icons.Tests.ModelExtensions;
+
+[TestClass]
+public class LootChestExtensionsTests
 {
-    [TestClass]
-    public class LootChestExtensionsTests
+    [TestMethod]
+    public void UpdateGameStringsTest()
     {
-        [TestMethod]
-        public void UpdateGameStringsTest()
+        using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
+
+        LootChest lootChest = new LootChest
         {
-            using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
+            Id = "EpicProgChest",
+        };
 
-            LootChest lootChest = new LootChest
-            {
-                Id = "EpicProgChest",
-            };
+        lootChest.UpdateGameStrings(gameStringDocument);
 
-            lootChest.UpdateGameStrings(gameStringDocument);
+        Assert.AreEqual("Epic Chest", lootChest.Name);
+        Assert.AreEqual("A Loot Chest that guarantees at least one Epic or better item.", lootChest.Description!.RawDescription);
+    }
 
-            Assert.AreEqual("Epic Chest", lootChest.Name);
-            Assert.AreEqual("A Loot Chest that guarantees at least one Epic or better item.", lootChest.Description!.RawDescription);
-        }
-
-        [TestMethod]
-        public void UpdateGameStringsThrowArgumentNullException()
+    [TestMethod]
+    public void UpdateGameStringsThrowArgumentNullException()
+    {
+        LootChest lootChest = new LootChest
         {
-            LootChest lootChest = new LootChest
-            {
-                Id = "EpicProgChest",
-            };
+            Id = "EpicProgChest",
+        };
 
-            Assert.ThrowsException<ArgumentNullException>(() => lootChest.UpdateGameStrings(null!));
-        }
+        Assert.ThrowsException<ArgumentNullException>(() => lootChest.UpdateGameStrings(null!));
+    }
 
-        private static byte[] LoadEnusLocalizedStringData()
-        {
-            using MemoryStream memoryStream = new MemoryStream();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+    private static byte[] LoadEnusLocalizedStringData()
+    {
+        using MemoryStream memoryStream = new MemoryStream();
+        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
 
-            writer.WriteStartObject();
+        writer.WriteStartObject();
 
-            writer.WriteStartObject("meta");
-            writer.WriteString("locale", "enus");
-            writer.WriteEndObject(); // meta
+        writer.WriteStartObject("meta");
+        writer.WriteString("locale", "enus");
+        writer.WriteEndObject(); // meta
 
-            writer.WriteStartObject("gamestrings");
-            writer.WriteStartObject("lootchest");
+        writer.WriteStartObject("gamestrings");
+        writer.WriteStartObject("lootchest");
 
-            writer.WriteStartObject("name");
-            writer.WriteString("EpicProgChest", "Epic Chest");
-            writer.WriteEndObject();
-            writer.WriteStartObject("description");
-            writer.WriteString("EpicProgChest", "A Loot Chest that guarantees at least one Epic or better item.");
-            writer.WriteEndObject();
+        writer.WriteStartObject("name");
+        writer.WriteString("EpicProgChest", "Epic Chest");
+        writer.WriteEndObject();
+        writer.WriteStartObject("description");
+        writer.WriteString("EpicProgChest", "A Loot Chest that guarantees at least one Epic or better item.");
+        writer.WriteEndObject();
 
-            writer.WriteEndObject(); // end
+        writer.WriteEndObject(); // end
 
-            writer.WriteEndObject(); // end gamestrings
+        writer.WriteEndObject(); // end gamestrings
 
-            writer.WriteEndObject();
+        writer.WriteEndObject();
 
-            writer.Flush();
+        writer.Flush();
 
-            return memoryStream.ToArray();
-        }
+        return memoryStream.ToArray();
     }
 }

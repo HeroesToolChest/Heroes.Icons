@@ -5,64 +5,63 @@ using System;
 using System.IO;
 using System.Text.Json;
 
-namespace Heroes.Icons.Tests.ModelExtensions
+namespace Heroes.Icons.Tests.ModelExtensions;
+
+[TestClass]
+public class TypeDescriptionExtensionsTests
 {
-    [TestClass]
-    public class TypeDescriptionExtensionsTests
+    [TestMethod]
+    public void UpdateGameStringsTest()
     {
-        [TestMethod]
-        public void UpdateGameStringsTest()
+        using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
+
+        LootChest lootChest = new LootChest
         {
-            using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
+            Id = "BasicPortrait",
+        };
 
-            LootChest lootChest = new LootChest
-            {
-                Id = "BasicPortrait",
-            };
+        lootChest.UpdateGameStrings(gameStringDocument);
 
-            lootChest.UpdateGameStrings(gameStringDocument);
+        Assert.AreEqual("some name", lootChest.Name);
+    }
 
-            Assert.AreEqual("some name", lootChest.Name);
-        }
-
-        [TestMethod]
-        public void UpdateGameStringsThrowArgumentNullException()
+    [TestMethod]
+    public void UpdateGameStringsThrowArgumentNullException()
+    {
+        LootChest lootChest = new LootChest
         {
-            LootChest lootChest = new LootChest
-            {
-                Id = "BasicPortrait",
-            };
+            Id = "BasicPortrait",
+        };
 
-            Assert.ThrowsException<ArgumentNullException>(() => lootChest.UpdateGameStrings(null!));
-        }
+        Assert.ThrowsException<ArgumentNullException>(() => lootChest.UpdateGameStrings(null!));
+    }
 
-        private static byte[] LoadEnusLocalizedStringData()
-        {
-            using MemoryStream memoryStream = new MemoryStream();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+    private static byte[] LoadEnusLocalizedStringData()
+    {
+        using MemoryStream memoryStream = new MemoryStream();
+        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
 
-            writer.WriteStartObject();
+        writer.WriteStartObject();
 
-            writer.WriteStartObject("meta");
-            writer.WriteString("locale", "enus");
-            writer.WriteEndObject(); // meta
+        writer.WriteStartObject("meta");
+        writer.WriteString("locale", "enus");
+        writer.WriteEndObject(); // meta
 
-            writer.WriteStartObject("gamestrings");
-            writer.WriteStartObject("lootchest");
+        writer.WriteStartObject("gamestrings");
+        writer.WriteStartObject("lootchest");
 
-            writer.WriteStartObject("name");
-            writer.WriteString("BasicPortrait", "some name");
-            writer.WriteEndObject();
+        writer.WriteStartObject("name");
+        writer.WriteString("BasicPortrait", "some name");
+        writer.WriteEndObject();
 
-            writer.WriteEndObject(); // end
+        writer.WriteEndObject(); // end
 
-            writer.WriteEndObject(); // end gamestrings
+        writer.WriteEndObject(); // end gamestrings
 
-            writer.WriteEndObject();
+        writer.WriteEndObject();
 
-            writer.Flush();
+        writer.Flush();
 
-            return memoryStream.ToArray();
-        }
+        return memoryStream.ToArray();
     }
 }

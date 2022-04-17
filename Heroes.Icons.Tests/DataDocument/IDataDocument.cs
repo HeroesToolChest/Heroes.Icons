@@ -1,29 +1,28 @@
 ﻿using System.Threading.Tasks;
 
-namespace Heroes.Icons.Tests.DataDocument
+namespace Heroes.Icons.Tests.DataDocument;
+
+public interface IDataDocument
 {
-    public interface IDataDocument
-    {
-        void DataDocumentFileTest();
+    void DataDocumentFileTest();
 
-        void DataDocumentFileLocaleTest();
+    void DataDocumentFileLocaleTest();
 
-        void DataDocumentROMLocaleTest();
+    void DataDocumentROMLocaleTest();
 
-        void DataDocumentFileGSDTest();
+    void DataDocumentFileGSDTest();
 
-        void DataDocumentROMGSDTest();
+    void DataDocumentROMGSDTest();
 
-        void DataDocumentStreamTest();
+    void DataDocumentStreamTest();
 
-        void DataDocumentStreamWithGSDTest();
+    void DataDocumentStreamWithGSDTest();
 
-        void DataDocumentStreamWithGameStringStreamTest();
+    void DataDocumentStreamWithGameStringStreamTest();
 
-        Task DataDocumentStreamAsyncTest();
+    Task DataDocumentStreamAsyncTest();
 
-        Task DataDocumentStreamWithGameStringDocumentAsyncTest();
+    Task DataDocumentStreamWithGameStringDocumentAsyncTest();
 
-        Task DataDocumentStreamWithGameStringStreamAsyncTest();
-    }
+    Task DataDocumentStreamWithGameStringStreamAsyncTest();
 }

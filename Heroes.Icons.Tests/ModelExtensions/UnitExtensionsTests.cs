@@ -5,85 +5,84 @@ using System;
 using System.IO;
 using System.Text.Json;
 
-namespace Heroes.Icons.Tests.ModelExtensions
+namespace Heroes.Icons.Tests.ModelExtensions;
+
+[TestClass]
+public class UnitExtensionsTests
 {
-    [TestClass]
-    public class UnitExtensionsTests
+    [TestMethod]
+    public void UpdateGameStringsTest()
     {
-        [TestMethod]
-        public void UpdateGameStringsTest()
+        using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
+
+        Unit unit = new Unit
         {
-            using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
+            CUnitId = "AbathurEvolvedMonstrosity",
+            Id = "AbathurEvolvedMonstrosity",
+        };
 
-            Unit unit = new Unit
-            {
-                CUnitId = "AbathurEvolvedMonstrosity",
-                Id = "AbathurEvolvedMonstrosity",
-            };
+        unit.UpdateGameStrings(gameStringDocument);
 
-            unit.UpdateGameStrings(gameStringDocument);
+        Assert.AreEqual("A long description", unit.Description!.RawDescription);
+    }
 
-            Assert.AreEqual("A long description", unit.Description!.RawDescription);
-        }
-
-        [TestMethod]
-        public void UpdateGameStringsThrowArgumentNullException()
+    [TestMethod]
+    public void UpdateGameStringsThrowArgumentNullException()
+    {
+        Unit unit = new Unit
         {
-            Unit unit = new Unit
-            {
-                CUnitId = "AbathurEvolvedMonstrosity",
-                Id = "AbathurEvolvedMonstrosity",
-            };
+            CUnitId = "AbathurEvolvedMonstrosity",
+            Id = "AbathurEvolvedMonstrosity",
+        };
 
-            Assert.ThrowsException<ArgumentNullException>(() => unit.UpdateGameStrings(null!));
-        }
+        Assert.ThrowsException<ArgumentNullException>(() => unit.UpdateGameStrings(null!));
+    }
 
-        private static byte[] LoadEnusLocalizedStringData()
-        {
-            using MemoryStream memoryStream = new MemoryStream();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+    private static byte[] LoadEnusLocalizedStringData()
+    {
+        using MemoryStream memoryStream = new MemoryStream();
+        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
 
-            writer.WriteStartObject();
+        writer.WriteStartObject();
 
-            writer.WriteStartObject("meta");
-            writer.WriteString("locale", "enus");
-            writer.WriteEndObject(); // meta
+        writer.WriteStartObject("meta");
+        writer.WriteString("locale", "enus");
+        writer.WriteEndObject(); // meta
 
-            writer.WriteStartObject("gamestrings");
-            writer.WriteStartObject("unit");
+        writer.WriteStartObject("gamestrings");
+        writer.WriteStartObject("unit");
 
-            writer.WriteStartObject("damagetype");
-            writer.WriteString("AbathurEvolvedMonstrosity", "Summon");
-            writer.WriteEndObject();
+        writer.WriteStartObject("damagetype");
+        writer.WriteString("AbathurEvolvedMonstrosity", "Summon");
+        writer.WriteEndObject();
 
-            writer.WriteStartObject("description");
-            writer.WriteString("AbathurEvolvedMonstrosity", "A long description");
-            writer.WriteEndObject();
+        writer.WriteStartObject("description");
+        writer.WriteString("AbathurEvolvedMonstrosity", "A long description");
+        writer.WriteEndObject();
 
-            writer.WriteStartObject("energytype");
-            writer.WriteString("AbathurEvolvedMonstrosity", "Mana");
-            writer.WriteEndObject();
+        writer.WriteStartObject("energytype");
+        writer.WriteString("AbathurEvolvedMonstrosity", "Mana");
+        writer.WriteEndObject();
 
-            writer.WriteStartObject("lifetype");
-            writer.WriteString("AbathurEvolvedMonstrosity", "Life");
-            writer.WriteEndObject();
+        writer.WriteStartObject("lifetype");
+        writer.WriteString("AbathurEvolvedMonstrosity", "Life");
+        writer.WriteEndObject();
 
-            writer.WriteStartObject("name");
-            writer.WriteString("AbathurEvolvedMonstrosity", "Evolved Monstrosity");
-            writer.WriteEndObject();
+        writer.WriteStartObject("name");
+        writer.WriteString("AbathurEvolvedMonstrosity", "Evolved Monstrosity");
+        writer.WriteEndObject();
 
-            writer.WriteStartObject("shieldtype");
-            writer.WriteString("AbathurEvolvedMonstrosity", "Shield");
-            writer.WriteEndObject();
+        writer.WriteStartObject("shieldtype");
+        writer.WriteString("AbathurEvolvedMonstrosity", "Shield");
+        writer.WriteEndObject();
 
-            writer.WriteEndObject(); // unit
-            writer.WriteEndObject(); // gamestrings
+        writer.WriteEndObject(); // unit
+        writer.WriteEndObject(); // gamestrings
 
-            writer.WriteEndObject();
+        writer.WriteEndObject();
 
-            writer.Flush();
+        writer.Flush();
 
-            return memoryStream.ToArray();
-        }
+        return memoryStream.ToArray();
     }
 }

@@ -7,364 +7,363 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Heroes.Icons.DataDocument
+namespace Heroes.Icons.DataDocument;
+
+/// <summary>
+/// Base class for the data reader classes.
+/// </summary>
+public abstract class DataDocumentBase : IDisposable
 {
+    private readonly Stream? _streamForDataAsync;
+    private readonly Stream? _streamForGameStringAsync;
+
+    private bool _disposedValue;
+
     /// <summary>
-    /// Base class for the data reader classes.
+    /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
+    /// The <see cref="Localization"/> will be inferred from <paramref name="jsonDataFilePath"/>.
     /// </summary>
-    public abstract class DataDocumentBase : IDisposable
+    /// <param name="jsonDataFilePath">The JSON file to parse.</param>
+    protected DataDocumentBase(string jsonDataFilePath)
     {
-        private readonly Stream? _streamForDataAsync;
-        private readonly Stream? _streamForGameStringAsync;
+        JsonDataDocument = JsonDocument.Parse(File.ReadAllBytes(jsonDataFilePath));
 
-        private bool _disposedValue;
+        SetLocalizationFromFileName(jsonDataFilePath);
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
-        /// The <see cref="Localization"/> will be inferred from <paramref name="jsonDataFilePath"/>.
-        /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file to parse.</param>
-        protected DataDocumentBase(string jsonDataFilePath)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
+    /// </summary>
+    /// <param name="jsonDataFilePath">The JSON file to parse.</param>
+    /// <param name="localization">The <see cref="Localization"/> of the file.</param>
+    protected DataDocumentBase(string jsonDataFilePath, Localization localization)
+    {
+        JsonDataDocument = JsonDocument.Parse(File.ReadAllBytes(jsonDataFilePath));
+
+        Localization = localization;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
+    /// </summary>
+    /// <param name="jsonData">The JSON data to parse.</param>
+    /// <param name="localization">The <see cref="Localization"/> of the file.</param>
+    protected DataDocumentBase(ReadOnlyMemory<byte> jsonData, Localization localization)
+    {
+        JsonDataDocument = JsonDocument.Parse(jsonData);
+        Localization = localization;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
+    /// The <paramref name="gameStringDocument"/> overrides the <paramref name="jsonDataFilePath"/> <see cref="Localization"/>.
+    /// </summary>
+    /// <param name="jsonDataFilePath">The JSON file to parse.</param>
+    /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="gameStringDocument"/> is <see langword="null"/>.</exception>
+    protected DataDocumentBase(string jsonDataFilePath, GameStringDocument gameStringDocument)
+        : this(jsonDataFilePath)
+    {
+        GameStringDocument = gameStringDocument ?? throw new ArgumentNullException(nameof(gameStringDocument));
+        Localization = GameStringDocument.Localization;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
+    /// </summary>
+    /// <param name="jsonData">The JSON data to parse.</param>
+    /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="gameStringDocument"/> is <see langword="null"/>.</exception>
+    protected DataDocumentBase(ReadOnlyMemory<byte> jsonData, GameStringDocument gameStringDocument)
+        : this(jsonData)
+    {
+        GameStringDocument = gameStringDocument ?? throw new ArgumentNullException(nameof(gameStringDocument));
+        Localization = GameStringDocument.Localization;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
+    /// </summary>
+    /// <param name="utf8Json">The JSON data to parse.</param>
+    /// <param name="localization">The <see cref="Localization"/> of the file.</param>
+    /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
+    protected DataDocumentBase(Stream utf8Json, Localization localization, bool isAsync = false)
+    {
+        if (isAsync)
         {
-            JsonDataDocument = JsonDocument.Parse(File.ReadAllBytes(jsonDataFilePath));
-
-            SetLocalizationFromFileName(jsonDataFilePath);
+            JsonDataDocument = null!;
+            _streamForDataAsync = utf8Json;
+        }
+        else
+        {
+            JsonDataDocument = JsonDocument.Parse(utf8Json);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
-        /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file to parse.</param>
-        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        protected DataDocumentBase(string jsonDataFilePath, Localization localization)
-        {
-            JsonDataDocument = JsonDocument.Parse(File.ReadAllBytes(jsonDataFilePath));
+        Localization = localization;
+    }
 
-            Localization = localization;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
+    /// </summary>
+    /// <param name="utf8Json">The JSON data to parse.</param>
+    /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
+    /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="gameStringDocument"/> is <see langword="null"/>.</exception>
+    protected DataDocumentBase(Stream utf8Json, GameStringDocument gameStringDocument, bool isAsync = false)
+    {
+        if (isAsync)
+        {
+            JsonDataDocument = null!;
+            _streamForDataAsync = utf8Json;
+        }
+        else
+        {
+            JsonDataDocument = JsonDocument.Parse(utf8Json);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
-        /// </summary>
-        /// <param name="jsonData">The JSON data to parse.</param>
-        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        protected DataDocumentBase(ReadOnlyMemory<byte> jsonData, Localization localization)
-        {
-            JsonDataDocument = JsonDocument.Parse(jsonData);
-            Localization = localization;
-        }
+        GameStringDocument = gameStringDocument ?? throw new ArgumentNullException(nameof(gameStringDocument));
+        Localization = gameStringDocument.Localization;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
-        /// The <paramref name="gameStringDocument"/> overrides the <paramref name="jsonDataFilePath"/> <see cref="Localization"/>.
-        /// </summary>
-        /// <param name="jsonDataFilePath">The JSON file to parse.</param>
-        /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="gameStringDocument"/> is <see langword="null"/>.</exception>
-        protected DataDocumentBase(string jsonDataFilePath, GameStringDocument gameStringDocument)
-            : this(jsonDataFilePath)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
+    /// </summary>
+    /// <param name="utf8Json">The JSON data to parse.</param>
+    /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
+    /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
+    protected DataDocumentBase(Stream utf8Json, Stream utf8JsonGameStrings, bool isAsync = false)
+    {
+        if (isAsync)
         {
-            GameStringDocument = gameStringDocument ?? throw new ArgumentNullException(nameof(gameStringDocument));
+            JsonDataDocument = null!;
+            _streamForDataAsync = utf8Json;
+            _streamForGameStringAsync = utf8JsonGameStrings;
+        }
+        else
+        {
+            JsonDataDocument = JsonDocument.Parse(utf8Json);
+            GameStringDocument = GameStringDocument.Parse(utf8JsonGameStrings);
             Localization = GameStringDocument.Localization;
         }
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
-        /// </summary>
-        /// <param name="jsonData">The JSON data to parse.</param>
-        /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="gameStringDocument"/> is <see langword="null"/>.</exception>
-        protected DataDocumentBase(ReadOnlyMemory<byte> jsonData, GameStringDocument gameStringDocument)
-            : this(jsonData)
+    private DataDocumentBase(ReadOnlyMemory<byte> jsonData)
+    {
+        JsonDataDocument = JsonDocument.Parse(jsonData);
+    }
+
+    /// <summary>
+    /// Finalizes an instance of the <see cref="DataDocumentBase"/> class.
+    /// </summary>
+    ~DataDocumentBase()
+    {
+        Dispose(false);
+    }
+
+    /// <summary>
+    /// Gets the current selected localization.
+    /// </summary>
+    public Localization Localization { get; private set; } = Localization.ENUS;
+
+    /// <summary>
+    /// Gets the <see cref="JsonDataDocument"/> to allow for manually parsing.
+    /// </summary>
+    public JsonDocument JsonDataDocument { get; private set; }
+
+    /// <summary>
+    /// Gets a collection of all name property values.
+    /// </summary>
+    public IEnumerable<string> GetNames => GetCollectionOfPropety("name");
+
+    /// <summary>
+    /// Gets a collection of all hyperlinkId property values.
+    /// </summary>
+    public IEnumerable<string> GetHyperlinkIds => GetCollectionOfPropety("hyperlinkId");
+
+    /// <summary>
+    /// Gets a collection of all ids (the root element property values).
+    /// </summary>
+    public IEnumerable<string> GetIds
+    {
+        get
         {
-            GameStringDocument = gameStringDocument ?? throw new ArgumentNullException(nameof(gameStringDocument));
-            Localization = GameStringDocument.Localization;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
-        /// </summary>
-        /// <param name="utf8Json">The JSON data to parse.</param>
-        /// <param name="localization">The <see cref="Localization"/> of the file.</param>
-        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
-        protected DataDocumentBase(Stream utf8Json, Localization localization, bool isAsync = false)
-        {
-            if (isAsync)
-            {
-                JsonDataDocument = null!;
-                _streamForDataAsync = utf8Json;
-            }
-            else
-            {
-                JsonDataDocument = JsonDocument.Parse(utf8Json);
-            }
-
-            Localization = localization;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
-        /// </summary>
-        /// <param name="utf8Json">The JSON data to parse.</param>
-        /// <param name="gameStringDocument">Instance of a <see cref="GameStringDocument"/>.</param>
-        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="gameStringDocument"/> is <see langword="null"/>.</exception>
-        protected DataDocumentBase(Stream utf8Json, GameStringDocument gameStringDocument, bool isAsync = false)
-        {
-            if (isAsync)
-            {
-                JsonDataDocument = null!;
-                _streamForDataAsync = utf8Json;
-            }
-            else
-            {
-                JsonDataDocument = JsonDocument.Parse(utf8Json);
-            }
-
-            GameStringDocument = gameStringDocument ?? throw new ArgumentNullException(nameof(gameStringDocument));
-            Localization = gameStringDocument.Localization;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataDocumentBase"/> class.
-        /// </summary>
-        /// <param name="utf8Json">The JSON data to parse.</param>
-        /// <param name="utf8JsonGameStrings">The JSON gamestring data to parse.</param>
-        /// <param name="isAsync">Value indicating whether to parse the <paramref name="utf8Json"/> as <see langword="async"/>.</param>
-        protected DataDocumentBase(Stream utf8Json, Stream utf8JsonGameStrings, bool isAsync = false)
-        {
-            if (isAsync)
-            {
-                JsonDataDocument = null!;
-                _streamForDataAsync = utf8Json;
-                _streamForGameStringAsync = utf8JsonGameStrings;
-            }
-            else
-            {
-                JsonDataDocument = JsonDocument.Parse(utf8Json);
-                GameStringDocument = GameStringDocument.Parse(utf8JsonGameStrings);
-                Localization = GameStringDocument.Localization;
-            }
-        }
-
-        private DataDocumentBase(ReadOnlyMemory<byte> jsonData)
-        {
-            JsonDataDocument = JsonDocument.Parse(jsonData);
-        }
-
-        /// <summary>
-        /// Finalizes an instance of the <see cref="DataDocumentBase"/> class.
-        /// </summary>
-        ~DataDocumentBase()
-        {
-            Dispose(false);
-        }
-
-        /// <summary>
-        /// Gets the current selected localization.
-        /// </summary>
-        public Localization Localization { get; private set; } = Localization.ENUS;
-
-        /// <summary>
-        /// Gets the <see cref="JsonDataDocument"/> to allow for manually parsing.
-        /// </summary>
-        public JsonDocument JsonDataDocument { get; private set; }
-
-        /// <summary>
-        /// Gets a collection of all name property values.
-        /// </summary>
-        public IEnumerable<string> GetNames => GetCollectionOfPropety("name");
-
-        /// <summary>
-        /// Gets a collection of all hyperlinkId property values.
-        /// </summary>
-        public IEnumerable<string> GetHyperlinkIds => GetCollectionOfPropety("hyperlinkId");
-
-        /// <summary>
-        /// Gets a collection of all ids (the root element property values).
-        /// </summary>
-        public IEnumerable<string> GetIds
-        {
-            get
-            {
-                foreach (JsonProperty property in JsonDataDocument.RootElement.EnumerateObject())
-                {
-                    yield return property.Name;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets the amount of total items.
-        /// </summary>
-        public int Count => JsonDataDocument.RootElement.EnumerateObject().Count();
-
-        /// <summary>
-        /// Gets the current <see cref="GameStringDocument"/> associated with this reader.
-        /// </summary>
-        protected GameStringDocument? GameStringDocument { get; private set; }
-
-        /// <inheritdoc/>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Sets the <see cref="TooltipDescription"/>.
-        /// </summary>
-        /// <param name="value">The value to parse for the description.</param>
-        /// <param name="scaleLocalization">The <see cref="Localization"/> for the scale text. Does not affect the actually locazation of <paramref name="value"/>.</param>
-        /// <returns>The <see cref="TooltipDescription"/> or <see langword="null"/> if <paramref name="value"/> is <see langword="null"/>.</returns>
-        protected static TooltipDescription? SetTooltipDescription(string? value, Localization scaleLocalization)
-        {
-            if (value is null)
-                return null;
-
-            return new TooltipDescription(value, scaleLocalization);
-        }
-
-        /// <summary>
-        /// Sets the <see cref="Localization"/> from <paramref name="jsonDataFilePath"/>.
-        /// </summary>
-        /// <param name="jsonDataFilePath">The json file path.</param>
-        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        protected bool SetLocalizationFromFileName(string jsonDataFilePath)
-        {
-            string? file = Path.GetFileNameWithoutExtension(jsonDataFilePath);
-
-            int index = file.LastIndexOf('_');
-            if (index > -1)
-            {
-                if (Enum.TryParse(file[(index + 1)..], true, out Localization localization))
-                {
-                    Localization = localization;
-
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Parses the JSON data stream as async.
-        /// </summary>
-        /// <typeparam name="T">A class that derives <see cref="DataDocumentBase"/>.</typeparam>
-        /// <returns>a class that derives <see cref="DataDocumentBase"/>.</returns>
-        /// <exception cref="InvalidOperationException"><see cref="_streamForDataAsync"/> is <see langword="null"/>.</exception>
-        protected async Task<T> InitializeParseDataStreamAsync<T>()
-            where T : DataDocumentBase
-        {
-            if (_streamForDataAsync is null)
-                throw new InvalidOperationException($"'{nameof(_streamForDataAsync)}' is null.");
-
-            JsonDataDocument = await JsonDocument.ParseAsync(_streamForDataAsync).ConfigureAwait(false);
-
-            return (T)this;
-        }
-
-        /// <summary>
-        /// Parses the JSON data and gamestring stream as async.
-        /// </summary>
-        /// <typeparam name="T">A class that derives <see cref="DataDocumentBase"/>.</typeparam>
-        /// <returns>a class that derives <see cref="DataDocumentBase"/>.</returns>
-        /// <exception cref="InvalidOperationException"><see cref="_streamForDataAsync"/> is <see langword="null"/>.</exception>
-        /// <exception cref="InvalidOperationException"><see cref="_streamForGameStringAsync"/> is <see langword="null"/>.</exception>
-        protected async Task<T> InitializeParseDataWithGameStringStreamAsync<T>()
-            where T : DataDocumentBase
-        {
-            if (_streamForDataAsync is null)
-                throw new InvalidOperationException($"'{nameof(_streamForDataAsync)}' is null.");
-
-            if (_streamForGameStringAsync is null)
-                throw new InvalidOperationException($"'{nameof(_streamForGameStringAsync)}' is null.");
-
-            Task<JsonDocument> dataDocumentTask = JsonDocument.ParseAsync(_streamForDataAsync);
-            Task<GameStringDocument> gameStringDocumentTask = GameStringDocument.ParseAsync(_streamForGameStringAsync);
-
-            JsonDataDocument = await dataDocumentTask.ConfigureAwait(false);
-            GameStringDocument = await gameStringDocumentTask.ConfigureAwait(false);
-
-            Localization = GameStringDocument.Localization;
-
-            return (T)this;
-        }
-
-        /// <summary>
-        /// Gets a collection of all the values of the selected property.
-        /// </summary>
-        /// <param name="property">A property name that is in the root element.</param>
-        /// <returns>a collection of the <paramref name="property"/> values.</returns>
-        protected IEnumerable<string> GetCollectionOfPropety(string property)
-        {
-            foreach (JsonProperty jsonProperty in JsonDataDocument.RootElement.EnumerateObject())
-            {
-                if (jsonProperty.Value.TryGetProperty(property, out JsonElement element))
-                {
-                    string? propertyValue = element.GetString();
-                    if (propertyValue is not null)
-                        yield return propertyValue;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Finds the value to a given <paramref name="propertyId"/>.
-        /// </summary>
-        /// <typeparam name="T">An <see cref="IExtractable"/> type.</typeparam>
-        /// <param name="propertyId">Json property name.</param>
-        /// <param name="propertyValue">The value of the property.</param>
-        /// <param name="getData">The method to execute the lookup for the value.</param>
-        /// <param name="value">An <see cref="IExtractable"/> object with the given <paramref name="propertyId"/>.</param>
-        /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="propertyId"/>, <paramref name="propertyValue"/>, or <paramref name="getData"/> is <see langword="null"/>.</exception>
-        protected virtual bool PropertyLookup<T>(string propertyId, string? propertyValue, Func<string, JsonElement, T> getData, [NotNullWhen(true)] out T? value)
-            where T : class, IExtractable, new()
-        {
-            if (propertyId is null)
-                throw new ArgumentNullException(nameof(propertyId));
-
-            if (getData is null)
-                throw new ArgumentNullException(nameof(getData));
-
-            value = null;
-
-            if (propertyValue is null)
-                return false;
-
             foreach (JsonProperty property in JsonDataDocument.RootElement.EnumerateObject())
             {
-                if (property.Value.TryGetProperty(propertyId, out JsonElement nameElement) && nameElement.ValueEquals(propertyValue))
-                {
-                    value = getData(property.Name, property.Value);
-
-                    return true;
-                }
+                yield return property.Name;
             }
+        }
+    }
 
-            return false;
+    /// <summary>
+    /// Gets the amount of total items.
+    /// </summary>
+    public int Count => JsonDataDocument.RootElement.EnumerateObject().Count();
+
+    /// <summary>
+    /// Gets the current <see cref="GameStringDocument"/> associated with this reader.
+    /// </summary>
+    protected GameStringDocument? GameStringDocument { get; private set; }
+
+    /// <inheritdoc/>
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    /// Sets the <see cref="TooltipDescription"/>.
+    /// </summary>
+    /// <param name="value">The value to parse for the description.</param>
+    /// <param name="scaleLocalization">The <see cref="Localization"/> for the scale text. Does not affect the actually locazation of <paramref name="value"/>.</param>
+    /// <returns>The <see cref="TooltipDescription"/> or <see langword="null"/> if <paramref name="value"/> is <see langword="null"/>.</returns>
+    protected static TooltipDescription? SetTooltipDescription(string? value, Localization scaleLocalization)
+    {
+        if (value is null)
+            return null;
+
+        return new TooltipDescription(value, scaleLocalization);
+    }
+
+    /// <summary>
+    /// Sets the <see cref="Localization"/> from <paramref name="jsonDataFilePath"/>.
+    /// </summary>
+    /// <param name="jsonDataFilePath">The json file path.</param>
+    /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+    protected bool SetLocalizationFromFileName(string jsonDataFilePath)
+    {
+        string? file = Path.GetFileNameWithoutExtension(jsonDataFilePath);
+
+        int index = file.LastIndexOf('_');
+        if (index > -1)
+        {
+            if (Enum.TryParse(file[(index + 1)..], true, out Localization localization))
+            {
+                Localization = localization;
+
+                return true;
+            }
         }
 
-        /// <summary>
-        /// Disposes the resources.
-        /// </summary>
-        /// <param name="disposing">True to include releasing managed resource.</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposedValue)
-            {
-                if (disposing)
-                {
-                    JsonDataDocument.Dispose();
-                    GameStringDocument?.Dispose();
-                    _streamForDataAsync?.Dispose();
-                    _streamForGameStringAsync?.Dispose();
-                }
+        return false;
+    }
 
-                _disposedValue = true;
+    /// <summary>
+    /// Parses the JSON data stream as async.
+    /// </summary>
+    /// <typeparam name="T">A class that derives <see cref="DataDocumentBase"/>.</typeparam>
+    /// <returns>a class that derives <see cref="DataDocumentBase"/>.</returns>
+    /// <exception cref="InvalidOperationException"><see cref="_streamForDataAsync"/> is <see langword="null"/>.</exception>
+    protected async Task<T> InitializeParseDataStreamAsync<T>()
+        where T : DataDocumentBase
+    {
+        if (_streamForDataAsync is null)
+            throw new InvalidOperationException($"'{nameof(_streamForDataAsync)}' is null.");
+
+        JsonDataDocument = await JsonDocument.ParseAsync(_streamForDataAsync).ConfigureAwait(false);
+
+        return (T)this;
+    }
+
+    /// <summary>
+    /// Parses the JSON data and gamestring stream as async.
+    /// </summary>
+    /// <typeparam name="T">A class that derives <see cref="DataDocumentBase"/>.</typeparam>
+    /// <returns>a class that derives <see cref="DataDocumentBase"/>.</returns>
+    /// <exception cref="InvalidOperationException"><see cref="_streamForDataAsync"/> is <see langword="null"/>.</exception>
+    /// <exception cref="InvalidOperationException"><see cref="_streamForGameStringAsync"/> is <see langword="null"/>.</exception>
+    protected async Task<T> InitializeParseDataWithGameStringStreamAsync<T>()
+        where T : DataDocumentBase
+    {
+        if (_streamForDataAsync is null)
+            throw new InvalidOperationException($"'{nameof(_streamForDataAsync)}' is null.");
+
+        if (_streamForGameStringAsync is null)
+            throw new InvalidOperationException($"'{nameof(_streamForGameStringAsync)}' is null.");
+
+        Task<JsonDocument> dataDocumentTask = JsonDocument.ParseAsync(_streamForDataAsync);
+        Task<GameStringDocument> gameStringDocumentTask = GameStringDocument.ParseAsync(_streamForGameStringAsync);
+
+        JsonDataDocument = await dataDocumentTask.ConfigureAwait(false);
+        GameStringDocument = await gameStringDocumentTask.ConfigureAwait(false);
+
+        Localization = GameStringDocument.Localization;
+
+        return (T)this;
+    }
+
+    /// <summary>
+    /// Gets a collection of all the values of the selected property.
+    /// </summary>
+    /// <param name="property">A property name that is in the root element.</param>
+    /// <returns>a collection of the <paramref name="property"/> values.</returns>
+    protected IEnumerable<string> GetCollectionOfPropety(string property)
+    {
+        foreach (JsonProperty jsonProperty in JsonDataDocument.RootElement.EnumerateObject())
+        {
+            if (jsonProperty.Value.TryGetProperty(property, out JsonElement element))
+            {
+                string? propertyValue = element.GetString();
+                if (propertyValue is not null)
+                    yield return propertyValue;
             }
+        }
+    }
+
+    /// <summary>
+    /// Finds the value to a given <paramref name="propertyId"/>.
+    /// </summary>
+    /// <typeparam name="T">An <see cref="IExtractable"/> type.</typeparam>
+    /// <param name="propertyId">Json property name.</param>
+    /// <param name="propertyValue">The value of the property.</param>
+    /// <param name="getData">The method to execute the lookup for the value.</param>
+    /// <param name="value">An <see cref="IExtractable"/> object with the given <paramref name="propertyId"/>.</param>
+    /// <returns><see langword="true"/> if the value was found; otherwise <see langword="false"/>.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="propertyId"/>, <paramref name="propertyValue"/>, or <paramref name="getData"/> is <see langword="null"/>.</exception>
+    protected virtual bool PropertyLookup<T>(string propertyId, string? propertyValue, Func<string, JsonElement, T> getData, [NotNullWhen(true)] out T? value)
+        where T : class, IExtractable, new()
+    {
+        if (propertyId is null)
+            throw new ArgumentNullException(nameof(propertyId));
+
+        if (getData is null)
+            throw new ArgumentNullException(nameof(getData));
+
+        value = null;
+
+        if (propertyValue is null)
+            return false;
+
+        foreach (JsonProperty property in JsonDataDocument.RootElement.EnumerateObject())
+        {
+            if (property.Value.TryGetProperty(propertyId, out JsonElement nameElement) && nameElement.ValueEquals(propertyValue))
+            {
+                value = getData(property.Name, property.Value);
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Disposes the resources.
+    /// </summary>
+    /// <param name="disposing">True to include releasing managed resource.</param>
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposedValue)
+        {
+            if (disposing)
+            {
+                JsonDataDocument.Dispose();
+                GameStringDocument?.Dispose();
+                _streamForDataAsync?.Dispose();
+                _streamForGameStringAsync?.Dispose();
+            }
+
+            _disposedValue = true;
         }
     }
 }

@@ -5,68 +5,67 @@ using System;
 using System.IO;
 using System.Text.Json;
 
-namespace Heroes.Icons.Tests.ModelExtensions
+namespace Heroes.Icons.Tests.ModelExtensions;
+
+[TestClass]
+public class BundleExtensionsTests
 {
-    [TestClass]
-    public class BundleExtensionsTests
+    [TestMethod]
+    public void UpdateGameStringsTest()
     {
-        [TestMethod]
-        public void UpdateGameStringsTest()
+        using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
+
+        Bundle bundle = new Bundle
         {
-            using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
+            Id = "RaiderRexxarBundle",
+        };
 
-            Bundle bundle = new Bundle
-            {
-                Id = "RaiderRexxarBundle",
-            };
+        bundle.UpdateGameStrings(gameStringDocument);
 
-            bundle.UpdateGameStrings(gameStringDocument);
+        Assert.AreEqual("특공대원 렉사르 묶음 상품", bundle.Name);
+        Assert.AreEqual("xyzRaiderRexxarBundle", bundle.SortName);
+    }
 
-            Assert.AreEqual("특공대원 렉사르 묶음 상품", bundle.Name);
-            Assert.AreEqual("xyzRaiderRexxarBundle", bundle.SortName);
-        }
-
-        [TestMethod]
-        public void UpdateGameStringsThrowArgumentNullException()
+    [TestMethod]
+    public void UpdateGameStringsThrowArgumentNullException()
+    {
+        Bundle bundle = new Bundle
         {
-            Bundle bundle = new Bundle
-            {
-                Id = "RaiderRexxarBundle",
-            };
+            Id = "RaiderRexxarBundle",
+        };
 
-            Assert.ThrowsException<ArgumentNullException>(() => bundle.UpdateGameStrings(null!));
-        }
+        Assert.ThrowsException<ArgumentNullException>(() => bundle.UpdateGameStrings(null!));
+    }
 
-        private static byte[] LoadEnusLocalizedStringData()
-        {
-            using MemoryStream memoryStream = new MemoryStream();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+    private static byte[] LoadEnusLocalizedStringData()
+    {
+        using MemoryStream memoryStream = new MemoryStream();
+        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
 
-            writer.WriteStartObject();
+        writer.WriteStartObject();
 
-            writer.WriteStartObject("meta");
-            writer.WriteString("locale", "enus");
-            writer.WriteEndObject(); // meta
+        writer.WriteStartObject("meta");
+        writer.WriteString("locale", "enus");
+        writer.WriteEndObject(); // meta
 
-            writer.WriteStartObject("gamestrings");
-            writer.WriteStartObject("bundle");
+        writer.WriteStartObject("gamestrings");
+        writer.WriteStartObject("bundle");
 
-            writer.WriteStartObject("name");
-            writer.WriteString("RaiderRexxarBundle", "특공대원 렉사르 묶음 상품");
-            writer.WriteEndObject();
-            writer.WriteStartObject("sortname");
-            writer.WriteString("RaiderRexxarBundle", "xyzRaiderRexxarBundle");
-            writer.WriteEndObject();
+        writer.WriteStartObject("name");
+        writer.WriteString("RaiderRexxarBundle", "특공대원 렉사르 묶음 상품");
+        writer.WriteEndObject();
+        writer.WriteStartObject("sortname");
+        writer.WriteString("RaiderRexxarBundle", "xyzRaiderRexxarBundle");
+        writer.WriteEndObject();
 
-            writer.WriteEndObject(); // end
+        writer.WriteEndObject(); // end
 
-            writer.WriteEndObject(); // end gamestrings
+        writer.WriteEndObject(); // end gamestrings
 
-            writer.WriteEndObject();
+        writer.WriteEndObject();
 
-            writer.Flush();
+        writer.Flush();
 
-            return memoryStream.ToArray();
-        }
+        return memoryStream.ToArray();
     }
 }

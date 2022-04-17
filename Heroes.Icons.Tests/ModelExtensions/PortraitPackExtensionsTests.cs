@@ -5,65 +5,64 @@ using System;
 using System.IO;
 using System.Text.Json;
 
-namespace Heroes.Icons.Tests.ModelExtensions
+namespace Heroes.Icons.Tests.ModelExtensions;
+
+[TestClass]
+public class PortraitPackExtensionsTests
 {
-    [TestClass]
-    public class PortraitPackExtensionsTests
+    [TestMethod]
+    public void UpdateGameStringsTest()
     {
-        [TestMethod]
-        public void UpdateGameStringsTest()
+        using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
+
+        PortraitPack portraitPack = new PortraitPack
         {
-            using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
+            Id = "AbathurToys18Portrait",
+        };
 
-            PortraitPack portraitPack = new PortraitPack
-            {
-                Id = "AbathurToys18Portrait",
-            };
+        portraitPack.UpdateGameStrings(gameStringDocument);
 
-            portraitPack.UpdateGameStrings(gameStringDocument);
+        Assert.AreEqual("Caterpillathur Portrait", portraitPack.Name);
+    }
 
-            Assert.AreEqual("Caterpillathur Portrait", portraitPack.Name);
-        }
-
-        [TestMethod]
-        public void UpdateGameStringsThrowArgumentNullException()
+    [TestMethod]
+    public void UpdateGameStringsThrowArgumentNullException()
+    {
+        PortraitPack portraitPack = new PortraitPack
         {
-            PortraitPack portraitPack = new PortraitPack
-            {
-                Id = "AdmiralKrakenovPortrait",
-            };
+            Id = "AdmiralKrakenovPortrait",
+        };
 
-            Assert.ThrowsException<ArgumentNullException>(() => portraitPack.UpdateGameStrings(null!));
-        }
+        Assert.ThrowsException<ArgumentNullException>(() => portraitPack.UpdateGameStrings(null!));
+    }
 
-        private static byte[] LoadEnusLocalizedStringData()
-        {
-            using MemoryStream memoryStream = new MemoryStream();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+    private static byte[] LoadEnusLocalizedStringData()
+    {
+        using MemoryStream memoryStream = new MemoryStream();
+        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
 
-            writer.WriteStartObject();
+        writer.WriteStartObject();
 
-            writer.WriteStartObject("meta");
-            writer.WriteString("locale", "enus");
-            writer.WriteEndObject(); // meta
+        writer.WriteStartObject("meta");
+        writer.WriteString("locale", "enus");
+        writer.WriteEndObject(); // meta
 
-            writer.WriteStartObject("gamestrings");
-            writer.WriteStartObject("portrait");
+        writer.WriteStartObject("gamestrings");
+        writer.WriteStartObject("portrait");
 
-            writer.WriteStartObject("name");
-            writer.WriteString("AbathurToys18Portrait", "Caterpillathur Portrait");
-            writer.WriteString("AdmiralKrakenovPortrait", "Admiral Krakenov Portrait");
-            writer.WriteEndObject();
+        writer.WriteStartObject("name");
+        writer.WriteString("AbathurToys18Portrait", "Caterpillathur Portrait");
+        writer.WriteString("AdmiralKrakenovPortrait", "Admiral Krakenov Portrait");
+        writer.WriteEndObject();
 
-            writer.WriteEndObject(); // end portrait
+        writer.WriteEndObject(); // end portrait
 
-            writer.WriteEndObject(); // end gamestrings
+        writer.WriteEndObject(); // end gamestrings
 
-            writer.WriteEndObject();
+        writer.WriteEndObject();
 
-            writer.Flush();
+        writer.Flush();
 
-            return memoryStream.ToArray();
-        }
+        return memoryStream.ToArray();
     }
 }

@@ -7,436 +7,435 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Heroes.Icons.Tests.DataDocument
+namespace Heroes.Icons.Tests.DataDocument;
+
+[TestClass]
+public class AnnouncerDataDocumentTests : DataDocumentBase, IDataDocument
 {
-    [TestClass]
-    public class AnnouncerDataDocumentTests : DataDocumentBase, IDataDocument
+    private readonly string _dataFile = Path.Combine("JsonData", "announcerdata_76893_kokr.json");
+    private readonly string _jsonGameStringFileKOKR = Path.Combine("JsonGameStrings", "gamestrings_76893_kokr.json");
+    private readonly string _jsonGameStringFileFRFR = Path.Combine("JsonGameStrings", "gamestrings_76893_frfr.json");
+
+    private readonly AnnouncerDataDocument _announcerDataDocument;
+
+    public AnnouncerDataDocumentTests()
     {
-        private readonly string _dataFile = Path.Combine("JsonData", "announcerdata_76893_kokr.json");
-        private readonly string _jsonGameStringFileKOKR = Path.Combine("JsonGameStrings", "gamestrings_76893_kokr.json");
-        private readonly string _jsonGameStringFileFRFR = Path.Combine("JsonGameStrings", "gamestrings_76893_frfr.json");
+        _announcerDataDocument = AnnouncerDataDocument.Parse(LoadJsonTestData(), Localization.ENUS);
+    }
 
-        private readonly AnnouncerDataDocument _announcerDataDocument;
+    [TestMethod]
+    [TestCategory("DataDocument")]
+    public void DataDocumentFileGSDTest()
+    {
+        using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileFRFR);
+        using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(_dataFile, gameStringDocument);
 
-        public AnnouncerDataDocumentTests()
+        Assert.AreEqual(Localization.FRFR, document.Localization);
+        Assert.IsTrue(document.TryGetAnnouncerById("AbathurA", out Announcer _));
+    }
+
+    [TestMethod]
+    [TestCategory("DataDocument")]
+    public void DataDocumentFileLocaleTest()
+    {
+        using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(_dataFile, Localization.FRFR);
+
+        Assert.AreEqual(Localization.FRFR, document.Localization);
+        Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
+    }
+
+    [TestMethod]
+    [TestCategory("DataDocument")]
+    public void DataDocumentFileTest()
+    {
+        using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(_dataFile);
+
+        Assert.AreEqual(Localization.KOKR, document.Localization);
+        Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
+    }
+
+    [TestMethod]
+    [TestCategory("DataDocument")]
+    public void DataDocumentROMGSDTest()
+    {
+        using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
+        using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(GetBytesForROM("AbathurA"), gameStringDocument);
+
+        Assert.AreEqual(Localization.KOKR, document.Localization);
+        Assert.IsTrue(document.TryGetAnnouncerById("AbathurA", out Announcer _));
+    }
+
+    [TestMethod]
+    [TestCategory("DataDocument")]
+    public void DataDocumentROMLocaleTest()
+    {
+        using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(GetBytesForROM("AbathurA"), Localization.FRFR);
+
+        Assert.AreEqual(Localization.FRFR, document.Localization);
+        Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
+    }
+
+    [TestMethod]
+    [TestCategory("DataDocument")]
+    public void DataDocumentStreamTest()
+    {
+        using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+        using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(stream, Localization.FRFR);
+
+        Assert.AreEqual(Localization.FRFR, document.Localization);
+        Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
+    }
+
+    [TestMethod]
+    [TestCategory("DataDocument")]
+    public void DataDocumentStreamWithGSDTest()
+    {
+        using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
+        using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+        using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(stream, gameStringDocument);
+
+        Assert.AreEqual(Localization.KOKR, document.Localization);
+        Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
+    }
+
+    [TestMethod]
+    [TestCategory("DataDocument")]
+    public void DataDocumentStreamWithGameStringStreamTest()
+    {
+        using FileStream streamGameString = new FileStream(_jsonGameStringFileKOKR, FileMode.Open);
+        using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+        using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(stream, streamGameString);
+
+        Assert.AreEqual(Localization.KOKR, document.Localization);
+        Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
+    }
+
+    [TestMethod]
+    [TestCategory("DataDocument")]
+    public async Task DataDocumentStreamAsyncTest()
+    {
+        using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+        using AnnouncerDataDocument document = await AnnouncerDataDocument.ParseAsync(stream, Localization.FRFR);
+
+        Assert.AreEqual(Localization.FRFR, document.Localization);
+        Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
+    }
+
+    [TestMethod]
+    [TestCategory("DataDocument")]
+    public async Task DataDocumentStreamWithGameStringDocumentAsyncTest()
+    {
+        using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
+        using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+        using AnnouncerDataDocument document = await AnnouncerDataDocument.ParseAsync(stream, gameStringDocument);
+
+        Assert.AreEqual(Localization.KOKR, document.Localization);
+        Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
+    }
+
+    [TestMethod]
+    [TestCategory("DataDocument")]
+    public async Task DataDocumentStreamWithGameStringStreamAsyncTest()
+    {
+        using FileStream streamGameString = new FileStream(_jsonGameStringFileKOKR, FileMode.Open);
+        using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+        using AnnouncerDataDocument document = await AnnouncerDataDocument.ParseAsync(stream, streamGameString);
+
+        Assert.AreEqual(Localization.KOKR, document.Localization);
+        Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
+    }
+
+    [DataTestMethod]
+    [DataRow("Adjutant")]
+    [DataRow(null)]
+    [DataRow("asdf")]
+    public void GetAnnouncerByIdTest(string id)
+    {
+        if (id is null)
         {
-            _announcerDataDocument = AnnouncerDataDocument.Parse(LoadJsonTestData(), Localization.ENUS);
-        }
-
-        [TestMethod]
-        [TestCategory("DataDocument")]
-        public void DataDocumentFileGSDTest()
-        {
-            using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileFRFR);
-            using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(_dataFile, gameStringDocument);
-
-            Assert.AreEqual(Localization.FRFR, document.Localization);
-            Assert.IsTrue(document.TryGetAnnouncerById("AbathurA", out Announcer _));
-        }
-
-        [TestMethod]
-        [TestCategory("DataDocument")]
-        public void DataDocumentFileLocaleTest()
-        {
-            using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(_dataFile, Localization.FRFR);
-
-            Assert.AreEqual(Localization.FRFR, document.Localization);
-            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
-        }
-
-        [TestMethod]
-        [TestCategory("DataDocument")]
-        public void DataDocumentFileTest()
-        {
-            using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(_dataFile);
-
-            Assert.AreEqual(Localization.KOKR, document.Localization);
-            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
-        }
-
-        [TestMethod]
-        [TestCategory("DataDocument")]
-        public void DataDocumentROMGSDTest()
-        {
-            using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
-            using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(GetBytesForROM("AbathurA"), gameStringDocument);
-
-            Assert.AreEqual(Localization.KOKR, document.Localization);
-            Assert.IsTrue(document.TryGetAnnouncerById("AbathurA", out Announcer _));
-        }
-
-        [TestMethod]
-        [TestCategory("DataDocument")]
-        public void DataDocumentROMLocaleTest()
-        {
-            using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(GetBytesForROM("AbathurA"), Localization.FRFR);
-
-            Assert.AreEqual(Localization.FRFR, document.Localization);
-            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
-        }
-
-        [TestMethod]
-        [TestCategory("DataDocument")]
-        public void DataDocumentStreamTest()
-        {
-            using FileStream stream = new FileStream(_dataFile, FileMode.Open);
-            using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(stream, Localization.FRFR);
-
-            Assert.AreEqual(Localization.FRFR, document.Localization);
-            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
-        }
-
-        [TestMethod]
-        [TestCategory("DataDocument")]
-        public void DataDocumentStreamWithGSDTest()
-        {
-            using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
-            using FileStream stream = new FileStream(_dataFile, FileMode.Open);
-            using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(stream, gameStringDocument);
-
-            Assert.AreEqual(Localization.KOKR, document.Localization);
-            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
-        }
-
-        [TestMethod]
-        [TestCategory("DataDocument")]
-        public void DataDocumentStreamWithGameStringStreamTest()
-        {
-            using FileStream streamGameString = new FileStream(_jsonGameStringFileKOKR, FileMode.Open);
-            using FileStream stream = new FileStream(_dataFile, FileMode.Open);
-            using AnnouncerDataDocument document = AnnouncerDataDocument.Parse(stream, streamGameString);
-
-            Assert.AreEqual(Localization.KOKR, document.Localization);
-            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
-        }
-
-        [TestMethod]
-        [TestCategory("DataDocument")]
-        public async Task DataDocumentStreamAsyncTest()
-        {
-            using FileStream stream = new FileStream(_dataFile, FileMode.Open);
-            using AnnouncerDataDocument document = await AnnouncerDataDocument.ParseAsync(stream, Localization.FRFR);
-
-            Assert.AreEqual(Localization.FRFR, document.Localization);
-            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
-        }
-
-        [TestMethod]
-        [TestCategory("DataDocument")]
-        public async Task DataDocumentStreamWithGameStringDocumentAsyncTest()
-        {
-            using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
-            using FileStream stream = new FileStream(_dataFile, FileMode.Open);
-            using AnnouncerDataDocument document = await AnnouncerDataDocument.ParseAsync(stream, gameStringDocument);
-
-            Assert.AreEqual(Localization.KOKR, document.Localization);
-            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
-        }
-
-        [TestMethod]
-        [TestCategory("DataDocument")]
-        public async Task DataDocumentStreamWithGameStringStreamAsyncTest()
-        {
-            using FileStream streamGameString = new FileStream(_jsonGameStringFileKOKR, FileMode.Open);
-            using FileStream stream = new FileStream(_dataFile, FileMode.Open);
-            using AnnouncerDataDocument document = await AnnouncerDataDocument.ParseAsync(stream, streamGameString);
-
-            Assert.AreEqual(Localization.KOKR, document.Localization);
-            Assert.IsTrue(document.JsonDataDocument.RootElement.TryGetProperty("AbathurA", out JsonElement _));
-        }
-
-        [DataTestMethod]
-        [DataRow("Adjutant")]
-        [DataRow(null)]
-        [DataRow("asdf")]
-        public void GetAnnouncerByIdTest(string id)
-        {
-            if (id is null)
+            Assert.ThrowsException<ArgumentNullException>(() =>
             {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _announcerDataDocument.GetAnnouncerById(id!);
-                });
+                _ = _announcerDataDocument.GetAnnouncerById(id!);
+            });
 
-                return;
-            }
-            else if (id == "asdf")
-            {
-                Assert.ThrowsException<KeyNotFoundException>(() =>
-                {
-                    _ = _announcerDataDocument.GetAnnouncerById(id);
-                });
-
-                return;
-            }
-
-            BasicAdjutantAsserts(_announcerDataDocument.GetAnnouncerById(id));
+            return;
         }
-
-        [DataTestMethod]
-        [DataRow("Adjutant")]
-        [DataRow(null)]
-        [DataRow("asdf")]
-        public void TryGetAnnouncerByIdTest(string? id)
+        else if (id == "asdf")
         {
-            if (id is null || id == "asdf")
+            Assert.ThrowsException<KeyNotFoundException>(() =>
             {
-                Assert.IsFalse(_announcerDataDocument.TryGetAnnouncerById(id, out _));
+                _ = _announcerDataDocument.GetAnnouncerById(id);
+            });
 
-                return;
-            }
-
-            Assert.IsTrue(_announcerDataDocument.TryGetAnnouncerById(id, out Announcer? _));
-            if (_announcerDataDocument.TryGetAnnouncerById(id, out Announcer? announcer))
-            {
-                BasicAdjutantAsserts(announcer);
-            }
+            return;
         }
 
-        [DataTestMethod]
-        [DataRow("AdjutantAnnouncer")]
-        [DataRow(null)]
-        [DataRow("asdf")]
-        public void GetAnnouncerByHyperlinkIdTest(string id)
+        BasicAdjutantAsserts(_announcerDataDocument.GetAnnouncerById(id));
+    }
+
+    [DataTestMethod]
+    [DataRow("Adjutant")]
+    [DataRow(null)]
+    [DataRow("asdf")]
+    public void TryGetAnnouncerByIdTest(string? id)
+    {
+        if (id is null || id == "asdf")
         {
-            if (id is null)
-            {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _announcerDataDocument.GetAnnouncerByHyperlinkId(id!);
-                });
+            Assert.IsFalse(_announcerDataDocument.TryGetAnnouncerById(id, out _));
 
-                return;
-            }
-            else if (id == "asdf")
-            {
-                Assert.ThrowsException<KeyNotFoundException>(() =>
-                {
-                    _ = _announcerDataDocument.GetAnnouncerByHyperlinkId(id);
-                });
-
-                return;
-            }
-
-            BasicAdjutantAsserts(_announcerDataDocument.GetAnnouncerByHyperlinkId(id));
+            return;
         }
 
-        [DataTestMethod]
-        [DataRow("AdjutantAnnouncer")]
-        [DataRow(null)]
-        [DataRow("asdf")]
-        public void TryGetAnnouncerByIdHyperlinkIdTest(string? id)
+        Assert.IsTrue(_announcerDataDocument.TryGetAnnouncerById(id, out Announcer? _));
+        if (_announcerDataDocument.TryGetAnnouncerById(id, out Announcer? announcer))
         {
-            if (id is null || id == "asdf")
-            {
-                Assert.IsFalse(_announcerDataDocument.TryGetAnnouncerByHyperlinkId(id, out _));
-
-                return;
-            }
-
-            Assert.IsTrue(_announcerDataDocument.TryGetAnnouncerByHyperlinkId(id, out Announcer? announcer));
-            BasicAdjutantAsserts(announcer!);
+            BasicAdjutantAsserts(announcer);
         }
+    }
 
-        [DataTestMethod]
-        [DataRow("AADJ")]
-        [DataRow(null)]
-        [DataRow("asdf")]
-        public void GetAnnouncerByAttributeIdTest(string id)
+    [DataTestMethod]
+    [DataRow("AdjutantAnnouncer")]
+    [DataRow(null)]
+    [DataRow("asdf")]
+    public void GetAnnouncerByHyperlinkIdTest(string id)
+    {
+        if (id is null)
         {
-            if (id is null)
+            Assert.ThrowsException<ArgumentNullException>(() =>
             {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _announcerDataDocument.GetAnnouncerByAttributeId(id!);
-                });
+                _ = _announcerDataDocument.GetAnnouncerByHyperlinkId(id!);
+            });
 
-                return;
-            }
-            else if (id == "asdf")
+            return;
+        }
+        else if (id == "asdf")
+        {
+            Assert.ThrowsException<KeyNotFoundException>(() =>
             {
-                Assert.ThrowsException<KeyNotFoundException>(() =>
-                {
-                    _ = _announcerDataDocument.GetAnnouncerByAttributeId(id);
-                });
+                _ = _announcerDataDocument.GetAnnouncerByHyperlinkId(id);
+            });
 
-                return;
-            }
-
-            BasicAdjutantAsserts(_announcerDataDocument.GetAnnouncerByAttributeId(id));
+            return;
         }
 
-        [DataTestMethod]
-        [DataRow("AADJ")]
-        [DataRow(null)]
-        [DataRow("asdf")]
-        public void TryGetAnnouncerByAttributeIdTest(string? id)
+        BasicAdjutantAsserts(_announcerDataDocument.GetAnnouncerByHyperlinkId(id));
+    }
+
+    [DataTestMethod]
+    [DataRow("AdjutantAnnouncer")]
+    [DataRow(null)]
+    [DataRow("asdf")]
+    public void TryGetAnnouncerByIdHyperlinkIdTest(string? id)
+    {
+        if (id is null || id == "asdf")
         {
-            if (id is null || id == "asdf")
+            Assert.IsFalse(_announcerDataDocument.TryGetAnnouncerByHyperlinkId(id, out _));
+
+            return;
+        }
+
+        Assert.IsTrue(_announcerDataDocument.TryGetAnnouncerByHyperlinkId(id, out Announcer? announcer));
+        BasicAdjutantAsserts(announcer!);
+    }
+
+    [DataTestMethod]
+    [DataRow("AADJ")]
+    [DataRow(null)]
+    [DataRow("asdf")]
+    public void GetAnnouncerByAttributeIdTest(string id)
+    {
+        if (id is null)
+        {
+            Assert.ThrowsException<ArgumentNullException>(() =>
             {
-                Assert.IsFalse(_announcerDataDocument.TryGetAnnouncerByAttributeId(id, out _));
+                _ = _announcerDataDocument.GetAnnouncerByAttributeId(id!);
+            });
 
-                return;
-            }
-
-            Assert.IsTrue(_announcerDataDocument.TryGetAnnouncerByAttributeId(id, out Announcer? announcer));
-            BasicAdjutantAsserts(announcer!);
+            return;
         }
-
-        [DataTestMethod]
-        [DataRow("AI")]
-        [DataRow(null)]
-        [DataRow("asdf")]
-        public void GetAnnouncerByHeroIdTest(string id)
+        else if (id == "asdf")
         {
-            if (id is null)
+            Assert.ThrowsException<KeyNotFoundException>(() =>
             {
-                Assert.ThrowsException<ArgumentNullException>(() =>
-                {
-                    _ = _announcerDataDocument.GetAnnouncerByHeroId(id!);
-                });
+                _ = _announcerDataDocument.GetAnnouncerByAttributeId(id);
+            });
 
-                return;
-            }
-            else if (id == "asdf")
+            return;
+        }
+
+        BasicAdjutantAsserts(_announcerDataDocument.GetAnnouncerByAttributeId(id));
+    }
+
+    [DataTestMethod]
+    [DataRow("AADJ")]
+    [DataRow(null)]
+    [DataRow("asdf")]
+    public void TryGetAnnouncerByAttributeIdTest(string? id)
+    {
+        if (id is null || id == "asdf")
+        {
+            Assert.IsFalse(_announcerDataDocument.TryGetAnnouncerByAttributeId(id, out _));
+
+            return;
+        }
+
+        Assert.IsTrue(_announcerDataDocument.TryGetAnnouncerByAttributeId(id, out Announcer? announcer));
+        BasicAdjutantAsserts(announcer!);
+    }
+
+    [DataTestMethod]
+    [DataRow("AI")]
+    [DataRow(null)]
+    [DataRow("asdf")]
+    public void GetAnnouncerByHeroIdTest(string id)
+    {
+        if (id is null)
+        {
+            Assert.ThrowsException<ArgumentNullException>(() =>
             {
-                Assert.ThrowsException<KeyNotFoundException>(() =>
-                {
-                    _ = _announcerDataDocument.GetAnnouncerByHeroId(id);
-                });
+                _ = _announcerDataDocument.GetAnnouncerByHeroId(id!);
+            });
 
-                return;
-            }
-
-            BasicAdjutantAsserts(_announcerDataDocument.GetAnnouncerByHeroId(id));
+            return;
         }
-
-        [DataTestMethod]
-        [DataRow("AI")]
-        [DataRow(null)]
-        [DataRow("asdf")]
-        public void TryGetAnnouncerByHeroIdTest(string id)
+        else if (id == "asdf")
         {
-            if (id is null || id == "asdf")
+            Assert.ThrowsException<KeyNotFoundException>(() =>
             {
-                Assert.IsFalse(_announcerDataDocument.TryGetAnnouncerByHeroId(id, out _));
+                _ = _announcerDataDocument.GetAnnouncerByHeroId(id);
+            });
 
-                return;
-            }
-
-            Assert.IsTrue(_announcerDataDocument.TryGetAnnouncerByHeroId(id, out Announcer? announcer));
-            BasicAdjutantAsserts(announcer!);
+            return;
         }
 
-        [TestMethod]
-        public void UpdateGameStringsTest()
+        BasicAdjutantAsserts(_announcerDataDocument.GetAnnouncerByHeroId(id));
+    }
+
+    [DataTestMethod]
+    [DataRow("AI")]
+    [DataRow(null)]
+    [DataRow("asdf")]
+    public void TryGetAnnouncerByHeroIdTest(string id)
+    {
+        if (id is null || id == "asdf")
         {
-            Announcer announcer = new Announcer
-            {
-                Id = "AbathurA",
-            };
+            Assert.IsFalse(_announcerDataDocument.TryGetAnnouncerByHeroId(id, out _));
 
-            using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
-            gameStringDocument.UpdateGameStrings(announcer);
-
-            Assert.ThrowsException<ArgumentNullException>(() => gameStringDocument.UpdateGameStrings(announcer: null!));
-
-            Assert.AreEqual("Abathur Announcer", announcer.Name);
-            Assert.AreEqual("asdf", announcer.Description?.RawDescription);
-            Assert.AreEqual("asdfsn", announcer.SortName);
+            return;
         }
 
-        private static byte[] LoadJsonTestData()
+        Assert.IsTrue(_announcerDataDocument.TryGetAnnouncerByHeroId(id, out Announcer? announcer));
+        BasicAdjutantAsserts(announcer!);
+    }
+
+    [TestMethod]
+    public void UpdateGameStringsTest()
+    {
+        Announcer announcer = new Announcer
         {
-            using MemoryStream memoryStream = new MemoryStream();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
-            writer.WriteStartObject();
+            Id = "AbathurA",
+        };
 
-            writer.WriteStartObject("AbathurA");
-            writer.WriteString("name", "Abathur Announcer");
-            writer.WriteString("hyperlinkId", "AbathurAnnouncer");
-            writer.WriteString("attributeId", "AB01");
-            writer.WriteString("rarity", "Legendary");
-            writer.WriteString("category", "Starcraft");
-            writer.WriteString("gender", "Unknown");
-            writer.WriteString("heroId", "Abathur");
-            writer.WriteString("releaseDate", "2014-03-13");
-            writer.WriteString("image", "storm_ui_announcer_abathur.png");
-            writer.WriteEndObject();
+        using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
+        gameStringDocument.UpdateGameStrings(announcer);
 
-            writer.WriteStartObject("Adjutant");
-            writer.WriteString("name", "Adjutant Announcer");
-            writer.WriteString("hyperlinkId", "AdjutantAnnouncer");
-            writer.WriteString("attributeId", "AADJ");
-            writer.WriteString("rarity", "Legendary");
-            writer.WriteString("category", "Starcraft");
-            writer.WriteString("gender", "Female");
-            writer.WriteString("heroId", "AI");
-            writer.WriteString("releaseDate", "2018-03-27");
-            writer.WriteString("image", "storm_ui_announcer_adjutant.png");
-            writer.WriteString("description", "Ann");
-            writer.WriteString("sortName", "adj");
-            writer.WriteEndObject();
+        Assert.ThrowsException<ArgumentNullException>(() => gameStringDocument.UpdateGameStrings(announcer: null!));
 
-            writer.WriteEndObject();
+        Assert.AreEqual("Abathur Announcer", announcer.Name);
+        Assert.AreEqual("asdf", announcer.Description?.RawDescription);
+        Assert.AreEqual("asdfsn", announcer.SortName);
+    }
 
-            writer.Flush();
+    private static byte[] LoadJsonTestData()
+    {
+        using MemoryStream memoryStream = new MemoryStream();
+        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        writer.WriteStartObject();
 
-            return memoryStream.ToArray();
-        }
+        writer.WriteStartObject("AbathurA");
+        writer.WriteString("name", "Abathur Announcer");
+        writer.WriteString("hyperlinkId", "AbathurAnnouncer");
+        writer.WriteString("attributeId", "AB01");
+        writer.WriteString("rarity", "Legendary");
+        writer.WriteString("category", "Starcraft");
+        writer.WriteString("gender", "Unknown");
+        writer.WriteString("heroId", "Abathur");
+        writer.WriteString("releaseDate", "2014-03-13");
+        writer.WriteString("image", "storm_ui_announcer_abathur.png");
+        writer.WriteEndObject();
 
-        private static byte[] LoadEnusLocalizedStringData()
-        {
-            using MemoryStream memoryStream = new MemoryStream();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        writer.WriteStartObject("Adjutant");
+        writer.WriteString("name", "Adjutant Announcer");
+        writer.WriteString("hyperlinkId", "AdjutantAnnouncer");
+        writer.WriteString("attributeId", "AADJ");
+        writer.WriteString("rarity", "Legendary");
+        writer.WriteString("category", "Starcraft");
+        writer.WriteString("gender", "Female");
+        writer.WriteString("heroId", "AI");
+        writer.WriteString("releaseDate", "2018-03-27");
+        writer.WriteString("image", "storm_ui_announcer_adjutant.png");
+        writer.WriteString("description", "Ann");
+        writer.WriteString("sortName", "adj");
+        writer.WriteEndObject();
 
-            writer.WriteStartObject();
+        writer.WriteEndObject();
 
-            writer.WriteStartObject("meta");
-            writer.WriteString("locale", "enus");
-            writer.WriteEndObject(); // meta
+        writer.Flush();
 
-            writer.WriteStartObject("gamestrings");
-            writer.WriteStartObject("announcer");
+        return memoryStream.ToArray();
+    }
 
-            writer.WriteStartObject("name");
-            writer.WriteString("AbathurA", "Abathur Announcer");
-            writer.WriteString("Adjutant", "Adjutant Announcer");
-            writer.WriteEndObject();
-            writer.WriteStartObject("description");
-            writer.WriteString("AbathurA", "asdf");
-            writer.WriteString("Adjutant", "qwer");
-            writer.WriteEndObject();
-            writer.WriteStartObject("sortName");
-            writer.WriteString("AbathurA", "asdfsn");
-            writer.WriteString("Adjutant", "qwersn");
-            writer.WriteEndObject();
+    private static byte[] LoadEnusLocalizedStringData()
+    {
+        using MemoryStream memoryStream = new MemoryStream();
+        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
 
-            writer.WriteEndObject(); // end announcer
+        writer.WriteStartObject();
 
-            writer.WriteEndObject(); // end gamestrings
+        writer.WriteStartObject("meta");
+        writer.WriteString("locale", "enus");
+        writer.WriteEndObject(); // meta
 
-            writer.WriteEndObject();
+        writer.WriteStartObject("gamestrings");
+        writer.WriteStartObject("announcer");
 
-            writer.Flush();
+        writer.WriteStartObject("name");
+        writer.WriteString("AbathurA", "Abathur Announcer");
+        writer.WriteString("Adjutant", "Adjutant Announcer");
+        writer.WriteEndObject();
+        writer.WriteStartObject("description");
+        writer.WriteString("AbathurA", "asdf");
+        writer.WriteString("Adjutant", "qwer");
+        writer.WriteEndObject();
+        writer.WriteStartObject("sortName");
+        writer.WriteString("AbathurA", "asdfsn");
+        writer.WriteString("Adjutant", "qwersn");
+        writer.WriteEndObject();
 
-            return memoryStream.ToArray();
-        }
+        writer.WriteEndObject(); // end announcer
 
-        private static void BasicAdjutantAsserts(Announcer announcer)
-        {
-            Assert.AreEqual("Adjutant", announcer.Id);
-            Assert.AreEqual("Adjutant Announcer", announcer.Name);
-            Assert.AreEqual("AdjutantAnnouncer", announcer.HyperlinkId);
-            Assert.AreEqual("AADJ", announcer.AttributeId);
-            Assert.AreEqual(Rarity.Legendary, announcer.Rarity);
-            Assert.AreEqual("Starcraft", announcer.CollectionCategory);
-            Assert.AreEqual("Female", announcer.Gender);
-            Assert.AreEqual("AI", announcer.HeroId);
-            Assert.AreEqual(new DateTime(2018, 3, 27), announcer.ReleaseDate);
-            Assert.AreEqual("storm_ui_announcer_adjutant.png", announcer.ImageFileName);
-            Assert.AreEqual("Ann", announcer.Description?.RawDescription);
-            Assert.AreEqual("adj", announcer.SortName);
-        }
+        writer.WriteEndObject(); // end gamestrings
+
+        writer.WriteEndObject();
+
+        writer.Flush();
+
+        return memoryStream.ToArray();
+    }
+
+    private static void BasicAdjutantAsserts(Announcer announcer)
+    {
+        Assert.AreEqual("Adjutant", announcer.Id);
+        Assert.AreEqual("Adjutant Announcer", announcer.Name);
+        Assert.AreEqual("AdjutantAnnouncer", announcer.HyperlinkId);
+        Assert.AreEqual("AADJ", announcer.AttributeId);
+        Assert.AreEqual(Rarity.Legendary, announcer.Rarity);
+        Assert.AreEqual("Starcraft", announcer.CollectionCategory);
+        Assert.AreEqual("Female", announcer.Gender);
+        Assert.AreEqual("AI", announcer.HeroId);
+        Assert.AreEqual(new DateTime(2018, 3, 27), announcer.ReleaseDate);
+        Assert.AreEqual("storm_ui_announcer_adjutant.png", announcer.ImageFileName);
+        Assert.AreEqual("Ann", announcer.Description?.RawDescription);
+        Assert.AreEqual("adj", announcer.SortName);
     }
 }
