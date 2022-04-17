@@ -54,22 +54,22 @@ using HeroDataDocument heroDataDocument = HeroDataDocument.Parse("herodata_78679
 The `Parse` methods that accept a file path will load up the file by using `File.ReadAllBytes(...)`. If instead a stream is desired, `Stream` overloaded parse methods are available. Example parsing a non-localized json data file.
 ```C#
 // localization must be specified as a parameter.
-using FileStream stream = new FileStream("herodata_78679_enus.json", FileMode.Open);
+using FileStream stream = new("herodata_78679_enus.json", FileMode.Open);
 using HeroDataDocument document = HeroDataDocument.Parse(stream, Localization.ENUS);
 ```
 
 For a localized json data file, the `GameStringDocument` can accept a `Stream` argument as well.
 ```C#
-using FileStream gameStringStream = new FileStream("gamestrings_78679_enus.json", FileMode.Open);
+using FileStream gameStringStream = new("gamestrings_78679_enus.json", FileMode.Open);
 using GameStringDocument gameStringDocument = GameStringDocument.Parse(gameStringStream);
 
-using FileStream fileStream = new FileStream("herodata_78679_localized.json", FileMode.Open);
+using FileStream fileStream = new("herodata_78679_localized.json", FileMode.Open);
 using HeroDataDocument document = HeroDataDocument.Parse(fileStream, gameStringDocument);
 ```
 However a better way would be to use the `Parse(Stream utf8Json, Stream utf8JsonGameStrings)` method.
 ```C#
-using FileStream gameStringStream = new FileStream("gamestrings_78679_enus.json", FileMode.Open);
-using FileStream fileStream = new FileStream("herodata_78679_localized.json", FileMode.Open);
+using FileStream gameStringStream = new("gamestrings_78679_enus.json", FileMode.Open);
+using FileStream fileStream = new("herodata_78679_localized.json", FileMode.Open);
 using HeroDataDocument document = HeroDataDocument.Parse(fileStream, gameStringStream);
 ```
 
@@ -86,7 +86,7 @@ using HeroDataDocument heroDataDocument = HeroDataDocument.Parse("herodata_78679
 Hero alarakData = heroDataDocument.GetHeroById("Alarak", true, true, true, true);
 
 // get Alarak's attribute id
-string att = alarakData.AttributeId;
+string attributeId = alarakData.AttributeId;
 
 // his rarity
 Rarity rarity = alarakData.Rarity;
@@ -128,13 +128,13 @@ If using [heroes-data](https://github.com/HeroesToolChest/heroes-data) or a simi
 Example of usage.
 ```C#
 // by default, this will look into the heroesdata directory, otherwise provide the name of the directory
-HeroesDataDirectory heroesDataDirectory = new HeroesDataDirectory();
+HeroesDataDirectory heroesDataDirectory = new();
 
 // get the hero data document
 using HeroDataDocument heroDataDocument = heroesDataDirectory.HeroData(new HeroesDataVersion(2, 49, 4, 78679), true, Localization.ENUS);
 
 // now the hero data for Alarak can be obtained
-Hero alarakData = dataDocument.GetHeroById("Alarak", true, true, true, true);
+Hero alarakData = heroDataDocument.GetHeroById("Alarak", true, true, true, true);
 
 // later on we need the korean localization, so the gamestrings need to be updated
 heroesDataDirectory.UpdateGameString(alarakData, new HeroesDataVersion(2, 49, 4, 78679), Localization.KOKR);
@@ -143,9 +143,9 @@ heroesDataDirectory.UpdateGameString(alarakData, new HeroesDataVersion(2, 49, 4,
 `HeroesDataDirectory` automatically accounts for the "duplicate" version directories by reading the `.hdp.json` files.
 
 ## Developing
-To build and compile the code, it is recommended to use the latest version of [Visual Studio 2019 or Visual Studio Code](https://visualstudio.microsoft.com/downloads/).
+To build and compile the code, it is recommended to use the latest version of [Visual Studio 2022 or Visual Studio Code](https://visualstudio.microsoft.com/downloads/).
 
-Another option is to use the dotnet CLI tools from the [.NET Core 5.0 SDK](https://dotnet.microsoft.com/download).
+Another option is to use the dotnet CLI tools from the [.NET Core 6.0 SDK](https://dotnet.microsoft.com/download).
 
 ## License
 [MIT license](/LICENSE)
