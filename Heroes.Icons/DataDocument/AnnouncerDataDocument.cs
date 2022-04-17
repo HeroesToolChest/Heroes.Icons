@@ -353,7 +353,7 @@ public class AnnouncerDataDocument : DataDocumentBase, IDataDocument
 
     private Announcer GetAnnouncerData(string announcerId, JsonElement announcerElement)
     {
-        Announcer announcer = new Announcer()
+        Announcer announcer = new()
         {
             Id = announcerId,
         };

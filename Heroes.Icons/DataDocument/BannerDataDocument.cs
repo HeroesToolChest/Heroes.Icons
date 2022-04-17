@@ -324,7 +324,7 @@ public class BannerDataDocument : DataDocumentBase, IDataDocument
 
     private Banner GetBannerData(string bannerId, JsonElement bannerElement)
     {
-        Banner banner = new Banner()
+        Banner banner = new()
         {
             Id = bannerId,
         };

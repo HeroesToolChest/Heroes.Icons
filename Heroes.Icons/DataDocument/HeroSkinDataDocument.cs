@@ -324,7 +324,7 @@ public class HeroSkinDataDocument : DataDocumentBase, IDataDocument
 
     private HeroSkin GetHeroSkinData(string heroSkinId, JsonElement heroSkinElement)
     {
-        HeroSkin heroSkin = new HeroSkin()
+        HeroSkin heroSkin = new()
         {
             Id = heroSkinId,
         };

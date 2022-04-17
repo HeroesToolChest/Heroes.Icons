@@ -297,7 +297,7 @@ public class PortraitPackDataDocument : DataDocumentBase, IDataDocument
 
     private PortraitPack GetPortraitPackData(string portraitPackId, JsonElement portraitPackElement)
     {
-        PortraitPack portraitPack = new PortraitPack()
+        PortraitPack portraitPack = new()
         {
             Id = portraitPackId,
         };

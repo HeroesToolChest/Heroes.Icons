@@ -8,7 +8,7 @@ public class BannerExtensionsTests
     {
         using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-        Banner banner = new Banner
+        Banner banner = new()
         {
             Id = "BannerD3DemonHunterRare",
         };
@@ -21,7 +21,7 @@ public class BannerExtensionsTests
     [TestMethod]
     public void UpdateGameStringsThrowArgumentNullException()
     {
-        Banner banner = new Banner
+        Banner banner = new()
         {
             Id = "BannerD3DemonHunter",
         };
@@ -31,8 +31,8 @@ public class BannerExtensionsTests
 
     private static byte[] LoadEnusLocalizedStringData()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
 
         writer.WriteStartObject();
 

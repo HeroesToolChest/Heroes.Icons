@@ -8,7 +8,7 @@ public class MountExtensionsTests
     {
         using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-        Mount mount = new Mount
+        Mount mount = new()
         {
             Id = "AlarakTaldarimMarch",
         };
@@ -21,7 +21,7 @@ public class MountExtensionsTests
     [TestMethod]
     public void UpdateGameStringsThrowArgumentNullException()
     {
-        Mount mount = new Mount
+        Mount mount = new()
         {
             Id = "AlarakTaldarimMarch",
         };
@@ -31,8 +31,8 @@ public class MountExtensionsTests
 
     private static byte[] LoadEnusLocalizedStringData()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
 
         writer.WriteStartObject();
 

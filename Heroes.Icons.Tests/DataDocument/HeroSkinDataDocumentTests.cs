@@ -74,7 +74,7 @@ public class HeroSkinDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("DataDocument")]
     public void DataDocumentStreamTest()
     {
-        using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+        using FileStream stream = new(_dataFile, FileMode.Open);
         using HeroSkinDataDocument document = HeroSkinDataDocument.Parse(stream, Localization.FRFR);
 
         Assert.AreEqual(Localization.FRFR, document.Localization);
@@ -86,7 +86,7 @@ public class HeroSkinDataDocumentTests : DataDocumentBase, IDataDocument
     public void DataDocumentStreamWithGSDTest()
     {
         using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
-        using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+        using FileStream stream = new(_dataFile, FileMode.Open);
         using HeroSkinDataDocument document = HeroSkinDataDocument.Parse(stream, gameStringDocument);
 
         Assert.AreEqual(Localization.KOKR, document.Localization);
@@ -97,8 +97,8 @@ public class HeroSkinDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("DataDocument")]
     public void DataDocumentStreamWithGameStringStreamTest()
     {
-        using FileStream streamGameString = new FileStream(_jsonGameStringFileKOKR, FileMode.Open);
-        using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+        using FileStream streamGameString = new(_jsonGameStringFileKOKR, FileMode.Open);
+        using FileStream stream = new(_dataFile, FileMode.Open);
         using HeroSkinDataDocument document = HeroSkinDataDocument.Parse(stream, streamGameString);
 
         Assert.AreEqual(Localization.KOKR, document.Localization);
@@ -109,7 +109,7 @@ public class HeroSkinDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("DataDocument")]
     public async Task DataDocumentStreamAsyncTest()
     {
-        using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+        using FileStream stream = new(_dataFile, FileMode.Open);
         using HeroSkinDataDocument document = await HeroSkinDataDocument.ParseAsync(stream, Localization.FRFR);
 
         Assert.AreEqual(Localization.FRFR, document.Localization);
@@ -121,7 +121,7 @@ public class HeroSkinDataDocumentTests : DataDocumentBase, IDataDocument
     public async Task DataDocumentStreamWithGameStringDocumentAsyncTest()
     {
         using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
-        using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+        using FileStream stream = new(_dataFile, FileMode.Open);
         using HeroSkinDataDocument document = await HeroSkinDataDocument.ParseAsync(stream, gameStringDocument);
 
         Assert.AreEqual(Localization.KOKR, document.Localization);
@@ -132,8 +132,8 @@ public class HeroSkinDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("DataDocument")]
     public async Task DataDocumentStreamWithGameStringStreamAsyncTest()
     {
-        using FileStream streamGameString = new FileStream(_jsonGameStringFileKOKR, FileMode.Open);
-        using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+        using FileStream streamGameString = new(_jsonGameStringFileKOKR, FileMode.Open);
+        using FileStream stream = new(_dataFile, FileMode.Open);
         using HeroSkinDataDocument document = await HeroSkinDataDocument.ParseAsync(stream, streamGameString);
 
         Assert.AreEqual(Localization.KOKR, document.Localization);
@@ -280,8 +280,8 @@ public class HeroSkinDataDocumentTests : DataDocumentBase, IDataDocument
 
     private static byte[] LoadJsonTestData()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("AbathurBaseVar3");

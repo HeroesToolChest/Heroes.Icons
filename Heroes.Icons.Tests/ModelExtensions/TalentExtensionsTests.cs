@@ -8,7 +8,7 @@ public class TalentExtensionsTests
     {
         using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-        Talent talent = new Talent()
+        Talent talent = new()
         {
             AbilityTalentId = new AbilityTalentId("ZuljinWrongPlaceWrongTime", "ZuljinWrongPlaceWrongTime")
             {
@@ -25,7 +25,7 @@ public class TalentExtensionsTests
     [TestMethod]
     public void UpdateGameStringsThrowArgumentNullException()
     {
-        Talent talent = new Talent()
+        Talent talent = new()
         {
             AbilityTalentId = new AbilityTalentId("ZuljinWrongPlaceWrongTime", "ZuljinWrongPlaceWrongTime")
             {
@@ -39,8 +39,8 @@ public class TalentExtensionsTests
 
     private static byte[] LoadEnusLocalizedStringData()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
 
         writer.WriteStartObject();
 

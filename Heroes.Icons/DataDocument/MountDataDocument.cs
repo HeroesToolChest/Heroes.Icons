@@ -324,7 +324,7 @@ public class MountDataDocument : DataDocumentBase, IDataDocument
 
     private Mount GetMountData(string mountId, JsonElement mountElement)
     {
-        Mount mount = new Mount()
+        Mount mount = new()
         {
             Id = mountId,
         };

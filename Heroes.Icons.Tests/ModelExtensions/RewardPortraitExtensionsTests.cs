@@ -8,7 +8,7 @@ public class RewardPortraitExtensionsTests
     {
         using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-        RewardPortrait rewardPortrait = new RewardPortrait
+        RewardPortrait rewardPortrait = new()
         {
             Id = "1YearAnniversaryPortrait",
         };
@@ -21,7 +21,7 @@ public class RewardPortraitExtensionsTests
     [TestMethod]
     public void UpdateGameStringsThrowArgumentNullException()
     {
-        RewardPortrait rewardPortrait = new RewardPortrait
+        RewardPortrait rewardPortrait = new()
         {
             Id = "2016FallGlobalChampionshipPortrait",
         };
@@ -31,8 +31,8 @@ public class RewardPortraitExtensionsTests
 
     private static byte[] LoadEnusLocalizedStringData()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
 
         writer.WriteStartObject();
 

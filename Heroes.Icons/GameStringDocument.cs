@@ -192,7 +192,7 @@ public class GameStringDocument : IDisposable
     /// <returns>A <see cref="GameStringDocument"/> representation of the JSON value.</returns>
     public static async Task<GameStringDocument> ParseAsync(Stream utf8Json)
     {
-        GameStringDocument document = new GameStringDocument(utf8Json, true);
+        GameStringDocument document = new(utf8Json, true);
         await document.InitializeParseAsync<GameStringDocument>().ConfigureAwait(false);
         document.SetLocalizationFromMeta();
 

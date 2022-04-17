@@ -775,7 +775,7 @@ public class HeroDataDocument : UnitDataBase, IDataDocument
 
     private Hero GetHeroData(string heroId, JsonElement heroElement, bool includeAbilities, bool includeSubAbilities, bool includeTalents, bool includeHeroUnits)
     {
-        Hero hero = new Hero
+        Hero hero = new()
         {
             Id = heroId,
             CHeroId = heroId,
@@ -1035,7 +1035,7 @@ public class HeroDataDocument : UnitDataBase, IDataDocument
     {
         foreach (JsonElement element in tierElement.EnumerateArray())
         {
-            Talent talent = new Talent
+            Talent talent = new()
             {
                 Tier = talentTiers,
             };

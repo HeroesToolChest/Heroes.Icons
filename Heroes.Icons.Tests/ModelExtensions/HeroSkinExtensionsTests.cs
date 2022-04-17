@@ -8,7 +8,7 @@ public class HeroSkinExtensionsTests
     {
         using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-        HeroSkin heroSkin = new HeroSkin
+        HeroSkin heroSkin = new()
         {
             Id = "AbathurBaseVar3",
         };
@@ -21,7 +21,7 @@ public class HeroSkinExtensionsTests
     [TestMethod]
     public void UpdateGameStringsThrowArgumentNullException()
     {
-        HeroSkin heroSkin = new HeroSkin
+        HeroSkin heroSkin = new()
         {
             Id = "AbathurBaseVar3",
         };
@@ -31,8 +31,8 @@ public class HeroSkinExtensionsTests
 
     private static byte[] LoadEnusLocalizedStringData()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
 
         writer.WriteStartObject();
 

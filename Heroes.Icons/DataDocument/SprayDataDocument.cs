@@ -324,7 +324,7 @@ public class SprayDataDocument : DataDocumentBase, IDataDocument
 
     private Spray GetSprayData(string sprayId, JsonElement sprayElement)
     {
-        Spray spray = new Spray()
+        Spray spray = new()
         {
             Id = sprayId,
         };

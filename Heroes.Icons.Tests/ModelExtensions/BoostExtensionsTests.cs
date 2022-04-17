@@ -8,7 +8,7 @@ public class BoostExtensionsTests
     {
         using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-        Boost boost = new Boost
+        Boost boost = new()
         {
             Id = "30DayPromo",
         };
@@ -22,7 +22,7 @@ public class BoostExtensionsTests
     [TestMethod]
     public void UpdateGameStringsThrowArgumentNullException()
     {
-        Boost boost = new Boost
+        Boost boost = new()
         {
             Id = "30DayPromo",
         };
@@ -32,8 +32,8 @@ public class BoostExtensionsTests
 
     private static byte[] LoadEnusLocalizedStringData()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
 
         writer.WriteStartObject();
 

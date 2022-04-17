@@ -8,7 +8,7 @@ public class UnitExtensionsTests
     {
         using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-        Unit unit = new Unit
+        Unit unit = new()
         {
             CUnitId = "AbathurEvolvedMonstrosity",
             Id = "AbathurEvolvedMonstrosity",
@@ -22,7 +22,7 @@ public class UnitExtensionsTests
     [TestMethod]
     public void UpdateGameStringsThrowArgumentNullException()
     {
-        Unit unit = new Unit
+        Unit unit = new()
         {
             CUnitId = "AbathurEvolvedMonstrosity",
             Id = "AbathurEvolvedMonstrosity",
@@ -33,8 +33,8 @@ public class UnitExtensionsTests
 
     private static byte[] LoadEnusLocalizedStringData()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
 
         writer.WriteStartObject();
 

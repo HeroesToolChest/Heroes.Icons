@@ -326,7 +326,7 @@ public class MatchAwardDataDocument : DataDocumentBase, IDataDocument
 
     private MatchAward GetMatchAwardData(string matchAwardId, JsonElement matchAwardElement)
     {
-        MatchAward matchAward = new MatchAward()
+        MatchAward matchAward = new()
         {
             Id = matchAwardId,
         };

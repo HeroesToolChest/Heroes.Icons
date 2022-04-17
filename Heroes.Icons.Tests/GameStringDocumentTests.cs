@@ -58,8 +58,8 @@ public class GameStringDocumentTests
     [TestMethod]
     public void GameStringDocumentWithROMTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("meta");
@@ -81,8 +81,8 @@ public class GameStringDocumentTests
     [TestMethod]
     public void GameStringDocumentWithROMLocaleTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("meta");
@@ -104,7 +104,7 @@ public class GameStringDocumentTests
     [TestMethod]
     public void GameStringDocumentStreamTest()
     {
-        using FileStream stream = new FileStream(_jsonGameStringFileKOKR, FileMode.Open);
+        using FileStream stream = new(_jsonGameStringFileKOKR, FileMode.Open);
         using GameStringDocument document = GameStringDocument.Parse(stream);
 
         Assert.AreEqual(Localization.KOKR, document.Localization);
@@ -114,7 +114,7 @@ public class GameStringDocumentTests
     [TestMethod]
     public void GameStringDocumentWithStreamLocaleTest()
     {
-        using FileStream stream = new FileStream(_jsonGameStringFileKOKR, FileMode.Open);
+        using FileStream stream = new(_jsonGameStringFileKOKR, FileMode.Open);
         using GameStringDocument document = GameStringDocument.Parse(stream, Localization.KOKR);
 
         Assert.AreEqual(Localization.KOKR, document.Localization);
@@ -124,7 +124,7 @@ public class GameStringDocumentTests
     [TestMethod]
     public async Task GameStringDocumentWithStreamAsyncTest()
     {
-        using FileStream stream = new FileStream(_jsonGameStringFileKOKR, FileMode.Open);
+        using FileStream stream = new(_jsonGameStringFileKOKR, FileMode.Open);
         using GameStringDocument document = await GameStringDocument.ParseAsync(stream);
 
         Assert.AreEqual(Localization.KOKR, document.Localization);
@@ -134,7 +134,7 @@ public class GameStringDocumentTests
     [TestMethod]
     public async Task GameStringDocumentWithStreamAsyncLocaleTest()
     {
-        using FileStream stream = new FileStream(_jsonGameStringFileKOKR, FileMode.Open);
+        using FileStream stream = new(_jsonGameStringFileKOKR, FileMode.Open);
         using GameStringDocument document = await GameStringDocument.ParseAsync(stream, Localization.KOKR);
 
         Assert.AreEqual(Localization.KOKR, document.Localization);

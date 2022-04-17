@@ -367,7 +367,7 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestMethod]
     public void UpdateGameStringsTest()
     {
-        Hero hero = new Hero
+        Hero hero = new()
         {
             CUnitId = "HeroAlarak",
             CHeroId = "Alarak",
@@ -435,7 +435,7 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestMethod]
     public void UpdateAbilityGameStringsTest()
     {
-        Ability ability = new Ability()
+        Ability ability = new()
         {
             AbilityTalentId = new AbilityTalentId("AlarakDiscordStrike", "AlarakDiscordStrike")
             {
@@ -457,7 +457,7 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestMethod]
     public void UpdateTalentGameStringTest()
     {
-        Talent talent = new Talent()
+        Talent talent = new()
         {
             AbilityTalentId = new AbilityTalentId("ZuljinWrongPlaceWrongTime", "ZuljinWrongPlaceWrongTime")
             {
@@ -613,8 +613,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("Helper")]
     public void GetNameFromHeroIdTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("Abathur");
@@ -645,8 +645,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("Helper")]
     public void TryGetNameFromHeroIdTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("Abathur");
@@ -680,8 +680,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("Helper")]
     public void GetNameFromUnitIdTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("Abathur");
@@ -715,8 +715,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("Helper")]
     public void TryGetNameFromUnitIdTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("Abathur");
@@ -753,8 +753,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("Helper")]
     public void GetNameFromHyperlinkIdTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("Abathur");
@@ -788,8 +788,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("Helper")]
     public void TryGetNameFromHyperlinkIdTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("Abathur");
@@ -826,8 +826,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("Helper")]
     public void GetNameFromAttributeIdTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("Abathur");
@@ -861,8 +861,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("Helper")]
     public void TryGetNameFromAttributeIdTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("Abathur");
@@ -899,8 +899,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("Helper")]
     public void GetHeroIdFromUnitIdTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("Abathur");
@@ -934,8 +934,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("Helper")]
     public void TryGetHeroIdFromUnitIdTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("Abathur");
@@ -972,8 +972,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("Helper")]
     public void GetHeroIdFromHyperlinkIdTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("Abathur");
@@ -1007,8 +1007,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("Helper")]
     public void TryGetHeroIdFromHyperlinkIdTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("Abathur");
@@ -1045,8 +1045,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("Helper")]
     public void GetHeroIdFromAttributeIdTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("Abathur");
@@ -1080,8 +1080,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("Helper")]
     public void TryGetHeroIdFromAttributeIdTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("Abathur");
@@ -1118,8 +1118,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("Helper")]
     public void IsHeroExistsByHeroIdTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("Abathur");
@@ -1145,8 +1145,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("Helper")]
     public void IsHeroExistsByUnitIdTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("Abathur");
@@ -1180,8 +1180,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("Helper")]
     public void IsHeroExistsByHyperlinkIdTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("Abathur");
@@ -1215,8 +1215,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("Helper")]
     public void IsHeroExistsByAttributeIdTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("Abathur");
@@ -1261,8 +1261,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("Helper")]
     public void GetHeroNamesTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("Abathur");
@@ -1308,8 +1308,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("Helper")]
     public void GetHeroHyperlinkIdsTest()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("Abathur");
@@ -1414,7 +1414,7 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("DataDocument")]
     public void DataDocumentStreamTest()
     {
-        using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+        using FileStream stream = new(_dataFile, FileMode.Open);
         using HeroDataDocument document = HeroDataDocument.Parse(stream, Localization.FRFR);
 
         Assert.AreEqual(Localization.FRFR, document.Localization);
@@ -1426,7 +1426,7 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     public void DataDocumentStreamWithGSDTest()
     {
         using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
-        using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+        using FileStream stream = new(_dataFile, FileMode.Open);
         using HeroDataDocument document = HeroDataDocument.Parse(stream, gameStringDocument);
 
         Assert.AreEqual(Localization.KOKR, document.Localization);
@@ -1437,8 +1437,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("DataDocument")]
     public void DataDocumentStreamWithGameStringStreamTest()
     {
-        using FileStream streamGameString = new FileStream(_jsonGameStringFileKOKR, FileMode.Open);
-        using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+        using FileStream streamGameString = new(_jsonGameStringFileKOKR, FileMode.Open);
+        using FileStream stream = new(_dataFile, FileMode.Open);
         using HeroDataDocument document = HeroDataDocument.Parse(stream, streamGameString);
 
         Assert.AreEqual(Localization.KOKR, document.Localization);
@@ -1449,7 +1449,7 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("DataDocument")]
     public async Task DataDocumentStreamAsyncTest()
     {
-        using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+        using FileStream stream = new(_dataFile, FileMode.Open);
         using HeroDataDocument document = await HeroDataDocument.ParseAsync(stream, Localization.FRFR);
 
         Assert.AreEqual(Localization.FRFR, document.Localization);
@@ -1461,7 +1461,7 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     public async Task DataDocumentStreamWithGameStringDocumentAsyncTest()
     {
         using GameStringDocument gameStringDocument = GameStringDocument.Parse(_jsonGameStringFileKOKR);
-        using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+        using FileStream stream = new(_dataFile, FileMode.Open);
         using HeroDataDocument document = await HeroDataDocument.ParseAsync(stream, gameStringDocument);
 
         Assert.AreEqual(Localization.KOKR, document.Localization);
@@ -1472,8 +1472,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
     [TestCategory("DataDocument")]
     public async Task DataDocumentStreamWithGameStringStreamAsyncTest()
     {
-        using FileStream streamGameString = new FileStream(_jsonGameStringFileKOKR, FileMode.Open);
-        using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+        using FileStream streamGameString = new(_jsonGameStringFileKOKR, FileMode.Open);
+        using FileStream stream = new(_dataFile, FileMode.Open);
         using HeroDataDocument document = await HeroDataDocument.ParseAsync(stream, streamGameString);
 
         Assert.AreEqual(Localization.KOKR, document.Localization);
@@ -1496,8 +1496,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
 
     private static byte[] LoadJsonTestData()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("Alarak");
@@ -1934,8 +1934,8 @@ public class HeroDataDocumentTests : DataDocumentBase, IDataDocument
 
     private static byte[] LoadEnusLocalizedStringData()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
 
         writer.WriteStartObject();
 

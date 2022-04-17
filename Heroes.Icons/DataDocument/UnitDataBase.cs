@@ -173,7 +173,7 @@ public abstract class UnitDataBase : DataDocumentBase, IDataDocument
         {
             foreach (JsonProperty armorProperty in armorElement.EnumerateObject())
             {
-                UnitArmor unitArmor = new UnitArmor
+                UnitArmor unitArmor = new()
                 {
                     Type = armorProperty.Name,
                     BasicArmor = armorProperty.Value.GetProperty("basic").GetInt32(),
@@ -205,7 +205,7 @@ public abstract class UnitDataBase : DataDocumentBase, IDataDocument
                 if (weaponIdValue is null)
                     continue;
 
-                UnitWeapon unitWeapon = new UnitWeapon
+                UnitWeapon unitWeapon = new()
                 {
                     WeaponNameId = weaponIdValue,
                     Range = weaponArrayElement.GetProperty("range").GetDouble(),
@@ -222,7 +222,7 @@ public abstract class UnitDataBase : DataDocumentBase, IDataDocument
                 {
                     foreach (JsonProperty attributeFactorProperty in damageFactor.EnumerateObject())
                     {
-                        WeaponAttributeFactor weaponAttributeFactor = new WeaponAttributeFactor
+                        WeaponAttributeFactor weaponAttributeFactor = new()
                         {
                             Type = attributeFactorProperty.Name,
                             Value = attributeFactorProperty.Value.GetDouble(),
@@ -292,7 +292,7 @@ public abstract class UnitDataBase : DataDocumentBase, IDataDocument
 
         foreach (JsonElement element in tierElement.EnumerateArray())
         {
-            Ability ability = new Ability
+            Ability ability = new()
             {
                 Tier = abilityTier,
             };

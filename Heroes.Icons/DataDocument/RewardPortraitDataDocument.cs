@@ -297,7 +297,7 @@ public class RewardPortraitDataDocument : DataDocumentBase, IDataDocument
 
     private RewardPortrait GetRewardPortraitData(string rewardPortraitId, JsonElement rewardPortraitElement)
     {
-        RewardPortrait rewardPortrait = new RewardPortrait()
+        RewardPortrait rewardPortrait = new()
         {
             Id = rewardPortraitId,
         };

@@ -9,7 +9,7 @@ public class HeroesDataVersionTests
     [DataRow(-567, -324, -23, -234234, false)]
     public void VersionMinimumTest(int major, int minor, int revision, int build, bool isPtr = false)
     {
-        HeroesDataVersion heroesVersion = new HeroesDataVersion(major, minor, revision, build, isPtr);
+        HeroesDataVersion heroesVersion = new(major, minor, revision, build, isPtr);
 
         Assert.AreEqual(0, heroesVersion.Major);
         Assert.AreEqual(0, heroesVersion.Minor);
@@ -31,7 +31,7 @@ public class HeroesDataVersionTests
         Assert.IsFalse(new HeroesDataVersion(2, 45, 124, 154787, false).Equals((int?)null));
         Assert.IsFalse(new HeroesDataVersion(2, 45, 124, 154787, false).Equals(5));
 
-        HeroesDataVersion version = new HeroesDataVersion(2, 45, 124, 154787, false);
+        HeroesDataVersion version = new(2, 45, 124, 154787, false);
         Assert.IsTrue(version.Equals(obj: version));
     }
 
@@ -46,7 +46,7 @@ public class HeroesDataVersionTests
 
         Assert.AreEqual(0, new HeroesDataVersion(2, 45, 124, 154787, false).CompareTo(obj: new HeroesDataVersion(2, 45, 124, 154787, false)));
 
-        HeroesDataVersion version = new HeroesDataVersion(2, 45, 124, 154787, false);
+        HeroesDataVersion version = new(2, 45, 124, 154787, false);
         Assert.AreEqual(0, version.CompareTo(obj: version));
     }
 
@@ -59,7 +59,7 @@ public class HeroesDataVersionTests
     [DataRow(1, 1, 1, 11111, false)]
     public void NotEqualsTest(int major, int minor, int revision, int build, bool isPtr = false)
     {
-        HeroesDataVersion heroesVersion = new HeroesDataVersion(1, 1, 1, 11111, true);
+        HeroesDataVersion heroesVersion = new(1, 1, 1, 11111, true);
 
         Assert.AreNotEqual(heroesVersion, new HeroesDataVersion(major, minor, revision, build, isPtr));
     }
@@ -67,7 +67,7 @@ public class HeroesDataVersionTests
     [TestMethod]
     public void NotSameObjectTest()
     {
-        HeroesDataVersion heroesVersion = new HeroesDataVersion(1, 1, 1, 11111, true);
+        HeroesDataVersion heroesVersion = new(1, 1, 1, 11111, true);
 
         Assert.AreNotEqual(new List<string>() { "asdf" }, heroesVersion);
     }

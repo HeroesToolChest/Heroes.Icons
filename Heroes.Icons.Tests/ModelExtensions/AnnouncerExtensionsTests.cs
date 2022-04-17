@@ -8,7 +8,7 @@ public class AnnouncerExtensionsTests
     {
         using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-        Announcer announcer = new Announcer
+        Announcer announcer = new()
         {
             Id = "AbathurA",
         };
@@ -21,7 +21,7 @@ public class AnnouncerExtensionsTests
     [TestMethod]
     public void UpdateGameStringsThrowArgumentNullException()
     {
-        Announcer announcer = new Announcer
+        Announcer announcer = new()
         {
             Id = "AbathurA",
         };
@@ -31,8 +31,8 @@ public class AnnouncerExtensionsTests
 
     private static byte[] LoadEnusLocalizedStringData()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
 
         writer.WriteStartObject();
 

@@ -8,7 +8,7 @@ public class VoiceLineExtensionsTests
     {
         using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-        VoiceLine voiceLine = new VoiceLine
+        VoiceLine voiceLine = new()
         {
             Id = "AbathurBase_VoiceLine01",
         };
@@ -22,7 +22,7 @@ public class VoiceLineExtensionsTests
     [TestMethod]
     public void UpdateGameStringsThrowArgumentNullException()
     {
-        VoiceLine voiceLine = new VoiceLine
+        VoiceLine voiceLine = new()
         {
             Id = "AbathurBase_VoiceLine01",
         };
@@ -32,8 +32,8 @@ public class VoiceLineExtensionsTests
 
     private static byte[] LoadEnusLocalizedStringData()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
 
         writer.WriteStartObject();
 

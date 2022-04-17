@@ -8,7 +8,7 @@ public class EmoticonPackExtensionsTests
     {
         using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-        EmoticonPack emoticonPack = new EmoticonPack
+        EmoticonPack emoticonPack = new()
         {
             Id = "AbathurEmoticonPack2",
         };
@@ -21,7 +21,7 @@ public class EmoticonPackExtensionsTests
     [TestMethod]
     public void UpdateGameStringsThrowArgumentNullException()
     {
-        EmoticonPack emoticonPack = new EmoticonPack
+        EmoticonPack emoticonPack = new()
         {
             Id = "AbathurEmoticonPack2",
         };
@@ -31,8 +31,8 @@ public class EmoticonPackExtensionsTests
 
     private static byte[] LoadEnusLocalizedStringData()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
 
         writer.WriteStartObject();
 

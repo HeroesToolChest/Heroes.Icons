@@ -8,7 +8,7 @@ public class SprayExtensionsTests
     {
         using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-        Spray spray = new Spray
+        Spray spray = new()
         {
             Id = "SprayAnimatedCarbotsAlarakDark",
         };
@@ -21,7 +21,7 @@ public class SprayExtensionsTests
     [TestMethod]
     public void UpdateGameStringsThrowArgumentNullException()
     {
-        Spray spray = new Spray
+        Spray spray = new()
         {
             Id = "SprayAnimatedCarbotsAlarakDark",
         };
@@ -31,8 +31,8 @@ public class SprayExtensionsTests
 
     private static byte[] LoadEnusLocalizedStringData()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
 
         writer.WriteStartObject();
 

@@ -22,7 +22,7 @@ public class HeroesDataDirectoryTests
     [TestMethod]
     public void NoVersionsLoadedTest()
     {
-        HeroesDataDirectory heroesDataDirectory = new HeroesDataDirectory(Path.Join("heroesdataTestFolders", "someOther"));
+        HeroesDataDirectory heroesDataDirectory = new(Path.Join("heroesdataTestFolders", "someOther"));
         Assert.IsNull(heroesDataDirectory.NewestVersion);
         Assert.IsNull(heroesDataDirectory.OldestVersion);
     }

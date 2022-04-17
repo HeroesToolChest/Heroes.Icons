@@ -151,7 +151,7 @@ public class BehaviorVeterancyDataDocument : DataDocumentBase, IDataDocument
 
     private static BehaviorVeterancy GetBehaviorVeterancyData(string behaviorVeterancyId, JsonElement behaviorVeterancyElement)
     {
-        BehaviorVeterancy behaviorVeterancy = new BehaviorVeterancy()
+        BehaviorVeterancy behaviorVeterancy = new()
         {
             Id = behaviorVeterancyId,
         };
@@ -160,7 +160,7 @@ public class BehaviorVeterancyDataDocument : DataDocumentBase, IDataDocument
 
         if (indexOfMapSplit > 0)
         {
-            behaviorVeterancy.MapName = behaviorVeterancy.Id.Substring(0, indexOfMapSplit);
+            behaviorVeterancy.MapName = behaviorVeterancy.Id[..indexOfMapSplit];
         }
 
         if (behaviorVeterancyElement.TryGetProperty("combineModifications", out JsonElement combineModifications))
@@ -173,7 +173,7 @@ public class BehaviorVeterancyDataDocument : DataDocumentBase, IDataDocument
         {
             foreach (JsonElement veterancyLevelElement in veterancyLevelsElement.EnumerateArray())
             {
-                VeterancyLevel veterancyLevel = new VeterancyLevel();
+                VeterancyLevel veterancyLevel = new();
 
                 if (veterancyLevelElement.TryGetProperty("minVeterancyXP", out JsonElement minVeterancyXP))
                 {

@@ -8,7 +8,7 @@ public class EmoticonExtensionsTests
     {
         using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-        Emoticon emoticon = new Emoticon
+        Emoticon emoticon = new()
         {
             Id = "abathur_silly",
         };
@@ -24,7 +24,7 @@ public class EmoticonExtensionsTests
     [TestMethod]
     public void UpdateGameStringsThrowArgumentNullException()
     {
-        Emoticon emoticon = new Emoticon
+        Emoticon emoticon = new()
         {
             Id = "abathur_silly",
         };
@@ -34,8 +34,8 @@ public class EmoticonExtensionsTests
 
     private static byte[] LoadEnusLocalizedStringData()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
 
         writer.WriteStartObject();
 

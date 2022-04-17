@@ -297,7 +297,7 @@ public class TypeDescriptionDataDocument : DataDocumentBase, IDataDocument
 
     private TypeDescription GetTypeDescriptionData(string typeDescriptionId, JsonElement typeDescriptionElement)
     {
-        TypeDescription typeDescription = new TypeDescription()
+        TypeDescription typeDescription = new()
         {
             Id = typeDescriptionId,
         };

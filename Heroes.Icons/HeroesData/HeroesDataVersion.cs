@@ -85,7 +85,7 @@ public class HeroesDataVersion : IComparable, IComparable<HeroesDataVersion>, IE
     /// <returns><see langword="true"/> if the <paramref name="left"/> value is less than the <paramref name="right"/> value; otherwise <see langword="false"/>.</returns>
     public static bool operator <(HeroesDataVersion? left, HeroesDataVersion? right)
     {
-        return left is null ? right is object : left.CompareTo(right) < 0;
+        return left is null ? right is not null : left.CompareTo(right) < 0;
     }
 
     /// <summary>
@@ -107,7 +107,7 @@ public class HeroesDataVersion : IComparable, IComparable<HeroesDataVersion>, IE
     /// <returns><see langword="true"/> if the <paramref name="left"/> value is greater than the <paramref name="right"/> value; otherwise <see langword="false"/>.</returns>
     public static bool operator >(HeroesDataVersion? left, HeroesDataVersion? right)
     {
-        return left is object && left.CompareTo(right) > 0;
+        return left is not null && left.CompareTo(right) > 0;
     }
 
     /// <summary>
@@ -293,7 +293,7 @@ public class HeroesDataVersion : IComparable, IComparable<HeroesDataVersion>, IE
             {
                 ReadOnlySpan<char> buildSpan = values[3].AsSpan();
 
-                if (int.TryParse(buildSpan.Slice(0, indexPtr), out build) &&
+                if (int.TryParse(buildSpan[..indexPtr], out build) &&
                     buildSpan[(indexPtr + 1)..].Equals("ptr", StringComparison.OrdinalIgnoreCase))
                 {
                     result = new HeroesDataVersion(major, minor, revision, build, true);

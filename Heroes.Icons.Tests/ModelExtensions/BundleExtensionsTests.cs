@@ -8,7 +8,7 @@ public class BundleExtensionsTests
     {
         using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-        Bundle bundle = new Bundle
+        Bundle bundle = new()
         {
             Id = "RaiderRexxarBundle",
         };
@@ -22,7 +22,7 @@ public class BundleExtensionsTests
     [TestMethod]
     public void UpdateGameStringsThrowArgumentNullException()
     {
-        Bundle bundle = new Bundle
+        Bundle bundle = new()
         {
             Id = "RaiderRexxarBundle",
         };
@@ -32,8 +32,8 @@ public class BundleExtensionsTests
 
     private static byte[] LoadEnusLocalizedStringData()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
 
         writer.WriteStartObject();
 

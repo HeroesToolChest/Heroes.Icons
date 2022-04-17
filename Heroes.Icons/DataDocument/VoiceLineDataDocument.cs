@@ -324,7 +324,7 @@ public class VoiceLineDataDocument : DataDocumentBase, IDataDocument
 
     private VoiceLine GetVoiceLineData(string voiceLineId, JsonElement voiceLineElement)
     {
-        VoiceLine voiceLine = new VoiceLine()
+        VoiceLine voiceLine = new()
         {
             Id = voiceLineId,
         };

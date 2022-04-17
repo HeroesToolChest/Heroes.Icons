@@ -297,7 +297,7 @@ public class EmoticonDataDocument : DataDocumentBase, IDataDocument
 
     private Emoticon GetEmoticonData(string emoticonId, JsonElement emoticonElement)
     {
-        Emoticon emoticon = new Emoticon()
+        Emoticon emoticon = new()
         {
             Id = emoticonId,
         };

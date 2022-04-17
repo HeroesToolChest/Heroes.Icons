@@ -319,7 +319,7 @@ public class UnitDataDocument : UnitDataBase
 
     private Unit GetUnitData(string unitId, JsonElement element, bool includeAbilities, bool includeSubAbilities)
     {
-        Unit unit = new Unit
+        Unit unit = new()
         {
             Id = unitId,
             CUnitId = unitId,
@@ -329,7 +329,7 @@ public class UnitDataDocument : UnitDataBase
 
         if (indexOfMapSplit > 0)
         {
-            unit.MapName = unit.Id.Substring(0, indexOfMapSplit);
+            unit.MapName = unit.Id[..indexOfMapSplit];
         }
 
         if (element.TryGetProperty("hyperlinkId", out JsonElement hyperlinkId))
@@ -338,7 +338,7 @@ public class UnitDataDocument : UnitDataBase
         int index = unitId.IndexOf('-', StringComparison.InvariantCultureIgnoreCase);
         if (index > -1)
         {
-            unit.MapName = unitId.Substring(0, index);
+            unit.MapName = unitId[..index];
         }
 
         if (element.TryGetProperty("name", out JsonElement name))

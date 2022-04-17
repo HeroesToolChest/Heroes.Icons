@@ -8,7 +8,7 @@ public class LootChestExtensionsTests
     {
         using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-        LootChest lootChest = new LootChest
+        LootChest lootChest = new()
         {
             Id = "EpicProgChest",
         };
@@ -22,7 +22,7 @@ public class LootChestExtensionsTests
     [TestMethod]
     public void UpdateGameStringsThrowArgumentNullException()
     {
-        LootChest lootChest = new LootChest
+        LootChest lootChest = new()
         {
             Id = "EpicProgChest",
         };
@@ -32,8 +32,8 @@ public class LootChestExtensionsTests
 
     private static byte[] LoadEnusLocalizedStringData()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
 
         writer.WriteStartObject();
 

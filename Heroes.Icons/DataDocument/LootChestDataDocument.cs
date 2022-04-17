@@ -324,7 +324,7 @@ public class LootChestDataDocument : DataDocumentBase, IDataDocument
 
     private LootChest GetLootChestData(string lootChestId, JsonElement lootChestElement)
     {
-        LootChest lootChest = new LootChest()
+        LootChest lootChest = new()
         {
             Id = lootChestId,
         };

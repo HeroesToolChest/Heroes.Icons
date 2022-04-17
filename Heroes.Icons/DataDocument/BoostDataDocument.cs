@@ -297,7 +297,7 @@ public class BoostDataDocument : DataDocumentBase, IDataDocument
 
     private Boost GetBoostData(string boostId, JsonElement boostElement)
     {
-        Boost boost = new Boost()
+        Boost boost = new()
         {
             Id = boostId,
         };

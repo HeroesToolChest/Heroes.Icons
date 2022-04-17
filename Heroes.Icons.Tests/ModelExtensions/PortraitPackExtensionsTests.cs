@@ -8,7 +8,7 @@ public class PortraitPackExtensionsTests
     {
         using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-        PortraitPack portraitPack = new PortraitPack
+        PortraitPack portraitPack = new()
         {
             Id = "AbathurToys18Portrait",
         };
@@ -21,7 +21,7 @@ public class PortraitPackExtensionsTests
     [TestMethod]
     public void UpdateGameStringsThrowArgumentNullException()
     {
-        PortraitPack portraitPack = new PortraitPack
+        PortraitPack portraitPack = new()
         {
             Id = "AdmiralKrakenovPortrait",
         };
@@ -31,8 +31,8 @@ public class PortraitPackExtensionsTests
 
     private static byte[] LoadEnusLocalizedStringData()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
 
         writer.WriteStartObject();
 

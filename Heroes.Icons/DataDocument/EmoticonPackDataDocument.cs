@@ -297,7 +297,7 @@ public class EmoticonPackDataDocument : DataDocumentBase, IDataDocument
 
     private EmoticonPack GetEmoticonPackData(string emoticonPackId, JsonElement emoticonPackElement)
     {
-        EmoticonPack emoticonPack = new EmoticonPack()
+        EmoticonPack emoticonPack = new()
         {
             Id = emoticonPackId,
         };

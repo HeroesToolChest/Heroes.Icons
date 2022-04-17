@@ -8,7 +8,7 @@ public class HeroExtensionsTests
     {
         using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-        Hero hero = new Hero
+        Hero hero = new()
         {
             CUnitId = "HeroAlarak",
             CHeroId = "Alarak",
@@ -25,7 +25,7 @@ public class HeroExtensionsTests
     [TestMethod]
     public void UpdateGameStringsThrowArgumentNullException()
     {
-        Hero hero = new Hero
+        Hero hero = new()
         {
             CUnitId = "HeroAlarak",
             CHeroId = "Alarak",
@@ -37,8 +37,8 @@ public class HeroExtensionsTests
 
     private static byte[] LoadEnusLocalizedStringData()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
 
         writer.WriteStartObject();
 

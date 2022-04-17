@@ -8,7 +8,7 @@ public class MatchAwardExtensionsTests
     {
         using GameStringDocument gameStringDocument = GameStringDocument.Parse(LoadEnusLocalizedStringData());
 
-        MatchAward matchAward = new MatchAward
+        MatchAward matchAward = new()
         {
             Id = "ClutchHealer",
         };
@@ -21,7 +21,7 @@ public class MatchAwardExtensionsTests
     [TestMethod]
     public void UpdateGameStringsThrowArgumentNullException()
     {
-        MatchAward matchAward = new MatchAward
+        MatchAward matchAward = new()
         {
             Id = "ClutchHealer",
         };
@@ -31,8 +31,8 @@ public class MatchAwardExtensionsTests
 
     private static byte[] LoadEnusLocalizedStringData()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
 
         writer.WriteStartObject();
 

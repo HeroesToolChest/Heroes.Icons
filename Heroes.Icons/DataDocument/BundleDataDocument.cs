@@ -351,7 +351,7 @@ public class BundleDataDocument : DataDocumentBase, IDataDocument
 
     private Bundle GetBundleData(string bundleId, JsonElement bundleElement)
     {
-        Bundle bundle = new Bundle()
+        Bundle bundle = new()
         {
             Id = bundleId,
         };

@@ -47,7 +47,7 @@ public class BehaviorVeterancyDataDocumentTests : DataDocumentBase
     [TestCategory("DataDocument")]
     public void DataDocumentStreamTest()
     {
-        using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+        using FileStream stream = new(_dataFile, FileMode.Open);
         using BehaviorVeterancyDataDocument document = BehaviorVeterancyDataDocument.Parse(stream, Localization.FRFR);
 
         Assert.AreEqual(Localization.FRFR, document.Localization);
@@ -58,7 +58,7 @@ public class BehaviorVeterancyDataDocumentTests : DataDocumentBase
     [TestCategory("DataDocument")]
     public async Task DataDocumentStreamAsyncTest()
     {
-        using FileStream stream = new FileStream(_dataFile, FileMode.Open);
+        using FileStream stream = new(_dataFile, FileMode.Open);
         using BehaviorVeterancyDataDocument document = await BehaviorVeterancyDataDocument.ParseAsync(stream, Localization.FRFR);
 
         Assert.AreEqual(Localization.FRFR, document.Localization);
@@ -135,8 +135,8 @@ public class BehaviorVeterancyDataDocumentTests : DataDocumentBase
 
     private static byte[] LoadJsonTestData()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream);
+        using MemoryStream memoryStream = new();
+        using Utf8JsonWriter writer = new(memoryStream);
         writer.WriteStartObject();
 
         writer.WriteStartObject("alteracpass-CoreScaling");
