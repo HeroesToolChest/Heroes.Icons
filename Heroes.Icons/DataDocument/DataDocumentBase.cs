@@ -314,11 +314,8 @@ public abstract class DataDocumentBase : IDisposable
     protected virtual bool PropertyLookup<T>(string propertyId, string? propertyValue, Func<string, JsonElement, T> getData, [NotNullWhen(true)] out T? value)
         where T : class, IExtractable, new()
     {
-        if (propertyId is null)
-            throw new ArgumentNullException(nameof(propertyId));
-
-        if (getData is null)
-            throw new ArgumentNullException(nameof(getData));
+        ArgumentNullException.ThrowIfNull(propertyId, nameof(propertyId));
+        ArgumentNullException.ThrowIfNull(getData, nameof(getData));
 
         value = null;
 

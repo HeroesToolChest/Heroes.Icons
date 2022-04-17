@@ -156,8 +156,7 @@ public class HeroesDataVersion : IComparable, IComparable<HeroesDataVersion>, IE
     /// <exception cref="FormatException"><paramref name="s"/> is not in a valid format.</exception>
     public static HeroesDataVersion Parse(string s)
     {
-        if (s is null)
-            throw new ArgumentNullException(nameof(s));
+        ArgumentNullException.ThrowIfNull(s, nameof(s));
 
         if (TryParse(s, out HeroesDataVersion? value))
             return value;
@@ -174,8 +173,7 @@ public class HeroesDataVersion : IComparable, IComparable<HeroesDataVersion>, IE
     /// <exception cref="FormatException"><paramref name="s"/> is not in a valid format.</exception>
     public static HeroesDataVersion Parse(ReadOnlySpan<char> s)
     {
-        if (s == null)
-            throw new ArgumentNullException(nameof(s));
+        if (s == null) throw new ArgumentNullException(nameof(s));
 
         if (TryParse(s, out HeroesDataVersion? value))
             return value;

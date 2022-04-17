@@ -236,8 +236,7 @@ public class PortraitPackDataDocument : DataDocumentBase, IDataDocument
     /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
     public PortraitPack GetPortraitPackById(string id)
     {
-        if (id is null)
-            throw new ArgumentNullException(nameof(id));
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
 
         if (TryGetPortraitPackById(id, out PortraitPack? value))
             return value;
@@ -277,8 +276,7 @@ public class PortraitPackDataDocument : DataDocumentBase, IDataDocument
     /// <returns>A <see cref="PortraitPack"/> object.</returns>
     public PortraitPack GetPortraitPackByHyperlinkId(string hyperlinkId)
     {
-        if (hyperlinkId is null)
-            throw new ArgumentNullException(nameof(hyperlinkId));
+        ArgumentNullException.ThrowIfNull(hyperlinkId, nameof(hyperlinkId));
 
         if (TryGetPortraitPackByHyperlinkId(hyperlinkId, out PortraitPack? value))
             return value;

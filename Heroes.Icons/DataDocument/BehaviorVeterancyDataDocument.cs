@@ -117,8 +117,7 @@ public class BehaviorVeterancyDataDocument : DataDocumentBase, IDataDocument
     /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
     public BehaviorVeterancy GetBehaviorVeterancyById(string id)
     {
-        if (id is null)
-            throw new ArgumentNullException(nameof(id));
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
 
         if (TryGetBehaviorVeterancyById(id, out BehaviorVeterancy? value))
             return value;

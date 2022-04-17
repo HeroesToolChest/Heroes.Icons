@@ -238,8 +238,7 @@ public class UnitDataDocument : UnitDataBase
     /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
     public Unit GetUnitById(string id, bool abilities, bool subAbilities)
     {
-        if (id is null)
-            throw new ArgumentNullException(nameof(id));
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
 
         if (TryGetUnitById(id, out Unit? value, abilities, subAbilities))
             return value;
@@ -283,8 +282,7 @@ public class UnitDataDocument : UnitDataBase
     /// <exception cref="KeyNotFoundException">The <paramref name="hyperlinkId"/> property value was not found.</exception>
     public Unit GetUnitByHyperlinkId(string hyperlinkId, bool abilities, bool subAbilities)
     {
-        if (hyperlinkId is null)
-            throw new ArgumentNullException(nameof(hyperlinkId));
+        ArgumentNullException.ThrowIfNull(hyperlinkId, nameof(hyperlinkId));
 
         if (TryGetUnitByHyperlinkId(hyperlinkId, out Unit? value, abilities, subAbilities))
             return value;

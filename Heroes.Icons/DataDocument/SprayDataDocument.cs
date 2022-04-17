@@ -236,8 +236,7 @@ public class SprayDataDocument : DataDocumentBase, IDataDocument
     /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
     public Spray GetSprayById(string id)
     {
-        if (id is null)
-            throw new ArgumentNullException(nameof(id));
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
 
         if (TryGetSprayById(id, out Spray? value))
             return value;
@@ -277,8 +276,7 @@ public class SprayDataDocument : DataDocumentBase, IDataDocument
     /// <returns>A <see cref="Spray"/> object.</returns>
     public Spray GetSprayByHyperlinkId(string hyperlinkId)
     {
-        if (hyperlinkId is null)
-            throw new ArgumentNullException(nameof(hyperlinkId));
+        ArgumentNullException.ThrowIfNull(hyperlinkId, nameof(hyperlinkId));
 
         if (TryGetSprayByHyperlinkId(hyperlinkId, out Spray? value))
             return value;
@@ -304,8 +302,7 @@ public class SprayDataDocument : DataDocumentBase, IDataDocument
     /// <returns>A <see cref="Spray"/> object.</returns>
     public Spray GetSprayByAttributeId(string attributeId)
     {
-        if (attributeId is null)
-            throw new ArgumentNullException(nameof(attributeId));
+        ArgumentNullException.ThrowIfNull(attributeId, nameof(attributeId));
 
         if (TryGetSprayByAttributeId(attributeId, out Spray? value))
             return value;

@@ -236,8 +236,7 @@ public class MatchAwardDataDocument : DataDocumentBase, IDataDocument
     /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
     public MatchAward GetMatchAwardById(string id)
     {
-        if (id is null)
-            throw new ArgumentNullException(nameof(id));
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
 
         if (TryGetMatchAwardById(id, out MatchAward? value))
             return value;
@@ -278,8 +277,7 @@ public class MatchAwardDataDocument : DataDocumentBase, IDataDocument
     /// <returns>A <see cref="MatchAward"/> object.</returns>
     public MatchAward GetMatchAwardByGameLinkId(string gameLink)
     {
-        if (gameLink is null)
-            throw new ArgumentNullException(nameof(gameLink));
+        ArgumentNullException.ThrowIfNull(gameLink, nameof(gameLink));
 
         if (TryGetMatchAwardByGameLinkId(gameLink, out MatchAward? value))
             return value;
@@ -306,8 +304,7 @@ public class MatchAwardDataDocument : DataDocumentBase, IDataDocument
     /// <returns>A <see cref="MatchAward"/> object.</returns>
     public MatchAward GetMatchAwardByTag(string tag)
     {
-        if (tag is null)
-            throw new ArgumentNullException(nameof(tag));
+        ArgumentNullException.ThrowIfNull(tag, nameof(tag));
 
         if (TryGetMatchAwardByTag(tag, out MatchAward? value))
             return value;

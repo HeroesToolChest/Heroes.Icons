@@ -250,8 +250,7 @@ public class HeroDataDocument : UnitDataBase, IDataDocument
     /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
     public Hero GetHeroById(string id, bool abilities, bool subAbilities, bool talents, bool heroUnits)
     {
-        if (id is null)
-            throw new ArgumentNullException(nameof(id));
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
 
         if (TryGetHeroById(id, out Hero? value, abilities, subAbilities, talents, heroUnits))
             return value;
@@ -299,8 +298,7 @@ public class HeroDataDocument : UnitDataBase, IDataDocument
     /// <returns>A <see cref="Hero"/> object.</returns>
     public Hero GetHeroByUnitId(string unitId, bool abilities, bool subAbilities, bool talents, bool heroUnits)
     {
-        if (unitId is null)
-            throw new ArgumentNullException(nameof(unitId));
+        ArgumentNullException.ThrowIfNull(unitId, nameof(unitId));
 
         if (TryGetHeroByUnitId(unitId, out Hero? value, abilities, subAbilities, talents, heroUnits))
             return value;
@@ -334,8 +332,7 @@ public class HeroDataDocument : UnitDataBase, IDataDocument
     /// <returns>A <see cref="Hero"/> object.</returns>
     public Hero GetHeroByHyperlinkId(string hyperlinkId, bool abilities, bool subAbilities, bool talents, bool heroUnits)
     {
-        if (hyperlinkId is null)
-            throw new ArgumentNullException(nameof(hyperlinkId));
+        ArgumentNullException.ThrowIfNull(hyperlinkId, nameof(hyperlinkId));
 
         if (TryGetHeroByHyperlinkId(hyperlinkId, out Hero? value, abilities, subAbilities, talents, heroUnits))
             return value;
@@ -369,8 +366,7 @@ public class HeroDataDocument : UnitDataBase, IDataDocument
     /// <returns>A <see cref="Hero"/> object.</returns>
     public Hero GetHeroByAttributeId(string attributeId, bool abilities, bool subAbilities, bool talents, bool heroUnits)
     {
-        if (attributeId is null)
-            throw new ArgumentNullException(nameof(attributeId));
+        ArgumentNullException.ThrowIfNull(attributeId, nameof(attributeId));
 
         if (TryGetHeroByAttributeId(attributeId, out Hero? value, abilities, subAbilities, talents, heroUnits))
             return value;
@@ -400,8 +396,7 @@ public class HeroDataDocument : UnitDataBase, IDataDocument
     /// <exception cref="KeyNotFoundException">No property was found with the requested property value.</exception>
     public string? GetNameFromHeroId(string heroId)
     {
-        if (heroId is null)
-            throw new ArgumentNullException(nameof(heroId));
+        ArgumentNullException.ThrowIfNull(heroId, nameof(heroId));
 
         if (TryGetNameFromHeroId(heroId, out string? value))
             return value;
@@ -441,8 +436,7 @@ public class HeroDataDocument : UnitDataBase, IDataDocument
     /// <exception cref="KeyNotFoundException">No property was found with the requested property value.</exception>
     public string? GetNameFromUnitId(string unitId)
     {
-        if (unitId is null)
-            throw new ArgumentNullException(nameof(unitId));
+        ArgumentNullException.ThrowIfNull(unitId, nameof(unitId));
 
         if (TryGetNameFromUnitId(unitId, out string? value))
             return value;
@@ -486,8 +480,7 @@ public class HeroDataDocument : UnitDataBase, IDataDocument
     /// <exception cref="KeyNotFoundException">No property was found with the requested property value.</exception>
     public string? GetNameFromHyperlinkId(string hyperlinkId)
     {
-        if (hyperlinkId is null)
-            throw new ArgumentNullException(nameof(hyperlinkId));
+        ArgumentNullException.ThrowIfNull(hyperlinkId, nameof(hyperlinkId));
 
         if (TryGetNameFromHyperlinkId(hyperlinkId, out string? value))
             return value;
@@ -531,8 +524,7 @@ public class HeroDataDocument : UnitDataBase, IDataDocument
     /// <exception cref="KeyNotFoundException">No property was found with the requested property value.</exception>
     public string? GetNameFromAttributeId(string attributeId)
     {
-        if (attributeId is null)
-            throw new ArgumentNullException(nameof(attributeId));
+        ArgumentNullException.ThrowIfNull(attributeId, nameof(attributeId));
 
         if (TryGetNameFromAttributeId(attributeId, out string? value))
             return value;
@@ -576,8 +568,7 @@ public class HeroDataDocument : UnitDataBase, IDataDocument
     /// <exception cref="KeyNotFoundException">No property was found with the requested property value.</exception>
     public string GetHeroIdFromUnitId(string unitId)
     {
-        if (unitId is null)
-            throw new ArgumentNullException(nameof(unitId));
+        ArgumentNullException.ThrowIfNull(unitId, nameof(unitId));
 
         if (TryGetHeroIdFromUnitId(unitId, out string? value))
             return value;
@@ -620,8 +611,7 @@ public class HeroDataDocument : UnitDataBase, IDataDocument
     /// <exception cref="KeyNotFoundException">No property was found with the requested property value.</exception>
     public string GetHeroIdFromHyperlinkId(string hyperlinkId)
     {
-        if (hyperlinkId is null)
-            throw new ArgumentNullException(nameof(hyperlinkId));
+        ArgumentNullException.ThrowIfNull(hyperlinkId, nameof(hyperlinkId));
 
         if (TryGetHeroIdFromHyperlinkId(hyperlinkId, out string? value))
             return value;
@@ -664,8 +654,7 @@ public class HeroDataDocument : UnitDataBase, IDataDocument
     /// <exception cref="KeyNotFoundException">No property was found with the requested property value.</exception>
     public string GetHeroIdFromAttributeId(string attributeId)
     {
-        if (attributeId is null)
-            throw new ArgumentNullException(nameof(attributeId));
+        ArgumentNullException.ThrowIfNull(attributeId, nameof(attributeId));
 
         if (TryGetHeroIdFromAttributeId(attributeId, out string? value))
             return value;
@@ -707,8 +696,7 @@ public class HeroDataDocument : UnitDataBase, IDataDocument
     /// <exception cref="ArgumentNullException"><paramref name="heroId"/> is <see langword="null"/>.</exception>
     public bool IsHeroExistsByHeroId(string heroId)
     {
-        if (heroId is null)
-            throw new ArgumentNullException(nameof(heroId));
+        ArgumentNullException.ThrowIfNull(heroId, nameof(heroId));
 
         return JsonDataDocument.RootElement.TryGetProperty(heroId, out JsonElement _);
     }
@@ -721,8 +709,7 @@ public class HeroDataDocument : UnitDataBase, IDataDocument
     /// <exception cref="ArgumentNullException"><paramref name="unitId"/> is <see langword="null"/>.</exception>
     public bool IsHeroExistsByUnitId(string unitId)
     {
-        if (unitId is null)
-            throw new ArgumentNullException(nameof(unitId));
+        ArgumentNullException.ThrowIfNull(unitId, nameof(unitId));
 
         foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
         {
@@ -741,8 +728,7 @@ public class HeroDataDocument : UnitDataBase, IDataDocument
     /// <exception cref="ArgumentNullException"><paramref name="hyperlinkId"/> is <see langword="null"/>.</exception>
     public bool IsHeroExistsByHyperlinkId(string hyperlinkId)
     {
-        if (hyperlinkId is null)
-            throw new ArgumentNullException(nameof(hyperlinkId));
+        ArgumentNullException.ThrowIfNull(hyperlinkId, nameof(hyperlinkId));
 
         foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
         {
@@ -761,8 +747,7 @@ public class HeroDataDocument : UnitDataBase, IDataDocument
     /// <exception cref="ArgumentNullException"><paramref name="attributeId"/> is <see langword="null"/>.</exception>
     public bool IsHeroExistsByAttributeId(string attributeId)
     {
-        if (attributeId is null)
-            throw new ArgumentNullException(nameof(attributeId));
+        ArgumentNullException.ThrowIfNull(attributeId, nameof(attributeId));
 
         foreach (JsonProperty heroProperty in JsonDataDocument.RootElement.EnumerateObject())
         {

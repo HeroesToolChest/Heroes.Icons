@@ -15,10 +15,8 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is null.</exception>
     public void UpdateGameString(Announcer announcer, HeroesDataVersion version, Localization localization)
     {
-        if (announcer is null)
-            throw new ArgumentNullException(nameof(announcer));
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(announcer, nameof(announcer));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (_, string gameStringPath) = GetDataAndGameStringPaths(version, true, localization, _announcerFileTemplateName, false, true);
 
@@ -37,10 +35,8 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is null.</exception>
     public void UpdateGameString(Banner banner, HeroesDataVersion version, Localization localization)
     {
-        if (banner is null)
-            throw new ArgumentNullException(nameof(banner));
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(banner, nameof(banner));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (_, string gameStringPath) = GetDataAndGameStringPaths(version, true, localization, _bannerFileTemplateName, false, true);
 
@@ -59,10 +55,8 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is null.</exception>
     public void UpdateGameString(Emoticon emoticon, HeroesDataVersion version, Localization localization)
     {
-        if (emoticon is null)
-            throw new ArgumentNullException(nameof(emoticon));
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(emoticon, nameof(emoticon));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (_, string gameStringPath) = GetDataAndGameStringPaths(version, true, localization, _emoticonFileTemplateName, false, true);
 
@@ -81,10 +75,8 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is null.</exception>
     public void UpdateGameString(EmoticonPack emoticonPack, HeroesDataVersion version, Localization localization)
     {
-        if (emoticonPack is null)
-            throw new ArgumentNullException(nameof(emoticonPack));
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(emoticonPack, nameof(emoticonPack));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (_, string gameStringPath) = GetDataAndGameStringPaths(version, true, localization, _emoticonPackFileTemplateName, false, true);
 
@@ -103,10 +95,8 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is null.</exception>
     public void UpdateGameString(Hero hero, HeroesDataVersion version, Localization localization)
     {
-        if (hero is null)
-            throw new ArgumentNullException(nameof(hero));
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(hero, nameof(hero));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (_, string gameStringPath) = GetDataAndGameStringPaths(version, true, localization, _heroFileTemplateName, false, true);
 
@@ -125,10 +115,8 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is null.</exception>
     public void UpdateGameString(HeroSkin heroSkin, HeroesDataVersion version, Localization localization)
     {
-        if (heroSkin is null)
-            throw new ArgumentNullException(nameof(heroSkin));
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(heroSkin, nameof(heroSkin));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (_, string gameStringPath) = GetDataAndGameStringPaths(version, true, localization, _heroSkinFileTemplateName, false, true);
 
@@ -147,10 +135,8 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is null.</exception>
     public void UpdateGameString(MatchAward matchAward, HeroesDataVersion version, Localization localization)
     {
-        if (matchAward is null)
-            throw new ArgumentNullException(nameof(matchAward));
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(matchAward, nameof(matchAward));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (_, string gameStringPath) = GetDataAndGameStringPaths(version, true, localization, _matchAwardFileTemplateName, false, true);
 
@@ -169,10 +155,8 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is null.</exception>
     public void UpdateGameString(Mount mount, HeroesDataVersion version, Localization localization)
     {
-        if (mount is null)
-            throw new ArgumentNullException(nameof(mount));
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(mount, nameof(mount));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (_, string gameStringPath) = GetDataAndGameStringPaths(version, true, localization, _mountFileTemplateName, false, true);
 
@@ -191,10 +175,8 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is null.</exception>
     public void UpdateGameString(PortraitPack portraitPack, HeroesDataVersion version, Localization localization)
     {
-        if (portraitPack is null)
-            throw new ArgumentNullException(nameof(portraitPack));
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(portraitPack, nameof(portraitPack));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (_, string gameStringPath) = GetDataAndGameStringPaths(version, true, localization, _portraitPackFileTemplateName, false, true);
 
@@ -213,10 +195,8 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is null.</exception>
     public void UpdateGameString(RewardPortrait rewardPortrait, HeroesDataVersion version, Localization localization)
     {
-        if (rewardPortrait is null)
-            throw new ArgumentNullException(nameof(rewardPortrait));
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(rewardPortrait, nameof(rewardPortrait));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (_, string gameStringPath) = GetDataAndGameStringPaths(version, true, localization, _rewardPortraitFileTemplateName, false, true);
 
@@ -235,10 +215,8 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is null.</exception>
     public void UpdateGameString(Spray spray, HeroesDataVersion version, Localization localization)
     {
-        if (spray is null)
-            throw new ArgumentNullException(nameof(spray));
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(spray, nameof(spray));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (_, string gameStringPath) = GetDataAndGameStringPaths(version, true, localization, _sprayFileTemplateName, false, true);
 
@@ -257,10 +235,8 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is null.</exception>
     public void UpdateGameString(Unit unit, HeroesDataVersion version, Localization localization)
     {
-        if (unit is null)
-            throw new ArgumentNullException(nameof(unit));
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(unit, nameof(unit));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (_, string gameStringPath) = GetDataAndGameStringPaths(version, true, localization, _unitFileTemplateName, false, true);
 
@@ -279,10 +255,8 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is null.</exception>
     public void UpdateGameString(VoiceLine voiceLine, HeroesDataVersion version, Localization localization)
     {
-        if (voiceLine is null)
-            throw new ArgumentNullException(nameof(voiceLine));
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(voiceLine, nameof(voiceLine));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (_, string gameStringPath) = GetDataAndGameStringPaths(version, true, localization, _voiceLineFileTemplateName, false, true);
 

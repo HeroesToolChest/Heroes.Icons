@@ -236,8 +236,7 @@ public class AnnouncerDataDocument : DataDocumentBase, IDataDocument
     /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
     public Announcer GetAnnouncerById(string id)
     {
-        if (id is null)
-            throw new ArgumentNullException(nameof(id));
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
 
         if (TryGetAnnouncerById(id, out Announcer? value))
             return value;
@@ -277,8 +276,7 @@ public class AnnouncerDataDocument : DataDocumentBase, IDataDocument
     /// <returns>An <see cref="Announcer"/> object.</returns>
     public Announcer GetAnnouncerByHyperlinkId(string hyperlinkId)
     {
-        if (hyperlinkId is null)
-            throw new ArgumentNullException(nameof(hyperlinkId));
+        ArgumentNullException.ThrowIfNull(hyperlinkId, nameof(hyperlinkId));
 
         if (TryGetAnnouncerByHyperlinkId(hyperlinkId, out Announcer? value))
             return value;
@@ -304,8 +302,7 @@ public class AnnouncerDataDocument : DataDocumentBase, IDataDocument
     /// <returns>An <see cref="Announcer"/> object.</returns>
     public Announcer GetAnnouncerByAttributeId(string attributeId)
     {
-        if (attributeId is null)
-            throw new ArgumentNullException(nameof(attributeId));
+        ArgumentNullException.ThrowIfNull(attributeId, nameof(attributeId));
 
         if (TryGetAnnouncerByAttributeId(attributeId, out Announcer? value))
             return value;
@@ -331,10 +328,7 @@ public class AnnouncerDataDocument : DataDocumentBase, IDataDocument
     /// <returns>An <see cref="Announcer"/> object.</returns>
     public Announcer GetAnnouncerByHeroId(string heroId)
     {
-        if (heroId is null)
-        {
-            throw new ArgumentNullException(nameof(heroId));
-        }
+        ArgumentNullException.ThrowIfNull(heroId, nameof(heroId));
 
         if (TryGetAnnouncerByHeroId(heroId, out Announcer? value))
             return value;

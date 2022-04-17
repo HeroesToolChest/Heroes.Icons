@@ -236,8 +236,7 @@ public class VoiceLineDataDocument : DataDocumentBase, IDataDocument
     /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
     public VoiceLine GetVoiceLineById(string id)
     {
-        if (id is null)
-            throw new ArgumentNullException(nameof(id));
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
 
         if (TryGetVoiceLineById(id, out VoiceLine? value))
             return value;
@@ -277,8 +276,7 @@ public class VoiceLineDataDocument : DataDocumentBase, IDataDocument
     /// <returns>A <see cref="VoiceLine"/> object.</returns>
     public VoiceLine GetVoiceLineByHyperlinkId(string hyperlinkId)
     {
-        if (hyperlinkId is null)
-            throw new ArgumentNullException(nameof(hyperlinkId));
+        ArgumentNullException.ThrowIfNull(hyperlinkId, nameof(hyperlinkId));
 
         if (TryGetVoiceLineByHyperlinkId(hyperlinkId, out VoiceLine? value))
             return value;
@@ -304,8 +302,7 @@ public class VoiceLineDataDocument : DataDocumentBase, IDataDocument
     /// <returns>A <see cref="VoiceLine"/> object.</returns>
     public VoiceLine GetVoiceLineByAttributeId(string attributeId)
     {
-        if (attributeId is null)
-            throw new ArgumentNullException(nameof(attributeId));
+        ArgumentNullException.ThrowIfNull(attributeId, nameof(attributeId));
 
         if (TryGetVoiceLineByAttributeId(attributeId, out VoiceLine? value))
             return value;

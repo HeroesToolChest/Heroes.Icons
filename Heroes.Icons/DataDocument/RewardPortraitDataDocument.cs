@@ -236,8 +236,7 @@ public class RewardPortraitDataDocument : DataDocumentBase, IDataDocument
     /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
     public RewardPortrait GetRewardPortraitById(string id)
     {
-        if (id is null)
-            throw new ArgumentNullException(nameof(id));
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
 
         if (TryGetRewardPortraitById(id, out RewardPortrait? value))
             return value;
@@ -277,8 +276,7 @@ public class RewardPortraitDataDocument : DataDocumentBase, IDataDocument
     /// <returns>A <see cref="RewardPortrait"/> object.</returns>
     public RewardPortrait GetRewardPortraitByHyperlinkId(string hyperlinkId)
     {
-        if (hyperlinkId is null)
-            throw new ArgumentNullException(nameof(hyperlinkId));
+        ArgumentNullException.ThrowIfNull(hyperlinkId, nameof(hyperlinkId));
 
         if (TryGetRewardPortraitByHyperlinkId(hyperlinkId, out RewardPortrait? value))
             return value;

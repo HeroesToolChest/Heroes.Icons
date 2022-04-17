@@ -236,8 +236,7 @@ public class EmoticonDataDocument : DataDocumentBase, IDataDocument
     /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
     public Emoticon GetEmoticonById(string id)
     {
-        if (id is null)
-            throw new ArgumentNullException(nameof(id));
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
 
         if (TryGetEmoticonById(id, out Emoticon? value))
             return value;
@@ -277,8 +276,7 @@ public class EmoticonDataDocument : DataDocumentBase, IDataDocument
     /// <returns>An <see cref="Emoticon"/> object.</returns>
     public Emoticon GetEmoticonByHyperlinkId(string hyperlinkId)
     {
-        if (hyperlinkId is null)
-            throw new ArgumentNullException(nameof(hyperlinkId));
+        ArgumentNullException.ThrowIfNull(hyperlinkId, nameof(hyperlinkId));
 
         if (TryGetEmoticonByHyperlinkId(hyperlinkId, out Emoticon? value))
             return value;

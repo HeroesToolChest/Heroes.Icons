@@ -236,8 +236,7 @@ public class BoostDataDocument : DataDocumentBase, IDataDocument
     /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
     public Boost GetBoostById(string id)
     {
-        if (id is null)
-            throw new ArgumentNullException(nameof(id));
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
 
         if (TryGetBoostById(id, out Boost? value))
             return value;
@@ -277,8 +276,7 @@ public class BoostDataDocument : DataDocumentBase, IDataDocument
     /// <returns>A <see cref="Boost"/> object.</returns>
     public Boost GetBoostByHyperlinkId(string hyperlinkId)
     {
-        if (hyperlinkId is null)
-            throw new ArgumentNullException(nameof(hyperlinkId));
+        ArgumentNullException.ThrowIfNull(hyperlinkId, nameof(hyperlinkId));
 
         if (TryGetBoostByHyperlinkId(hyperlinkId, out Boost? value))
             return value;

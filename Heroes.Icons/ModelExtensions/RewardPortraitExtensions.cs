@@ -13,8 +13,7 @@ public static class RewardPortraitExtensions
     /// <exception cref="ArgumentNullException"><paramref name="gameStringDocument"/> is null.</exception>
     public static void UpdateGameStrings(this RewardPortrait rewardPortrait, GameStringDocument gameStringDocument)
     {
-        if (gameStringDocument is null)
-            throw new ArgumentNullException(nameof(gameStringDocument));
+        ArgumentNullException.ThrowIfNull(gameStringDocument, nameof(gameStringDocument));
 
         gameStringDocument.UpdateGameStrings(rewardPortrait);
     }

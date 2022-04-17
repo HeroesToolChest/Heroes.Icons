@@ -236,8 +236,7 @@ public class BundleDataDocument : DataDocumentBase, IDataDocument
     /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
     public Bundle GetBundleById(string id)
     {
-        if (id is null)
-            throw new ArgumentNullException(nameof(id));
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
 
         if (TryGetBundleById(id, out Bundle? value))
             return value;
@@ -277,8 +276,7 @@ public class BundleDataDocument : DataDocumentBase, IDataDocument
     /// <returns>A <see cref="Bundle"/> object.</returns>
     public Bundle GetBundleByHyperlinkId(string hyperlinkId)
     {
-        if (hyperlinkId is null)
-            throw new ArgumentNullException(nameof(hyperlinkId));
+        ArgumentNullException.ThrowIfNull(hyperlinkId, nameof(hyperlinkId));
 
         if (TryGetBundleByHyperlinkId(hyperlinkId, out Bundle? value))
             return value;
@@ -304,8 +302,7 @@ public class BundleDataDocument : DataDocumentBase, IDataDocument
     /// <returns>A <see cref="Bundle"/> object.</returns>
     public Bundle GetBundleByLootChestBonus(string lootChestBonus)
     {
-        if (lootChestBonus is null)
-            throw new ArgumentNullException(nameof(lootChestBonus));
+        ArgumentNullException.ThrowIfNull(lootChestBonus, nameof(lootChestBonus));
 
         if (TryGetBundleByLootChestBonus(lootChestBonus, out Bundle? value))
             return value;
@@ -331,8 +328,7 @@ public class BundleDataDocument : DataDocumentBase, IDataDocument
     /// <returns>A <see cref="Bundle"/> object.</returns>
     public Bundle GetBundleByBoostId(string boostId)
     {
-        if (boostId is null)
-            throw new ArgumentNullException(nameof(boostId));
+        ArgumentNullException.ThrowIfNull(boostId, nameof(boostId));
 
         if (TryGetBundleByBoostId(boostId, out Bundle? value))
             return value;

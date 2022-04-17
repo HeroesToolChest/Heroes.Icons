@@ -236,8 +236,7 @@ public class TypeDescriptionDataDocument : DataDocumentBase, IDataDocument
     /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
     public TypeDescription GetTypeDescriptionById(string id)
     {
-        if (id is null)
-            throw new ArgumentNullException(nameof(id));
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
 
         if (TryGetTypeDescriptionById(id, out TypeDescription? value))
             return value;
@@ -277,8 +276,7 @@ public class TypeDescriptionDataDocument : DataDocumentBase, IDataDocument
     /// <returns>A <see cref="TypeDescription"/> object.</returns>
     public TypeDescription GetTypeDescriptionByHyperlinkId(string hyperlinkId)
     {
-        if (hyperlinkId is null)
-            throw new ArgumentNullException(nameof(hyperlinkId));
+        ArgumentNullException.ThrowIfNull(hyperlinkId, nameof(hyperlinkId));
 
         if (TryGetTypeDescriptionByHyperlinkId(hyperlinkId, out TypeDescription? value))
             return value;

@@ -236,8 +236,7 @@ public class HeroSkinDataDocument : DataDocumentBase, IDataDocument
     /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
     public HeroSkin GetHeroSkinById(string id)
     {
-        if (id is null)
-            throw new ArgumentNullException(nameof(id));
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
 
         if (TryGetHeroSkinById(id, out HeroSkin? value))
             return value;
@@ -277,8 +276,7 @@ public class HeroSkinDataDocument : DataDocumentBase, IDataDocument
     /// <returns>A <see cref="HeroSkin"/> object.</returns>
     public HeroSkin GetHeroSkinByHyperlinkId(string hyperlinkId)
     {
-        if (hyperlinkId is null)
-            throw new ArgumentNullException(nameof(hyperlinkId));
+        ArgumentNullException.ThrowIfNull(hyperlinkId, nameof(hyperlinkId));
 
         if (TryGetHeroSkinByHyperlinkId(hyperlinkId, out HeroSkin? value))
             return value;
@@ -304,8 +302,7 @@ public class HeroSkinDataDocument : DataDocumentBase, IDataDocument
     /// <returns>A <see cref="HeroSkin"/> object.</returns>
     public HeroSkin GetHeroSkinByAttributeId(string attributeId)
     {
-        if (attributeId is null)
-            throw new ArgumentNullException(nameof(attributeId));
+        ArgumentNullException.ThrowIfNull(attributeId, nameof(attributeId));
 
         if (TryGetHeroSkinByAttributeId(attributeId, out HeroSkin? value))
             return value;

@@ -13,8 +13,7 @@ public static class TalentExtensions
     /// <exception cref="ArgumentNullException"><paramref name="gameStringDocument"/> is null.</exception>
     public static void UpdateGameStrings(this Talent talent, GameStringDocument gameStringDocument)
     {
-        if (gameStringDocument is null)
-            throw new ArgumentNullException(nameof(gameStringDocument));
+        ArgumentNullException.ThrowIfNull(gameStringDocument, nameof(gameStringDocument));
 
         gameStringDocument.UpdateGameStrings(talent);
     }

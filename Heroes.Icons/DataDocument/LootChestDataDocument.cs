@@ -236,8 +236,7 @@ public class LootChestDataDocument : DataDocumentBase, IDataDocument
     /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
     public LootChest GetLootChestById(string id)
     {
-        if (id is null)
-            throw new ArgumentNullException(nameof(id));
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
 
         if (TryGetLootChestById(id, out LootChest? value))
             return value;
@@ -277,8 +276,7 @@ public class LootChestDataDocument : DataDocumentBase, IDataDocument
     /// <returns>A <see cref="LootChest"/> object.</returns>
     public LootChest GetLootChestByHyperlinkId(string hyperlinkId)
     {
-        if (hyperlinkId is null)
-            throw new ArgumentNullException(nameof(hyperlinkId));
+        ArgumentNullException.ThrowIfNull(hyperlinkId, nameof(hyperlinkId));
 
         if (TryGetLootChestByHyperlinkId(hyperlinkId, out LootChest? value))
             return value;
@@ -304,8 +302,7 @@ public class LootChestDataDocument : DataDocumentBase, IDataDocument
     /// <returns>A <see cref="LootChest"/> object.</returns>
     public LootChest GetLootChestByTypeDescription(string typeDescription)
     {
-        if (typeDescription is null)
-            throw new ArgumentNullException(nameof(typeDescription));
+        ArgumentNullException.ThrowIfNull(typeDescription, nameof(typeDescription));
 
         if (TryGetLootChestByTypeDescription(typeDescription, out LootChest? value))
             return value;

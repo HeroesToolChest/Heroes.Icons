@@ -95,8 +95,7 @@ public abstract class UnitDataBase : DataDocumentBase, IDataDocument
     /// <exception cref="ArgumentNullException"><paramref name="unit"/> is <see langword="null"/>.</exception>
     protected virtual void SetUnitLife(JsonElement element, Unit unit)
     {
-        if (unit is null)
-            throw new ArgumentNullException(nameof(unit));
+        ArgumentNullException.ThrowIfNull(unit, nameof(unit));
 
         if (element.TryGetProperty("life", out JsonElement lifeElement))
         {
@@ -119,8 +118,7 @@ public abstract class UnitDataBase : DataDocumentBase, IDataDocument
     /// <exception cref="ArgumentNullException"><paramref name="unit"/> is <see langword="null"/>.</exception>
     protected virtual void SetUnitShield(JsonElement element, Unit unit)
     {
-        if (unit is null)
-            throw new ArgumentNullException(nameof(unit));
+        ArgumentNullException.ThrowIfNull(unit, nameof(unit));
 
         if (element.TryGetProperty("shield", out JsonElement shieldElement))
         {
@@ -144,8 +142,7 @@ public abstract class UnitDataBase : DataDocumentBase, IDataDocument
     /// <exception cref="ArgumentNullException"><paramref name="unit"/> is <see langword="null"/>.</exception>
     protected virtual void SetUnitEnergy(JsonElement element, Unit unit)
     {
-        if (unit is null)
-            throw new ArgumentNullException(nameof(unit));
+        ArgumentNullException.ThrowIfNull(unit, nameof(unit));
 
         if (element.TryGetProperty("energy", out JsonElement energyElement))
         {
@@ -166,8 +163,7 @@ public abstract class UnitDataBase : DataDocumentBase, IDataDocument
     /// <exception cref="ArgumentNullException"><paramref name="unit"/> is <see langword="null"/>.</exception>
     protected virtual void SetUnitArmor(JsonElement element, Unit unit)
     {
-        if (unit is null)
-            throw new ArgumentNullException(nameof(unit));
+        ArgumentNullException.ThrowIfNull(unit, nameof(unit));
 
         if (element.TryGetProperty("armor", out JsonElement armorElement))
         {
@@ -194,8 +190,7 @@ public abstract class UnitDataBase : DataDocumentBase, IDataDocument
     /// <exception cref="ArgumentNullException"><paramref name="unit"/> is <see langword="null"/>.</exception>
     protected virtual void SetUnitWeapons(JsonElement element, Unit unit)
     {
-        if (unit is null)
-            throw new ArgumentNullException(nameof(unit));
+        ArgumentNullException.ThrowIfNull(unit, nameof(unit));
 
         if (element.TryGetProperty("weapons", out JsonElement weapons))
         {
@@ -287,8 +282,7 @@ public abstract class UnitDataBase : DataDocumentBase, IDataDocument
     /// <exception cref="ArgumentNullException"><paramref name="unit"/> is <see langword="null"/>.</exception>
     protected virtual void AddTierAbilities(Unit unit, JsonElement tierElement, AbilityTiers abilityTier, string? parentLink)
     {
-        if (unit is null)
-            throw new ArgumentNullException(nameof(unit));
+        ArgumentNullException.ThrowIfNull(unit, nameof(unit));
 
         foreach (JsonElement element in tierElement.EnumerateArray())
         {
@@ -327,8 +321,7 @@ public abstract class UnitDataBase : DataDocumentBase, IDataDocument
     /// <exception cref="ArgumentNullException"><paramref name="abilityTalentBase"/> is <see langword="null"/>.</exception>
     protected virtual void SetAbilityTalentBase(AbilityTalentBase abilityTalentBase, JsonElement abilityTalentElement)
     {
-        if (abilityTalentBase is null)
-            throw new ArgumentNullException(nameof(abilityTalentBase));
+        ArgumentNullException.ThrowIfNull(abilityTalentBase, nameof(abilityTalentBase));
 
         abilityTalentBase.AbilityTalentId.ReferenceId = abilityTalentElement.GetProperty("nameId").GetString() ?? string.Empty;
 

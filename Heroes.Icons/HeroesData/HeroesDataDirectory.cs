@@ -116,8 +116,7 @@ public partial class HeroesDataDirectory
         if (string.IsNullOrWhiteSpace(path))
             throw new ArgumentException($"'{nameof(path)}' cannot be null or whitespace", nameof(path));
 
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         return Directory.Exists(Path.Combine(path, version.ToString()!));
     }
@@ -162,8 +161,7 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is <see langword="null"/>.</exception>
     public AnnouncerDataDocument AnnouncerData(HeroesDataVersion version, bool includeGameStrings = true, Localization localization = Localization.ENUS)
     {
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _announcerFileTemplateName);
 
@@ -183,8 +181,7 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is <see langword="null"/>.</exception>
     public BannerDataDocument BannerData(HeroesDataVersion version, bool includeGameStrings = true, Localization localization = Localization.ENUS)
     {
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _bannerFileTemplateName);
 
@@ -202,8 +199,7 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is <see langword="null"/>.</exception>
     public BehaviorVeterancyDataDocument BehaviorVeterancyData(HeroesDataVersion version)
     {
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (string dataPath, _) = GetDataAndGameStringPaths(version, false, Localization.ENUS, _behaviorVeterancyFileTemplateName, true, false);
 
@@ -220,8 +216,7 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is <see langword="null"/>.</exception>
     public EmoticonDataDocument EmoticonData(HeroesDataVersion version, bool includeGameStrings = true, Localization localization = Localization.ENUS)
     {
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _emoticonFileTemplateName);
 
@@ -241,8 +236,7 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is <see langword="null"/>.</exception>
     public EmoticonPackDataDocument EmoticonPackData(HeroesDataVersion version, bool includeGameStrings = true, Localization localization = Localization.ENUS)
     {
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _emoticonPackFileTemplateName);
 
@@ -262,8 +256,7 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is <see langword="null"/>.</exception>
     public HeroDataDocument HeroData(HeroesDataVersion version, bool includeGameStrings = true, Localization localization = Localization.ENUS)
     {
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _heroFileTemplateName);
 
@@ -283,8 +276,7 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is <see langword="null"/>.</exception>
     public HeroSkinDataDocument HeroSkinData(HeroesDataVersion version, bool includeGameStrings = true, Localization localization = Localization.ENUS)
     {
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _heroSkinFileTemplateName);
 
@@ -304,8 +296,7 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is <see langword="null"/>.</exception>
     public MatchAwardDataDocument MatchAwardData(HeroesDataVersion version, bool includeGameStrings = true, Localization localization = Localization.ENUS)
     {
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _matchAwardFileTemplateName);
 
@@ -325,8 +316,7 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is <see langword="null"/>.</exception>
     public MountDataDocument MountData(HeroesDataVersion version, bool includeGameStrings = true, Localization localization = Localization.ENUS)
     {
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _mountFileTemplateName);
 
@@ -346,8 +336,7 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is <see langword="null"/>.</exception>
     public PortraitPackDataDocument PortraitPackData(HeroesDataVersion version, bool includeGameStrings = true, Localization localization = Localization.ENUS)
     {
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _portraitPackFileTemplateName);
 
@@ -367,8 +356,7 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is <see langword="null"/>.</exception>
     public RewardPortraitDataDocument RewardPortraitData(HeroesDataVersion version, bool includeGameStrings = true, Localization localization = Localization.ENUS)
     {
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _rewardPortraitFileTemplateName);
 
@@ -388,8 +376,7 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is <see langword="null"/>.</exception>
     public SprayDataDocument SprayData(HeroesDataVersion version, bool includeGameStrings = true, Localization localization = Localization.ENUS)
     {
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _sprayFileTemplateName);
 
@@ -409,8 +396,7 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is <see langword="null"/>.</exception>
     public UnitDataDocument UnitData(HeroesDataVersion version, bool includeGameStrings = true, Localization localization = Localization.ENUS)
     {
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _unitFileTemplateName);
 
@@ -430,8 +416,7 @@ public partial class HeroesDataDirectory
     /// <exception cref="ArgumentNullException"><paramref name="version"/> is <see langword="null"/>.</exception>
     public VoiceLineDataDocument VoiceLineData(HeroesDataVersion version, bool includeGameStrings = true, Localization localization = Localization.ENUS)
     {
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
+        ArgumentNullException.ThrowIfNull(version, nameof(version));
 
         (string dataPath, string gameStringPath) = GetDataAndGameStringPaths(version, includeGameStrings, localization, _voiceLineFileTemplateName);
 

@@ -236,8 +236,7 @@ public class MountDataDocument : DataDocumentBase, IDataDocument
     /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
     public Mount GetMountById(string id)
     {
-        if (id is null)
-            throw new ArgumentNullException(nameof(id));
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
 
         if (TryGetMountById(id, out Mount? value))
             return value;
@@ -277,8 +276,7 @@ public class MountDataDocument : DataDocumentBase, IDataDocument
     /// <returns>A <see cref="Mount"/> object.</returns>
     public Mount GetMountByHyperlinkId(string hyperlinkId)
     {
-        if (hyperlinkId is null)
-            throw new ArgumentNullException(nameof(hyperlinkId));
+        ArgumentNullException.ThrowIfNull(hyperlinkId, nameof(hyperlinkId));
 
         if (TryGetMountByHyperlinkId(hyperlinkId, out Mount? value))
             return value;
@@ -304,8 +302,7 @@ public class MountDataDocument : DataDocumentBase, IDataDocument
     /// <returns>A <see cref="Mount"/> object.</returns>
     public Mount GetMountByAttributeId(string attributeId)
     {
-        if (attributeId is null)
-            throw new ArgumentNullException(nameof(attributeId));
+        ArgumentNullException.ThrowIfNull(attributeId, nameof(attributeId));
 
         if (TryGetMountByAttributeId(attributeId, out Mount? value))
             return value;

@@ -236,8 +236,7 @@ public class BannerDataDocument : DataDocumentBase, IDataDocument
     /// <exception cref="KeyNotFoundException">The <paramref name="id"/> property value was not found.</exception>
     public Banner GetBannerById(string id)
     {
-        if (id is null)
-            throw new ArgumentNullException(nameof(id));
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
 
         if (TryGetBannerById(id, out Banner? value))
             return value;
@@ -277,8 +276,7 @@ public class BannerDataDocument : DataDocumentBase, IDataDocument
     /// <returns>A <see cref="Banner"/> object.</returns>
     public Banner GetBannerByHyperlinkId(string hyperlinkId)
     {
-        if (hyperlinkId is null)
-            throw new ArgumentNullException(nameof(hyperlinkId));
+        ArgumentNullException.ThrowIfNull(hyperlinkId, nameof(hyperlinkId));
 
         if (TryGetBannerByHyperlinkId(hyperlinkId, out Banner? value))
             return value;
@@ -304,8 +302,7 @@ public class BannerDataDocument : DataDocumentBase, IDataDocument
     /// <returns>A <see cref="Banner"/> object.</returns>
     public Banner GetBannerByAttributeId(string attributeId)
     {
-        if (attributeId is null)
-            throw new ArgumentNullException(nameof(attributeId));
+        ArgumentNullException.ThrowIfNull(attributeId, nameof(attributeId));
 
         if (TryGetBannerByAttributeId(attributeId, out Banner? value))
             return value;

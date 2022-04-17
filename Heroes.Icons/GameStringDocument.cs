@@ -224,8 +224,7 @@ public class GameStringDocument : IDisposable
     /// <exception cref="ArgumentNullException"><paramref name="hero"/> is <see langword="null"/>.</exception>
     public void UpdateGameStrings(Hero hero)
     {
-        if (hero is null)
-            throw new ArgumentNullException(nameof(hero));
+        ArgumentNullException.ThrowIfNull(hero, nameof(hero));
 
         JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -282,8 +281,7 @@ public class GameStringDocument : IDisposable
     /// <exception cref="ArgumentNullException"><paramref name="unit"/> is <see langword="null"/>.</exception>
     public void UpdateGameStrings(Unit unit)
     {
-        if (unit is null)
-            throw new ArgumentNullException(nameof(unit));
+        ArgumentNullException.ThrowIfNull(unit, nameof(unit));
 
         JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -321,8 +319,7 @@ public class GameStringDocument : IDisposable
     /// <exception cref="ArgumentNullException"><paramref name="talent"/> is <see langword="null"/>.</exception>
     public void UpdateGameStrings(Talent talent)
     {
-        if (talent is null)
-            throw new ArgumentNullException(nameof(talent));
+        ArgumentNullException.ThrowIfNull(talent, nameof(talent));
 
         JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -339,8 +336,7 @@ public class GameStringDocument : IDisposable
     /// <exception cref="ArgumentNullException"><paramref name="ability"/> is <see langword="null"/>.</exception>
     public void UpdateGameStrings(Ability ability)
     {
-        if (ability is null)
-            throw new ArgumentNullException(nameof(ability));
+        ArgumentNullException.ThrowIfNull(ability, nameof(ability));
 
         JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -357,8 +353,7 @@ public class GameStringDocument : IDisposable
     /// <exception cref="ArgumentNullException"><paramref name="announcer"/> is <see langword="null"/>.</exception>
     public void UpdateGameStrings(Announcer announcer)
     {
-        if (announcer is null)
-            throw new ArgumentNullException(nameof(announcer));
+        ArgumentNullException.ThrowIfNull(announcer, nameof(announcer));
 
         JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -383,8 +378,7 @@ public class GameStringDocument : IDisposable
     /// <exception cref="ArgumentNullException"><paramref name="matchAward"/> is <see langword="null"/>.</exception>
     public void UpdateGameStrings(MatchAward matchAward)
     {
-        if (matchAward is null)
-            throw new ArgumentNullException(nameof(matchAward));
+        ArgumentNullException.ThrowIfNull(matchAward, nameof(matchAward));
 
         JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -408,8 +402,7 @@ public class GameStringDocument : IDisposable
     /// <exception cref="ArgumentNullException"><paramref name="heroSkin"/> is <see langword="null"/>.</exception>
     public void UpdateGameStrings(HeroSkin heroSkin)
     {
-        if (heroSkin is null)
-            throw new ArgumentNullException(nameof(heroSkin));
+        ArgumentNullException.ThrowIfNull(heroSkin, nameof(heroSkin));
 
         JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -436,8 +429,7 @@ public class GameStringDocument : IDisposable
     /// <exception cref="ArgumentNullException"><paramref name="mount"/> is <see langword="null"/>.</exception>
     public void UpdateGameStrings(Mount mount)
     {
-        if (mount is null)
-            throw new ArgumentNullException(nameof(mount));
+        ArgumentNullException.ThrowIfNull(mount, nameof(mount));
 
         JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -464,8 +456,7 @@ public class GameStringDocument : IDisposable
     /// <exception cref="ArgumentNullException"><paramref name="banner"/> is <see langword="null"/>.</exception>
     public void UpdateGameStrings(Banner banner)
     {
-        if (banner is null)
-            throw new ArgumentNullException(nameof(banner));
+        ArgumentNullException.ThrowIfNull(banner, nameof(banner));
 
         JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -490,8 +481,7 @@ public class GameStringDocument : IDisposable
     /// <exception cref="ArgumentNullException"><paramref name="spray"/> is <see langword="null"/>.</exception>
     public void UpdateGameStrings(Spray spray)
     {
-        if (spray is null)
-            throw new ArgumentNullException(nameof(spray));
+        ArgumentNullException.ThrowIfNull(spray, nameof(spray));
 
         JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -518,8 +508,7 @@ public class GameStringDocument : IDisposable
     /// <exception cref="ArgumentNullException"><paramref name="voiceLine"/> is <see langword="null"/>.</exception>
     public void UpdateGameStrings(VoiceLine voiceLine)
     {
-        if (voiceLine is null)
-            throw new ArgumentNullException(nameof(voiceLine));
+        ArgumentNullException.ThrowIfNull(voiceLine, nameof(voiceLine));
 
         JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -544,8 +533,7 @@ public class GameStringDocument : IDisposable
     /// <exception cref="ArgumentNullException"><paramref name="portraitPack"/> is <see langword="null"/>.</exception>
     public void UpdateGameStrings(PortraitPack portraitPack)
     {
-        if (portraitPack is null)
-            throw new ArgumentNullException(nameof(portraitPack));
+        ArgumentNullException.ThrowIfNull(portraitPack, nameof(portraitPack));
 
         JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -568,8 +556,7 @@ public class GameStringDocument : IDisposable
     /// <exception cref="ArgumentNullException"><paramref name="rewardPortrait"/> is <see langword="null"/>.</exception>
     public void UpdateGameStrings(RewardPortrait rewardPortrait)
     {
-        if (rewardPortrait is null)
-            throw new ArgumentNullException(nameof(rewardPortrait));
+        ArgumentNullException.ThrowIfNull(rewardPortrait, nameof(rewardPortrait));
 
         JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -596,8 +583,7 @@ public class GameStringDocument : IDisposable
     /// <exception cref="ArgumentNullException"><paramref name="emoticon"/> is <see langword="null"/>.</exception>
     public void UpdateGameStrings(Emoticon emoticon)
     {
-        if (emoticon is null)
-            throw new ArgumentNullException(nameof(emoticon));
+        ArgumentNullException.ThrowIfNull(emoticon, nameof(emoticon));
 
         JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -663,8 +649,7 @@ public class GameStringDocument : IDisposable
     /// <exception cref="ArgumentNullException"><paramref name="emoticonPack"/> is <see langword="null"/>.</exception>
     public void UpdateGameStrings(EmoticonPack emoticonPack)
     {
-        if (emoticonPack is null)
-            throw new ArgumentNullException(nameof(emoticonPack));
+        ArgumentNullException.ThrowIfNull(emoticonPack, nameof(emoticonPack));
 
         JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -689,8 +674,7 @@ public class GameStringDocument : IDisposable
     /// <exception cref="ArgumentNullException"><paramref name="bundle"/> is <see langword="null"/>.</exception>
     public void UpdateGameStrings(Bundle bundle)
     {
-        if (bundle is null)
-            throw new ArgumentNullException(nameof(bundle));
+        ArgumentNullException.ThrowIfNull(bundle, nameof(bundle));
 
         JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -714,8 +698,7 @@ public class GameStringDocument : IDisposable
     /// <exception cref="ArgumentNullException"><paramref name="boost"/> is <see langword="null"/>.</exception>
     public void UpdateGameStrings(Boost boost)
     {
-        if (boost is null)
-            throw new ArgumentNullException(nameof(boost));
+        ArgumentNullException.ThrowIfNull(boost, nameof(boost));
 
         JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -739,8 +722,7 @@ public class GameStringDocument : IDisposable
     /// <exception cref="ArgumentNullException"><paramref name="lootChest"/> is <see langword="null"/>.</exception>
     public void UpdateGameStrings(LootChest lootChest)
     {
-        if (lootChest is null)
-            throw new ArgumentNullException(nameof(lootChest));
+        ArgumentNullException.ThrowIfNull(lootChest, nameof(lootChest));
 
         JsonElement element = JsonGameStringDocument.RootElement;
 
@@ -763,8 +745,7 @@ public class GameStringDocument : IDisposable
     /// <exception cref="ArgumentNullException"><paramref name="typeDescription"/> is <see langword="null"/>.</exception>
     public void UpdateGameStrings(TypeDescription typeDescription)
     {
-        if (typeDescription is null)
-            throw new ArgumentNullException(nameof(typeDescription));
+        ArgumentNullException.ThrowIfNull(typeDescription, nameof(typeDescription));
 
         JsonElement element = JsonGameStringDocument.RootElement;
 
